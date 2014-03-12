@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-
+@property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
+- (IBAction)valueChanged:(id)sender;
 @end
