@@ -5,16 +5,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="HomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mnM-CL-Hqk"/>
                         <viewControllerLayoutGuide type="bottom" id="Rob-Mb-cgN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -31,7 +31,11 @@
                                 <action selector="valueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="qQz-2b-RDA"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="HSh-0T-hyc"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="HSh-0T-hyc">
+                            <connections>
+                                <segue destination="YPY-Ya-UdB" kind="modal" id="CgV-XM-4s4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="segment" destination="bJx-gF-tQQ" id="ueZ-Pe-CcU"/>
@@ -40,6 +44,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="166" y="-257"/>
+        </scene>
+        <!--Details View Controller-->
+        <scene sceneID="eCi-NT-zx7">
+            <objects>
+                <viewController id="vuh-Fq-aGL" customClass="DetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BHA-yn-yD1"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Ng-By-N0Z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DkZ-IV-PlB">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gye-1Q-KkB">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vOw-2C-AJz">
+                            <connections>
+                                <action selector="cancel:" destination="vuh-Fq-aGL" id="l2e-8p-pDv"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="RO9-jB-hQz">
+                            <connections>
+                                <action selector="done:" destination="vuh-Fq-aGL" id="1Cf-Xy-s1b"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fFV-eq-hPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1129" y="-253"/>
         </scene>
         <!--List Controller-->
         <scene sceneID="a6m-MR-MG9">
@@ -51,7 +85,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexTrackingBackgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ig8-N0-lZr">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PinCell" id="Ig8-N0-lZr">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ig8-N0-lZr" id="3XX-EZ-Efe">
@@ -81,7 +115,6 @@
                     <view key="view" contentMode="scaleToFill" id="DKQ-wc-Ihd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXF-tK-fcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -93,7 +126,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l6p-uc-Or6" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="87k-Od-0Wi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="87k-Od-0Wi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -105,6 +138,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTV-NS-yg8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-267" y="-257"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8cp-du-m4V">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YPY-Ya-UdB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="YAI-aE-HZO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vuh-Fq-aGL" kind="relationship" relationship="rootViewController" id="5T6-fT-Us1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LsO-Nz-jpj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="603" y="-253"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -1,28 +1,28 @@
 //
-//  ViewController.m
+//  HomeController.m
 //  icanvass
 //
 //  Created by Roman Kot on 08.03.2014.
 //  Copyright (c) 2014 Roman Kot. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "HomeViewController.h"
 #import "ListController.h"
 #import "MapController.h"
 
-@interface ViewController ()
+@interface HomeViewController ()
 @property (nonatomic,strong) NSArray *controllers;
 @property (nonatomic,weak) UIViewController *current;
 @end
 
-@implementation ViewController
+@implementation HomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     ListController *list=[self.storyboard instantiateViewControllerWithIdentifier:@"ListController"];
     MapController *map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];
     self.controllers=@[list,map];
-    [self cycleFromViewController:nil toViewController:list];
+    [self switchToViewController:list];
     
 }
 
@@ -37,13 +37,14 @@
     [self addChildViewController:newv];
     
     newv.view.frame=self.view.bounds;
+    
     void(^completion)(BOOL)=^void(BOOL finished){
         [oldv removeFromParentViewController];
         [newv didMoveToParentViewController:self];
         self.current=newv;
     };
     
-    if(!oldv) {
+    if(!oldv) { //transitionFromVC toVC requires both vcs, if there is no old I need to add new view myself and call completion block
         [self.view addSubview:newv.view];
         completion(YES);
         return;

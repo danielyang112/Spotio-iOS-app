@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F0B18D10FC60087941E /* DetailsViewController.m */; };
+		42284F5218D252970087941E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42284F5118D252970087941E /* CoreData.framework */; };
+		42284F5418D253F60087941E /* pins.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5318D253F60087941E /* pins.xcdatamodel */; };
+		42284F5D18D254020087941E /* Pin.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5618D254020087941E /* Pin.m */; };
+		42284F5E18D254020087941E /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5818D254020087941E /* Status.m */; };
+		42284F5F18D254020087941E /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5A18D254020087941E /* Location.m */; };
+		42284F6018D254020087941E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5C18D254020087941E /* User.m */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -14,7 +21,7 @@
 		42A6A58D18CBA3BF0043233C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A6A58C18CBA3BF0043233C /* main.m */; };
 		42A6A59118CBA3BF0043233C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A6A59018CBA3BF0043233C /* AppDelegate.m */; };
 		42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42A6A59218CBA3BF0043233C /* Main.storyboard */; };
-		42A6A59718CBA3BF0043233C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A6A59618CBA3BF0043233C /* ViewController.m */; };
+		42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A6A59618CBA3BF0043233C /* HomeViewController.m */; };
 		42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A6A59818CBA3BF0043233C /* Images.xcassets */; };
 		42A6A5A018CBA3BF0043233C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A59F18CBA3BF0043233C /* XCTest.framework */; };
 		42A6A5A118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
@@ -36,6 +43,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		42284F0A18D10FC60087941E /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		42284F0B18D10FC60087941E /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		42284F5118D252970087941E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		42284F5318D253F60087941E /* pins.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pins.xcdatamodel; sourceTree = "<group>"; };
+		42284F5518D254020087941E /* Pin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pin.h; sourceTree = "<group>"; };
+		42284F5618D254020087941E /* Pin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pin.m; sourceTree = "<group>"; };
+		42284F5718D254020087941E /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
+		42284F5818D254020087941E /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
+		42284F5918D254020087941E /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		42284F5A18D254020087941E /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		42284F5B18D254020087941E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		42284F5C18D254020087941E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -47,8 +66,8 @@
 		42A6A58F18CBA3BF0043233C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		42A6A59018CBA3BF0043233C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		42A6A59318CBA3BF0043233C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		42A6A59518CBA3BF0043233C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		42A6A59618CBA3BF0043233C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		42A6A59518CBA3BF0043233C /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		42A6A59618CBA3BF0043233C /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		42A6A59818CBA3BF0043233C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		42A6A59E18CBA3BF0043233C /* icanvassTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = icanvassTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A59F18CBA3BF0043233C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -66,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42284F5218D252970087941E /* CoreData.framework in Frameworks */,
 				42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */,
 				42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */,
 				42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */,
@@ -85,6 +105,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42284F6118D254560087941E /* coredata */ = {
+			isa = PBXGroup;
+			children = (
+				42284F5318D253F60087941E /* pins.xcdatamodel */,
+				42284F5518D254020087941E /* Pin.h */,
+				42284F5618D254020087941E /* Pin.m */,
+				42284F5718D254020087941E /* Status.h */,
+				42284F5818D254020087941E /* Status.m */,
+				42284F5918D254020087941E /* Location.h */,
+				42284F5A18D254020087941E /* Location.m */,
+				42284F5B18D254020087941E /* User.h */,
+				42284F5C18D254020087941E /* User.m */,
+			);
+			name = coredata;
+			sourceTree = "<group>";
+		};
+		42284F6218D2546A0087941E /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				42A6A59518CBA3BF0043233C /* HomeViewController.h */,
+				42A6A59618CBA3BF0043233C /* HomeViewController.m */,
+				42A6A5B518CBB52C0043233C /* ListController.h */,
+				42A6A5B618CBB52C0043233C /* ListController.m */,
+				42A6A5B818CBB5470043233C /* MapController.h */,
+				42A6A5B918CBB5470043233C /* MapController.m */,
+				42284F0A18D10FC60087941E /* DetailsViewController.h */,
+				42284F0B18D10FC60087941E /* DetailsViewController.m */,
+			);
+			name = viewcontrollers;
+			sourceTree = "<group>";
+		};
 		42A6A57418CBA3BF0043233C = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +158,7 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42284F5118D252970087941E /* CoreData.framework */,
 				42A6A58018CBA3BF0043233C /* Foundation.framework */,
 				42A6A58218CBA3BF0043233C /* CoreGraphics.framework */,
 				42A6A58418CBA3BF0043233C /* UIKit.framework */,
@@ -118,17 +170,13 @@
 		42A6A58618CBA3BF0043233C /* icanvass */ = {
 			isa = PBXGroup;
 			children = (
+				42284F6218D2546A0087941E /* viewcontrollers */,
+				42284F6118D254560087941E /* coredata */,
 				42A6A58F18CBA3BF0043233C /* AppDelegate.h */,
 				42A6A59018CBA3BF0043233C /* AppDelegate.m */,
 				42A6A59218CBA3BF0043233C /* Main.storyboard */,
-				42A6A59518CBA3BF0043233C /* ViewController.h */,
-				42A6A59618CBA3BF0043233C /* ViewController.m */,
 				42A6A59818CBA3BF0043233C /* Images.xcassets */,
 				42A6A58718CBA3BF0043233C /* Supporting Files */,
-				42A6A5B518CBB52C0043233C /* ListController.h */,
-				42A6A5B618CBB52C0043233C /* ListController.m */,
-				42A6A5B818CBB5470043233C /* MapController.h */,
-				42A6A5B918CBB5470043233C /* MapController.m */,
 			);
 			path = icanvass;
 			sourceTree = "<group>";
@@ -259,11 +307,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42A6A59718CBA3BF0043233C /* ViewController.m in Sources */,
+				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
+				42284F5418D253F60087941E /* pins.xcdatamodel in Sources */,
 				42A6A59118CBA3BF0043233C /* AppDelegate.m in Sources */,
 				42A6A5BA18CBB5470043233C /* MapController.m in Sources */,
+				42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
+				42284F6018D254020087941E /* User.m in Sources */,
+				42284F5F18D254020087941E /* Location.m in Sources */,
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
+				42284F5E18D254020087941E /* Status.m in Sources */,
+				42284F5D18D254020087941E /* Pin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +526,7 @@
 				42A6A5B118CBA3BF0043233C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		42A6A5B218CBA3BF0043233C /* Build configuration list for PBXNativeTarget "icanvassTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +535,7 @@
 				42A6A5B418CBA3BF0043233C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
