@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController <CLLocationManagerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
 - (IBAction)valueChanged:(id)sender;
 @end
