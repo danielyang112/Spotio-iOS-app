@@ -32,12 +32,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mapView=[GMSMapView mapWithFrame:self.view.bounds camera:[self cameraPosition]];
+    self.mapView=[GMSMapView mapWithFrame:CGRectZero camera:[self cameraPosition]];
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
-    [self.view addSubview:_mapView];
+    self.view=_mapView;
 }
 
 #pragma mark - GMSMapViewDelegate
