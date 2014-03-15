@@ -8,7 +8,7 @@
 
 #import "ICRequestManager.h"
 
-#define kBaseUrl @"http://login.icanvassapp.com:888/PinService.svc/"
+#define kBaseUrl @"http://login.icanvassapp.com/"
 
 @implementation ICRequestManager
 
@@ -28,12 +28,25 @@
     NSString *u=[NSString stringWithFormat:@"%@||%@",company, userName];
     self.requestSerializer=[AFHTTPRequestSerializer serializer];
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:u password:password];
-    [self GET:@"Pins?$format=json&$top=0" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"PinService.svc/Pins?$format=json&$top=0" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         cb(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.requestSerializer=[AFHTTPRequestSerializer new];
         cb(NO);
     }];
+}
+
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    void(^f)(AFHTTPRequestOperation *operation, NSError *error)=^(AFHTTPRequestOperation *operation, NSError *error) {
+        if(operation.response.statusCode==403){
+            NSLog(@"403");
+        }
+        failure(operation,error);
+    };
+    
+    return [super HTTPRequestOperationWithRequest:request success:success failure:f];
 }
 
 @end

@@ -19,6 +19,8 @@
 
 @implementation HomeViewController
 
+#pragma mark - UIViewController
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -52,6 +54,8 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+#pragma mark - Helpers
+
 - (void)switchToViewController:(UIViewController*)vc {
     if(vc==_current) return;
     
@@ -81,6 +85,8 @@
                             animations:^{}
                             completion:completion];
 }
+
+#pragma mark - Actions
 
 - (IBAction)valueChanged:(id)sender {
     UISegmentedControl *segmented=(UISegmentedControl*)sender;
