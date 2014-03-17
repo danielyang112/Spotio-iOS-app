@@ -21,8 +21,8 @@
 @property (nonatomic, retain) NSNumber * userLongitude;
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSDate * dateTimeInputted;
+@property (nonatomic, retain) NSString *status;
 @property (nonatomic, retain) NSManagedObject *location;
 @property (nonatomic, retain) NSManagedObject *user;
-@property (nonatomic, retain) NSManagedObject *status;
 
 @end

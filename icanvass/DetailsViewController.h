@@ -10,6 +10,8 @@
 
 @interface DetailsViewController : UIViewController
 
+@property (nonatomic) BOOL preview;
+
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 

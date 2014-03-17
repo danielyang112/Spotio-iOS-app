@@ -11,4 +11,5 @@
 @interface Pins : NSObject
 + (Pins*)sharedInstance;
 - (void)sendPinsTo:(void (^)(NSArray *a))block;
+- (UIColor*)colorForStatus:(NSString*)status;
 @end

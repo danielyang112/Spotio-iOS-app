@@ -7,36 +7,46 @@
 //
 
 #import "ListController.h"
+#import "DetailsViewController.h"
+#import "Pins.h"
+#import "PinCell.h"
+#import "PinTemp.h"
 
 @interface ListController ()
-
+@property (nonatomic,strong) NSArray *pins;
 @end
 
 @implementation ListController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedIn" object:nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.tableFooterView=[UIView new];
+    [self refresh];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)refresh {
+    [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
+        self.pins=a;
+        [self.tableView reloadData];
+    }];
+}
+
+#pragma mark - Notifications
+
+- (void)userLoggedIn:(NSNotification*)notification {
+    [self refresh];
 }
 
 #pragma mark - Table view data source
@@ -48,15 +58,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 18;
+    return [_pins count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"PinCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    PinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    PinTemp *pin=_pins[indexPath.row];
+    cell.topLabel.text=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
+    cell.bottomLabel.text=[NSString stringWithFormat:@"%@ %@, %@",pin.location.city, pin.location.state, pin.location.zip];
+    static NSDateFormatter *dateFormatter;
+    if(!dateFormatter) {
+        dateFormatter=[[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat=@"MM/dd/yy";
+    }
+    cell.rightLabel.text=[dateFormatter stringFromDate:pin.creationDate];
+    cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
     return cell;
 }
 
@@ -99,16 +118,15 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
+    dc.preview=YES;
 }
-
- */
 
 @end

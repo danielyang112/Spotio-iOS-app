@@ -7,19 +7,30 @@
 //
 
 #import "MapController.h"
+#import "Pins.h"
+#import "PinTemp.h"
 #import <GoogleMaps/GoogleMaps.h>
 
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL located;
+@property (nonatomic,strong) NSMutableDictionary *markers;
+@property (nonatomic,strong) NSMutableDictionary *icons;
 @end
 
 @implementation MapController
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
+        self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
+        self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedIn" object:nil];
     }
     return self;
 }
@@ -27,7 +38,7 @@
 - (GMSCameraPosition*)cameraPosition {
     return [GMSCameraPosition cameraWithLatitude:_location.coordinate.latitude
                                        longitude:_location.coordinate.longitude
-                                            zoom:20];
+                                            zoom:18];
 }
 
 - (void)viewDidLoad {
@@ -38,6 +49,38 @@
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
     self.view=_mapView;
+    [self refresh];
+}
+
+- (UIImage*)iconForPin:(PinTemp*)pin {
+    if(!_icons[pin.status]){
+        _icons[pin.status]=[GMSMarker markerImageWithColor:[[Pins sharedInstance] colorForStatus:pin.status]];
+    }
+    return _icons[pin.status];
+}
+
+- (GMSMarker*)markerForPin:(PinTemp*)pin {
+    CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
+    GMSMarker *marker=[GMSMarker markerWithPosition:position];
+    marker.title=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
+    marker.icon=[self iconForPin:pin];
+    marker.map=_mapView;
+    return marker;
+}
+
+- (void)refresh {
+    [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
+        for(PinTemp *pin in a){
+            GMSMarker *marker=[self markerForPin:pin];
+            self.markers[pin.ident]=marker;
+        }
+    }];
+}
+
+#pragma mark - Notifications
+
+- (void)userLoggedIn:(NSNotification*)notification {
+    [self refresh];
 }
 
 #pragma mark - GMSMapViewDelegate

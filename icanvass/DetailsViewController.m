@@ -26,6 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if(_preview) {
+        self.navigationItem.leftBarButtonItem=nil;
+        self.navigationItem.rightBarButtonItem=nil;
+    }
 	// Do any additional setup after loading the view.
 }
 

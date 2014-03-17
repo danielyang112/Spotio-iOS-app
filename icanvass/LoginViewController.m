@@ -10,7 +10,11 @@
 #import "ICRequestManager.h"
 
 @interface LoginViewController ()
-
+@property (nonatomic,strong) NSString *username;
+@property (nonatomic,strong) NSString *password;
+@property (nonatomic,strong) NSString *company;
+@property (nonatomic,strong) NSArray *companies;
+@property (nonatomic,weak) UITextField *activeField;
 @end
 
 @implementation LoginViewController
@@ -28,38 +32,69 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
 }
 
-- (void)showWrongPassword {
-    
+- (void)showWrongPassword:(BOOL)show {
+    self.wrongPassLabel.hidden=!show;
 }
 
 - (void)loginWithUsername:(NSString*)username password:(NSString*)password company:(NSString*)company {
+    self.company=company;
+    [self showWrongPassword:NO];
     [[ICRequestManager sharedManager] loginUserName:username password:password company:company cb:^(BOOL success) {
         if(success) {
             [self close];
         } else {
-            [self showWrongPassword];
+            [self showWrongPassword:YES];
         }
     }];
 }
 
-- (void)loginWithUserName:(NSString*)username password:(NSString*)password {
+- (void)loginWithUsername:(NSString*)username password:(NSString*)password {
+    self.username=username;
+    self.password=password;
     NSDictionary *dic=@{@"login":username,@"password":password};
     [[ICRequestManager sharedManager] POST:@"MobileApp/GetActiveCompanies" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *companies=(NSArray*)responseObject;
-        if(companies.count==1) {
-            
+        self.companies=(NSArray*)responseObject;
+        if(![_companies count]){
+            [self showWrongPassword:YES];
+        } else if(_companies.count==1) {
+            [self loginWithUsername:username password:password company:_companies[0]];
         } else {
-            
+            [self showCompanySelection];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
 }
 
+- (void)showCompanySelection {
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"Select company" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    for(NSString *company in _companies){
+        [sheet addButtonWithTitle:company];
+    }
+    [sheet addButtonWithTitle:@"Cancel"];
+    sheet.cancelButtonIndex=_companies.count;
+    [sheet showInView:self.view];
+    //[sheet autorelease];
+}
+
+#pragma mark - Actions
+
+- (IBAction)hideKeyboard:(UIButton *)sender {
+    [_activeField resignFirstResponder];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex!=actionSheet.cancelButtonIndex){
+        [self loginWithUsername:_username password:_password company:_companies[buttonIndex]];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
+    self.activeField=textField;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
@@ -67,6 +102,12 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if(textField==_loginTextField) {
+        [_passwordTextField becomeFirstResponder];
+    } else if(textField==_passwordTextField) {
+        [textField resignFirstResponder];
+        [self loginWithUsername:_loginTextField.text password:_passwordTextField.text];
+    }
     return YES;
 }
 

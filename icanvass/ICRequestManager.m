@@ -30,8 +30,9 @@
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:u password:password];
     [self GET:@"PinService.svc/Pins?$format=json&$top=0" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         cb(YES);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedIn" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.requestSerializer=[AFHTTPRequestSerializer new];
+        self.requestSerializer=[AFHTTPRequestSerializer serializer];
         cb(NO);
     }];
 }
@@ -40,9 +41,7 @@
                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     void(^f)(AFHTTPRequestOperation *operation, NSError *error)=^(AFHTTPRequestOperation *operation, NSError *error) {
-        if(operation.response.statusCode==403){
-            NSLog(@"403");
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICNetFailed" object:nil userInfo:@{@"status":[NSNumber numberWithLong:operation.response.statusCode]}];
         failure(operation,error);
     };
     

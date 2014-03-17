@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "ICRequestManager.h"
+#import "AFNetworkActivityIndicatorManager.h"
 #import <GoogleMaps/GoogleMaps.h>
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
@@ -21,6 +23,9 @@
 {
     // Override point for customization after application launch.
     [GMSServices provideAPIKey:kGoogleAPIKey];
+    [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
+    //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
     return YES;
 }
 							
@@ -50,6 +55,12 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+- (void)ICNetFailed:(NSNotification*)notification {
+    if([notification.userInfo[@"status"] intValue]==401){
+        [self.window.rootViewController performSegueWithIdentifier:@"LoginSegue" sender:nil];
+    }
 }
 
 - (void)saveContext
