@@ -13,7 +13,7 @@
 #import "PinTemp.h"
 
 @interface Pins ()
-@property (nonatomic,strong) NSArray *pins;
+@property (nonatomic,strong) NSMutableArray *pins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
 @end
@@ -23,11 +23,8 @@
 - (Pins*)init {
     self=[super init];
     if(self) {
-        self.colors=@{@"Not Home":[UIColor blueColor],
-                      @"Not Interested":[UIColor darkGrayColor],
-                      @"Not Qualified":[UIColor lightGrayColor],
-                      @"Lead":[UIColor greenColor],
-                      @"Sold":[UIColor redColor]};
+        self.colors=@{};
+        [self sendStatusesTo:^(NSArray *a) {}];
     }
     return self;
 }
@@ -41,7 +38,7 @@
     return sharedInstance;
 }
 
-- (NSArray*)pinsArrayFromArray:(NSArray*)a {
+- (NSMutableArray*)pinsArrayFromArray:(NSArray*)a {
     return [a mapWith:^NSObject *(NSObject *o) {
         NSDictionary *dic=(NSDictionary*)o;
         return [[PinTemp alloc] initWithDictionary:dic];
@@ -50,11 +47,26 @@
 
 - (NSArray*)statusesArrayFromArray:(NSArray*)a {
     NSMutableArray *ma=[[NSMutableArray alloc] initWithCapacity:[a count]];
-//    NSMutableDictionary *c=[[NSMutableDictionary alloc] initWithCapacity:5];
     for(NSDictionary *dic in a) {
         [ma addObject:dic[@"Name"]];
     }
     return ma;
+}
+
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
+- (NSDictionary*)colorsFromStatuses:(NSArray *)a {
+    NSMutableDictionary *md=[[NSMutableDictionary alloc] initWithCapacity:[a count]];
+    for(NSDictionary *dic in a) {
+        md[dic[@"Name"]]=[Pins colorFromHexString:dic[@"Color"]];
+    }
+    return md;
 }
 
 - (void)sendPinsTo:(void (^)(NSArray *a))block {
@@ -79,6 +91,9 @@
     NSString *u=@"PinService.svc/Pins?$format=json";
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
+        [_pins insertObject:p atIndex:0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         block(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -97,6 +112,7 @@
         NSLog(@"JSON: %@", responseObject);
         self.statuses=[self statusesArrayFromArray:responseObject[@"value"]];
         block(_statuses);
+        self.colors=[self colorsFromStatuses:responseObject[@"value"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinColors" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

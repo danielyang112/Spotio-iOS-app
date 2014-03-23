@@ -31,6 +31,8 @@
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedIn" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
     }
     return self;
 }
@@ -85,6 +87,14 @@
 }
 
 #pragma mark - Notifications
+
+- (void)colorsChanged:(NSNotification*)notification {
+    [self refresh];
+}
+
+- (void)pinsChanged:(NSNotification*)notification {
+    [self refresh];
+}
 
 - (void)userLoggedIn:(NSNotification*)notification {
     [self refresh];
