@@ -125,8 +125,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
-    dc.preview=YES;
+    //DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
+    //dc.preview=YES;
 }
 
 @end

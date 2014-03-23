@@ -18,4 +18,12 @@
     return a;
 }
 
+- (NSMutableArray*)grepWith:(BOOL(^)(NSObject*))f {
+    NSMutableArray *a=[[NSMutableArray alloc] initWithCapacity:[self count]];
+    for(NSObject *o in self) {
+        if(f(o)) [a addObject:o];
+    }
+    return a;
+}
+
 @end

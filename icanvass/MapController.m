@@ -13,7 +13,7 @@
 
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
-@property (nonatomic) BOOL located;
+@property (nonatomic) BOOL moved;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @end
@@ -35,12 +35,6 @@
     return self;
 }
 
-- (GMSCameraPosition*)cameraPosition {
-    return [GMSCameraPosition cameraWithLatitude:_location.coordinate.latitude
-                                       longitude:_location.coordinate.longitude
-                                            zoom:18];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mapView=[GMSMapView mapWithFrame:CGRectZero camera:[self cameraPosition]];
@@ -50,6 +44,19 @@
     _mapView.settings.compassButton=YES;
     self.view=_mapView;
     [self refresh];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    //_moved=NO;    //still weird
+}
+
+#pragma mark - Helpers
+
+- (GMSCameraPosition*)cameraPosition {
+    return [GMSCameraPosition cameraWithLatitude:_location.coordinate.latitude
+                                       longitude:_location.coordinate.longitude
+                                            zoom:18];
 }
 
 - (UIImage*)iconForPin:(PinTemp*)pin {
@@ -86,7 +93,9 @@
 #pragma mark - GMSMapViewDelegate
 
 - (void)mapView:(GMSMapView*)mapView willMove:(BOOL)gesture {
-    
+    if(gesture) {
+        self.moved=YES;
+    }
 }
 
 - (void)mapView:(GMSMapView*)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -97,7 +106,9 @@
 
 - (void)setLocation:(CLLocation *)location {
     _location=location;
-    [_mapView animateToCameraPosition:[self cameraPosition]];
+    if(!_moved) {
+        [_mapView animateToCameraPosition:[self cameraPosition]];
+    }
 }
 
 @end

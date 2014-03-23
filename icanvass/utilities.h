@@ -10,4 +10,5 @@
 
 @interface NSArray (RKFunctional)
 - (NSMutableArray*)mapWith:(NSObject*(^)(NSObject*))f;
+- (NSMutableArray*)grepWith:(BOOL(^)(NSObject*))f;
 @end

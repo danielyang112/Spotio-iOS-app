@@ -8,7 +8,9 @@
 
 #import "ICRequestManager.h"
 
-#define kBaseUrl @"http://login.icanvassapp.com/"
+#define kBaseUrl @"http://login.icanvassapp.com:444/"
+#define kCompanyNameKey @"CompanyName"
+#define kPasswordKey @"Password"
 
 @implementation ICRequestManager
 
@@ -17,7 +19,14 @@
     static dispatch_once_t onceToken=0;
     dispatch_once(&onceToken, ^{
         sharedManager=[[ICRequestManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseUrl]];
-        [sharedManager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        [sharedManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+        NSString *username=[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey];
+        NSString *company=[[NSUserDefaults standardUserDefaults] objectForKey:kCompanyNameKey];
+        NSString *password=[[NSUserDefaults standardUserDefaults] objectForKey:kPasswordKey];
+        if(username&&company&&password) {
+            NSString *u=[NSString stringWithFormat:@"%@||%@",company, username];
+            [sharedManager.requestSerializer setAuthorizationHeaderFieldWithUsername:u password:password];
+        }
     });
     return sharedManager;
 }
@@ -26,13 +35,25 @@
               company:(NSString*)company cb:(void(^)(BOOL success))cb {
     
     NSString *u=[NSString stringWithFormat:@"%@||%@",company, userName];
-    self.requestSerializer=[AFHTTPRequestSerializer serializer];
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:u password:password];
     [self GET:@"PinService.svc/Pins?$format=json&$top=0" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[NSUserDefaults standardUserDefaults] setObject:userName forKey:kUserNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:company  forKey:kCompanyNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:password forKey:kPasswordKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         cb(YES);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedIn" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.requestSerializer=[AFHTTPRequestSerializer serializer];
+        cb(NO);
+    }];
+}
+
+- (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success))cb {
+    [[ICRequestManager sharedManager] POST:@"MobileApp/RegisterCompanyExtended" parameters:d success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {}];
+        cb(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"registration failed");
         cb(NO);
     }];
 }

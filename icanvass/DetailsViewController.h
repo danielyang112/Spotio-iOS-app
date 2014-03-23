@@ -7,12 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface DetailsViewController : UIViewController
 
-@property (nonatomic) BOOL preview;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic) BOOL adding;
+@property (weak, nonatomic) IBOutlet UIButton *statusButton;
+@property (weak, nonatomic) IBOutlet UITextField *streetNumberTextField;
+@property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
+@property (weak, nonatomic) IBOutlet UITextField *streetNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
 
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)status:(id)sender;
 
 @end

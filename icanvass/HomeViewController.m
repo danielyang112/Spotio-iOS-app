@@ -9,10 +9,13 @@
 #import "HomeViewController.h"
 #import "ListController.h"
 #import "MapController.h"
+#import "DetailsViewController.h"
 
 @interface HomeViewController () <MapControllerDelegate>
 @property (nonatomic,strong) NSArray *controllers;
 @property (nonatomic,strong) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationCoordinate2D tappedCoordinate;
+@property (nonatomic) BOOL tapped;
 @property (nonatomic,weak) UIViewController *current;
 @property (nonatomic,strong) MapController *map;
 @end
@@ -97,6 +100,9 @@
 
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate {
     NSLog(@"%f, %f",coordinate.latitude, coordinate.longitude);
+    self.tappedCoordinate=coordinate;
+    self.tapped=YES;
+    [self performSegueWithIdentifier:@"AddPin" sender:nil];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -109,9 +115,22 @@
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0) {
         // If the event is recent, do something with it.
-        NSLog(@"recent latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
+        NSLog(@"recent latitude %.6f, longitude %.6f\n", location.coordinate.latitude, location.coordinate.longitude);
         _map.location=location;
     }
+}
+
+#pragma mark - Navigation
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    UINavigationController *nc=(UINavigationController*)[segue destinationViewController];
+    DetailsViewController *dc=(DetailsViewController*)nc.topViewController;
+    dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
+    _tapped=NO;
+    dc.adding=YES;
 }
 
 @end
