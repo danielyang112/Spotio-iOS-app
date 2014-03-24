@@ -156,6 +156,7 @@
     if(buttonIndex==actionSheet.cancelButtonIndex) return;
     self.status=_statuses[buttonIndex];
     [_statusButton setTitle:_status forState:UIControlStateNormal];
+    [_statusButton setTitleColor:[[Pins sharedInstance] colorForStatus:_status] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem.enabled=YES;
 }
 

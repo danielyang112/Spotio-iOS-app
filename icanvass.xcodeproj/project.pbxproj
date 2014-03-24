@@ -37,6 +37,7 @@
 		42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F8F18D26AF10087941E /* AFURLResponseSerialization.m */; };
 		42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9118D26AF10087941E /* AFURLSessionManager.m */; };
 		42284F9D18D26B110087941E /* ICRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9C18D26B110087941E /* ICRequestManager.m */; };
+		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -131,6 +132,8 @@
 		42284F9118D26AF10087941E /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		42284F9B18D26B110087941E /* ICRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICRequestManager.h; sourceTree = "<group>"; };
 		42284F9C18D26B110087941E /* ICRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICRequestManager.m; sourceTree = "<group>"; };
+		423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToWebsiteViewController.h; sourceTree = "<group>"; };
+		423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToWebsiteViewController.m; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -268,6 +271,8 @@
 				42BBFF2E18D398210065D4C3 /* RegisterViewController.m */,
 				42D28CE718E08285005E1758 /* LeftDrawerViewController.h */,
 				42D28CE818E08285005E1758 /* LeftDrawerViewController.m */,
+				423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */,
+				423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -550,6 +555,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,

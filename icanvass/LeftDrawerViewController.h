@@ -10,8 +10,9 @@
 
 @interface LeftDrawerViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UISwitch *mapSwitch;
+- (IBAction)pins:(id)sender;
 - (IBAction)satelliteView:(id)sender;
-- (IBAction)stwitchChanged:(UISwitch *)sender;
+- (IBAction)switchChanged:(UISwitch *)sender;
 - (IBAction)addUser:(id)sender;
 - (IBAction)customizeStatus:(id)sender;
 - (IBAction)customizeQuestions:(id)sender;

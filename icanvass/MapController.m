@@ -14,6 +14,7 @@
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
+@property (nonatomic) BOOL satellite;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @end
@@ -32,6 +33,7 @@
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
     }
     return self;
 }
@@ -43,6 +45,7 @@
     _mapView.myLocationEnabled=YES;
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
+    _mapView.mapType=_satellite?kGMSTypeSatellite:kGMSTypeNormal;
     self.view=_mapView;
 }
 
@@ -104,6 +107,12 @@
 - (void)pinsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
     [self refresh];
+}
+
+- (void)mapSettingsChanged:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
+    self.satellite=[notification.userInfo[@"satellite"] boolValue];
+    _mapView.mapType=_satellite?kGMSTypeSatellite:kGMSTypeNormal;
 }
 
 #pragma mark - GMSMapViewDelegate
