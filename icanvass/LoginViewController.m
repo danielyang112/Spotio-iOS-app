@@ -29,7 +29,9 @@
 #pragma mark - Helpers
 
 - (void)close {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        //
+    }];
 }
 
 - (void)showWrongPassword:(BOOL)show {

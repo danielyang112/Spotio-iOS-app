@@ -14,4 +14,5 @@
 - (void)sendStatusesTo:(void (^)(NSArray *a))block;
 - (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block;
 - (UIColor*)colorForStatus:(NSString*)status;
+- (void)clear;
 @end

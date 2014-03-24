@@ -25,17 +25,20 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedIn" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
     }
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refresh];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[UIView new];
-    [self refresh];
 }
 
 - (void)refresh {
@@ -48,14 +51,12 @@
 #pragma mark - Notifications
 
 - (void)colorsChanged:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
     [self refresh];
 }
 
 - (void)pinsChanged:(NSNotification*)notification {
-    [self refresh];
-}
-
-- (void)userLoggedIn:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
     [self refresh];
 }
 

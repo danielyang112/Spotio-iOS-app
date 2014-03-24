@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ICRequestManager.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "MMDrawerController/MMDrawerController.h"
 #import <GoogleMaps/GoogleMaps.h>
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
@@ -19,9 +20,17 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    MMDrawerController *drawerController=(MMDrawerController*)self.window.rootViewController;
+    UINavigationController *navigationController=[drawerController.storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
+    drawerController.centerViewController=navigationController;
+    UIViewController *left=[drawerController.storyboard instantiateViewControllerWithIdentifier:@"LeftViewController"];
+    [drawerController setLeftDrawerViewController:left];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
     [GMSServices provideAPIKey:kGoogleAPIKey];
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
@@ -58,7 +67,8 @@
 
 - (void)ICNetFailed:(NSNotification*)notification {
     if([notification.userInfo[@"status"] intValue]==401){
-        [self.window.rootViewController performSegueWithIdentifier:@"LoginSegue" sender:nil];
+        MMDrawerController *drawerController=(MMDrawerController*)self.window.rootViewController;
+        [drawerController performSegueWithIdentifier:@"LoginSegue" sender:nil];
     }
 }
 

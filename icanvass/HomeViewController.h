@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MMDrawerController/UIViewController+MMDrawerController.h"
 
 @interface HomeViewController : UIViewController <CLLocationManagerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;

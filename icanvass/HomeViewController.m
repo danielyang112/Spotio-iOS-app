@@ -10,6 +10,7 @@
 #import "ListController.h"
 #import "MapController.h"
 #import "DetailsViewController.h"
+#import "MMDrawerController/MMDrawerBarButtonItem.h"
 
 @interface HomeViewController () <MapControllerDelegate>
 @property (nonatomic,strong) NSArray *controllers;
@@ -38,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupLeftMenuButton];
     ListController *list=[self.storyboard instantiateViewControllerWithIdentifier:@"ListController"];
     self.map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];
     _map.delegate=self;
@@ -58,6 +60,15 @@
 }
 
 #pragma mark - Helpers
+
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
 
 - (void)switchToViewController:(UIViewController*)vc {
     if(vc==_current) return;

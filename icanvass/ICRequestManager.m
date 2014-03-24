@@ -41,8 +41,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:company  forKey:kCompanyNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:kPasswordKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
         cb(YES);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedIn" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         cb(NO);
     }];
@@ -56,6 +56,15 @@
         NSLog(@"registration failed");
         cb(NO);
     }];
+}
+
+- (void)logoutWithCb:(void(^)(BOOL success))cb {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserNameKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCompanyNameKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPasswordKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
+    [self loginUserName:@"" password:@"" company:@"" cb:^(BOOL success) {cb(success);}];
 }
 
 - (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request

@@ -30,7 +30,6 @@
         // Custom initialization
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedIn" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
     }
@@ -45,12 +44,16 @@
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
     self.view=_mapView;
-    [self refresh];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     //_moved=NO;    //still weird
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refresh];
 }
 
 #pragma mark - Helpers
@@ -79,6 +82,10 @@
 
 - (void)refresh {
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
+        for(GMSMarker *m in _markers.allValues){
+            m.map=nil;
+        }
+        [_markers removeAllObjects];
         for(PinTemp *pin in a){
             GMSMarker *marker=[self markerForPin:pin];
             self.markers[pin.ident]=marker;
@@ -89,14 +96,13 @@
 #pragma mark - Notifications
 
 - (void)colorsChanged:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
+    [_icons removeAllObjects];
     [self refresh];
 }
 
 - (void)pinsChanged:(NSNotification*)notification {
-    [self refresh];
-}
-
-- (void)userLoggedIn:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
     [self refresh];
 }
 

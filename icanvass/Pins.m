@@ -12,7 +12,9 @@
 #import "Pin.h"
 #import "PinTemp.h"
 
-@interface Pins ()
+@interface Pins () {
+    BOOL _sendingStatuses;
+}
 @property (nonatomic,strong) NSMutableArray *pins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
@@ -24,7 +26,8 @@
     self=[super init];
     if(self) {
         self.colors=@{};
-        [self sendStatusesTo:^(NSArray *a) {}];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
+        [self sendStatusesTo:nil];
     }
     return self;
 }
@@ -106,20 +109,38 @@
         block(_statuses);
         return;
     }
+    _sendingStatuses=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/PinStatus?$format=json";
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.statuses=[self statusesArrayFromArray:responseObject[@"value"]];
-        block(_statuses);
+        if(block) block(_statuses);
         self.colors=[self colorsFromStatuses:responseObject[@"value"]];
+        _sendingStatuses=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinColors" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        _sendingStatuses=NO;
     }];
 }
 
+- (void)clear {
+    self.pins=nil;
+    self.statuses=nil;
+    self.colors=nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+}
+
+- (void)userLoggedIn:(NSNotification*)notification {
+    [self clear];
+    
+}
+
 - (UIColor*)colorForStatus:(NSString*)status {
+    if(!_colors&&!_sendingStatuses) {
+        [self sendStatusesTo:nil];
+    }
     UIColor *c=_colors[status];
     if(!c){
         c=[UIColor whiteColor];
