@@ -31,5 +31,6 @@
 @property (nonatomic, retain) NSDate *creationDate;
 @property (nonatomic, retain) NSString *status;
 @property (nonatomic, retain) LocationTemp *location;
+@property (nonatomic, retain) NSString *address;
 
 @end

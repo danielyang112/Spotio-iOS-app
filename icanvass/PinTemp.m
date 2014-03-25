@@ -42,4 +42,11 @@
     return self;
 }
 
+- (NSString*)address {
+    if(!_address) {
+        _address=[NSString stringWithFormat:@"%@ %@",self.location.streetNumber, self.location.streetName];
+    }
+    return _address;
+}
+
 @end
