@@ -40,13 +40,38 @@
         self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
         self.navigationItem.rightBarButtonItem.enabled=NO;
-    } else {
+    } else if(_pin){
         self.navigationItem.rightBarButtonItem=[self editButtonItem];
+        [self extractPin];
+        [self enableChanges:NO];
     }
     [self updateAddressTextFields];
 }
 
 #pragma mark - Helpers
+
+- (void)enableChanges:(BOOL)enable {
+    _statusButton.enabled=enable;
+    
+    _streetNameTextField.enabled=enable;
+    _streetNameTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
+    _streetNumberTextField.enabled=enable;
+    _streetNumberTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
+    _cityStateZipTextField.enabled=enable;
+    _cityStateZipTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
+    
+    _numberStepper.hidden=!enable;
+}
+
+- (void)extractPin {
+    self.streetName=_pin.location.streetName;
+    self.streetNumber=_pin.location.streetNumber;
+    self.city=_pin.location.city;
+    self.state=_pin.location.state;
+    self.zipCode=_pin.location.zip;
+    
+    self.status=_pin.status;
+}
 
 - (void)updateAddressTextFields {
     _streetNameTextField.text=_streetName;
@@ -106,9 +131,9 @@
         NSLog(@"geocode error");
     }];
 }
-
+static NSDateFormatter *dateFormatter;
 - (void)addPin {
-    static NSDateFormatter *dateFormatter;
+    
     if(!dateFormatter) {
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
@@ -131,12 +156,38 @@
     }];
 }
 
+- (void)editPin {
+    if(!dateFormatter) {
+        dateFormatter=[[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+    }
+    NSDictionary *location=@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumber,_streetName],
+                             @"City":_city,
+                             @"State":_state,
+                             @"Zip":_zipCode};
+    NSDictionary *data=@{@"Id":_pin.ident,
+                         @"Location":location,
+                         @"Status":_status,
+                         @"Latitude":[NSString stringWithFormat:@"%.6f",[_pin.latitude doubleValue]],
+                         @"Longitude":[NSString stringWithFormat:@"%.6f",[_pin.longitude doubleValue]],
+                         @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
+                         @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
+                         @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
+                         @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]]};
+    [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
+        
+    }];
+}
+
 #pragma mark - API
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
-    _streetNameTextField.enabled=_streetNumberTextField.enabled=
-    _cityStateZipTextField.enabled=_statusButton.enabled=editing;
+    //[self enableChanges:editing];
+    _statusButton.enabled=editing;
+    if(!editing) {
+        [self editPin];
+    }
 }
 
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -150,13 +201,17 @@
     //[self setEditing:adding animated:NO];
 }
 
+- (void)setStatus:(NSString *)status {
+    _status=status;
+    [_statusButton setTitle:_status forState:UIControlStateNormal];
+    [_statusButton setTitleColor:[[Pins sharedInstance] colorForStatus:_status] forState:UIControlStateNormal];
+}
+
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if(buttonIndex==actionSheet.cancelButtonIndex) return;
     self.status=_statuses[buttonIndex];
-    [_statusButton setTitle:_status forState:UIControlStateNormal];
-    [_statusButton setTitleColor:[[Pins sharedInstance] colorForStatus:_status] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem.enabled=YES;
 }
 

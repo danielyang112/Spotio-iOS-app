@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PinTemp.h"
 
 @interface ListController : UITableViewController
-
 @end

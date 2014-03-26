@@ -41,6 +41,7 @@
     [super viewDidLoad];
     [self setupLeftMenuButton];
     ListController *list=[self.storyboard instantiateViewControllerWithIdentifier:@"ListController"];
+    //list.delegate=self;
     self.map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];
     _map.delegate=self;
     _map.location=_locationManager.location;
@@ -147,6 +148,8 @@
         dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
         _tapped=NO;
         dc.adding=YES;
+    } else if([segue.identifier isEqualToString:@"ViewPin"]) {
+        
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "MapController.h"
+#import "DetailsViewController.h"
 #import "Pins.h"
 #import "PinTemp.h"
 #import <GoogleMaps/GoogleMaps.h>
@@ -77,6 +78,7 @@
 - (GMSMarker*)markerForPin:(PinTemp*)pin {
     CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
     GMSMarker *marker=[GMSMarker markerWithPosition:position];
+    marker.userData=pin;
     marker.title=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
     marker.icon=[self iconForPin:pin];
     marker.map=_mapView;
@@ -127,6 +129,12 @@
     [_delegate mapController:self didSelectBuildingAtCoordinate:coordinate];
 }
 
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    PinTemp *pin=marker.userData;
+    [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+    return YES;
+}
+
 #pragma mark - API
 
 - (void)setLocation:(CLLocation *)location {
@@ -134,6 +142,15 @@
     if(!_moved) {
         [_mapView animateToCameraPosition:[self cameraPosition]];
     }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
+    dc.pin=sender;
 }
 
 @end
