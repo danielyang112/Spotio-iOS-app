@@ -37,6 +37,7 @@
 		42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F8F18D26AF10087941E /* AFURLResponseSerialization.m */; };
 		42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9118D26AF10087941E /* AFURLSessionManager.m */; };
 		42284F9D18D26B110087941E /* ICRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9C18D26B110087941E /* ICRequestManager.m */; };
+		4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4239345918E2F56E0041EF93 /* DatesPickerViewController.m */; };
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
@@ -68,6 +69,7 @@
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
+		42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C35AE218E21E6700E83545 /* FilterViewController.m */; };
 		42D28CE318E06702005E1758 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CDB18E06702005E1758 /* MMDrawerBarButtonItem.m */; };
 		42D28CE418E06702005E1758 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CDE18E06702005E1758 /* MMDrawerController.m */; };
 		42D28CE518E06702005E1758 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CE018E06702005E1758 /* MMDrawerVisualState.m */; };
@@ -133,6 +135,8 @@
 		42284F9118D26AF10087941E /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		42284F9B18D26B110087941E /* ICRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICRequestManager.h; sourceTree = "<group>"; };
 		42284F9C18D26B110087941E /* ICRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICRequestManager.m; sourceTree = "<group>"; };
+		4239345818E2F56E0041EF93 /* DatesPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatesPickerViewController.h; sourceTree = "<group>"; };
+		4239345918E2F56E0041EF93 /* DatesPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatesPickerViewController.m; sourceTree = "<group>"; };
 		423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToWebsiteViewController.h; sourceTree = "<group>"; };
 		423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToWebsiteViewController.m; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +191,8 @@
 		42BBFF2E18D398210065D4C3 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		42BBFF3018D3996E0065D4C3 /* Pins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pins.h; sourceTree = "<group>"; };
 		42BBFF3118D3996E0065D4C3 /* Pins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pins.m; sourceTree = "<group>"; };
+		42C35AE118E21E6700E83545 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		42C35AE218E21E6700E83545 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		42D28CDA18E06702005E1758 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		42D28CDB18E06702005E1758 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		42D28CDC18E06702005E1758 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -275,6 +281,10 @@
 				42D28CE818E08285005E1758 /* LeftDrawerViewController.m */,
 				423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */,
 				423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */,
+				42C35AE118E21E6700E83545 /* FilterViewController.h */,
+				42C35AE218E21E6700E83545 /* FilterViewController.m */,
+				4239345818E2F56E0041EF93 /* DatesPickerViewController.h */,
+				4239345918E2F56E0041EF93 /* DatesPickerViewController.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -563,6 +573,7 @@
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
+				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
 				42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */,
 				42284F5418D253F60087941E /* pins.xcdatamodel in Sources */,
@@ -586,6 +597,7 @@
 				42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */,
 				42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */,
 				42284F9D18D26B110087941E /* ICRequestManager.m in Sources */,
+				4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */,
 				42284F9818D26AF10087941E /* AFURLRequestSerialization.m in Sources */,
 				42D28CE418E06702005E1758 /* MMDrawerController.m in Sources */,
 				42284F9718D26AF10087941E /* AFURLConnectionOperation.m in Sources */,

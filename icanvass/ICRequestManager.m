@@ -72,6 +72,7 @@
                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     void(^f)(AFHTTPRequestOperation *operation, NSError *error)=^(AFHTTPRequestOperation *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICNetFailed" object:nil userInfo:@{@"status":[NSNumber numberWithLong:operation.response.statusCode]}];
+        NSLog(@"%@",operation.responseString);
         failure(operation,error);
     };
     

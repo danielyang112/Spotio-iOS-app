@@ -12,5 +12,7 @@
 
 @interface HomeViewController : UIViewController <CLLocationManagerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
+@property (weak, nonatomic) IBOutlet UIView *container;
+- (IBAction)filter:(id)sender;
 - (IBAction)valueChanged:(id)sender;
 @end

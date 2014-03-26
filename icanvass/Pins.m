@@ -16,6 +16,7 @@
     BOOL _sendingStatuses;
 }
 @property (nonatomic,strong) NSMutableArray *pins;
+@property (nonatomic,strong) NSMutableArray *filteredPins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
 @end
@@ -27,6 +28,7 @@
     if(self) {
         self.colors=@{};
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
         [self sendStatusesTo:nil];
     }
     return self;
@@ -73,6 +75,10 @@
 }
 
 - (void)sendPinsTo:(void (^)(NSArray *a))block {
+    if(_filteredPins){
+        block(_filteredPins);
+        return;
+    }
     if(_pins){
         block(_pins);
         return;
@@ -83,6 +89,8 @@
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
+        self.oldest=[[_pins lastObject] creationDate];
+        self.newest=[[_pins firstObject] creationDate];
         block(_pins);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -127,6 +135,7 @@
 
 - (void)clear {
     self.pins=nil;
+    self.filteredPins=nil;
     self.statuses=nil;
     self.colors=nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
@@ -135,6 +144,43 @@
 - (void)userLoggedIn:(NSNotification*)notification {
     [self clear];
     
+}
+
+- (void)filterChanged:(NSNotification*)notification {
+    NSDictionary *d=notification.userInfo;
+    self.filter=d;
+    if(!d || ![d count]){
+        self.filteredPins=nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+        return;
+    }
+    NSArray *s=d[@"statuses"];
+    NSDate *cf=d[@"createdFrom"];
+    NSDate *ct=d[@"createdTo"];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSInteger comps = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    if(cf){
+        NSDateComponents *cfComponents = [calendar components:comps fromDate: cf];
+        NSDateComponents *ctComponents = [calendar components:comps fromDate: ct];
+        cf = [calendar dateFromComponents:cfComponents];
+        ct = [calendar dateFromComponents:ctComponents];
+    }
+    
+    self.filteredPins=[_pins grepWith:^BOOL(NSObject *o) {
+        BOOL ret=YES;
+        PinTemp *p=(PinTemp*)o;
+        if(cf){
+            NSDateComponents *components = [calendar components:comps
+                                                         fromDate:p.creationDate];
+            NSDate *date=[calendar dateFromComponents:components];
+            ret=ret&&([cf compare:date]!=NSOrderedDescending);
+            ret=ret&&([date compare:ct]!=NSOrderedDescending);
+        }
+        if(s){
+            ret=ret&&([s containsObject:p.status]);
+        }
+        return ret;
+    }];
 }
 
 - (UIColor*)colorForStatus:(NSString*)status {

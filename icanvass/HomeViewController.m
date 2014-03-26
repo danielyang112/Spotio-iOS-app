@@ -80,7 +80,7 @@
     [oldv willMoveToParentViewController:nil];
     [self addChildViewController:newv];
     
-    newv.view.frame=self.view.bounds;
+    newv.view.frame=_container.bounds;
     
     void(^completion)(BOOL)=^void(BOOL finished){
         [oldv removeFromParentViewController];
@@ -89,7 +89,7 @@
     };
     
     if(!oldv) { //transitionFromVC toVC requires both vcs, if there is no old I need to add new view myself and call completion block
-        [self.view addSubview:newv.view];
+        [self.container addSubview:newv.view];
         completion(YES);
         return;
     }
@@ -101,6 +101,10 @@
 }
 
 #pragma mark - Actions
+
+- (IBAction)filter:(id)sender {
+    
+}
 
 - (IBAction)valueChanged:(id)sender {
     UISegmentedControl *segmented=(UISegmentedControl*)sender;
@@ -137,11 +141,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UINavigationController *nc=(UINavigationController*)[segue destinationViewController];
-    DetailsViewController *dc=(DetailsViewController*)nc.topViewController;
-    dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
-    _tapped=NO;
-    dc.adding=YES;
+    if([segue.identifier isEqualToString:@"AddPin"]) {
+        UINavigationController *nc=(UINavigationController*)[segue destinationViewController];
+        DetailsViewController *dc=(DetailsViewController*)nc.topViewController;
+        dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
+        _tapped=NO;
+        dc.adding=YES;
+    }
 }
 
 @end

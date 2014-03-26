@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface Pins : NSObject
+@property (nonatomic,strong) NSDate *oldest;
+@property (nonatomic,strong) NSDate *newest;
+@property (nonatomic,strong) NSDictionary *filter;
 + (Pins*)sharedInstance;
 - (void)sendPinsTo:(void (^)(NSArray *a))block;
 - (void)sendStatusesTo:(void (^)(NSArray *a))block;

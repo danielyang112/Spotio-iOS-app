@@ -49,4 +49,13 @@
     return _address;
 }
 
++ (NSString*)formatDate:(NSDate*)date {
+    static NSDateFormatter *dateFormatter;
+    if(!dateFormatter) {
+        dateFormatter=[[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat=@"MM/dd/yy";
+    }
+    return [dateFormatter stringFromDate:date];
+}
+
 @end
