@@ -44,8 +44,8 @@
     self.map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];
     _map.delegate=self;
     _map.location=_locationManager.location;
-    self.controllers=@[list,_map];
-    [self switchToViewController:list];
+    self.controllers=@[_map,list];
+    [self switchToViewController:_controllers[0]];
     
 }
 

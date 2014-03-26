@@ -45,8 +45,8 @@
                             <rect key="frame" x="96" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="List"/>
                                 <segment title="Map"/>
+                                <segment title="List"/>
                             </segments>
                             <connections>
                                 <action selector="valueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="qQz-2b-RDA"/>
