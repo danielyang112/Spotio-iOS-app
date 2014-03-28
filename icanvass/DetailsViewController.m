@@ -37,18 +37,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if(_adding) {
-        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
-        self.navigationItem.rightBarButtonItem.enabled=NO;
+        [self adjustForAdding];
     } else if(_pin){
-        self.navigationItem.rightBarButtonItem=[self editButtonItem];
-        [self extractPin];
-        [self enableChanges:NO];
+        [self adjustForViewing];
     }
-    [self updateAddressTextFields];
 }
 
 #pragma mark - Helpers
+
+- (void)adjustForAdding {
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
+    self.navigationItem.rightBarButtonItem.enabled=NO;
+    [self updateAddressTextFields];
+}
+
+- (void)adjustForViewing {
+    self.navigationItem.rightBarButtonItem=[self editButtonItem];
+    [self extractPin];
+    [self enableChanges:NO];
+    [self updateAddressTextFields];
+}
+
+- (void)adjustForEditing {
+    self.navigationItem.rightBarButtonItem=[self editButtonItem];
+    [self extractPin];
+    [self updateAddressTextFields];
+    [self setEditing:YES animated:YES];
+}
 
 - (void)enableChanges:(BOOL)enable {
     _statusButton.enabled=enable;
@@ -115,7 +131,16 @@
         NSArray *components=a[0][@"address_components"];
         self.zipCode=[self name:@"long_name" forComponentType:@"postal_code" fromComponents:components];
     }
-    
+    /*NSArray *f=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
+        PinTemp *p=(PinTemp*)o;
+        return [p.location.streetName isEqualToString:_streetName]&&[p.location.streetNumber isEqualToString:_streetNumber];
+    }];
+    if([f count]) {
+        self.pin=f[0];
+        [self adjustForViewing];
+    }else{
+        [self adjustForAdding];
+    }*/
     [self updateAddressTextFields];
 }
 
@@ -145,6 +170,7 @@ static NSDateFormatter *dateFormatter;
     NSDictionary *data=@{@"Id":[[NSUUID UUID] UUIDString],
                          @"Location":location,
                          @"Status":_status,
+                         @"ClientData":@{},
                          @"Latitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
                          @"Longitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
                          @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
@@ -168,6 +194,7 @@ static NSDateFormatter *dateFormatter;
     NSDictionary *data=@{@"Id":_pin.ident,
                          @"Location":location,
                          @"Status":_status,
+                         @"ClientData":@{},
                          @"Latitude":[NSString stringWithFormat:@"%.6f",[_pin.latitude doubleValue]],
                          @"Longitude":[NSString stringWithFormat:@"%.6f",[_pin.longitude doubleValue]],
                          @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],

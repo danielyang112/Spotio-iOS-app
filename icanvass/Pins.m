@@ -15,7 +15,6 @@
 @interface Pins () {
     BOOL _sendingStatuses;
 }
-@property (nonatomic,strong) NSMutableArray *pins;
 @property (nonatomic,strong) NSMutableArray *filteredPins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;

@@ -10,6 +10,7 @@
 #import "PinTemp.h"
 
 @interface Pins : NSObject
+@property (nonatomic,strong) NSMutableArray *pins;
 @property (nonatomic,strong) NSDate *oldest;
 @property (nonatomic,strong) NSDate *newest;
 @property (nonatomic,strong) NSDictionary *filter;
