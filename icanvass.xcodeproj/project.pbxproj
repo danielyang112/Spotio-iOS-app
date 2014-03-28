@@ -66,6 +66,7 @@
 		42A7BEC818D719BF00973EA8 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A7BEBF18D719BF00973EA8 /* UIRefreshControl+AFNetworking.m */; };
 		42A7BEC918D719BF00973EA8 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A7BEC118D719BF00973EA8 /* UIWebView+AFNetworking.m */; };
 		42A7BECD18D71D7400973EA8 /* PinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A7BECC18D71D7400973EA8 /* PinCell.m */; };
+		42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A66918E5734800B46FBF /* PocketSVG.m */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -185,6 +186,8 @@
 		42A7BEC118D719BF00973EA8 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		42A7BECB18D71D7400973EA8 /* PinCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinCell.h; sourceTree = "<group>"; };
 		42A7BECC18D71D7400973EA8 /* PinCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinCell.m; sourceTree = "<group>"; };
+		42B3A66818E5734800B46FBF /* PocketSVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PocketSVG.h; sourceTree = "<group>"; };
+		42B3A66918E5734800B46FBF /* PocketSVG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PocketSVG.m; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				42B3A66718E5732200B46FBF /* PocketSVG */,
 				42D28CD918E06702005E1758 /* MMDrawerController */,
 				42A7BEB018D719BF00973EA8 /* UIKit+AFNetworking */,
 				42284F7E18D26AF10087941E /* AFNetworking */,
@@ -454,6 +458,15 @@
 			name = views;
 			sourceTree = "<group>";
 		};
+		42B3A66718E5732200B46FBF /* PocketSVG */ = {
+			isa = PBXGroup;
+			children = (
+				42B3A66818E5734800B46FBF /* PocketSVG.h */,
+				42B3A66918E5734800B46FBF /* PocketSVG.m */,
+			);
+			name = PocketSVG;
+			sourceTree = "<group>";
+		};
 		42D28CD918E06702005E1758 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +622,7 @@
 				42284F5E18D254020087941E /* Status.m in Sources */,
 				42A7BEC518D719BF00973EA8 /* UIButton+AFNetworking.m in Sources */,
 				42A7BEC818D719BF00973EA8 /* UIRefreshControl+AFNetworking.m in Sources */,
+				42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */,
 				42A7BEAF18D7150200973EA8 /* PinTemp.m in Sources */,
 				42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */,
 				42284F5D18D254020087941E /* Pin.m in Sources */,

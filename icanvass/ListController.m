@@ -11,6 +11,7 @@
 #import "Pins.h"
 #import "PinCell.h"
 #import "PinTemp.h"
+#import "PocketSVG.h"
 
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
@@ -157,48 +158,60 @@ enum ICSortOrder : NSUInteger {
     cell.bottomLabel.text=[NSString stringWithFormat:@"%@ %@, %@",pin.location.city, pin.location.state, pin.location.zip];
     cell.rightLabel.text=[PinTemp formatDate:pin.creationDate];
     cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
+    /*
+    CGPathRef path=[PocketSVG pathFromDAttribute:@"M0 0 h80 c40 0 50 10 50 50 v80 c0 25 0 25 -25 50 l-45 50 c-10 10 -30 10 -40 0 l-45 -50 c-25 -25 -25 -25 -25 -50 v-80 c0 -40 10 -50 50 -50 z"];
+    
+    
+    CAShapeLayer *shapeLayer=[CAShapeLayer layer];
+    shapeLayer.path=path;
+    shapeLayer.lineWidth=20;
+    CGRect boundingBox = CGPathGetBoundingBox(shapeLayer.path);
+    
+    CGFloat boundingBoxAspectRatio = CGRectGetWidth(boundingBox)/CGRectGetHeight(boundingBox);
+    CGFloat viewAspectRatio = 1.0;
+    
+    CGFloat scaleFactor = 1.0;
+    if (boundingBoxAspectRatio > viewAspectRatio) {
+        // Width is limiting factor
+        scaleFactor = CGRectGetWidth(cell.icon.frame)/CGRectGetWidth(boundingBox);
+    } else {
+        // Height is limiting factor
+        scaleFactor = CGRectGetHeight(cell.icon.frame)/CGRectGetHeight(boundingBox);
+    }
+    
+    
+    // Scaling the path ...
+    CGAffineTransform scaleTransform = CGAffineTransformIdentity;
+    // Scale down the path first
+    scaleTransform = CGAffineTransformScale(scaleTransform, scaleFactor, scaleFactor);
+    // Then translate the path to the upper left corner
+    scaleTransform = CGAffineTransformTranslate(scaleTransform, -CGRectGetMinX(boundingBox), -CGRectGetMinY(boundingBox));
+    
+    // If you want to be fancy you could also center the path in the view
+    // i.e. if you don't want it to stick to the top.
+    // It is done by calculating the heigth and width difference and translating
+    // half the scaled value of that in both x and y (the scaled side will be 0)
+    CGSize scaledSize = CGSizeApplyAffineTransform(boundingBox.size, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
+    CGSize centerOffset = CGSizeMake((CGRectGetWidth(cell.icon.frame)-scaledSize.width)/(scaleFactor*2.0),
+                                     (CGRectGetHeight(cell.icon.frame)-scaledSize.height)/(scaleFactor*2.0));
+    scaleTransform = CGAffineTransformTranslate(scaleTransform, centerOffset.width, centerOffset.height);
+    // End of "center in view" transformation code
+    
+    CGPathRef scaledPath = CGPathCreateCopyByTransformingPath(shapeLayer.path,
+                                                              &scaleTransform);
+    shapeLayer.path=scaledPath;
+    shapeLayer.strokeColor=[[UIColor darkGrayColor] CGColor];
+    shapeLayer.lineWidth=2;
+    CAShapeLayer *another=[CAShapeLayer layer];
+    another.path=scaledPath;
+    another.strokeColor=[[UIColor whiteColor] CGColor];
+    another.fillColor=[[[Pins sharedInstance] colorForStatus:pin.status] CGColor];
+    another.lineWidth=1;
+    [cell.icon.layer addSublayer:shapeLayer];
+    [cell.icon.layer addSublayer:another];
+    */
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 
