@@ -80,6 +80,8 @@
 		42B3A68618E8903600B46FBF /* support@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67E18E8903600B46FBF /* support@2x.png */; };
 		42B3A68818E891C200B46FBF /* status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68718E891C200B46FBF /* status@2x.png */; };
 		42B3A68A18E89B2600B46FBF /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68918E89B2600B46FBF /* bg@2x.png */; };
+		42B3A69018E8C3E100B46FBF /* FreshdeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3A68E18E8C3E100B46FBF /* FreshdeskSDK.framework */; };
+		42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68F18E8C3E100B46FBF /* FreshdeskSDKResources.bundle */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -216,6 +218,8 @@
 		42B3A67E18E8903600B46FBF /* support@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "support@2x.png"; sourceTree = "<group>"; };
 		42B3A68718E891C200B46FBF /* status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status@2x.png"; sourceTree = "<group>"; };
 		42B3A68918E89B2600B46FBF /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		42B3A68E18E8C3E100B46FBF /* FreshdeskSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FreshdeskSDK.framework; sourceTree = "<group>"; };
+		42B3A68F18E8C3E100B46FBF /* FreshdeskSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FreshdeskSDKResources.bundle; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 				42284F7818D2575A0087941E /* OpenGLES.framework in Frameworks */,
 				42284F7618D2574B0087941E /* libz.dylib in Frameworks */,
 				42284F7418D2573E0087941E /* libicucore.dylib in Frameworks */,
+				42B3A69018E8C3E100B46FBF /* FreshdeskSDK.framework in Frameworks */,
 				42284F7218D257330087941E /* libc++.dylib in Frameworks */,
 				42284F7018D257260087941E /* ImageIO.framework in Frameworks */,
 				42284F6E18D2571D0087941E /* GLKit.framework in Frameworks */,
@@ -325,6 +330,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				42B3A68D18E8C3E100B46FBF /* FreshdeskSDK */,
 				42B3A66718E5732200B46FBF /* PocketSVG */,
 				42D28CD918E06702005E1758 /* MMDrawerController */,
 				42A7BEB018D719BF00973EA8 /* UIKit+AFNetworking */,
@@ -510,6 +516,16 @@
 			name = PocketSVG;
 			sourceTree = "<group>";
 		};
+		42B3A68D18E8C3E100B46FBF /* FreshdeskSDK */ = {
+			isa = PBXGroup;
+			children = (
+				42B3A68E18E8C3E100B46FBF /* FreshdeskSDK.framework */,
+				42B3A68F18E8C3E100B46FBF /* FreshdeskSDKResources.bundle */,
+			);
+			name = FreshdeskSDK;
+			path = "FreshdeskSDK-iosuniversal";
+			sourceTree = "<group>";
+		};
 		42D28CD918E06702005E1758 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -614,6 +630,7 @@
 				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
+				42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */,
 				42B3A68818E891C200B46FBF /* status@2x.png in Resources */,
 				42B3A68418E8903600B46FBF /* reports@2x.png in Resources */,
 				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
@@ -812,6 +829,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/romek/Documents/newicanvass/icanvass,
+					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
@@ -830,6 +848,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/romek/Documents/newicanvass/icanvass,
+					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";

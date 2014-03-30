@@ -11,6 +11,8 @@
 #import "MMDrawerController/UIViewController+MMDrawerController.h"
 #import "HomeViewController.h"
 #import "GoToWebsiteViewController.h"
+#import "ICRequestManager.h"
+#import <FreshdeskSDK/FreshdeskSDK.h>
 
 
 @interface LeftDrawerViewController ()
@@ -97,6 +99,9 @@
 }
 
 - (IBAction)support:(id)sender {
+    NSString *username=[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey];
+    [FDSupport setUseremail:username];
+    [[FDSupport sharedInstance] presentSupport:self];
 }
 
 - (IBAction)logout:(id)sender {

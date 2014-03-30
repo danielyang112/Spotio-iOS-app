@@ -11,8 +11,11 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "MMDrawerController/MMDrawerController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <FreshdeskSDK/FreshdeskSDK.h>
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
+#define kFreshDeskSite @"icanvass.freshdesk.com"
+#define kFreshDeskAPIKey @"AA0MM4OpIMwfo14c2"
 
 @implementation AppDelegate
 
@@ -32,6 +35,7 @@
     [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     
     [GMSServices provideAPIKey:kGoogleAPIKey];
+    [FDSupport setUpWithSite:kFreshDeskSite andApikey:kFreshDeskAPIKey];
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
