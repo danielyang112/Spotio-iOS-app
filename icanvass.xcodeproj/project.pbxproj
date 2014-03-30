@@ -82,6 +82,32 @@
 		42B3A68A18E89B2600B46FBF /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68918E89B2600B46FBF /* bg@2x.png */; };
 		42B3A69018E8C3E100B46FBF /* FreshdeskSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3A68E18E8C3E100B46FBF /* FreshdeskSDK.framework */; };
 		42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68F18E8C3E100B46FBF /* FreshdeskSDKResources.bundle */; };
+		42B3A6B918E8C5E700B46FBF /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A69418E8C5E600B46FBF /* Mixpanel.m */; };
+		42B3A6BA18E8C5E700B46FBF /* MPArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69518E8C5E600B46FBF /* MPArrowLeft.png */; };
+		42B3A6BB18E8C5E700B46FBF /* MPArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69618E8C5E600B46FBF /* MPArrowLeft@2x.png */; };
+		42B3A6BC18E8C5E700B46FBF /* MPArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69718E8C5E600B46FBF /* MPArrowRight.png */; };
+		42B3A6BD18E8C5E700B46FBF /* MPArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69818E8C5E600B46FBF /* MPArrowRight@2x.png */; };
+		42B3A6BE18E8C5E700B46FBF /* MPCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69918E8C5E600B46FBF /* MPCheckmark.png */; };
+		42B3A6BF18E8C5E700B46FBF /* MPCheckmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69A18E8C5E600B46FBF /* MPCheckmark@2x.png */; };
+		42B3A6C018E8C5E700B46FBF /* MPCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69B18E8C5E600B46FBF /* MPCloseBtn.png */; };
+		42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69C18E8C5E600B46FBF /* MPCloseBtn@2x.png */; };
+		42B3A6C218E8C5E700B46FBF /* MPDismissKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69D18E8C5E600B46FBF /* MPDismissKeyboard.png */; };
+		42B3A6C318E8C5E700B46FBF /* MPDismissKeyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69E18E8C5E600B46FBF /* MPDismissKeyboard@2x.png */; };
+		42B3A6C418E8C5E700B46FBF /* MPLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A69F18E8C5E700B46FBF /* MPLogo.png */; };
+		42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A6A018E8C5E700B46FBF /* MPLogo@2x.png */; };
+		42B3A6C618E8C5E700B46FBF /* MPNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6A218E8C5E700B46FBF /* MPNotification.m */; };
+		42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A6A318E8C5E700B46FBF /* MPNotification.storyboard */; };
+		42B3A6C818E8C5E700B46FBF /* MPNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6A518E8C5E700B46FBF /* MPNotificationViewController.m */; };
+		42B3A6C918E8C5E700B46FBF /* MPSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6A718E8C5E700B46FBF /* MPSurvey.m */; };
+		42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A6A818E8C5E700B46FBF /* MPSurvey.storyboard */; };
+		42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6AA18E8C5E700B46FBF /* MPSurveyNavigationController.m */; };
+		42B3A6CC18E8C5E700B46FBF /* MPSurveyQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6AC18E8C5E700B46FBF /* MPSurveyQuestion.m */; };
+		42B3A6CD18E8C5E700B46FBF /* MPSurveyQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6AE18E8C5E700B46FBF /* MPSurveyQuestionViewController.m */; };
+		42B3A6CE18E8C5E700B46FBF /* NSData+MPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B018E8C5E700B46FBF /* NSData+MPBase64.m */; };
+		42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B218E8C5E700B46FBF /* UIColor+MPColor.m */; };
+		42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B418E8C5E700B46FBF /* UIImage+MPAverageColor.m */; };
+		42B3A6D118E8C5E700B46FBF /* UIImage+MPImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B618E8C5E700B46FBF /* UIImage+MPImageEffects.m */; };
+		42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -220,6 +246,44 @@
 		42B3A68918E89B2600B46FBF /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		42B3A68E18E8C3E100B46FBF /* FreshdeskSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FreshdeskSDK.framework; sourceTree = "<group>"; };
 		42B3A68F18E8C3E100B46FBF /* FreshdeskSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FreshdeskSDKResources.bundle; sourceTree = "<group>"; };
+		42B3A69318E8C5E600B46FBF /* Mixpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixpanel.h; sourceTree = "<group>"; };
+		42B3A69418E8C5E600B46FBF /* Mixpanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mixpanel.m; sourceTree = "<group>"; };
+		42B3A69518E8C5E600B46FBF /* MPArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPArrowLeft.png; sourceTree = "<group>"; };
+		42B3A69618E8C5E600B46FBF /* MPArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPArrowLeft@2x.png"; sourceTree = "<group>"; };
+		42B3A69718E8C5E600B46FBF /* MPArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPArrowRight.png; sourceTree = "<group>"; };
+		42B3A69818E8C5E600B46FBF /* MPArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPArrowRight@2x.png"; sourceTree = "<group>"; };
+		42B3A69918E8C5E600B46FBF /* MPCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPCheckmark.png; sourceTree = "<group>"; };
+		42B3A69A18E8C5E600B46FBF /* MPCheckmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPCheckmark@2x.png"; sourceTree = "<group>"; };
+		42B3A69B18E8C5E600B46FBF /* MPCloseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPCloseBtn.png; sourceTree = "<group>"; };
+		42B3A69C18E8C5E600B46FBF /* MPCloseBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPCloseBtn@2x.png"; sourceTree = "<group>"; };
+		42B3A69D18E8C5E600B46FBF /* MPDismissKeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPDismissKeyboard.png; sourceTree = "<group>"; };
+		42B3A69E18E8C5E600B46FBF /* MPDismissKeyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPDismissKeyboard@2x.png"; sourceTree = "<group>"; };
+		42B3A69F18E8C5E700B46FBF /* MPLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPLogo.png; sourceTree = "<group>"; };
+		42B3A6A018E8C5E700B46FBF /* MPLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPLogo@2x.png"; sourceTree = "<group>"; };
+		42B3A6A118E8C5E700B46FBF /* MPNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPNotification.h; sourceTree = "<group>"; };
+		42B3A6A218E8C5E700B46FBF /* MPNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPNotification.m; sourceTree = "<group>"; };
+		42B3A6A318E8C5E700B46FBF /* MPNotification.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MPNotification.storyboard; sourceTree = "<group>"; };
+		42B3A6A418E8C5E700B46FBF /* MPNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPNotificationViewController.h; sourceTree = "<group>"; };
+		42B3A6A518E8C5E700B46FBF /* MPNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPNotificationViewController.m; sourceTree = "<group>"; };
+		42B3A6A618E8C5E700B46FBF /* MPSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSurvey.h; sourceTree = "<group>"; };
+		42B3A6A718E8C5E700B46FBF /* MPSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSurvey.m; sourceTree = "<group>"; };
+		42B3A6A818E8C5E700B46FBF /* MPSurvey.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MPSurvey.storyboard; sourceTree = "<group>"; };
+		42B3A6A918E8C5E700B46FBF /* MPSurveyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSurveyNavigationController.h; sourceTree = "<group>"; };
+		42B3A6AA18E8C5E700B46FBF /* MPSurveyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSurveyNavigationController.m; sourceTree = "<group>"; };
+		42B3A6AB18E8C5E700B46FBF /* MPSurveyQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSurveyQuestion.h; sourceTree = "<group>"; };
+		42B3A6AC18E8C5E700B46FBF /* MPSurveyQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSurveyQuestion.m; sourceTree = "<group>"; };
+		42B3A6AD18E8C5E700B46FBF /* MPSurveyQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSurveyQuestionViewController.h; sourceTree = "<group>"; };
+		42B3A6AE18E8C5E700B46FBF /* MPSurveyQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSurveyQuestionViewController.m; sourceTree = "<group>"; };
+		42B3A6AF18E8C5E700B46FBF /* NSData+MPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MPBase64.h"; sourceTree = "<group>"; };
+		42B3A6B018E8C5E700B46FBF /* NSData+MPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MPBase64.m"; sourceTree = "<group>"; };
+		42B3A6B118E8C5E700B46FBF /* UIColor+MPColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MPColor.h"; sourceTree = "<group>"; };
+		42B3A6B218E8C5E700B46FBF /* UIColor+MPColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MPColor.m"; sourceTree = "<group>"; };
+		42B3A6B318E8C5E700B46FBF /* UIImage+MPAverageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MPAverageColor.h"; sourceTree = "<group>"; };
+		42B3A6B418E8C5E700B46FBF /* UIImage+MPAverageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MPAverageColor.m"; sourceTree = "<group>"; };
+		42B3A6B518E8C5E700B46FBF /* UIImage+MPImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MPImageEffects.h"; sourceTree = "<group>"; };
+		42B3A6B618E8C5E700B46FBF /* UIImage+MPImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MPImageEffects.m"; sourceTree = "<group>"; };
+		42B3A6B718E8C5E700B46FBF /* UIView+MPSnapshotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MPSnapshotImage.h"; sourceTree = "<group>"; };
+		42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MPSnapshotImage.m"; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -330,6 +394,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				42B3A69218E8C5E600B46FBF /* Mixpanel */,
 				42B3A68D18E8C3E100B46FBF /* FreshdeskSDK */,
 				42B3A66718E5732200B46FBF /* PocketSVG */,
 				42D28CD918E06702005E1758 /* MMDrawerController */,
@@ -526,6 +591,51 @@
 			path = "FreshdeskSDK-iosuniversal";
 			sourceTree = "<group>";
 		};
+		42B3A69218E8C5E600B46FBF /* Mixpanel */ = {
+			isa = PBXGroup;
+			children = (
+				42B3A69318E8C5E600B46FBF /* Mixpanel.h */,
+				42B3A69418E8C5E600B46FBF /* Mixpanel.m */,
+				42B3A69518E8C5E600B46FBF /* MPArrowLeft.png */,
+				42B3A69618E8C5E600B46FBF /* MPArrowLeft@2x.png */,
+				42B3A69718E8C5E600B46FBF /* MPArrowRight.png */,
+				42B3A69818E8C5E600B46FBF /* MPArrowRight@2x.png */,
+				42B3A69918E8C5E600B46FBF /* MPCheckmark.png */,
+				42B3A69A18E8C5E600B46FBF /* MPCheckmark@2x.png */,
+				42B3A69B18E8C5E600B46FBF /* MPCloseBtn.png */,
+				42B3A69C18E8C5E600B46FBF /* MPCloseBtn@2x.png */,
+				42B3A69D18E8C5E600B46FBF /* MPDismissKeyboard.png */,
+				42B3A69E18E8C5E600B46FBF /* MPDismissKeyboard@2x.png */,
+				42B3A69F18E8C5E700B46FBF /* MPLogo.png */,
+				42B3A6A018E8C5E700B46FBF /* MPLogo@2x.png */,
+				42B3A6A118E8C5E700B46FBF /* MPNotification.h */,
+				42B3A6A218E8C5E700B46FBF /* MPNotification.m */,
+				42B3A6A318E8C5E700B46FBF /* MPNotification.storyboard */,
+				42B3A6A418E8C5E700B46FBF /* MPNotificationViewController.h */,
+				42B3A6A518E8C5E700B46FBF /* MPNotificationViewController.m */,
+				42B3A6A618E8C5E700B46FBF /* MPSurvey.h */,
+				42B3A6A718E8C5E700B46FBF /* MPSurvey.m */,
+				42B3A6A818E8C5E700B46FBF /* MPSurvey.storyboard */,
+				42B3A6A918E8C5E700B46FBF /* MPSurveyNavigationController.h */,
+				42B3A6AA18E8C5E700B46FBF /* MPSurveyNavigationController.m */,
+				42B3A6AB18E8C5E700B46FBF /* MPSurveyQuestion.h */,
+				42B3A6AC18E8C5E700B46FBF /* MPSurveyQuestion.m */,
+				42B3A6AD18E8C5E700B46FBF /* MPSurveyQuestionViewController.h */,
+				42B3A6AE18E8C5E700B46FBF /* MPSurveyQuestionViewController.m */,
+				42B3A6AF18E8C5E700B46FBF /* NSData+MPBase64.h */,
+				42B3A6B018E8C5E700B46FBF /* NSData+MPBase64.m */,
+				42B3A6B118E8C5E700B46FBF /* UIColor+MPColor.h */,
+				42B3A6B218E8C5E700B46FBF /* UIColor+MPColor.m */,
+				42B3A6B318E8C5E700B46FBF /* UIImage+MPAverageColor.h */,
+				42B3A6B418E8C5E700B46FBF /* UIImage+MPAverageColor.m */,
+				42B3A6B518E8C5E700B46FBF /* UIImage+MPImageEffects.h */,
+				42B3A6B618E8C5E700B46FBF /* UIImage+MPImageEffects.m */,
+				42B3A6B718E8C5E700B46FBF /* UIView+MPSnapshotImage.h */,
+				42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */,
+			);
+			path = Mixpanel;
+			sourceTree = "<group>";
+		};
 		42D28CD918E06702005E1758 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,10 +728,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42B3A6BD18E8C5E700B46FBF /* MPArrowRight@2x.png in Resources */,
 				42B3A68518E8903600B46FBF /* satellite@2x.png in Resources */,
+				42B3A6BB18E8C5E700B46FBF /* MPArrowLeft@2x.png in Resources */,
+				42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */,
+				42B3A6BF18E8C5E700B46FBF /* MPCheckmark@2x.png in Resources */,
 				42B3A68218E8903600B46FBF /* logout@2x.png in Resources */,
+				42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */,
+				42B3A6BE18E8C5E700B46FBF /* MPCheckmark.png in Resources */,
 				42B3A68618E8903600B46FBF /* support@2x.png in Resources */,
 				42B3A68318E8903600B46FBF /* questions@2x.png in Resources */,
+				42B3A6C018E8C5E700B46FBF /* MPCloseBtn.png in Resources */,
+				42B3A6BC18E8C5E700B46FBF /* MPArrowRight.png in Resources */,
 				42B3A67618E82FB900B46FBF /* InfoView.xib in Resources */,
 				42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */,
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
@@ -629,8 +747,14 @@
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
+				42B3A6C218E8C5E700B46FBF /* MPDismissKeyboard.png in Resources */,
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
+				42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */,
+				42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */,
+				42B3A6C318E8C5E700B46FBF /* MPDismissKeyboard@2x.png in Resources */,
 				42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */,
+				42B3A6BA18E8C5E700B46FBF /* MPArrowLeft.png in Resources */,
+				42B3A6C418E8C5E700B46FBF /* MPLogo.png in Resources */,
 				42B3A68818E891C200B46FBF /* status@2x.png in Resources */,
 				42B3A68418E8903600B46FBF /* reports@2x.png in Resources */,
 				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
@@ -658,16 +782,22 @@
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
+				42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */,
 				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
 				42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */,
+				42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */,
+				42B3A6C818E8C5E700B46FBF /* MPNotificationViewController.m in Sources */,
+				42B3A6CE18E8C5E700B46FBF /* NSData+MPBase64.m in Sources */,
 				42284F5418D253F60087941E /* pins.xcdatamodel in Sources */,
 				42A7BEAC18D5B02900973EA8 /* utilities.m in Sources */,
 				42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */,
+				42B3A6B918E8C5E700B46FBF /* Mixpanel.m in Sources */,
 				42A6A59118CBA3BF0043233C /* AppDelegate.m in Sources */,
 				42B3A67118E7161900B46FBF /* Fields.m in Sources */,
 				42A7BEC318D719BF00973EA8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				42D28CE618E06702005E1758 /* UIViewController+MMDrawerController.m in Sources */,
+				42B3A6D118E8C5E700B46FBF /* UIImage+MPImageEffects.m in Sources */,
 				42A6A5BA18CBB5470043233C /* MapController.m in Sources */,
 				42A7BEC918D719BF00973EA8 /* UIWebView+AFNetworking.m in Sources */,
 				42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */,
@@ -679,16 +809,21 @@
 				42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */,
 				42284F9518D26AF10087941E /* AFNetworkReachabilityManager.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
+				42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */,
 				42A7BECD18D71D7400973EA8 /* PinCell.m in Sources */,
 				42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */,
 				42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */,
 				42284F9D18D26B110087941E /* ICRequestManager.m in Sources */,
+				42B3A6C618E8C5E700B46FBF /* MPNotification.m in Sources */,
 				4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */,
+				42B3A6C918E8C5E700B46FBF /* MPSurvey.m in Sources */,
 				42284F9818D26AF10087941E /* AFURLRequestSerialization.m in Sources */,
 				42D28CE418E06702005E1758 /* MMDrawerController.m in Sources */,
 				42284F9718D26AF10087941E /* AFURLConnectionOperation.m in Sources */,
 				42284F9318D26AF10087941E /* AFHTTPRequestOperationManager.m in Sources */,
+				42B3A6CC18E8C5E700B46FBF /* MPSurveyQuestion.m in Sources */,
 				42284F6018D254020087941E /* User.m in Sources */,
+				42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */,
 				42284F5F18D254020087941E /* Location.m in Sources */,
 				42284F9618D26AF10087941E /* AFSecurityPolicy.m in Sources */,
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
@@ -698,6 +833,7 @@
 				42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */,
 				42A7BEAF18D7150200973EA8 /* PinTemp.m in Sources */,
 				42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */,
+				42B3A6CD18E8C5E700B46FBF /* MPSurveyQuestionViewController.m in Sources */,
 				42284F5D18D254020087941E /* Pin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

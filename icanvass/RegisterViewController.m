@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "ICRequestManager.h"
+#import "Mixpanel.h"
 
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
@@ -77,6 +78,17 @@
                       @"Password":[self trim:_passwordTextField]};
     [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
         if(success) {
+            Mixpanel *mixpanel=[Mixpanel sharedInstance];
+            NSString *distinctID=mixpanel.distinctId;
+            //[mixpanel createAlias:_txtEMail.text forDistinctID:mixpanel.distinctId];
+            // You must call identify if you haven't already
+            // (e.g., when your app launches).
+            [mixpanel identify:d[@"EmailAdderss"]];
+            [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAdderss"]];
+            [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyLogin"]}];
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                                   UIRemoteNotificationTypeSound |
+                                                                                   UIRemoteNotificationTypeAlert)];
             [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
         } else {
             if(response[@"Message"]) {

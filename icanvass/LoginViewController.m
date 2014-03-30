@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "ICRequestManager.h"
+#import "Mixpanel.h"
 
 @interface LoginViewController ()
 @property (nonatomic,strong) NSString *username;
@@ -44,6 +45,12 @@
     [self showWrongPassword:NO];
     [[ICRequestManager sharedManager] loginUserName:username password:password company:company cb:^(BOOL success) {
         if(success) {
+            Mixpanel *mixpanel=[Mixpanel sharedInstance];
+            [mixpanel identify:username];
+            [mixpanel registerSuperPropertiesOnce:@{@"company":company}];
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                                   UIRemoteNotificationTypeSound |
+                                                                                   UIRemoteNotificationTypeAlert)];
             [self close];
         } else {
             [self showWrongPassword:YES];

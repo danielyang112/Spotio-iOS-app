@@ -12,10 +12,12 @@
 #import "MMDrawerController/MMDrawerController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <FreshdeskSDK/FreshdeskSDK.h>
+#import "Mixpanel.h"
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
 #define kFreshDeskSite @"icanvass.freshdesk.com"
 #define kFreshDeskAPIKey @"AA0MM4OpIMwfo14c2"
+#define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
 
 @implementation AppDelegate
 
@@ -36,10 +38,23 @@
     
     [GMSServices provideAPIKey:kGoogleAPIKey];
     [FDSupport setUpWithSite:kFreshDeskSite andApikey:kFreshDeskAPIKey];
+    [Mixpanel sharedInstanceWithToken:kMixPanelToken];
+    [[Mixpanel sharedInstance] registerSuperProperties:@{@"version":@"iCanvass", @"platform":@"iOS"}];
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken: (NSData *)deviceToken {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    NSString *token=[[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",token);
+    // Make sure identify has been called before sending
+    // a device token.
+    [mixpanel identify:[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey]];
+    // This sends the deviceToken to Mixpanel
+    [mixpanel.people addPushDeviceToken:deviceToken];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
