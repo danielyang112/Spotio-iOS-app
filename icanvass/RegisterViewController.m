@@ -50,6 +50,16 @@
     return [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (void)showErrors:(NSArray*)errors {
+    NSString *m=[errors componentsJoinedByString:@"\n"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:m
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)proceedWithRegistration {
 /*    dict[@"CompanyLogin"] = [_txtCompanyName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"EmailAddress"] = [_txtEMail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -65,9 +75,13 @@
                       @"Phone":[self trim:_phoneTextField],
                       @"EmailAddress":[self trim:_emailTextField],
                       @"Password":[self trim:_passwordTextField]};
-    [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success) {
+    [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
         if(success) {
             [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        } else {
+            if(response[@"Message"]) {
+                [self showErrors:response[@"Message"]];
+            }
         }
     }];
 }

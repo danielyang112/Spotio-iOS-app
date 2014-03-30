@@ -285,7 +285,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T9t-TR-kiZ" userLabel="streetnumber">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T9t-TR-kiZ" userLabel="streetnumber">
                                                     <rect key="frame" x="20" y="7" width="178" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -295,7 +295,7 @@
                                                         <action selector="textFieldDidChange:" destination="cDv-bY-OHf" eventType="editingChanged" id="KWc-Y0-QEo"/>
                                                     </connections>
                                                 </textField>
-                                                <stepper opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="Edi-tk-feq">
+                                                <stepper opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="Edi-tk-feq">
                                                     <rect key="frame" x="206" y="7" width="94" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <connections>
@@ -303,6 +303,15 @@
                                                     </connections>
                                                 </stepper>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="T9t-TR-kiZ" secondAttribute="bottom" constant="6" id="0do-Dr-Srp"/>
+                                                <constraint firstAttribute="bottom" secondItem="Edi-tk-feq" secondAttribute="bottom" constant="7" id="3Bf-IQ-afl"/>
+                                                <constraint firstItem="Edi-tk-feq" firstAttribute="leading" secondItem="T9t-TR-kiZ" secondAttribute="trailing" constant="8" id="Orf-dP-Jdz"/>
+                                                <constraint firstItem="T9t-TR-kiZ" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="7" id="SnQ-Mt-1il"/>
+                                                <constraint firstAttribute="trailing" secondItem="Edi-tk-feq" secondAttribute="trailing" constant="20" id="mJo-ro-sU9"/>
+                                                <constraint firstItem="Edi-tk-feq" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="7" id="nYA-N8-tnp"/>
+                                                <constraint firstItem="T9t-TR-kiZ" firstAttribute="leading" secondItem="HGW-pJ-b0E" secondAttribute="leading" constant="20" id="p8g-XB-S7c"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="field" destination="T9t-TR-kiZ" id="caY-06-WNg"/>
@@ -324,6 +333,7 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="fxp-pj-lEW" secondAttribute="bottom" constant="6" id="2eI-he-ykA"/>
                                                 <constraint firstItem="fxp-pj-lEW" firstAttribute="leading" secondItem="B4k-MQ-MOP" secondAttribute="leading" constant="20" symbolic="YES" id="3x1-HC-EMk"/>
                                                 <constraint firstAttribute="trailing" secondItem="fxp-pj-lEW" secondAttribute="trailing" constant="20" symbolic="YES" id="U1r-33-VnU"/>
                                                 <constraint firstItem="fxp-pj-lEW" firstAttribute="top" secondItem="B4k-MQ-MOP" secondAttribute="top" constant="7" id="Y3p-w9-Okm"/>

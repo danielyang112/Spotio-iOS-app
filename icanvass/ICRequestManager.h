@@ -14,6 +14,6 @@
 + (ICRequestManager*)sharedManager;
 - (void)loginUserName:(NSString*)userName password:(NSString*)password
               company:(NSString*)company cb:(void(^)(BOOL success))cb;
-- (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success))cb;
+- (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success, id response))cb;
 - (void)logoutWithCb:(void(^)(BOOL success))cb;
 @end

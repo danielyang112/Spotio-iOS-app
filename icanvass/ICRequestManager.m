@@ -48,13 +48,18 @@
     }];
 }
 
-- (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success))cb {
+- (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success, id response))cb {
     [[ICRequestManager sharedManager] POST:@"MobileApp/RegisterCompanyExtended" parameters:d success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {}];
-        cb(YES);
+        NSDictionary *d=operation.responseObject;
+        if(!d[@"Message"]){
+            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {}];
+            cb(YES,operation.responseObject);
+        }else{
+            cb(NO,operation.responseObject);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"registration failed");
-        cb(NO);
+        cb(NO,nil);
     }];
 }
 
