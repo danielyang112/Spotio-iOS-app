@@ -208,7 +208,9 @@ static NSDateFormatter *dateFormatter;
                              @"City":_city,
                              @"State":_state,
                              @"Zip":_zipCode};
-    NSDictionary *data=@{@"Id":[[NSUUID UUID] UUIDString],
+    NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
+                            @{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
+    NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
                          @"Location":location,
                          @"Status":_status,
                          @"ClientData":@{},
@@ -217,7 +219,8 @@ static NSDateFormatter *dateFormatter;
                          @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
                          @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
                          @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-                         @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]]};
+                         @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
+                         @"CustomValues":customFields};
     [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
     }];
@@ -232,7 +235,7 @@ static NSDateFormatter *dateFormatter;
                              @"City":_city,
                              @"State":_state,
                              @"Zip":_zipCode};
-    NSDictionary *d=@{@"DefinitionId":@"1",@"StringValue":@"1"};
+    NSDictionary *d=@{@"DefinitionId":@"1",@"StringValue":@"Abc"};
     NSArray *customFields=@[d];
     NSDictionary *data=@{@"Id":_pin.ident,
                          @"Location":location,
