@@ -21,6 +21,7 @@
 
 @interface PinTemp : NSObject
 
+- (void)updateWithDictionary:(NSDictionary*)dic;
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic;
 
 @property (nonatomic, retain) NSString *ident;

@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PinTemp.h"
 
-@interface DetailsViewController : UIViewController
+@interface DetailsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) BOOL adding;
@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
 @property (weak, nonatomic) IBOutlet UITextField *streetNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;

@@ -14,32 +14,44 @@
 
 @implementation PinTemp
 
+- (void)updateWithDictionary:(NSDictionary*)dic {
+    self.ident=dic[@"Id"];
+    self.status=dic[@"Status"];
+    NSString *noMilliseconds=[dic[@"CreationDate"] componentsSeparatedByString:@"."][0];
+    static NSDateFormatter *dateFormatter;
+    if(!dateFormatter){
+        dateFormatter=[[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    }
+    self.creationDate=[dateFormatter dateFromString:noMilliseconds];
+    self.latitude=dic[@"Latitude"];
+    self.longitude=dic[@"Longitude"];
+    LocationTemp *loc=[LocationTemp new];
+    NSDictionary *ld=dic[@"Location"];
+    NSArray *a=[self addressComponents:ld[@"Address"]];
+    loc.streetNumber=a[0];
+    loc.streetName=a[1];
+    loc.city=ld[@"City"];
+    loc.unit=ld[@"Unit"];
+    loc.zip=ld[@"Zip"];
+    loc.state=ld[@"State"];
+    self.location=loc;
+}
+
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic {
     self=[super init];
     if(self) {
-        self.ident=dic[@"Id"];
-        self.status=dic[@"Status"];
-        NSString *noMilliseconds=[dic[@"CreationDate"] componentsSeparatedByString:@"."][0];
-        static NSDateFormatter *dateFormatter;
-        if(!dateFormatter){
-            dateFormatter=[[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        }
-        self.creationDate=[dateFormatter dateFromString:noMilliseconds];
-        self.latitude=dic[@"Latitude"];
-        self.longitude=dic[@"Longitude"];
-        LocationTemp *loc=[LocationTemp new];
-        NSDictionary *ld=dic[@"Location"];
-        NSArray *a=[ld[@"Address"] componentsSeparatedByString:@"\n"];
-        loc.streetNumber=a[0];
-        loc.streetName=a[1];
-        loc.city=ld[@"City"];
-        loc.unit=ld[@"Unit"];
-        loc.zip=ld[@"Zip"];
-        loc.state=ld[@"State"];
-        self.location=loc;
+        [self updateWithDictionary:dic];
     }
     return self;
+}
+
+- (NSArray*)addressComponents:(NSString*)address {
+    NSArray *a=[address componentsSeparatedByString:@"\n"];
+    if([a count]<2) {
+        a=@[@"",a[0]];
+    }
+    return a;
 }
 
 - (NSString*)address {

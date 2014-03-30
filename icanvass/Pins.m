@@ -83,7 +83,7 @@
         return;
     }
     ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$select=CreationDate,Id,Latitude,Location,Longitude,Status";
+    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -120,7 +120,10 @@
             PinTemp *_p=(PinTemp*)o;
             return [pin.ident isEqual:_p.ident];
         }][0];
-        p.status=dictionary[@"Status"];
+        [p updateWithDictionary:dictionary];
+        //NSInteger idx=[_pins indexOfObject:p];
+        //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
+//        p.status=dictionary[@"Status"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         block(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

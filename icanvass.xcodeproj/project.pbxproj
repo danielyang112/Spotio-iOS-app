@@ -67,6 +67,8 @@
 		42A7BEC918D719BF00973EA8 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A7BEC118D719BF00973EA8 /* UIWebView+AFNetworking.m */; };
 		42A7BECD18D71D7400973EA8 /* PinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A7BECC18D71D7400973EA8 /* PinCell.m */; };
 		42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A66918E5734800B46FBF /* PocketSVG.m */; };
+		42B3A67118E7161900B46FBF /* Fields.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A67018E7161900B46FBF /* Fields.m */; };
+		42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A67318E8023300B46FBF /* DetailsTableViewCell.m */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -188,6 +190,10 @@
 		42A7BECC18D71D7400973EA8 /* PinCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinCell.m; sourceTree = "<group>"; };
 		42B3A66818E5734800B46FBF /* PocketSVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PocketSVG.h; sourceTree = "<group>"; };
 		42B3A66918E5734800B46FBF /* PocketSVG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PocketSVG.m; sourceTree = "<group>"; };
+		42B3A66F18E7161900B46FBF /* Fields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fields.h; sourceTree = "<group>"; };
+		42B3A67018E7161900B46FBF /* Fields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fields.m; sourceTree = "<group>"; };
+		42B3A67218E8023300B46FBF /* DetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsTableViewCell.h; sourceTree = "<group>"; };
+		42B3A67318E8023300B46FBF /* DetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsTableViewCell.m; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -276,6 +282,8 @@
 				42A6A5B918CBB5470043233C /* MapController.m */,
 				42284F0A18D10FC60087941E /* DetailsViewController.h */,
 				42284F0B18D10FC60087941E /* DetailsViewController.m */,
+				42B3A67218E8023300B46FBF /* DetailsTableViewCell.h */,
+				42B3A67318E8023300B46FBF /* DetailsTableViewCell.m */,
 				42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */,
 				42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */,
 				42BBFF2D18D398210065D4C3 /* RegisterViewController.h */,
@@ -382,6 +390,8 @@
 				42284F6118D254560087941E /* coredata */,
 				42BBFF3018D3996E0065D4C3 /* Pins.h */,
 				42BBFF3118D3996E0065D4C3 /* Pins.m */,
+				42B3A66F18E7161900B46FBF /* Fields.h */,
+				42B3A67018E7161900B46FBF /* Fields.m */,
 				42A7BEAA18D5B02900973EA8 /* utilities.h */,
 				42A7BEAB18D5B02900973EA8 /* utilities.m */,
 				42A6A58F18CBA3BF0043233C /* AppDelegate.h */,
@@ -582,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */,
 				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
@@ -593,6 +604,7 @@
 				42A7BEAC18D5B02900973EA8 /* utilities.m in Sources */,
 				42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */,
 				42A6A59118CBA3BF0043233C /* AppDelegate.m in Sources */,
+				42B3A67118E7161900B46FBF /* Fields.m in Sources */,
 				42A7BEC318D719BF00973EA8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				42D28CE618E06702005E1758 /* UIViewController+MMDrawerController.m in Sources */,
 				42A6A5BA18CBB5470043233C /* MapController.m in Sources */,
