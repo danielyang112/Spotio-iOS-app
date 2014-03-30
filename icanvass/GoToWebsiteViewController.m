@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     _textLabel.text=_text;
     [self setupLeftMenuButton];
     // Do any additional setup after loading the view.

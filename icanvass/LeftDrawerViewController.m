@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     _mapSwitch.on=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     // Do any additional setup after loading the view.
 }

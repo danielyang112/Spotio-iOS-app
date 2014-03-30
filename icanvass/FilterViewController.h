@@ -11,6 +11,7 @@
 
 @interface FilterViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,DatesPickerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *statusTableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;

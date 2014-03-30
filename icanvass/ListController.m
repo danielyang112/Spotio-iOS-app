@@ -30,6 +30,9 @@ enum ICSortOrder : NSUInteger {
 @property (nonatomic,strong) NSArray *addressDescriptors;
 @property (nonatomic,strong) NSArray *dateDescriptors;
 @property (nonatomic,strong) UIView *headerView;
+@property (nonatomic,strong) UIButton *statusButton;
+@property (nonatomic,strong) UIButton *addressButton;
+@property (nonatomic,strong) UIButton *dateButton;
 @property (nonatomic,strong) NSSortDescriptor *currentDescriptor;
 @property (nonatomic) enum ICSortOrder sortOrder;
 @end
@@ -53,12 +56,12 @@ enum ICSortOrder : NSUInteger {
         self.dateDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES],
                                            [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO]];
         self.headerView=[[[NSBundle mainBundle] loadNibNamed:@"ListHeader" owner:nil options:nil] lastObject];
-        UIButton *button=(UIButton*)[_headerView viewWithTag:1];
-        [button addTarget:self action:@selector(sortStatus:) forControlEvents:UIControlEventTouchUpInside];
-        button=(UIButton*)[_headerView viewWithTag:2];
-        [button addTarget:self action:@selector(sortAddress:) forControlEvents:UIControlEventTouchUpInside];
-        button=(UIButton*)[_headerView viewWithTag:3];
-        [button addTarget:self action:@selector(sortDate:) forControlEvents:UIControlEventTouchUpInside];
+        self.statusButton=(UIButton*)[_headerView viewWithTag:1];
+        [_statusButton addTarget:self action:@selector(sortStatus:) forControlEvents:UIControlEventTouchUpInside];
+        self.addressButton=(UIButton*)[_headerView viewWithTag:2];
+        [_addressButton addTarget:self action:@selector(sortAddress:) forControlEvents:UIControlEventTouchUpInside];
+        self.dateButton=(UIButton*)[_headerView viewWithTag:3];
+        [_dateButton addTarget:self action:@selector(sortDate:) forControlEvents:UIControlEventTouchUpInside];
         
         _currentDescriptor=_dateDescriptors[1];
         self.sortOrder=ICSortOrderDateDescending;
@@ -76,7 +79,40 @@ enum ICSortOrder : NSUInteger {
     self.tableView.tableFooterView=[UIView new];
 }
 
+- (void)updateArrows {
+    NSString *status=@"Status";
+    NSString *address=@"Address";
+    NSString *date=@"Date";
+    switch (_sortOrder) {
+        case ICSortOrderAddressAscending:
+            address=[address stringByAppendingString:@" \u25b2"];
+            break;
+        case ICSortOrderAddressDescending:
+            address=[address stringByAppendingString:@" \u25bc"];
+            break;
+        case ICSortOrderStatusAscending:
+            status=[status stringByAppendingString:@" \u25b2"];
+            break;
+        case ICSortOrderStatusDescending:
+            status=[status stringByAppendingString:@" \u25bc"];
+            break;
+        case ICSortOrderDateAscending:
+            date=[date stringByAppendingString:@" \u25b2"];
+            break;
+        case ICSortOrderDateDescending:
+            date=[date stringByAppendingString:@" \u25bc"];
+            break;
+            
+        default:
+            break;
+    }
+    [_statusButton setTitle:status forState:UIControlStateNormal];
+    [_addressButton setTitle:address forState:UIControlStateNormal];
+    [_dateButton setTitle:date forState:UIControlStateNormal];
+}
+
 - (void)sort {
+    [self updateArrows];
     NSArray *descriptors=@[_currentDescriptor];
     self.pins=[self.pins sortedArrayUsingDescriptors:descriptors];
     [self.tableView reloadData];

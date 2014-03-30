@@ -55,6 +55,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.backgroundColor=[UIColor clearColor];
     if(_adding) {
         [self adjustForAdding];
     } else if(_pin){
