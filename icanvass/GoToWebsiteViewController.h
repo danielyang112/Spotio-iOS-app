@@ -12,4 +12,5 @@
 @property (nonatomic,strong) NSString *text;
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
+- (IBAction)gotoWebsite:(id)sender;
 @end

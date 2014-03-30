@@ -59,4 +59,7 @@
 }
 */
 
+- (IBAction)gotoWebsite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://login.icanvassapp.com"]];
+}
 @end

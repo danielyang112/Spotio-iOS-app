@@ -45,9 +45,10 @@
 }
 */
 
-- (void)goToWebsiteWithText:(NSString*)text {
+- (void)goToWebsiteWithText:(NSString*)text title:(NSString*)title{
     GoToWebsiteViewController *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"GoToWebsiteViewController"];
     vc.text=text;
+    vc.title=title;
     UINavigationController *nc=[[UINavigationController alloc] initWithRootViewController:vc];
     [self.mm_drawerController setCenterViewController:nc
                                    withCloseAnimation:YES
@@ -76,23 +77,23 @@
 }
 
 - (IBAction)addUser:(id)sender {
-    [self goToWebsiteWithText:@"go to website to add users!\nof course we will change this text"];
+    [self goToWebsiteWithText:@"Want to add some people to your team? No problem! Just click the button to go to the web app." title:@"Add User"];
 }
 
 - (IBAction)customizeStatus:(id)sender {
-    [self goToWebsiteWithText:@"go to website to customize statuses!\nof course we will change this text"];
+    [self goToWebsiteWithText:@"Make it work for you! Go ahead and login to the web app by clicking the button below." title:@"Customize Status"];
 }
 
 - (IBAction)customizeQuestions:(id)sender {
-    [self goToWebsiteWithText:@"go to website to customize questions!\nof course we will change this text"];
+    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the iCanvass web app, click the button below." title:@"Customize Questions"];
 }
 
 - (IBAction)deletePin:(id)sender {
-    [self goToWebsiteWithText:@"go to website to delete pins!\nof course we will change this text"];
+    [self goToWebsiteWithText:@"I know, I know. Made a mistake and want to delete a PIN. Go to the web app, just cklick below." title:@"Delete PIN"];
 }
 
 - (IBAction)reports:(id)sender {
-    [self goToWebsiteWithText:@"go to website to generate reports!\nof course we will change this text"];
+    [self goToWebsiteWithText:@"Custom reports with all your data are just around the corner in the web app, click below." title:@"Reports"];
 }
 
 - (IBAction)support:(id)sender {
