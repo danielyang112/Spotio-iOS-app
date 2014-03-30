@@ -158,6 +158,8 @@ enum ICSortOrder : NSUInteger {
     cell.bottomLabel.text=pin.address2;
     cell.rightLabel.text=[PinTemp formatDate:pin.creationDate];
     cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
+    cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
+    cell.icon.layer.borderWidth=1.f;
     /*
     CGPathRef path=[PocketSVG pathFromDAttribute:@"M0 0 h80 c40 0 50 10 50 50 v80 c0 25 0 25 -25 50 l-45 50 c-10 10 -30 10 -40 0 l-45 -50 c-25 -25 -25 -25 -25 -50 v-80 c0 -40 10 -50 50 -50 z"];
     

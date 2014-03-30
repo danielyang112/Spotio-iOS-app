@@ -139,13 +139,17 @@
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     PinTemp *pin=marker.userData;
     UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
+    UIView *icon=[view viewWithTag:7];
+    icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
+    icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
+    icon.layer.borderWidth=1.f;
     UIView *bg=view;//[view viewWithTag:9];
     bg.layer.masksToBounds = NO;
     bg.layer.shadowOffset = CGSizeMake(-5, 5);
     bg.layer.shadowRadius = 3;
     bg.layer.shadowOpacity = 0.8;
-    bg.layer.borderWidth = 1;
-    bg.layer.borderColor = [UIColor blackColor].CGColor;
+    bg.layer.borderWidth = 1.f;
+    bg.layer.borderColor = [UIColor darkGrayColor].CGColor;
     UILabel *l=(UILabel*)[view viewWithTag:1];
     l.text=pin.status;
     l=(UILabel*)[view viewWithTag:2];

@@ -70,6 +70,15 @@
 		42B3A67118E7161900B46FBF /* Fields.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A67018E7161900B46FBF /* Fields.m */; };
 		42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A67318E8023300B46FBF /* DetailsTableViewCell.m */; };
 		42B3A67618E82FB900B46FBF /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67518E82FB900B46FBF /* InfoView.xib */; };
+		42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67718E8903600B46FBF /* adduser@2x.png */; };
+		42B3A68018E8903600B46FBF /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67818E8903600B46FBF /* delete@2x.png */; };
+		42B3A68118E8903600B46FBF /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67918E8903600B46FBF /* home@2x.png */; };
+		42B3A68218E8903600B46FBF /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67A18E8903600B46FBF /* logout@2x.png */; };
+		42B3A68318E8903600B46FBF /* questions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67B18E8903600B46FBF /* questions@2x.png */; };
+		42B3A68418E8903600B46FBF /* reports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67C18E8903600B46FBF /* reports@2x.png */; };
+		42B3A68518E8903600B46FBF /* satellite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67D18E8903600B46FBF /* satellite@2x.png */; };
+		42B3A68618E8903600B46FBF /* support@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A67E18E8903600B46FBF /* support@2x.png */; };
+		42B3A68818E891C200B46FBF /* status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A68718E891C200B46FBF /* status@2x.png */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -196,6 +205,15 @@
 		42B3A67218E8023300B46FBF /* DetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsTableViewCell.h; sourceTree = "<group>"; };
 		42B3A67318E8023300B46FBF /* DetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsTableViewCell.m; sourceTree = "<group>"; };
 		42B3A67518E82FB900B46FBF /* InfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
+		42B3A67718E8903600B46FBF /* adduser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adduser@2x.png"; sourceTree = "<group>"; };
+		42B3A67818E8903600B46FBF /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete@2x.png"; sourceTree = "<group>"; };
+		42B3A67918E8903600B46FBF /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x.png"; sourceTree = "<group>"; };
+		42B3A67A18E8903600B46FBF /* logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@2x.png"; sourceTree = "<group>"; };
+		42B3A67B18E8903600B46FBF /* questions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "questions@2x.png"; sourceTree = "<group>"; };
+		42B3A67C18E8903600B46FBF /* reports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reports@2x.png"; sourceTree = "<group>"; };
+		42B3A67D18E8903600B46FBF /* satellite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "satellite@2x.png"; sourceTree = "<group>"; };
+		42B3A67E18E8903600B46FBF /* support@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "support@2x.png"; sourceTree = "<group>"; };
+		42B3A68718E891C200B46FBF /* status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status@2x.png"; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -390,6 +408,15 @@
 				42A7BECA18D71D5400973EA8 /* views */,
 				42284F6218D2546A0087941E /* viewcontrollers */,
 				42284F6118D254560087941E /* coredata */,
+				42B3A67718E8903600B46FBF /* adduser@2x.png */,
+				42B3A68718E891C200B46FBF /* status@2x.png */,
+				42B3A67818E8903600B46FBF /* delete@2x.png */,
+				42B3A67918E8903600B46FBF /* home@2x.png */,
+				42B3A67A18E8903600B46FBF /* logout@2x.png */,
+				42B3A67B18E8903600B46FBF /* questions@2x.png */,
+				42B3A67C18E8903600B46FBF /* reports@2x.png */,
+				42B3A67D18E8903600B46FBF /* satellite@2x.png */,
+				42B3A67E18E8903600B46FBF /* support@2x.png */,
 				42BBFF3018D3996E0065D4C3 /* Pins.h */,
 				42BBFF3118D3996E0065D4C3 /* Pins.m */,
 				42B3A66F18E7161900B46FBF /* Fields.h */,
@@ -572,12 +599,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42B3A68518E8903600B46FBF /* satellite@2x.png in Resources */,
+				42B3A68218E8903600B46FBF /* logout@2x.png in Resources */,
+				42B3A68618E8903600B46FBF /* support@2x.png in Resources */,
+				42B3A68318E8903600B46FBF /* questions@2x.png in Resources */,
 				42B3A67618E82FB900B46FBF /* InfoView.xib in Resources */,
 				42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */,
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
+				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
+				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
+				42B3A68818E891C200B46FBF /* status@2x.png in Resources */,
+				42B3A68418E8903600B46FBF /* reports@2x.png in Resources */,
+				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
