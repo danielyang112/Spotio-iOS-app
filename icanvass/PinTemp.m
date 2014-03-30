@@ -16,6 +16,7 @@
 
 - (void)updateWithDictionary:(NSDictionary*)dic {
     self.ident=dic[@"Id"];
+    self.user=dic[@"UserName"];
     self.status=dic[@"Status"];
     NSString *noMilliseconds=[dic[@"CreationDate"] componentsSeparatedByString:@"."][0];
     static NSDateFormatter *dateFormatter;
@@ -59,6 +60,13 @@
         _address=[NSString stringWithFormat:@"%@ %@",self.location.streetNumber, self.location.streetName];
     }
     return _address;
+}
+
+- (NSString*)address2 {
+    if(!_address2) {
+        _address2=[NSString stringWithFormat:@"%@ %@, %@",self.location.city, self.location.state, self.location.zip];
+    }
+    return _address2;
 }
 
 + (NSString*)formatDate:(NSDate*)date {

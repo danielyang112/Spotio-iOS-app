@@ -10,7 +10,6 @@
 #import "DetailsViewController.h"
 #import "Pins.h"
 #import "PinTemp.h"
-#import <GoogleMaps/GoogleMaps.h>
 
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
@@ -126,13 +125,44 @@
 }
 
 - (void)mapView:(GMSMapView*)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    [_delegate mapController:self didSelectBuildingAtCoordinate:coordinate];
+    if(!mapView.selectedMarker){
+        [_delegate mapController:self didSelectBuildingAtCoordinate:coordinate];
+    }
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    //PinTemp *pin=marker.userData;
+    //[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+    return NO;
+}
+
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    PinTemp *pin=marker.userData;
+    UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
+    UIView *bg=view;//[view viewWithTag:9];
+    bg.layer.masksToBounds = NO;
+    bg.layer.shadowOffset = CGSizeMake(-5, 5);
+    bg.layer.shadowRadius = 3;
+    bg.layer.shadowOpacity = 0.8;
+    bg.layer.borderWidth = 1;
+    bg.layer.borderColor = [UIColor blackColor].CGColor;
+    UILabel *l=(UILabel*)[view viewWithTag:1];
+    l.text=pin.status;
+    l=(UILabel*)[view viewWithTag:2];
+    l.text=pin.user;
+    l=(UILabel*)[view viewWithTag:3];
+    l.text=[PinTemp formatDate:pin.creationDate];
+    l=(UILabel*)[view viewWithTag:4];
+    l.text=pin.address;
+    l=(UILabel*)[view viewWithTag:5];
+    l.text=pin.address2;
+    //view.backgroundColor=[UIColor whiteColor];
+    return view;
+}
+
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
     PinTemp *pin=marker.userData;
     [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
-    return YES;
 }
 
 #pragma mark - API

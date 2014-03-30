@@ -155,7 +155,7 @@ enum ICSortOrder : NSUInteger {
     // Configure the cell...
     PinTemp *pin=_pins[indexPath.row];
     cell.topLabel.text=pin.address;
-    cell.bottomLabel.text=[NSString stringWithFormat:@"%@ %@, %@",pin.location.city, pin.location.state, pin.location.zip];
+    cell.bottomLabel.text=pin.address2;
     cell.rightLabel.text=[PinTemp formatDate:pin.creationDate];
     cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
     /*

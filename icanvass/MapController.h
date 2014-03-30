@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @class MapController;
 @protocol MapControllerDelegate <NSObject>

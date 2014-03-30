@@ -25,6 +25,7 @@
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic;
 
 @property (nonatomic, retain) NSString *ident;
+@property (nonatomic, retain) NSString *user;
 @property (nonatomic, retain) NSDictionary *clientData;
 @property (nonatomic, retain) NSString *notes;
 @property (nonatomic, retain) NSNumber *latitude;
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSString *status;
 @property (nonatomic, retain) LocationTemp *location;
 @property (nonatomic, retain) NSString *address;
+@property (nonatomic, retain) NSString *address2;
 + (NSString*)formatDate:(NSDate*)date;
 
 @end
