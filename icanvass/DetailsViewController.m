@@ -263,7 +263,7 @@ static NSDateFormatter *dateFormatter;
     if(section==0) {
         return 3;
     } else {
-        return self.isEditing?[_customFields count]:0;
+        return tableView.isEditing?[_customFields count]:0;
     }
     
     /*
@@ -279,7 +279,7 @@ static NSDateFormatter *dateFormatter;
         CellIdentifier=@"DetailsStatusCell";
         DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         UIButton *button=(UIButton*)[cell viewWithTag:1];
-        if(self.isEditing){
+        if(tableView.isEditing){
             [button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
             [button addTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -362,6 +362,16 @@ static NSDateFormatter *dateFormatter;
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UITableViewCell *cell=(UITableViewCell*)(textField.superview.superview.superview);
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    
+    if(indexPath.section==0) {
+        return YES;
+    }
+    return cell.editingStyle==UITableViewCellEditingStyleDelete;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
