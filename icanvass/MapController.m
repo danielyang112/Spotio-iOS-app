@@ -15,7 +15,6 @@
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
-@property (nonatomic) BOOL satellite;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @end
@@ -46,7 +45,8 @@
     _mapView.myLocationEnabled=YES;
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
-    _mapView.mapType=_satellite?kGMSTypeSatellite:kGMSTypeNormal;
+    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
+    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
     self.view=_mapView;
 }
 
@@ -113,8 +113,8 @@
 
 - (void)mapSettingsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
-    self.satellite=[notification.userInfo[@"satellite"] boolValue];
-    _mapView.mapType=_satellite?kGMSTypeSatellite:kGMSTypeNormal;
+    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
+    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
 }
 
 #pragma mark - GMSMapViewDelegate

@@ -261,7 +261,7 @@ static NSDateFormatter *dateFormatter;
     if(section==0) {
         return 3;
     } else {
-        return [_customFields count];
+        return self.isEditing?[_customFields count]:0;
     }
     
     /*

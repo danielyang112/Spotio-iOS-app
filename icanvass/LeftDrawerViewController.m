@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _mapSwitch.on=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     // Do any additional setup after loading the view.
 }
 
@@ -67,8 +68,9 @@
 }
 
 - (IBAction)switchChanged:(UISwitch *)sender {
-    NSDictionary *ui=@{@"satellite":[NSNumber numberWithBool:sender.on]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICMapSettings" object:nil userInfo:ui];
+    NSInteger on=sender.on?1:0;
+    [[NSUserDefaults standardUserDefaults] setObject:@(on) forKey:@"Satellite"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICMapSettings" object:nil userInfo:nil];
     [self.mm_drawerController closeDrawerAnimated:YES completion:nil];
 }
 
