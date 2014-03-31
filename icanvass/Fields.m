@@ -74,9 +74,14 @@
 - (NSArray*)fieldsArrayFromArray:(NSArray*)a {
     return [a mapWith:^NSObject *(NSObject *o) {
         Field *f=[[Field alloc] initWithDictionary:(NSDictionary*)o];
-        _fieldById[@(f.ident)]=f;
         return f;
     }];
+}
+
+- (void)updateDictionary {
+    for(Field *f in _fields){
+        _fieldById[[@(f.ident) stringValue]]=f;
+    }
 }
 
 #pragma mark - API
@@ -92,6 +97,7 @@
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.fields=[self fieldsArrayFromArray:responseObject[@"value"]];
+        [self updateDictionary];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFields" object:nil];
         block(_fields);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

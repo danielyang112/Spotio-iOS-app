@@ -320,6 +320,7 @@ static NSDateFormatter *dateFormatter;
         CellIdentifier=@"DetailsTextCell";
         DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         cell.field.text=_streetName;
+        cell.field.delegate=self;
         self.streetNameTextField=cell.field;
         return cell;
     }
@@ -436,10 +437,28 @@ static NSDateFormatter *dateFormatter;
     self.activeField=textField;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    if(!indexPath || indexPath.section==0){
+        return YES;
+    }
+    if(indexPath.section==0) {
+        return YES;
+    }
     
+    Field *f=_customFields[indexPath.row];
+    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    _addedFields[key]=[textField.text stringByReplacingCharactersInRange:range withString:string];
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    /*DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    if(!indexPath || indexPath.section==0){
+        return;
+    }
     if(indexPath.section==0) {
         if(indexPath.row==0) {
             self.streetNumber=textField.text;
@@ -453,8 +472,8 @@ static NSDateFormatter *dateFormatter;
     Field *f=_customFields[indexPath.row];
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
     _addedFields[key]=cell.field.text;
-    //f.clientData=cell.field.text;
-    
+    //f.clientData=cell.field.text;*/
+    self.activeField=nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -585,7 +604,7 @@ static NSDateFormatter *dateFormatter;
         DatePickerViewController *d=segue.destinationViewController;
         d.delegate=self;
         d.name=f.name;
-        d.date=[_addedFields[key] isEqualToString:@""]?[NSDate date]:_addedFields[key];
+        d.date=[_addedFields[key] isKindOfClass:[NSDate class]]?_addedFields[key]:[NSDate date];
     } else if([segue.identifier isEqualToString:@"DropDown"]) {
         DropDownViewController *drop=segue.destinationViewController;
         drop.delegate=self;
