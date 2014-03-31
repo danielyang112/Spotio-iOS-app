@@ -207,6 +207,7 @@
 - (BOOL)addressExists:(NSString*)streetName number:(NSString*)number {
     NSArray *a=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
         PinTemp *p=(PinTemp*)o;
+        if([p.ident isEqualToString:_pin.ident]) return NO;
         return [p.location.streetName isEqualToString:streetName] && [p.location.streetNumber isEqualToString:number];
     }];
     return [a count];
@@ -215,7 +216,7 @@
 static NSDateFormatter *dateFormatter;
 - (void)addPin {
     if([self addressExists:_streetNameTextField.text number:_streetNumberTextField.text]){
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exist" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -277,6 +278,11 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)editPin {
+    if([self addressExists:_streetNameTextField.text number:_streetNumberTextField.text]){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     if(!dateFormatter) {
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
