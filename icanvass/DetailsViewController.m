@@ -590,9 +590,9 @@ static NSDateFormatter *dateFormatter;
 
 - (void)setStatus:(NSString *)status {
     _status=status;
-    NSRange range = NSMakeRange(0, 1);
-    NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
-    [self.tableView reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+    //NSRange range = NSMakeRange(0, 1);
+    //NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UIActionSheetDelegate
