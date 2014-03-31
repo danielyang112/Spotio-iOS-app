@@ -30,6 +30,7 @@
 @property (nonatomic,strong) NSArray *customFields;
 @property (nonatomic,strong) NSMutableDictionary *addedFields;
 
+
 @property (nonatomic,weak) UITextField *activeField;
 
 @end
@@ -202,9 +203,22 @@
         NSLog(@"geocode error");
     }];
 }
+
+- (BOOL)addressExists:(NSString*)streetName number:(NSString*)number {
+    NSArray *a=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
+        PinTemp *p=(PinTemp*)o;
+        return [p.location.streetName isEqualToString:streetName] && [p.location.streetNumber isEqualToString:number];
+    }];
+    return [a count];
+}
+
 static NSDateFormatter *dateFormatter;
 - (void)addPin {
-    
+    if([self addressExists:_streetNameTextField.text number:_streetNumberTextField.text]){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exist" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     if(!dateFormatter) {
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
@@ -302,7 +316,7 @@ static NSDateFormatter *dateFormatter;
     if(section==0) {
         return 3;
     } else {
-        return tableView.isEditing?[_customFields count]:0;
+        return tableView.isEditing?[_customFields count]:[_pin.customValues count];
     }
     
     /*
@@ -348,6 +362,33 @@ static NSDateFormatter *dateFormatter;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0) {
         return [self tableView:tableView firstSectionForRowAtIndexPath:indexPath];
+    }else if(!tableView.isEditing){
+        NSString *CellIdentifier = @"DetailsDropDownCell";
+        DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.enabled=NO;
+        NSArray *c=_pin.customValues;
+        NSDictionary *d=c[indexPath.row];
+        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        cell.textLabel.text=f.name;
+        NSString *v=nilIfNull(d[@"StringValue"]);
+        if(!v) v=nilIfNull(d[@"IntValue"]);
+        if(!v) v=nilIfNull(d[@"DecimalValue"]);
+        if(!v) {
+            static NSDateFormatter *dFormatter;
+            static NSDateFormatter *ddFormatter;
+            if(!dFormatter){
+                dFormatter=[[NSDateFormatter alloc] init];
+                dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+            }
+            if(!ddFormatter) {
+                ddFormatter=[[NSDateFormatter alloc] init];
+                ddFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+            }
+            NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
+            v=[dFormatter stringFromDate:date];
+        }
+        cell.detailTextLabel.text=v;
+        return cell;
     }
     
     Field *f=_customFields[indexPath.row];
@@ -359,12 +400,12 @@ static NSDateFormatter *dateFormatter;
         cell.enabled=!!_addedFields[key];
         
         cell.textLabel.text=f.name;
-        static NSDateFormatter *dateFormatter;
-        if(!dateFormatter){
-            dateFormatter=[[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+        static NSDateFormatter *dFormatter;
+        if(!dFormatter){
+            dFormatter=[[NSDateFormatter alloc] init];
+            dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
         }
-        cell.detailTextLabel.text=[dateFormatter stringFromDate:_addedFields[key]];
+        cell.detailTextLabel.text=[dFormatter stringFromDate:_addedFields[key]];
         
         return cell;
     }if(f.type==FieldDropDown){
