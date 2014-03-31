@@ -28,6 +28,11 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"LoginView"];
+}
+
 #pragma mark - Helpers
 
 - (void)close {

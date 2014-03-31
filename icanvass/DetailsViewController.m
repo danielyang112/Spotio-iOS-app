@@ -14,6 +14,7 @@
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
+#import "Mixpanel.h"
 #import <EventKit/EventKit.h>
 
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
@@ -72,6 +73,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"DetailsView"];
     [self updateFields];
 }
 

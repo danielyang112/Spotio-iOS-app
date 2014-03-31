@@ -9,6 +9,7 @@
 #import "FilterViewController.h"
 #import "Pins.h"
 #import "PinTemp.h"
+#import "Mixpanel.h"
 #import "utilities.h"
 
 #define kStatusSection 0
@@ -66,6 +67,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"FilterView"];
     [[Pins sharedInstance] sendStatusesTo:^(NSArray *a) {
         self.statuses=a;
         [self.statusTableView reloadData];

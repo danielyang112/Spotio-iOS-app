@@ -13,6 +13,7 @@
 #import "PinTemp.h"
 #import "PocketSVG.h"
 #import "utilities.h"
+#import "Mixpanel.h"
 
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
@@ -73,6 +74,7 @@ enum ICSortOrder : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"ListView"];
     [self refresh];
 }
 

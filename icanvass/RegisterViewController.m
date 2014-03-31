@@ -34,6 +34,11 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"RegisterView"];
+}
+
 #pragma mark - Helpers
 
 - (void)registerForKeyboardNotifications {

@@ -10,6 +10,7 @@
 #import "DetailsViewController.h"
 #import "Pins.h"
 #import "PinTemp.h"
+#import "Mixpanel.h"
 
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
@@ -56,6 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[Mixpanel sharedInstance] track:@"MapView"];
     [self refresh];
 }
 
