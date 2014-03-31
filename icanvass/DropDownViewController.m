@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tableView reloadData];
     // Do any additional setup after loading the view.
 }
 

@@ -10,11 +10,12 @@
 #import "ICRequestManager.h"
 #import "DetailsTableViewCell.h"
 #import "DatePickerViewController.h"
+#import "DropDownViewController.h"
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
 
-@interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate>
+@interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
 @property (nonatomic,strong) NSString *zipCode;
@@ -331,6 +332,15 @@ static NSDateFormatter *dateFormatter;
         cell.detailTextLabel.text=[dateFormatter stringFromDate:_addedFields[key]];
         
         return cell;
+    }if(f.type==FieldDropDown){
+        NSString *CellIdentifier = @"DetailsDropDownCell";
+        DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.enabled=!!_addedFields[key];
+        
+        cell.textLabel.text=f.name;
+        cell.detailTextLabel.text=_addedFields[key];
+        
+        return cell;
     }else{
         NSString *CellIdentifier = @"DetailsTextCell";
         DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -370,7 +380,13 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"DatePicker" sender:nil];
+    //[tableView deselectRowAtIndexPath:indexPath animated:NO];
+    Field *f=_customFields[indexPath.row];
+    if(f.type==FieldDateTime){
+        [self performSegueWithIdentifier:@"DatePicker" sender:nil];
+    }else if(f.type==FieldDropDown){
+        [self performSegueWithIdentifier:@"DropDown" sender:nil];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -428,6 +444,15 @@ static NSDateFormatter *dateFormatter;
     Field *f=_customFields[indexPath.row];
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
     _addedFields[key]=date;
+}
+
+#pragma mark - DropDownDelegate
+
+- (void)dropDown:(DropDownViewController *)dropDown changedTo:(NSString *)value {
+    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    Field *f=_customFields[indexPath.row];
+    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    _addedFields[key]=value;
 }
 
 #pragma mark - API
@@ -525,13 +550,19 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    DatePickerViewController *d=segue.destinationViewController;
-    d.delegate=self;
     NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
     Field *f=_customFields[indexPath.row];
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
-    d.name=f.name;
-    d.date=[_addedFields[key] isEqualToString:@""]?[NSDate date]:_addedFields[key];
+    if([segue.identifier isEqualToString:@"DatePicker"]) {
+        DatePickerViewController *d=segue.destinationViewController;
+        d.delegate=self;
+        d.name=f.name;
+        d.date=[_addedFields[key] isEqualToString:@""]?[NSDate date]:_addedFields[key];
+    } else if([segue.identifier isEqualToString:@"DropDown"]) {
+        DropDownViewController *drop=segue.destinationViewController;
+        drop.delegate=self;
+        drop.options=f.settings;
+    }
 }
 
 @end

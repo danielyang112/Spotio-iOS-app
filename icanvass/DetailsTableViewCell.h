@@ -22,3 +22,7 @@
 @interface DetailsDateCell : DetailsTableViewCell
 
 @end
+
+@interface DetailsDropDownCell : DetailsTableViewCell
+
+@end
