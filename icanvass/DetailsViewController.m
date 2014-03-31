@@ -14,6 +14,7 @@
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
+#import <EventKit/EventKit.h>
 
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
@@ -214,10 +215,14 @@ static NSDateFormatter *dateFormatter;
                              @"Zip":_zipCode};
     //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
                             //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
+    NSString *titleOfEvent;
+    NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
     for(NSString *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[key];
         if(f.type==FieldDateTime){
+            titleOfEvent=f.name;
+            dateOfEvent=_addedFields[key];
             [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
         }else if(f.type==FieldNumber){
             [customValues addObject:@{@"DefinitionId":key,@"IntValue":_addedFields[key]}];
@@ -239,6 +244,20 @@ static NSDateFormatter *dateFormatter;
                          @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
                          @"CustomValues":customValues};
     [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
+        if(titleOfEvent){
+            EKEventStore *store = [[EKEventStore alloc] init];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                EKEvent *event = [EKEvent eventWithEventStore:store];
+                event.title = titleOfEvent;
+                event.startDate = dateOfEvent;
+                event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                [event setCalendar:[store defaultCalendarForNewEvents]];
+                NSError *err = nil;
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+//                NSString *savedEventId = event.eventIdentifier;  //this is so you can access this event later
+            }];
+        }
         [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
     }];
 }
