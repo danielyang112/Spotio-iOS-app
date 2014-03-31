@@ -57,7 +57,7 @@
 - (id)init {
     self=[super init];
     if(self) {
-        
+        self.fieldById=[[NSMutableDictionary alloc] initWithCapacity:5];
     }
     return self;
 }
@@ -73,7 +73,9 @@
 
 - (NSArray*)fieldsArrayFromArray:(NSArray*)a {
     return [a mapWith:^NSObject *(NSObject *o) {
-        return [[Field alloc] initWithDictionary:(NSDictionary*)o];
+        Field *f=[[Field alloc] initWithDictionary:(NSDictionary*)o];
+        _fieldById[@(f.ident)]=f;
+        return f;
     }];
 }
 

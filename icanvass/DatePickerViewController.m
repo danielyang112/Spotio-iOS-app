@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.backgroundColor=[UIColor clearColor];
     self.datePicker.minimumDate=[NSDate date];
     [self.datePicker setDate:_date animated:YES];
     [self.tableView reloadData];

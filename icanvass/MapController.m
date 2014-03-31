@@ -86,7 +86,7 @@
 
 - (void)refresh {
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
-        for(GMSMarker *m in _markers.allValues){
+        for(GMSMarker *m in [_markers allValues]){
             m.map=nil;
         }
         [_markers removeAllObjects];

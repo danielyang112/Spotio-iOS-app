@@ -34,4 +34,5 @@ typedef enum FieldType : NSUInteger {
 @interface Fields : NSObject
 + (Fields*)sharedInstance;
 - (void)sendFieldsTo:(void (^)(NSArray *a))block;
+@property (nonatomic,strong) NSMutableDictionary *fieldById;
 @end

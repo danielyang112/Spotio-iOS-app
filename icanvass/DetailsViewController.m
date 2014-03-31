@@ -29,6 +29,8 @@
 @property (nonatomic,strong) NSArray *customFields;
 @property (nonatomic,strong) NSMutableDictionary *addedFields;
 
+@property (nonatomic,weak) UITextField *activeField;
+
 @end
 
 @implementation DetailsViewController
@@ -210,8 +212,21 @@ static NSDateFormatter *dateFormatter;
                              @"City":_city,
                              @"State":_state,
                              @"Zip":_zipCode};
-    NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
-                            @{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
+    //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
+                            //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
+    NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
+    for(NSString *key in [_addedFields allKeys]) {
+        Field *f=[Fields sharedInstance].fieldById[key];
+        if(f.type==FieldDateTime){
+            [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
+        }else if(f.type==FieldNumber){
+            [customValues addObject:@{@"DefinitionId":key,@"IntValue":_addedFields[key]}];
+        }else if(f.type==FieldMoney){
+            [customValues addObject:@{@"DefinitionId":key,@"DecimalValue":_addedFields[key]}];
+        }else{
+            [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
+        }
+    }
     NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
                          @"Location":location,
                          @"Status":_status,
@@ -222,7 +237,7 @@ static NSDateFormatter *dateFormatter;
                          @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
                          @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
                          @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
-                         @"CustomValues":customFields};
+                         @"CustomValues":customValues};
     [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
     }];
@@ -237,8 +252,8 @@ static NSDateFormatter *dateFormatter;
                              @"City":_city,
                              @"State":_state,
                              @"Zip":_zipCode};
-    NSDictionary *d=@{@"DefinitionId":@"1",@"StringValue":@"Abc"};
-    NSArray *customFields=@[d];
+    //NSDictionary *d=@{@"DefinitionId":@"1",@"StringValue":@"Abc"};
+    NSArray *customFields=@[];
     NSDictionary *data=@{@"Id":_pin.ident,
                          @"Location":location,
                          @"Status":_status,
@@ -375,6 +390,7 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - UITableViewDelegate
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    [_activeField endEditing:YES];
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     return cell.editingAccessoryType==UITableViewCellAccessoryDisclosureIndicator;
 }
@@ -382,6 +398,7 @@ static NSDateFormatter *dateFormatter;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //[tableView deselectRowAtIndexPath:indexPath animated:NO];
     Field *f=_customFields[indexPath.row];
+    [_activeField endEditing:YES];
     if(f.type==FieldDateTime){
         [self performSegueWithIdentifier:@"DatePicker" sender:nil];
     }else if(f.type==FieldDropDown){
@@ -415,7 +432,11 @@ static NSDateFormatter *dateFormatter;
     return cell.editingStyle==UITableViewCellEditingStyleDelete;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeField=textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     
@@ -426,13 +447,17 @@ static NSDateFormatter *dateFormatter;
             self.streetName=textField.text;
         }
         [textField endEditing:YES];
-        return YES;
+        return;
     }
     
     Field *f=_customFields[indexPath.row];
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
     _addedFields[key]=cell.field.text;
     //f.clientData=cell.field.text;
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField endEditing:YES];
     return YES;
 }
@@ -523,14 +548,17 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
+    [self textFieldDidEndEditing:_activeField];
     [self addPin];
 }
 
 - (IBAction)cancel:(id)sender {
+    [_activeField endEditing:YES];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
 }
 
 - (IBAction)status:(id)sender {
+    [self textFieldDidEndEditing:_activeField];
     [[Pins sharedInstance] sendStatusesTo:^(NSArray *a) {
         self.statuses=a;
         UIActionSheet *as=[[UIActionSheet alloc] initWithTitle:@"Status"
