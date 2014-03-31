@@ -15,7 +15,7 @@
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate;
 @end
 
-@interface MapController : UIViewController
+@interface MapController : UIViewController<UISearchBarDelegate>
 @property (nonatomic,strong) CLLocation *location;
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @end

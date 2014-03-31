@@ -11,12 +11,17 @@
 #import "Pins.h"
 #import "PinTemp.h"
 #import "Mixpanel.h"
+#import "utilities.h"
 
 @interface MapController () <GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
+@property (nonatomic,strong) NSString *searchText;
+@property (nonatomic,strong) NSArray *pins;
+@property (nonatomic,strong) NSArray *filtered;
+@property (nonatomic,strong) UISearchBar *searchBar;
 @end
 
 @implementation MapController
@@ -40,14 +45,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mapView=[GMSMapView mapWithFrame:CGRectZero camera:[self cameraPosition]];
+    self.mapView=[GMSMapView mapWithFrame:[self.view bounds] camera:[self cameraPosition]];
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
     _mapView.settings.myLocationButton=YES;
     _mapView.settings.compassButton=YES;
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
-    self.view=_mapView;
+    [self.view insertSubview:_mapView atIndex:0];
+    self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0.f,0.f,320.f,44.f)];
+    _searchBar.delegate=self;
+    _searchBar.showsCancelButton=YES;
+    [self.view addSubview:_searchBar];
+}
+
+- (void)viewWillLayoutSubviews {
+    self.mapView.frame=self.view.bounds;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -86,16 +99,37 @@
     return marker;
 }
 
+- (void)filterArray {
+    if(!_searchText || [_searchText isEqualToString:@""]){
+        self.filtered=_pins;
+        [self refreshMarkers];
+        return;
+    }
+    self.filtered=[_pins grepWith:^BOOL(NSObject *o) {
+        PinTemp *p=(PinTemp*)o;
+        return ([p.status rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
+        || ([p.address rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
+        || ([p.address2 rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound);
+    }];
+    [self refreshMarkers];
+}
+
+- (void)refreshMarkers {
+    for(GMSMarker *m in [_markers allValues]){
+        m.map=nil;
+    }
+    [_markers removeAllObjects];
+    for(PinTemp *pin in _filtered){
+        GMSMarker *marker=[self markerForPin:pin];
+        self.markers[pin.ident]=marker;
+    }
+}
+
 - (void)refresh {
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
-        for(GMSMarker *m in [_markers allValues]){
-            m.map=nil;
-        }
-        [_markers removeAllObjects];
-        for(PinTemp *pin in a){
-            GMSMarker *marker=[self markerForPin:pin];
-            self.markers[pin.ident]=marker;
-        }
+        self.pins=a;
+        self.filtered=a;
+        [self refreshMarkers];
     }];
 }
 
@@ -169,6 +203,25 @@
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
     PinTemp *pin=marker.userData;
     [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.searchText=searchText;
+    [self filterArray];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    //self.searchText=nil;
+    //[self filterArray];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+    self.searchText=nil;
+    [self filterArray];
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - API
