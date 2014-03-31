@@ -37,6 +37,7 @@
     loc.zip=ld[@"Zip"];
     loc.state=ld[@"State"];
     self.location=loc;
+    self.customValues=dic[@"CustomValues"];
 }
 
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic {

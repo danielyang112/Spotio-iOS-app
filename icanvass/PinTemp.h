@@ -10,12 +10,12 @@
 
 @interface LocationTemp : NSObject
 
-@property (nonatomic, retain) NSString *streetName;
-@property (nonatomic, retain) NSString *streetNumber;
-@property (nonatomic, retain) NSString *city;
-@property (nonatomic, retain) NSString *state;
-@property (nonatomic, retain) NSString *unit;
-@property (nonatomic, retain) NSString *zip;
+@property (nonatomic, strong) NSString *streetName;
+@property (nonatomic, strong) NSString *streetNumber;
+@property (nonatomic, strong) NSString *city;
+@property (nonatomic, strong) NSString *state;
+@property (nonatomic, strong) NSString *unit;
+@property (nonatomic, strong) NSString *zip;
 
 @end
 
@@ -24,17 +24,18 @@
 - (void)updateWithDictionary:(NSDictionary*)dic;
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic;
 
-@property (nonatomic, retain) NSString *ident;
-@property (nonatomic, retain) NSString *user;
-@property (nonatomic, retain) NSDictionary *clientData;
-@property (nonatomic, retain) NSString *notes;
-@property (nonatomic, retain) NSNumber *latitude;
-@property (nonatomic, retain) NSNumber *longitude;
-@property (nonatomic, retain) NSDate *creationDate;
-@property (nonatomic, retain) NSString *status;
-@property (nonatomic, retain) LocationTemp *location;
-@property (nonatomic, retain) NSString *address;
-@property (nonatomic, retain) NSString *address2;
+@property (nonatomic, strong) NSString *ident;
+@property (nonatomic, strong) NSString *user;
+@property (nonatomic, strong) NSDictionary *clientData;
+@property (nonatomic, strong) NSString *notes;
+@property (nonatomic, strong) NSNumber *latitude;
+@property (nonatomic, strong) NSNumber *longitude;
+@property (nonatomic, strong) NSDate *creationDate;
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) LocationTemp *location;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *address2;
+@property (nonatomic, strong) NSArray *customValues;
 + (NSString*)formatDate:(NSDate*)date;
 
 @end

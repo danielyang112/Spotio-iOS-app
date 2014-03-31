@@ -12,6 +12,7 @@
 #import "PinCell.h"
 #import "PinTemp.h"
 #import "PocketSVG.h"
+#import "utilities.h"
 
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
@@ -34,6 +35,7 @@ enum ICSortOrder : NSUInteger {
 @property (nonatomic,strong) UIButton *addressButton;
 @property (nonatomic,strong) UIButton *dateButton;
 @property (nonatomic,strong) NSSortDescriptor *currentDescriptor;
+@property (nonatomic,strong) NSString *searchText;
 @property (nonatomic) enum ICSortOrder sortOrder;
 @end
 
@@ -72,6 +74,10 @@ enum ICSortOrder : NSUInteger {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refresh];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [_searchBar resignFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -115,12 +121,29 @@ enum ICSortOrder : NSUInteger {
     [self updateArrows];
     NSArray *descriptors=@[_currentDescriptor];
     self.pins=[self.pins sortedArrayUsingDescriptors:descriptors];
+    self.filtered=[self.filtered sortedArrayUsingDescriptors:descriptors];
+    [self.tableView reloadData];
+}
+
+- (void)filterArray {
+    if(!_searchText || [_searchText isEqualToString:@""]){
+        self.filtered=_pins;
+        [self.tableView reloadData];
+        return;
+    }
+    self.filtered=[_pins grepWith:^BOOL(NSObject *o) {
+        PinTemp *p=(PinTemp*)o;
+        return ([p.status rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
+        || ([p.address rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
+        || ([p.address2 rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound);
+    }];
     [self.tableView reloadData];
 }
 
 - (void)refresh {
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         self.pins=a;
+        self.filtered=a;
         [self sort];
     }];
 }
@@ -173,7 +196,7 @@ enum ICSortOrder : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [_pins count];
+    return [_filtered count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -189,7 +212,7 @@ enum ICSortOrder : NSUInteger {
     PinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PinTemp *pin=_pins[indexPath.row];
+    PinTemp *pin=_filtered[indexPath.row];
     cell.topLabel.text=pin.address;
     cell.bottomLabel.text=pin.address2;
     cell.rightLabel.text=[PinTemp formatDate:pin.creationDate];
@@ -249,6 +272,25 @@ enum ICSortOrder : NSUInteger {
     [cell.icon.layer addSublayer:another];
     */
     return cell;
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.searchText=searchText;
+    [self filterArray];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    //self.searchText=nil;
+    //[self filterArray];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+    self.searchText=nil;
+    [self filterArray];
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - Navigation
