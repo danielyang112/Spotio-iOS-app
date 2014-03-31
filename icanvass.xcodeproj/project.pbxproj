@@ -108,6 +108,8 @@
 		42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B418E8C5E700B46FBF /* UIImage+MPAverageColor.m */; };
 		42B3A6D118E8C5E700B46FBF /* UIImage+MPImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B618E8C5E700B46FBF /* UIImage+MPImageEffects.m */; };
 		42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */; };
+		42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6D418E9781800B46FBF /* DatePickerViewController.m */; };
+		42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6D718E9783500B46FBF /* DropDownViewController.m */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -284,6 +286,10 @@
 		42B3A6B618E8C5E700B46FBF /* UIImage+MPImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MPImageEffects.m"; sourceTree = "<group>"; };
 		42B3A6B718E8C5E700B46FBF /* UIView+MPSnapshotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MPSnapshotImage.h"; sourceTree = "<group>"; };
 		42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MPSnapshotImage.m"; sourceTree = "<group>"; };
+		42B3A6D318E9781800B46FBF /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		42B3A6D418E9781800B46FBF /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
+		42B3A6D618E9783500B46FBF /* DropDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownViewController.h; sourceTree = "<group>"; };
+		42B3A6D718E9783500B46FBF /* DropDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownViewController.m; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -387,6 +393,10 @@
 				42C35AE218E21E6700E83545 /* FilterViewController.m */,
 				4239345818E2F56E0041EF93 /* DatesPickerViewController.h */,
 				4239345918E2F56E0041EF93 /* DatesPickerViewController.m */,
+				42B3A6D318E9781800B46FBF /* DatePickerViewController.h */,
+				42B3A6D418E9781800B46FBF /* DatePickerViewController.m */,
+				42B3A6D618E9783500B46FBF /* DropDownViewController.h */,
+				42B3A6D718E9783500B46FBF /* DropDownViewController.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -779,6 +789,8 @@
 			files = (
 				42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */,
 				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
+				42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */,
+				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,

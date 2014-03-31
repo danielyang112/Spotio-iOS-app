@@ -9,11 +9,12 @@
 #import "DetailsViewController.h"
 #import "ICRequestManager.h"
 #import "DetailsTableViewCell.h"
+#import "DatePickerViewController.h"
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
 
-@interface DetailsViewController () <UIActionSheetDelegate>
+@interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
 @property (nonatomic,strong) NSString *zipCode;
@@ -312,16 +313,35 @@ static NSDateFormatter *dateFormatter;
     if(indexPath.section==0) {
         return [self tableView:tableView firstSectionForRowAtIndexPath:indexPath];
     }
-    static NSString *CellIdentifier = @"DetailsTextCell";
-    DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.field.delegate=self;
-    //UITextField *field=(UITextField*)[cell viewWithTag:1];
+    
     Field *f=_customFields[indexPath.row];
-    cell.field.placeholder=f.name;
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
-    cell.field.text=_addedFields[key];
-    cell.enabled=!!_addedFields[key];
-    return cell;
+    
+    if(f.type==FieldDateTime){
+        NSString *CellIdentifier = @"DetailsDateCell";
+        DetailsDateCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.enabled=!!_addedFields[key];
+        
+        cell.textLabel.text=f.name;
+        static NSDateFormatter *dateFormatter;
+        if(!dateFormatter){
+            dateFormatter=[[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+        }
+        cell.detailTextLabel.text=[dateFormatter stringFromDate:_addedFields[key]];
+        
+        return cell;
+    }else{
+        NSString *CellIdentifier = @"DetailsTextCell";
+        DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.field.delegate=self;
+        //UITextField *field=(UITextField*)[cell viewWithTag:1];
+        
+        cell.field.placeholder=f.name;
+        cell.field.text=_addedFields[key];
+        cell.enabled=!!_addedFields[key];
+        return cell;
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -333,11 +353,9 @@ static NSDateFormatter *dateFormatter;
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
     DetailsTableViewCell *cell = (DetailsTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     if(editingStyle==UITableViewCellEditingStyleInsert) {
-        _addedFields[key]=cell.field.text;
-///        f.clientData=cell.field.text;
+           _addedFields[key]=@"";
         cell.enabled=YES;
     } else {
-//        f.clientData=nil;
         [_addedFields removeObjectForKey:key];
         cell.enabled=NO;
     }
@@ -347,7 +365,12 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - UITableViewDelegate
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+    return cell.editingAccessoryType==UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"DatePicker" sender:nil];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -396,6 +419,15 @@ static NSDateFormatter *dateFormatter;
     //f.clientData=cell.field.text;
     [textField endEditing:YES];
     return YES;
+}
+
+#pragma mark - DatePickerDelegate
+
+- (void)datePicker:(DatePickerViewController *)picker changedDate:(NSDate *)date {
+    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    Field *f=_customFields[indexPath.row];
+    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    _addedFields[key]=date;
 }
 
 #pragma mark - API
@@ -488,6 +520,18 @@ static NSDateFormatter *dateFormatter;
         as.cancelButtonIndex=[a count];
         [as showInView:self.view];
     }];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    DatePickerViewController *d=segue.destinationViewController;
+    d.delegate=self;
+    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    Field *f=_customFields[indexPath.row];
+    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    d.name=f.name;
+    d.date=[_addedFields[key] isEqualToString:@""]?[NSDate date]:_addedFields[key];
 }
 
 @end

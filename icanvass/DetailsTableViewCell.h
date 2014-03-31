@@ -18,3 +18,7 @@
 - (IBAction)textFieldDidChange:(UITextField*)sender;
 - (IBAction)stepperChanged:(UIStepper*)sender;
 @end
+
+@interface DetailsDateCell : DetailsTableViewCell
+
+@end
