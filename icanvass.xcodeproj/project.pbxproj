@@ -110,6 +110,8 @@
 		42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6B818E8C5E700B46FBF /* UIView+MPSnapshotImage.m */; };
 		42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6D418E9781800B46FBF /* DatePickerViewController.m */; };
 		42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3A6D718E9783500B46FBF /* DropDownViewController.m */; };
+		42B3A6DB18E9AF9C00B46FBF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A6D918E9AF9C00B46FBF /* icon.png */; };
+		42B3A6DC18E9AF9C00B46FBF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3A6DA18E9AF9C00B46FBF /* icon@2x.png */; };
 		42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */; };
 		42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF2E18D398210065D4C3 /* RegisterViewController.m */; };
 		42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBFF3118D3996E0065D4C3 /* Pins.m */; };
@@ -290,6 +292,8 @@
 		42B3A6D418E9781800B46FBF /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		42B3A6D618E9783500B46FBF /* DropDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownViewController.h; sourceTree = "<group>"; };
 		42B3A6D718E9783500B46FBF /* DropDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownViewController.m; sourceTree = "<group>"; };
+		42B3A6D918E9AF9C00B46FBF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		42B3A6DA18E9AF9C00B46FBF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		42BBFF2A18D395FA0065D4C3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		42BBFF2B18D395FA0065D4C3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		42BBFF2D18D398210065D4C3 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -514,6 +518,8 @@
 				42A6A59218CBA3BF0043233C /* Main.storyboard */,
 				42B3A67518E82FB900B46FBF /* InfoView.xib */,
 				42FA1F6418E1DF970015D137 /* ListHeader.xib */,
+				42B3A6D918E9AF9C00B46FBF /* icon.png */,
+				42B3A6DA18E9AF9C00B46FBF /* icon@2x.png */,
 				42A6A59818CBA3BF0043233C /* Images.xcassets */,
 				42A6A58718CBA3BF0043233C /* Supporting Files */,
 			);
@@ -742,6 +748,7 @@
 				42B3A68518E8903600B46FBF /* satellite@2x.png in Resources */,
 				42B3A6BB18E8C5E700B46FBF /* MPArrowLeft@2x.png in Resources */,
 				42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */,
+				42B3A6DB18E9AF9C00B46FBF /* icon.png in Resources */,
 				42B3A6BF18E8C5E700B46FBF /* MPCheckmark@2x.png in Resources */,
 				42B3A68218E8903600B46FBF /* logout@2x.png in Resources */,
 				42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */,
@@ -769,6 +776,7 @@
 				42B3A68418E8903600B46FBF /* reports@2x.png in Resources */,
 				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
 				42B3A68A18E89B2600B46FBF /* bg@2x.png in Resources */,
+				42B3A6DC18E9AF9C00B46FBF /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,7 +979,6 @@
 		42A6A5B018CBA3BF0043233C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -990,7 +997,6 @@
 		42A6A5B118CBA3BF0043233C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
