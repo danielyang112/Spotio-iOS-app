@@ -85,27 +85,27 @@
 }
 
 - (IBAction)addUser:(id)sender {
-    [self goToWebsiteWithText:@"Want to add some people to your team? No problem! Just click the button to go to the web app." title:@"Add User"];
+    [self goToWebsiteWithText:@"Want to add some people to your team? No problem! Just click the button to go to the web app and hit the \"Add User\" button in the top right corner." title:@"Add User"];
     [[Mixpanel sharedInstance] track:@"AddUserView"];
 }
 
 - (IBAction)customizeStatus:(id)sender {
-    [self goToWebsiteWithText:@"Make it work for you! Go ahead and login to the web app by clicking the button below." title:@"Customize Status"];
+    [self goToWebsiteWithText:@"Make it work for you! Go ahead and login to the web app by clicking the button below and in the settings menu in the top right you can customize pretty much everything." title:@"Customize Status"];
     [[Mixpanel sharedInstance] track:@"CustomizeStatusView"];
 }
 
 - (IBAction)customizeQuestions:(id)sender {
-    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the iCanvass web app, click the button below." title:@"Customize Questions"];
+    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the iCanvass web app, click the button below to go to the login page." title:@"Customize Questions"];
     [[Mixpanel sharedInstance] track:@"CustomizeQuestionsView"];
 }
 
 - (IBAction)deletePin:(id)sender {
-    [self goToWebsiteWithText:@"I know, I know. Made a mistake and want to delete a PIN. Go to the web app, just cklick below." title:@"Delete PIN"];
+    [self goToWebsiteWithText:@"I know, I know. Made a mistake and need to delete a PIN. Go to the web app where you can do that and much more, just click below to go to the login screen." title:@"Delete PIN"];
     [[Mixpanel sharedInstance] track:@"DeletePINView"];
 }
 
 - (IBAction)reports:(id)sender {
-    [self goToWebsiteWithText:@"Custom reports with all your data are just around the corner in the web app, click below." title:@"Reports"];
+    [self goToWebsiteWithText:@"Custom reports with all your data are right around the corner in the web app, click below." title:@"Reports"];
     [[Mixpanel sharedInstance] track:@"ReportsView"];
 }
 
