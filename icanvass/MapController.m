@@ -45,7 +45,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mapView=[GMSMapView mapWithFrame:[self.view bounds] camera:[self cameraPosition]];
+    CGRect f=self.view.bounds;
+    self.mapView=[GMSMapView mapWithFrame:f camera:[self cameraPosition]];
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
     _mapView.settings.myLocationButton=YES;
@@ -60,7 +61,10 @@
 }
 
 - (void)viewWillLayoutSubviews {
-    self.mapView.frame=self.view.bounds;
+    CGRect f=self.view.bounds;
+    f.size.height-=44.f;
+    f.origin.y+=44.f;
+    self.mapView.frame=f;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

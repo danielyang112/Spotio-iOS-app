@@ -61,6 +61,9 @@
 }
 
 - (void)viewWillLayoutSubviews {
+    CGRect f=self.view.bounds;
+    f.size.height-=44.f;
+    self.container.frame=f;
     _current.view.frame=_container.bounds;
 }
 
@@ -85,7 +88,7 @@
     [oldv willMoveToParentViewController:nil];
     [self addChildViewController:newv];
     
-    newv.view.frame=_container.bounds;
+    newv.view.frame=self.container.bounds;
     
     void(^completion)(BOOL)=^void(BOOL finished){
         [oldv removeFromParentViewController];

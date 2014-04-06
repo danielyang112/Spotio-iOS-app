@@ -72,6 +72,10 @@ enum ICSortOrder : NSUInteger {
     return self;
 }
 
+- (void)viewWillLayoutSubviews {
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[Mixpanel sharedInstance] track:@"ListView"];
