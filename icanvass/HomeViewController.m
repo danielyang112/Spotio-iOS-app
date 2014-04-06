@@ -60,6 +60,10 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+- (void)viewWillLayoutSubviews {
+    _current.view.frame=_container.bounds;
+}
+
 #pragma mark - Helpers
 
 -(void)setupLeftMenuButton{
