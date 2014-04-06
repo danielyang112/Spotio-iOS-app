@@ -312,6 +312,20 @@
                                                         <action selector="stepperChanged:" destination="cDv-bY-OHf" eventType="valueChanged" id="zNR-6O-cyh"/>
                                                     </connections>
                                                 </stepper>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWj-4x-tYW">
+                                                    <rect key="frame" x="15" y="18" width="290" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yIr-ka-yQ4">
+                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="T9t-TR-kiZ" secondAttribute="bottom" constant="6" id="0do-Dr-Srp"/>
@@ -324,8 +338,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="bottom" destination="MWj-4x-tYW" id="xOI-ZV-S9o"/>
                                             <outlet property="field" destination="T9t-TR-kiZ" id="caY-06-WNg"/>
                                             <outlet property="stepper" destination="Edi-tk-feq" id="im6-Ez-ecB"/>
+                                            <outlet property="top" destination="yIr-ka-yQ4" id="XdZ-rA-2Bn"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailsTextCell" id="Tnv-XJ-hTE" customClass="DetailsTableViewCell">
@@ -341,6 +357,20 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cc-hs-q6p">
+                                                    <rect key="frame" x="15" y="18" width="290" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6x-5K-ztR">
+                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="fxp-pj-lEW" secondAttribute="bottom" constant="6" id="2eI-he-ykA"/>
@@ -350,7 +380,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="bottom" destination="1cc-hs-q6p" id="hex-Ni-J8j"/>
                                             <outlet property="field" destination="fxp-pj-lEW" id="hCM-Lc-swh"/>
+                                            <outlet property="top" destination="W6x-5K-ztR" id="ygb-PC-VSv"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailsDateCell" textLabel="6Si-5e-7cy" detailTextLabel="1tU-Zy-QST" style="IBUITableViewCellStyleSubtitle" id="4F5-G0-iAD" customClass="DetailsDateCell">

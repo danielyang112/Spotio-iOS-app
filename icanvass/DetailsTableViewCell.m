@@ -19,6 +19,9 @@
     [super setEditing:editing animated:animated];
     _field.enabled=editing;
     _field.borderStyle=editing?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
+    _field.hidden=!editing;
+    _top.hidden=editing;
+    _bottom.hidden=editing;
 }
 
 @end

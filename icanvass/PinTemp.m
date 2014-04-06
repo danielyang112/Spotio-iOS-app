@@ -7,6 +7,7 @@
 //
 
 #import "PinTemp.h"
+#import "utilities.h"
 
 @implementation LocationTemp
 
@@ -33,7 +34,7 @@
     loc.streetNumber=a[0];
     loc.streetName=a[1];
     loc.city=ld[@"City"];
-    loc.unit=ld[@"Unit"];
+    loc.unit=[nilIfNull(ld[@"Unit"]) stringValue];
     loc.zip=ld[@"Zip"];
     loc.state=ld[@"State"];
     self.location=loc;

@@ -11,6 +11,8 @@
 @interface DetailsTableViewCell : UITableViewCell
 @property (nonatomic,weak) IBOutlet UITextField *field;
 @property (nonatomic) BOOL enabled;
+@property (weak, nonatomic) IBOutlet UILabel *top;
+@property (weak, nonatomic) IBOutlet UILabel *bottom;
 @end
 
 @interface DetailsStreetNumberCell : DetailsTableViewCell

@@ -20,6 +20,7 @@
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
+@property (nonatomic,strong) NSString *unit;
 @property (nonatomic,strong) NSString *zipCode;
 @property (nonatomic,strong) NSString *city;
 @property (nonatomic,strong) NSString *state;
@@ -127,6 +128,7 @@
     self.city=_pin.location.city;
     self.state=_pin.location.state;
     self.zipCode=_pin.location.zip;
+    self.unit=_pin.location.unit;
     
     self.status=_pin.status;
 }
@@ -226,10 +228,13 @@ static NSDateFormatter *dateFormatter;
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
-    NSDictionary *location=@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
+    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
                              @"City":_city,
                              @"State":_state,
-                             @"Zip":_zipCode};
+                             @"Zip":_zipCode} mutableCopy];
+    if(![_unitTextField.text isEqualToString:@""]){
+        location[@"Unit"]=_unitTextField.text;
+    }
     //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
                             //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
     NSString *titleOfEvent;
@@ -322,7 +327,7 @@ static NSDateFormatter *dateFormatter;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(section==0) {
-        return 3;
+        return 4;
     } else {
         return tableView.isEditing?[_customFields count]:[_pin.customValues count];
     }
@@ -340,29 +345,48 @@ static NSDateFormatter *dateFormatter;
         CellIdentifier=@"DetailsStatusCell";
         DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         UIButton *button=(UIButton*)[cell viewWithTag:1];
-        if(tableView.isEditing){
-            [button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
-            [button addTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
-        }
         if(_status){
             [button setTitle:_status forState:UIControlStateNormal];
             [button setTitleColor:[[Pins sharedInstance] colorForStatus:_status] forState:UIControlStateNormal];
+        }
+        if(tableView.isEditing){
+            [button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
+            button.layer.cornerRadius = 5;
+            button.layer.borderWidth = 1;
+            button.layer.borderColor = button.titleLabel.textColor.CGColor;
         }
         return cell;
     } else if(indexPath.row==1) {
         CellIdentifier=@"DetailsStreetNumberCell";
         DetailsStreetNumberCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.top.text=@"Number";
+        cell.field.placeholder=@"Number";
+        cell.bottom.text=_streetNumber;
         cell.field.text=_streetNumber;
         cell.stepper.value=[_streetNumber doubleValue];
         cell.field.delegate=self;
         self.streetNumberTextField=cell.field;
         return cell;
-    } else {
+    } else if(indexPath.row==2){
         CellIdentifier=@"DetailsTextCell";
         DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.top.text=@"Street";
+        cell.field.placeholder=@"Street";
+        cell.bottom.text=_streetName;
         cell.field.text=_streetName;
         cell.field.delegate=self;
         self.streetNameTextField=cell.field;
+        return cell;
+    }else{
+        CellIdentifier=@"DetailsTextCell";
+        DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.top.text=@"Unit";
+        cell.field.placeholder=@"Unit";
+        cell.bottom.text=_unit;
+        cell.field.text=_unit;
+        cell.field.delegate=self;
+        self.unitTextField=cell.field;
         return cell;
     }
 }
@@ -378,6 +402,7 @@ static NSDateFormatter *dateFormatter;
         NSDictionary *d=c[indexPath.row];
         Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
         cell.textLabel.text=f.name;
+//        cell.top.text=f.name;
         NSString *v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
@@ -396,6 +421,7 @@ static NSDateFormatter *dateFormatter;
             v=[dFormatter stringFromDate:date];
         }
         cell.detailTextLabel.text=v;
+//        cell.bottom.text=v;
         return cell;
     }
     
