@@ -8,7 +8,7 @@
 
 #import "ICRequestManager.h"
 
-#define kBaseUrl @"http://login.icanvassapp.com:444/"
+#define kBaseUrl @"http://login.icanvassapp.com:888/"
 #define kCompanyNameKey @"CompanyName"
 #define kPasswordKey @"Password"
 
