@@ -925,23 +925,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="text goes here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="szI-eL-Hc5">
-                                <rect key="frame" x="20" y="20" width="280" height="209"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text goes here" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="szI-eL-Hc5">
+                                <rect key="frame" x="20" y="20" width="280" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="elC-lJ-59S">
-                                <rect key="frame" x="20" y="237" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login to iCanvassapp.com">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="gotoWebsite:" destination="2d9-Cr-0bh" eventType="touchUpInside" id="aUz-Dq-3Ef"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need more help? Visit our Support Forum, just click &quot;Support&quot; from the slider menu." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="1XI-gN-Cga">
                                 <rect key="frame" x="20" y="419" width="280" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -949,12 +939,42 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kW-0a-I59">
+                                <rect key="frame" x="32" y="50" width="256" height="361"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="elC-lJ-59S">
+                                        <rect key="frame" x="20" y="164" width="216" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Login to iCanvassapp.com">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="gotoWebsite:" destination="2d9-Cr-0bh" eventType="touchUpInside" id="aUz-Dq-3Ef"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="elC-lJ-59S" secondAttribute="centerX" id="0jN-Fc-0dW"/>
+                                    <constraint firstAttribute="width" constant="256" id="XEA-bl-TwK"/>
+                                    <constraint firstAttribute="centerY" secondItem="elC-lJ-59S" secondAttribute="centerY" id="ehw-QZ-9kA"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="0kW-0a-I59" firstAttribute="leading" secondItem="shd-oV-UiQ" secondAttribute="leading" constant="32" id="85z-OJ-h1R"/>
+                            <constraint firstItem="1XI-gN-Cga" firstAttribute="top" secondItem="0kW-0a-I59" secondAttribute="bottom" constant="8" id="9WM-3a-UyO"/>
                             <constraint firstAttribute="trailing" secondItem="1XI-gN-Cga" secondAttribute="trailing" constant="20" id="CwK-Qj-wBK"/>
+                            <constraint firstAttribute="trailing" secondItem="szI-eL-Hc5" secondAttribute="trailing" constant="20" id="DCz-e0-f47"/>
+                            <constraint firstItem="szI-eL-Hc5" firstAttribute="leading" secondItem="shd-oV-UiQ" secondAttribute="leading" constant="20" id="J7Z-c9-jqA"/>
+                            <constraint firstAttribute="trailing" secondItem="0kW-0a-I59" secondAttribute="trailing" constant="32" id="QTF-2H-ZHq"/>
                             <constraint firstItem="yGW-1j-jKB" firstAttribute="top" secondItem="1XI-gN-Cga" secondAttribute="bottom" constant="20" id="R0t-WW-CXh"/>
                             <constraint firstItem="1XI-gN-Cga" firstAttribute="leading" secondItem="shd-oV-UiQ" secondAttribute="leading" constant="20" id="d9s-ka-L0R"/>
+                            <constraint firstItem="0kW-0a-I59" firstAttribute="top" secondItem="szI-eL-Hc5" secondAttribute="bottom" constant="8" id="mXG-Ky-j6b"/>
+                            <constraint firstItem="szI-eL-Hc5" firstAttribute="top" secondItem="Zc4-my-426" secondAttribute="bottom" constant="20" id="yyr-xZ-FoB"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
