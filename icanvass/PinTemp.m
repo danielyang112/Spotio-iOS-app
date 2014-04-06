@@ -66,7 +66,7 @@
 
 - (NSString*)address2 {
     if(!_address2) {
-        _address2=[NSString stringWithFormat:@"%@ %@, %@",self.location.city, self.location.state, self.location.zip];
+        _address2=[NSString stringWithFormat:@"%@, %@, %@",self.location.city, self.location.state, self.location.zip];
     }
     return _address2;
 }
