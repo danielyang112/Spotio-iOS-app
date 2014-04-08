@@ -15,8 +15,8 @@
 #import "Mixpanel.h"
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
-#define kFreshDeskSite @"icanvass.freshdesk.com"
-#define kFreshDeskAPIKey @"AA0MM4OpIMwfo14c2"
+#define kFreshDeskSite @"spotio.freshdesk.com"
+#define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
 
 @implementation AppDelegate
