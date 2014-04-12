@@ -473,11 +473,11 @@ static NSDateFormatter *dateFormatter;
     NSString *key=[NSString stringWithFormat:@"%d",f.ident];
     DetailsTableViewCell *cell = (DetailsTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     if(editingStyle==UITableViewCellEditingStyleInsert) {
-           _addedFields[key]=@"";
-        cell.enabled=YES;
+//        _addedFields[key]=@"";
+//        cell.enabled=YES;
     } else {
-        [_addedFields removeObjectForKey:key];
-        cell.enabled=NO;
+//        [_addedFields removeObjectForKey:key];
+//        cell.enabled=NO;
     }
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -502,17 +502,18 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section==1;
+//    return indexPath.section==1;
+    return NO;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section==0) {
+//    if(indexPath.section==0) {
         return UITableViewCellEditingStyleNone;
-    }
+//    }
     
-    Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
-    return _addedFields[key]?UITableViewCellEditingStyleDelete:UITableViewCellEditingStyleInsert;
+//    Field *f=_customFields[indexPath.row];
+//    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+//    return _addedFields[key]?UITableViewCellEditingStyleDelete:UITableViewCellEditingStyleInsert;
 }
 
 #pragma mark - UITextFieldDelegate
