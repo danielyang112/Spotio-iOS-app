@@ -120,7 +120,9 @@
             PinTemp *_p=(PinTemp*)o;
             return [pin.ident isEqual:_p.ident];
         }][0];
+        NSArray *c=p.customValues;
         [p updateWithDictionary:dictionary];
+        p.customValues=c;
         //NSInteger idx=[_pins indexOfObject:p];
         //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
 //        p.status=dictionary[@"Status"];
