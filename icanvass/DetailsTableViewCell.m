@@ -50,6 +50,12 @@
 
 @implementation DetailsDateCell
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    self.top.hidden=NO;
+    self.bottom.hidden=NO;
+}
+
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
@@ -59,6 +65,12 @@
 @end
 
 @implementation DetailsDropDownCell
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    self.top.hidden=NO;
+    self.bottom.hidden=NO;
+}
 
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];

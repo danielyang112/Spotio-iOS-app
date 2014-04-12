@@ -429,8 +429,8 @@ static NSDateFormatter *dateFormatter;
     if(f.type==FieldDateTime){
         NSString *CellIdentifier = @"DetailsDateCell";
         DetailsDateCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.enabled=!!_addedFields[key];
-        
+        //cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
         cell.top.text=f.name;
         static NSDateFormatter *dFormatter;
         if(!dFormatter){
@@ -443,10 +443,11 @@ static NSDateFormatter *dateFormatter;
     }if(f.type==FieldDropDown){
         NSString *CellIdentifier = @"DetailsDropDownCell";
         DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.enabled=!!_addedFields[key];
+//        cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
         
-        cell.textLabel.text=f.name;
-        cell.detailTextLabel.text=_addedFields[key];
+        cell.top.text=f.name;
+        cell.bottom.text=_addedFields[key];
         
         return cell;
     }else{
@@ -457,7 +458,8 @@ static NSDateFormatter *dateFormatter;
         
         cell.field.placeholder=f.name;
         cell.field.text=_addedFields[key];
-        cell.enabled=!!_addedFields[key];
+//        cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
         return cell;
     }
 }
