@@ -131,6 +131,28 @@
     self.unit=_pin.location.unit;
     
     self.status=_pin.status;
+    
+    for(NSDictionary *d in _pin.customValues){
+        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        NSString *v=nilIfNull(d[@"StringValue"]);
+        if(!v) v=nilIfNull(d[@"IntValue"]);
+        if(!v) v=nilIfNull(d[@"DecimalValue"]);
+        if(!v) {
+            static NSDateFormatter *dFormatter;
+            static NSDateFormatter *ddFormatter;
+            if(!dFormatter){
+                dFormatter=[[NSDateFormatter alloc] init];
+                dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+            }
+            if(!ddFormatter) {
+                ddFormatter=[[NSDateFormatter alloc] init];
+                ddFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+            }
+            NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
+            v=[dFormatter stringFromDate:date];
+        }
+        _addedFields[[d[@"DefinitionId"] stringValue]]=v;
+    }
 }
 
 - (void)updateAddressTextFields {
@@ -266,7 +288,7 @@ static NSDateFormatter *dateFormatter;
                          @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
                          @"CustomValues":customValues};
     [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
-        if(titleOfEvent){
+        if(success && titleOfEvent){
             EKEventStore *store = [[EKEventStore alloc] init];
             [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
                 if (!granted) { return; }
@@ -277,7 +299,6 @@ static NSDateFormatter *dateFormatter;
                 [event setCalendar:[store defaultCalendarForNewEvents]];
                 NSError *err = nil;
                 [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-//                NSString *savedEventId = event.eventIdentifier;  //this is so you can access this event later
             }];
         }
         [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
@@ -519,13 +540,13 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UITableViewCell *cell=(UITableViewCell*)(textField.superview.superview.superview);
-    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+//    UITableViewCell *cell=(UITableViewCell*)(textField.superview.superview.superview);
+//    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     
-    if(indexPath.section==0) {
+//    if(indexPath.section==0) {
         return YES;
-    }
-    return cell.editingStyle==UITableViewCellEditingStyleDelete;
+//    }
+//    return cell.editingStyle==UITableViewCellEditingStyleDelete;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -535,10 +556,13 @@ static NSDateFormatter *dateFormatter;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-    if(!indexPath || indexPath.section==0){
+    if(!indexPath){
         return YES;
     }
     if(indexPath.section==0) {
+        if(textField==_unitTextField){
+            _unit=[textField.text stringByReplacingCharactersInRange:range withString:string];
+        }
         return YES;
     }
     
@@ -598,6 +622,7 @@ static NSDateFormatter *dateFormatter;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
+//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
     [_tableView setEditing:editing animated:animated];
     [_tableView reloadData];
     if(!editing) {
@@ -668,7 +693,11 @@ static NSDateFormatter *dateFormatter;
 
 - (IBAction)cancel:(id)sender {
     [_activeField endEditing:YES];
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    if(_adding){
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    }else{
+        [self setEditing:NO animated:YES];
+    }
 }
 
 - (IBAction)status:(id)sender {

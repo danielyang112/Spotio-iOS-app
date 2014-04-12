@@ -98,7 +98,7 @@
 
 - (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=@"PinService.svc/Pins?$format=json";
+    NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
