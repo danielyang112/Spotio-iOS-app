@@ -54,16 +54,16 @@
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
     [self.view insertSubview:_mapView atIndex:0];
-    self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0.f,0.f,320.f,44.f)];
-    _searchBar.delegate=self;
-    _searchBar.showsCancelButton=YES;
+//    self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0.f,0.f,320.f,44.f)];
+//    _searchBar.delegate=self;
+//    _searchBar.showsCancelButton=YES;
     [self.view addSubview:_searchBar];
 }
 
 - (void)viewWillLayoutSubviews {
     CGRect f=self.view.bounds;
-    f.size.height-=44.f;
-    f.origin.y+=44.f;
+//    f.size.height-=44.f;
+//    f.origin.y+=44.f;
     self.mapView.frame=f;
 }
 
