@@ -34,7 +34,11 @@
     loc.streetNumber=a[0];
     loc.streetName=a[1];
     loc.city=ld[@"City"];
-    loc.unit=[nilIfNull(ld[@"Unit"]) stringValue];
+    NSObject *u=nilIfNull(ld[@"Unit"]);
+    if([u isKindOfClass:[NSNumber class]]){
+        u=[(NSNumber*)u stringValue];
+    }
+    loc.unit=(NSString*)u;
     loc.zip=ld[@"Zip"];
     loc.state=ld[@"State"];
     self.location=loc;

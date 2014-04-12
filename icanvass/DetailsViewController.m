@@ -315,12 +315,26 @@ static NSDateFormatter *dateFormatter;
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
-    NSDictionary *location=@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
-                             @"City":_city,
-                             @"State":_state,
-                             @"Zip":_zipCode};
-    //NSDictionary *d=@{@"DefinitionId":@"1",@"StringValue":@"Abc"};
-    NSArray *customFields=@[];
+    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
+                                     @"City":_city,
+                                     @"State":_state,
+                                     @"Zip":_zipCode} mutableCopy];
+    if(![_unitTextField.text isEqualToString:@""]){
+        location[@"Unit"]=_unitTextField.text;
+    }
+    NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
+//    for(NSString *key in [_addedFields allKeys]) {
+//        Field *f=[Fields sharedInstance].fieldById[key];
+//        if(f.type==FieldDateTime){
+//            [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
+//        }else if(f.type==FieldNumber){
+//            [customValues addObject:@{@"DefinitionId":key,@"IntValue":_addedFields[key]}];
+//        }else if(f.type==FieldMoney){
+//            [customValues addObject:@{@"DefinitionId":key,@"DecimalValue":_addedFields[key]}];
+//        }else{
+//            [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
+//        }
+//    }
     NSDictionary *data=@{@"Id":_pin.ident,
                          @"Location":location,
                          @"Status":_status,
@@ -331,7 +345,7 @@ static NSDateFormatter *dateFormatter;
                          @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
                          @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
                          @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
-                         @"CustomValues":customFields};
+                         @"CustomValues":customValues};
     [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
         [self adjustForViewing];
     }];
@@ -644,7 +658,8 @@ static NSDateFormatter *dateFormatter;
     _status=status;
     //NSRange range = NSMakeRange(0, 1);
     //NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
-   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+   //[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UIActionSheetDelegate
