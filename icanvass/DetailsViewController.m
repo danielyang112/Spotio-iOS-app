@@ -401,8 +401,7 @@ static NSDateFormatter *dateFormatter;
         NSArray *c=_pin.customValues;
         NSDictionary *d=c[indexPath.row];
         Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
-        cell.textLabel.text=f.name;
-//        cell.top.text=f.name;
+        cell.top.text=f.name;
         NSString *v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
@@ -420,8 +419,7 @@ static NSDateFormatter *dateFormatter;
             NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
             v=[dFormatter stringFromDate:date];
         }
-        cell.detailTextLabel.text=v;
-//        cell.bottom.text=v;
+        cell.bottom.text=v;
         return cell;
     }
     
@@ -433,13 +431,13 @@ static NSDateFormatter *dateFormatter;
         DetailsDateCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         cell.enabled=!!_addedFields[key];
         
-        cell.textLabel.text=f.name;
+        cell.top.text=f.name;
         static NSDateFormatter *dFormatter;
         if(!dFormatter){
             dFormatter=[[NSDateFormatter alloc] init];
             dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
         }
-        cell.detailTextLabel.text=[dFormatter stringFromDate:_addedFields[key]];
+        cell.bottom.text=[dFormatter stringFromDate:_addedFields[key]];
         
         return cell;
     }if(f.type==FieldDropDown){
