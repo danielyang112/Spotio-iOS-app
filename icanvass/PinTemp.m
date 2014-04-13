@@ -26,6 +26,10 @@
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     }
     self.creationDate=[dateFormatter dateFromString:noMilliseconds];
+    if(nilIfNull(dic[@"UpdateDate"])){
+        noMilliseconds=[dic[@"UpdateDate"] componentsSeparatedByString:@"."][0];
+    }
+    self.updateDate=[dateFormatter dateFromString:noMilliseconds];
     self.latitude=dic[@"Latitude"];
     self.longitude=dic[@"Longitude"];
     LocationTemp *loc=[LocationTemp new];

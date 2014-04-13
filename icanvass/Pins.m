@@ -28,6 +28,7 @@
         self.colors=@{};
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [self sendStatusesTo:nil];
     }
     return self;
@@ -134,11 +135,7 @@
     }];
 }
 
-- (void)sendStatusesTo:(void (^)(NSArray *a))block {
-    if(_statuses){
-        block(_statuses);
-        return;
-    }
+- (void)fetchStatusesWithBlock:(void (^)(NSArray *a))block {
     _sendingStatuses=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/PinStatus?$format=json";
@@ -155,6 +152,14 @@
     }];
 }
 
+- (void)sendStatusesTo:(void (^)(NSArray *a))block {
+    if(_statuses){
+        block(_statuses);
+        return;
+    }
+    [self fetchStatusesWithBlock:block];
+}
+
 - (void)clear {
     self.pins=nil;
     self.filteredPins=nil;
@@ -166,6 +171,10 @@
 - (void)userLoggedIn:(NSNotification*)notification {
     [self clear];
     
+}
+
+- (void)appDidBecomeActive:(NSNotification*)notification {
+    [self fetchStatusesWithBlock:nil];
 }
 
 - (void)filterChanged:(NSNotification*)notification {

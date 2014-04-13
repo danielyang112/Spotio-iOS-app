@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSNumber *latitude;
 @property (nonatomic, strong) NSNumber *longitude;
 @property (nonatomic, strong) NSDate *creationDate;
+@property (nonatomic, strong) NSDate *updateDate;
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) LocationTemp *location;
 @property (nonatomic, strong) NSString *address;
