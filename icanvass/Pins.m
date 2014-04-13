@@ -18,6 +18,7 @@
 @property (nonatomic,strong) NSMutableArray *filteredPins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
+@property (nonatomic,strong) NSSortDescriptor *descriptor;
 @end
 
 @implementation Pins
@@ -44,10 +45,17 @@
 }
 
 - (NSMutableArray*)pinsArrayFromArray:(NSArray*)a {
-    return [a mapWith:^NSObject *(NSObject *o) {
-        NSDictionary *dic=(NSDictionary*)o;
-        return [[PinTemp alloc] initWithDictionary:dic];
-    }];
+    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
+    for(NSDictionary *dic in a){
+        [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
+    }
+    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
+    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
+    return ma;
+//    return [a mapWith:^NSObject *(NSObject *o) {
+//        NSDictionary *dic=(NSDictionary*)o;
+//        return [[PinTemp alloc] initWithDictionary:dic];
+//    }];
 }
 
 - (NSArray*)statusesArrayFromArray:(NSArray*)a {
@@ -89,8 +97,8 @@
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
-        self.oldest=[[_pins lastObject] creationDate];
-        self.newest=[[_pins firstObject] creationDate];
+        self.oldest=[[_pins lastObject] updateDate];
+        self.newest=[[_pins firstObject] updateDate];
         block(_pins);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
