@@ -112,10 +112,6 @@
 - (void)enableChanges:(BOOL)enable {
     _statusButton.enabled=enable;
     
-    _streetNameTextField.enabled=enable;
-    _streetNameTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
-    _streetNumberTextField.enabled=enable;
-    _streetNumberTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
     _cityStateZipTextField.enabled=enable;
     _cityStateZipTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
     
@@ -156,8 +152,6 @@
 }
 
 - (void)updateAddressTextFields {
-    _streetNameTextField.text=_streetName;
-    _streetNumberTextField.text=_streetNumber;
     if(![_city isEqualToString:@""]) {
         _cityStateZipTextField.text=[NSString stringWithFormat:@"%@, %@, %@",_city,_state,_zipCode];
     }
@@ -244,7 +238,7 @@
 
 static NSDateFormatter *dateFormatter;
 - (void)addPin {
-    if([self addressExists:_streetNameTextField.text number:_streetNumberTextField.text unit:_unit]){
+    if([self addressExists:_streetName number:_streetNumber unit:_unit]){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
@@ -253,12 +247,12 @@ static NSDateFormatter *dateFormatter;
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
-    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
+    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumber,_streetName],
                              @"City":_city,
                              @"State":_state,
                              @"Zip":_zipCode} mutableCopy];
-    if(![_unitTextField.text isEqualToString:@""]){
-        location[@"Unit"]=_unitTextField.text;
+    if(_unit&&![_unit isEqualToString:@""]){
+        location[@"Unit"]=_unit;
     }
     //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
                             //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
@@ -309,7 +303,7 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)editPin {
-    if([self addressExists:_streetNameTextField.text number:_streetNumberTextField.text unit:_unit]){
+    if([self addressExists:_streetName number:_streetNumber unit:_unit]){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
@@ -318,12 +312,12 @@ static NSDateFormatter *dateFormatter;
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
-    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumberTextField.text,_streetNameTextField.text],
+    NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumber,_streetName],
                                      @"City":_city,
                                      @"State":_state,
                                      @"Zip":_zipCode} mutableCopy];
-    if(![_unitTextField.text isEqualToString:@""]){
-        location[@"Unit"]=_unitTextField.text;
+    if(_unit&&![_unit isEqualToString:@""]){
+        location[@"Unit"]=_unit;
     }
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
 //    for(NSString *key in [_addedFields allKeys]) {
@@ -404,7 +398,6 @@ static NSDateFormatter *dateFormatter;
         cell.field.text=_streetNumber;
         cell.stepper.value=[_streetNumber doubleValue];
         cell.field.delegate=self;
-        self.streetNumberTextField=cell.field;
         return cell;
     } else if(indexPath.row==2){
         CellIdentifier=@"DetailsTextCell";
@@ -414,7 +407,6 @@ static NSDateFormatter *dateFormatter;
         cell.bottom.text=_streetName;
         cell.field.text=_streetName;
         cell.field.delegate=self;
-        self.streetNameTextField=cell.field;
         return cell;
     }else{
         CellIdentifier=@"DetailsTextCell";
@@ -424,7 +416,6 @@ static NSDateFormatter *dateFormatter;
         cell.bottom.text=_unit;
         cell.field.text=_unit;
         cell.field.delegate=self;
-        self.unitTextField=cell.field;
         return cell;
     }
 }
@@ -577,7 +568,12 @@ static NSDateFormatter *dateFormatter;
         return YES;
     }
     if(indexPath.section==0) {
-        if(textField==_unitTextField){
+        if(indexPath.row==1){
+            _streetNumber=[textField.text stringByReplacingCharactersInRange:range withString:string];
+        }else if(indexPath.row==2){
+            _streetName=[textField.text stringByReplacingCharactersInRange:range withString:string];
+        }
+        if(indexPath.row==3){
             _unit=[textField.text stringByReplacingCharactersInRange:range withString:string];
         }
         return YES;

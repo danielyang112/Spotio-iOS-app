@@ -16,10 +16,7 @@
 @property (nonatomic) BOOL adding;
 @property (nonatomic,strong) PinTemp *pin;
 @property (weak, nonatomic) IBOutlet UIButton *statusButton;
-@property (weak, nonatomic) IBOutlet UITextField *streetNumberTextField;
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
-@property (weak, nonatomic) IBOutlet UITextField *streetNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *unitTextField;
 @property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
