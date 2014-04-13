@@ -58,7 +58,7 @@
 
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
-//    self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
+    self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 //    self.accessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 }
 
@@ -74,7 +74,7 @@
 
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
-//    self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
+    self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 //    self.accessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 }
 
