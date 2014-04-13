@@ -69,7 +69,9 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPasswordKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
-    [self loginUserName:@"" password:@"" company:@"" cb:^(BOOL success) {cb(success);}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICNetFailed" object:nil userInfo:@{@"status":@(401)}];
+    //[self loginUserName:@"" password:@"" company:@"" cb:^(BOOL success) {cb(success);}];
+    cb(YES);
 }
 
 - (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request
