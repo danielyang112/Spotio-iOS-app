@@ -110,7 +110,6 @@
 }
 
 - (void)enableChanges:(BOOL)enable {
-    _statusButton.enabled=enable;
     
     _cityStateZipTextField.enabled=enable;
     _cityStateZipTextField.borderStyle=enable?UITextBorderStyleRoundedRect:UITextBorderStyleNone;
@@ -387,6 +386,9 @@ static NSDateFormatter *dateFormatter;
             button.layer.cornerRadius = 5;
             button.layer.borderWidth = 1;
             button.layer.borderColor = button.titleLabel.textColor.CGColor;
+        }else{
+            [button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
+            button.layer.borderWidth = 0;
         }
         return cell;
     } else if(indexPath.row==1) {

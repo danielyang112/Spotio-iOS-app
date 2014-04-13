@@ -15,7 +15,6 @@
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) BOOL adding;
 @property (nonatomic,strong) PinTemp *pin;
-@property (weak, nonatomic) IBOutlet UIButton *statusButton;
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
 @property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
