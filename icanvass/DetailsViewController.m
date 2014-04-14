@@ -20,6 +20,8 @@
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
+@property (nonatomic,strong) NSString *initialStreetNumber;
+@property (nonatomic,strong) NSString *initialStreetName;
 @property (nonatomic,strong) NSString *unit;
 @property (nonatomic,strong) NSString *zipCode;
 @property (nonatomic,strong) NSString *city;
@@ -119,7 +121,9 @@
 
 - (void)extractPin {
     self.streetName=_pin.location.streetName;
+    self.initialStreetName=_streetName;
     self.streetNumber=_pin.location.streetNumber;
+    self.initialStreetNumber=_streetNumber;
     self.city=_pin.location.city;
     self.state=_pin.location.state;
     self.zipCode=_pin.location.zip;
@@ -168,58 +172,78 @@
     return nil;
 }
 
-- (void)addressFromGoogleResults:(NSArray*)results {
-    NSArray *a=[results grepWith:^BOOL (NSObject *o) {
-        NSDictionary *d=(NSDictionary*)o;
-        NSArray *types=d[@"types"];
-        return ([types indexOfObject:@"street_address"]!=NSNotFound);
-    }];
-    if([a count]) {
-        NSArray *components=a[0][@"address_components"];
-        self.streetName=[self name:@"long_name" forComponentType:@"route" fromComponents:components];
-        self.streetNumber=[self name:@"long_name" forComponentType:@"street_number" fromComponents:components];
-        NSArray *range=[_streetNumber componentsSeparatedByString:@"-"];
-        if([range count]) {
-            self.streetNumber=range[0];
-        }
-        self.city=[self name:@"long_name" forComponentType:@"locality" fromComponents:components];
-        self.state=[self name:@"short_name" forComponentType:@"administrative_area_level_1" fromComponents:components];
-        self.googleLocation=a[0][@"geometry"][@"location"];
+//- (void)addressFromGoogleResults:(NSArray*)results {
+//    NSArray *a=[results grepWith:^BOOL (NSObject *o) {
+//        NSDictionary *d=(NSDictionary*)o;
+//        NSArray *types=d[@"types"];
+//        return ([types indexOfObject:@"street_address"]!=NSNotFound);
+//    }];
+//    if([a count]) {
+//        NSArray *components=a[0][@"address_components"];
+//        self.streetName=[self name:@"long_name" forComponentType:@"route" fromComponents:components];
+//        self.initialStreetName=_streetName;
+//        self.streetNumber=[self name:@"long_name" forComponentType:@"street_number" fromComponents:components];
+//        self.initialStreetNumber=_streetNumber;
+//        NSArray *range=[_streetNumber componentsSeparatedByString:@"-"];
+//        if([range count]) {
+//            self.streetNumber=range[0];
+//            self.initialStreetNumber=_streetNumber;
+//        }
+//        self.city=[self name:@"long_name" forComponentType:@"locality" fromComponents:components];
+//        self.state=[self name:@"short_name" forComponentType:@"administrative_area_level_1" fromComponents:components];
+//        self.googleLocation=a[0][@"geometry"][@"location"];
+//    }
+//    
+//    a=[results grepWith:^BOOL (NSObject *o) {
+//        NSDictionary *d=(NSDictionary*)o;
+//        NSArray *types=d[@"types"];
+//        return ([types indexOfObject:@"postal_code"]!=NSNotFound);
+//    }];
+//    
+//    if([a count]) {
+//        NSArray *components=a[0][@"address_components"];
+//        self.zipCode=[self name:@"long_name" forComponentType:@"postal_code" fromComponents:components];
+//    }
+//    [self updateAddressTextFields];
+//}
+
+- (void)addressFromPlacemark:(CLPlacemark*)placemark {
+    self.streetName=placemark.thoroughfare;
+    self.initialStreetName=_streetName;
+    self.streetNumber=placemark.subThoroughfare;
+    NSArray *range=[_streetNumber componentsSeparatedByString:@"–"];
+    if([range count]) {
+        self.streetNumber=range[0];
     }
-    
-    a=[results grepWith:^BOOL (NSObject *o) {
-        NSDictionary *d=(NSDictionary*)o;
-        NSArray *types=d[@"types"];
-        return ([types indexOfObject:@"postal_code"]!=NSNotFound);
-    }];
-    
-    if([a count]) {
-        NSArray *components=a[0][@"address_components"];
-        self.zipCode=[self name:@"long_name" forComponentType:@"postal_code" fromComponents:components];
-    }
-    /*NSArray *f=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
-        PinTemp *p=(PinTemp*)o;
-        return [p.location.streetName isEqualToString:_streetName]&&[p.location.streetNumber isEqualToString:_streetNumber];
-    }];
-    if([f count]) {
-        self.pin=f[0];
-        [self adjustForViewing];
-    }else{
-        [self adjustForAdding];
-    }*/
+    self.initialStreetNumber=_streetNumber;
+    self.city=placemark.addressDictionary[@"City"];
+    self.state=placemark.addressDictionary[@"State"];
+    self.zipCode=placemark.postalCode;
     [self updateAddressTextFields];
 }
 
-- (void)addressForCoordinate:(CLLocationCoordinate2D)coordinate {
-    NSDictionary *params=@{@"sensor":@"true",
-                           @"latlng":[NSString stringWithFormat:@"%.6f,%.6f",coordinate.latitude,coordinate.longitude]};
-    [[ICRequestManager sharedManager] GET:@"https://maps.googleapis.com/maps/api/geocode/json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *d=(NSDictionary*)responseObject;
-        if([d[@"status"] isEqualToString:@"OK"]) {
-            [self addressFromGoogleResults:d[@"results"]];
+//- (void)addressForCoordinate:(CLLocationCoordinate2D)coordinate {
+//    NSDictionary *params=@{@"sensor":@"true",
+//                           @"latlng":[NSString stringWithFormat:@"%.6f,%.6f",coordinate.latitude,coordinate.longitude]};
+//    [[ICRequestManager sharedManager] GET:@"https://maps.googleapis.com/maps/api/geocode/json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSDictionary *d=(NSDictionary*)responseObject;
+//        if([d[@"status"] isEqualToString:@"OK"]) {
+//            [self addressFromGoogleResults:d[@"results"]];
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"geocode error");
+//    }];
+//}
+
+- (void)addressForCoordinate2:(CLLocationCoordinate2D)coordinate {
+    CLLocation *loc=[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    [[CLGeocoder new] reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+        for(CLPlacemark *placemark in placemarks){
+            NSLog(@"%@",placemark);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"geocode error");
+        if([placemarks count]){
+            [self addressFromPlacemark:[placemarks firstObject]];
+        }
     }];
 }
 
@@ -651,8 +675,8 @@ static NSDateFormatter *dateFormatter;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate {
     _coordinate=coordinate;
-    _streetName=_streetNumber=_city=_state=_zipCode=@"";
-    [self addressForCoordinate:_coordinate];
+    _streetName=_streetNumber=_city=_state=_zipCode=_initialStreetName=_initialStreetNumber=@"";
+    [self addressForCoordinate2:_coordinate];
 }
 
 - (void)setAdding:(BOOL)adding {
