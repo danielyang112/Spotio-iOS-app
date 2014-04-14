@@ -14,6 +14,7 @@
 
 @interface Pins () {
     BOOL _sendingStatuses;
+    BOOL _gettingPins;
 }
 @property (nonatomic,strong) NSMutableArray *filteredPins;
 @property (nonatomic,strong) NSArray *statuses;
@@ -82,6 +83,24 @@
     return md;
 }
 
+- (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
+    _gettingPins=YES;
+    ICRequestManager *manager=[ICRequestManager sharedManager];
+    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
+    u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
+        self.oldest=[[_pins lastObject] updateDate];
+        self.newest=[[_pins firstObject] updateDate];
+        if(block) block(_pins);
+        _gettingPins=NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)sendPinsTo:(void (^)(NSArray *a))block {
     if(_filteredPins){
         block(_filteredPins);
@@ -91,18 +110,10 @@
         block(_pins);
         return;
     }
-    ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
-    u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
-        self.oldest=[[_pins lastObject] updateDate];
-        self.newest=[[_pins firstObject] updateDate];
-        block(_pins);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    if(_gettingPins) {
+        return;
+    }
+    [self fetchPinsWithBlock:block];
 }
 
 - (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
