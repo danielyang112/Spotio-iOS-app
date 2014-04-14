@@ -168,58 +168,82 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EcD-za-ldh">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcD-za-ldh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLa-KP-InW">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLa-KP-InW">
                                         <rect key="frame" x="40" y="90" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="ZYO-FG-q5V"/>
+                                            <constraint firstAttribute="height" constant="30" id="afv-sv-8f8"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="lfv-ll-J6H"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u2i-Xk-l92">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u2i-Xk-l92">
                                         <rect key="frame" x="40" y="128" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="5JJ-dd-VCT"/>
+                                            <constraint firstAttribute="height" constant="30" id="xra-OC-vkx"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="tEz-M7-Eyu"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Xq-Cj-5K3">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Xq-Cj-5K3">
                                         <rect key="frame" x="40" y="166" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="P5s-45-uun"/>
+                                            <constraint firstAttribute="width" constant="240" id="Vrf-D3-72K"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="9H0-a2-1eH"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-Aq-pOf">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-Aq-pOf">
                                         <rect key="frame" x="40" y="204" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Qby-5d-kM4"/>
+                                            <constraint firstAttribute="width" constant="240" id="lTh-In-EEf"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="ylw-vs-6or"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KC3-VO-X3m">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KC3-VO-X3m">
                                         <rect key="frame" x="40" y="242" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="lCd-VD-gKa"/>
+                                            <constraint firstAttribute="width" constant="240" id="zgA-Dk-kmG"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="emv-Sk-8Gk"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pED-h9-GyE">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pED-h9-GyE">
                                         <rect key="frame" x="40" y="280" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="9vw-RZ-vQv"/>
+                                            <constraint firstAttribute="width" constant="240" id="Z1g-1F-EzH"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                         <connections>
@@ -227,9 +251,36 @@
                                         </connections>
                                     </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="1Xq-Cj-5K3" secondAttribute="trailing" constant="40" id="1nQ-v8-sjD"/>
+                                    <constraint firstItem="1Xq-Cj-5K3" firstAttribute="top" secondItem="u2i-Xk-l92" secondAttribute="bottom" constant="8" id="2gZ-Nb-XKK"/>
+                                    <constraint firstItem="u2i-Xk-l92" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="D9r-dG-9Wg"/>
+                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="HPW-CY-WFh"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="N3k-Yd-uW8"/>
+                                    <constraint firstItem="TLa-KP-InW" firstAttribute="top" secondItem="EcD-za-ldh" secondAttribute="top" constant="90" id="QhP-yI-jcY"/>
+                                    <constraint firstAttribute="bottom" secondItem="pED-h9-GyE" secondAttribute="bottom" constant="194" id="UiF-Iu-UZg"/>
+                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="UjF-FL-REl"/>
+                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="top" secondItem="8bF-Aq-pOf" secondAttribute="bottom" constant="8" id="VSc-ue-L5D"/>
+                                    <constraint firstAttribute="trailing" secondItem="TLa-KP-InW" secondAttribute="trailing" constant="40" id="Zbl-t1-cam"/>
+                                    <constraint firstItem="TLa-KP-InW" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="aPk-NP-L2S"/>
+                                    <constraint firstAttribute="trailing" secondItem="pED-h9-GyE" secondAttribute="trailing" constant="40" id="bwy-yd-6F4"/>
+                                    <constraint firstItem="1Xq-Cj-5K3" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="dlx-Fa-Klc"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="top" secondItem="KC3-VO-X3m" secondAttribute="bottom" constant="8" id="mfr-JQ-NsS"/>
+                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="top" secondItem="1Xq-Cj-5K3" secondAttribute="bottom" constant="8" id="nCG-fu-xL9"/>
+                                    <constraint firstItem="u2i-Xk-l92" firstAttribute="top" secondItem="TLa-KP-InW" secondAttribute="bottom" constant="8" id="nun-jh-t13"/>
+                                    <constraint firstAttribute="trailing" secondItem="8bF-Aq-pOf" secondAttribute="trailing" constant="40" id="qYH-8U-oMn"/>
+                                    <constraint firstAttribute="trailing" secondItem="KC3-VO-X3m" secondAttribute="trailing" constant="40" id="tnc-Fy-eek"/>
+                                    <constraint firstAttribute="trailing" secondItem="u2i-Xk-l92" secondAttribute="trailing" constant="40" id="xb9-O1-rHV"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EcD-za-ldh" firstAttribute="leading" secondItem="Kyc-Xq-L4d" secondAttribute="leading" id="59f-9m-rnu"/>
+                            <constraint firstAttribute="trailing" secondItem="EcD-za-ldh" secondAttribute="trailing" id="nco-0U-BMM"/>
+                            <constraint firstAttribute="bottom" secondItem="EcD-za-ldh" secondAttribute="bottom" id="v6K-Y8-yO2"/>
+                            <constraint firstItem="EcD-za-ldh" firstAttribute="top" secondItem="Kyc-Xq-L4d" secondAttribute="top" id="z8a-TI-3zj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register" id="0Zi-QO-axG"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
