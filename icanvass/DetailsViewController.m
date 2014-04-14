@@ -247,6 +247,20 @@
     }];
 }
 
+- (void)locationForAddressDictionary:(NSDictionary*)address block:(void (^)(CLLocation *l))block {
+    if([_streetNumber isEqualToString:_initialStreetNumber]&&[_streetName isEqualToString:_initialStreetName]) {
+        block(nil);
+        return;
+    }
+    [[CLGeocoder new] geocodeAddressDictionary:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        for(CLPlacemark *placemark in placemarks){
+            NSLog(@"%@",placemark);
+        }
+        CLPlacemark *placemark=[placemarks firstObject];
+        block(placemark.location);
+    }];
+}
+
 - (BOOL)addressExists:(NSString*)streetName number:(NSString*)number unit:(NSString*)unit{
     if(!unit) unit=@"";
     NSArray *a=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
@@ -296,32 +310,41 @@ static NSDateFormatter *dateFormatter;
             [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
         }
     }
-    NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
-                         @"Location":location,
-                         @"Status":_status,
-                         @"ClientData":@{},
-                         @"Latitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
-                         @"Longitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-                         @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
-                         @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
-                         @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-                         @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
-                         @"CustomValues":customValues};
-    [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
-        if(success && titleOfEvent){
-            EKEventStore *store = [[EKEventStore alloc] init];
-            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-                if (!granted) { return; }
-                EKEvent *event = [EKEvent eventWithEventStore:store];
-                event.title = titleOfEvent;
-                event.startDate = dateOfEvent;
-                event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-                [event setCalendar:[store defaultCalendarForNewEvents]];
-                NSError *err = nil;
-                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            }];
+    [self locationForAddressDictionary:@{@"City":_city,@"State":_state,@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
+        CLLocationDegrees latitude=_coordinate.latitude;
+        CLLocationDegrees longitude=_coordinate.longitude;
+        if(l){
+            latitude=l.coordinate.latitude;
+            longitude=l.coordinate.longitude;
         }
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
+                             @"Location":location,
+                             @"Status":_status,
+                             @"ClientData":@{},
+                             @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
+                             @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
+                             @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
+                             @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
+                             @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
+                             @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
+                             @"CustomValues":customValues};
+        
+        [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
+            if(success && titleOfEvent){
+                EKEventStore *store = [[EKEventStore alloc] init];
+                [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                    if (!granted) { return; }
+                    EKEvent *event = [EKEvent eventWithEventStore:store];
+                    event.title = titleOfEvent;
+                    event.startDate = dateOfEvent;
+                    event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                    [event setCalendar:[store defaultCalendarForNewEvents]];
+                    NSError *err = nil;
+                    [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                }];
+            }
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        }];
     }];
 }
 
