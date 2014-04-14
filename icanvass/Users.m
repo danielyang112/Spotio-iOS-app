@@ -80,6 +80,7 @@
         _gettingUsers=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUsers" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _gettingUsers=NO;
         NSLog(@"Error: %@", error);
     }];
 }

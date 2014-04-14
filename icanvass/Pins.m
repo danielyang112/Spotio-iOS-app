@@ -98,6 +98,7 @@
         self.gettingPins=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.gettingPins=NO;
         NSLog(@"Error: %@", error);
     }];
 }
