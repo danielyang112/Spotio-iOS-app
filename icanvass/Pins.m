@@ -194,6 +194,7 @@
 
 - (void)appDidBecomeActive:(NSNotification*)notification {
     [self fetchStatusesWithBlock:nil];
+    [self fetchPinsWithBlock:nil];
 }
 
 - (void)filterChanged:(NSNotification*)notification {
