@@ -209,6 +209,7 @@
         return;
     }
     NSArray *s=d[@"statuses"];
+    NSArray *u=d[@"users"];
     NSDate *cf=d[@"createdFrom"];
     NSDate *ct=d[@"createdTo"];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -232,6 +233,9 @@
         }
         if(s){
             ret=ret&&([s containsObject:p.status]);
+        }
+        if(u){
+            ret=ret&&([u containsObject:p.user]);
         }
         return ret;
     }];
