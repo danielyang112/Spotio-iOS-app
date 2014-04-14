@@ -13,13 +13,13 @@
 #import "PinTemp.h"
 
 @interface Pins () {
-    BOOL _sendingStatuses;
-    BOOL _gettingPins;
 }
 @property (nonatomic,strong) NSMutableArray *filteredPins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
 @property (nonatomic,strong) NSSortDescriptor *descriptor;
+@property (nonatomic) BOOL sendingStatuses;
+@property (nonatomic) BOOL gettingPins;
 @end
 
 @implementation Pins
@@ -84,7 +84,8 @@
 }
 
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
-    _gettingPins=YES;
+    NSLog(@"%s",__FUNCTION__);
+    self.gettingPins=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -94,7 +95,7 @@
         self.oldest=[[_pins lastObject] updateDate];
         self.newest=[[_pins firstObject] updateDate];
         if(block) block(_pins);
-        _gettingPins=NO;
+        self.gettingPins=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -155,7 +156,7 @@
 }
 
 - (void)fetchStatusesWithBlock:(void (^)(NSArray *a))block {
-    _sendingStatuses=YES;
+    self.sendingStatuses=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/PinStatus?$format=json";
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -163,11 +164,11 @@
         self.statuses=[self statusesArrayFromArray:responseObject[@"value"]];
         if(block) block(_statuses);
         self.colors=[self colorsFromStatuses:responseObject[@"value"]];
-        _sendingStatuses=NO;
+        self.sendingStatuses=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinColors" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        _sendingStatuses=NO;
+        self.sendingStatuses=NO;
     }];
 }
 
@@ -194,7 +195,9 @@
 
 - (void)appDidBecomeActive:(NSNotification*)notification {
     [self fetchStatusesWithBlock:nil];
-    [self fetchPinsWithBlock:nil];
+    if(!_gettingPins) {
+        [self fetchPinsWithBlock:nil];
+    }
 }
 
 - (void)filterChanged:(NSNotification*)notification {

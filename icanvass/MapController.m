@@ -11,6 +11,7 @@
 #import "Pins.h"
 #import "PinTemp.h"
 #import "Mixpanel.h"
+#import "Users.h"
 #import "utilities.h"
 
 @interface MapController () <GMSMapViewDelegate>
@@ -130,6 +131,7 @@
 }
 
 - (void)refresh {
+    NSLog(@"%s",__FUNCTION__);
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         self.pins=a;
         self.filtered=a;
@@ -193,7 +195,8 @@
     UILabel *l=(UILabel*)[view viewWithTag:1];
     l.text=pin.status;
     l=(UILabel*)[view viewWithTag:2];
-    l.text=pin.user;
+//    l.text=pin.user;
+    l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
     l=(UILabel*)[view viewWithTag:3];
     l.text=[PinTemp formatDate:pin.creationDate];
     l=(UILabel*)[view viewWithTag:4];

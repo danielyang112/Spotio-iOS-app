@@ -121,6 +121,7 @@
 		42D28CE518E06702005E1758 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CE018E06702005E1758 /* MMDrawerVisualState.m */; };
 		42D28CE618E06702005E1758 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CE218E06702005E1758 /* UIViewController+MMDrawerController.m */; };
 		42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CE818E08285005E1758 /* LeftDrawerViewController.m */; };
+		42EF82EB18FBFA390045EB0E /* Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EF82EA18FBFA390045EB0E /* Users.m */; };
 		42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA1F6418E1DF970015D137 /* ListHeader.xib */; };
 /* End PBXBuildFile section */
 
@@ -313,6 +314,8 @@
 		42D28CE218E06702005E1758 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		42D28CE718E08285005E1758 /* LeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftDrawerViewController.h; sourceTree = "<group>"; };
 		42D28CE818E08285005E1758 /* LeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftDrawerViewController.m; sourceTree = "<group>"; };
+		42EF82E918FBFA390045EB0E /* Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Users.h; sourceTree = "<group>"; };
+		42EF82EA18FBFA390045EB0E /* Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Users.m; sourceTree = "<group>"; };
 		42FA1F6418E1DF970015D137 /* ListHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListHeader.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -509,6 +512,8 @@
 				42BBFF3118D3996E0065D4C3 /* Pins.m */,
 				42B3A66F18E7161900B46FBF /* Fields.h */,
 				42B3A67018E7161900B46FBF /* Fields.m */,
+				42EF82E918FBFA390045EB0E /* Users.h */,
+				42EF82EA18FBFA390045EB0E /* Users.m */,
 				42A7BEAA18D5B02900973EA8 /* utilities.h */,
 				42A7BEAB18D5B02900973EA8 /* utilities.m */,
 				42A6A58F18CBA3BF0043233C /* AppDelegate.h */,
@@ -843,6 +848,7 @@
 				42284F9318D26AF10087941E /* AFHTTPRequestOperationManager.m in Sources */,
 				42B3A6CC18E8C5E700B46FBF /* MPSurveyQuestion.m in Sources */,
 				42284F6018D254020087941E /* User.m in Sources */,
+				42EF82EB18FBFA390045EB0E /* Users.m in Sources */,
 				42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */,
 				42284F5F18D254020087941E /* Location.m in Sources */,
 				42284F9618D26AF10087941E /* AFSecurityPolicy.m in Sources */,

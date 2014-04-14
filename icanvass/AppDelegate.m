@@ -12,6 +12,7 @@
 #import "MMDrawerController/MMDrawerController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <FreshdeskSDK/FreshdeskSDK.h>
+#import "Users.h"
 #import "Mixpanel.h"
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
@@ -43,6 +44,7 @@
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
+    [Users sharedInstance];
     return YES;
 }
 

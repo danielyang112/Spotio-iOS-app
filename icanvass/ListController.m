@@ -147,6 +147,7 @@ enum ICSortOrder : NSUInteger {
 }
 
 - (void)refresh {
+    NSLog(@"%s",__FUNCTION__);
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         self.pins=a;
         self.filtered=a;

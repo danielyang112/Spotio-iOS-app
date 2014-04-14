@@ -98,8 +98,8 @@
         NSLog(@"JSON: %@", responseObject);
         self.fields=[self fieldsArrayFromArray:responseObject[@"value"]];
         [self updateDictionary];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFields" object:nil];
         block(_fields);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFields" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
