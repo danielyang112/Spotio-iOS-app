@@ -191,7 +191,6 @@
 
 - (void)userLoggedIn:(NSNotification*)notification {
     [self clear];
-    
 }
 
 - (void)appDidBecomeActive:(NSNotification*)notification {

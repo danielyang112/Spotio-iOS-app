@@ -58,6 +58,7 @@
     self=[super init];
     if(self) {
         self.fieldById=[[NSMutableDictionary alloc] initWithCapacity:5];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
     }
     return self;
 }
@@ -103,6 +104,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+}
+
+- (void)userLoggedIn:(NSNotification*)notification {
+    self.fields=nil;
 }
 
 @end
