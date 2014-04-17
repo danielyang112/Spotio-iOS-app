@@ -40,6 +40,7 @@
 		4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4239345918E2F56E0041EF93 /* DatesPickerViewController.m */; };
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
 		427E8A1819005F290092504A /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1719005F290092504A /* logo@2x.png */; };
+		427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 427E8A1A190081400092504A /* AlmostDoneViewController.m */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -188,6 +189,8 @@
 		423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToWebsiteViewController.h; sourceTree = "<group>"; };
 		423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToWebsiteViewController.m; sourceTree = "<group>"; };
 		427E8A1719005F290092504A /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		427E8A19190081400092504A /* AlmostDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlmostDoneViewController.h; sourceTree = "<group>"; };
+		427E8A1A190081400092504A /* AlmostDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlmostDoneViewController.m; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -406,6 +409,8 @@
 				42B3A6D418E9781800B46FBF /* DatePickerViewController.m */,
 				42B3A6D618E9783500B46FBF /* DropDownViewController.h */,
 				42B3A6D718E9783500B46FBF /* DropDownViewController.m */,
+				427E8A19190081400092504A /* AlmostDoneViewController.h */,
+				427E8A1A190081400092504A /* AlmostDoneViewController.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -860,6 +865,7 @@
 				42284F5E18D254020087941E /* Status.m in Sources */,
 				42A7BEC518D719BF00973EA8 /* UIButton+AFNetworking.m in Sources */,
 				42A7BEC818D719BF00973EA8 /* UIRefreshControl+AFNetworking.m in Sources */,
+				427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */,
 				42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */,
 				42A7BEAF18D7150200973EA8 /* PinTemp.m in Sources */,
 				42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */,

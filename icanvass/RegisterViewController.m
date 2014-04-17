@@ -94,10 +94,12 @@
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
-            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+            [self performSegueWithIdentifier:@"AlmostDone" sender:nil];
         } else {
             if(response[@"Message"]) {
                 [self showErrors:response[@"Message"]];
+            }else{
+                [self showErrors:@[@"An error occured."]];
             }
         }
     }];

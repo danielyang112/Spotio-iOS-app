@@ -59,6 +59,7 @@
     if(self) {
         self.fieldById=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(answeredQuestions:) name:@"ICQuestions" object:nil];
     }
     return self;
 }
@@ -107,6 +108,10 @@
 }
 
 - (void)userLoggedIn:(NSNotification*)notification {
+    self.fields=nil;
+}
+
+- (void)answeredQuestions:(NSNotification*)notification {
     self.fields=nil;
 }
 
