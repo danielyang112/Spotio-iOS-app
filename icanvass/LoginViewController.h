@@ -12,5 +12,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *loginTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *wrongPassLabel;
+@property (weak, nonatomic) IBOutlet UIButton *forgotButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+- (IBAction)forgotPassword:(id)sender;
 - (IBAction)hideKeyboard:(UIButton *)sender;
 @end

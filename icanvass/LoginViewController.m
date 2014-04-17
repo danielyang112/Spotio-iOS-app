@@ -22,6 +22,18 @@
 
 #pragma mark - View Controller
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self=[super initWithCoder:aDecoder];
+    if(self) {
+        [self registerForKeyboardNotifications];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
@@ -34,6 +46,17 @@
 }
 
 #pragma mark - Helpers
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
 
 - (void)close {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
@@ -94,6 +117,10 @@
 
 #pragma mark - Actions
 
+- (IBAction)forgotPassword:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://login.icanvassapp.com/Account/ICanvassForgotPassword"]];
+}
+
 - (IBAction)hideKeyboard:(UIButton *)sender {
     [_activeField resignFirstResponder];
 }
@@ -124,6 +151,31 @@
         [self loginWithUsername:_loginTextField.text password:_passwordTextField.text];
     }
     return YES;
+}
+
+#pragma mark - Notifications
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, _activeField.frame.origin) ) {
+        [self.scrollView scrollRectToVisible:_activeField.frame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

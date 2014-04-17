@@ -39,6 +39,7 @@
 		42284F9D18D26B110087941E /* ICRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9C18D26B110087941E /* ICRequestManager.m */; };
 		4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4239345918E2F56E0041EF93 /* DatesPickerViewController.m */; };
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
+		427E8A1819005F290092504A /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1719005F290092504A /* logo@2x.png */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -186,6 +187,7 @@
 		4239345918E2F56E0041EF93 /* DatesPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatesPickerViewController.m; sourceTree = "<group>"; };
 		423EA48F18E0B4DB00E22FF8 /* GoToWebsiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToWebsiteViewController.h; sourceTree = "<group>"; };
 		423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToWebsiteViewController.m; sourceTree = "<group>"; };
+		427E8A1719005F290092504A /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -508,6 +510,7 @@
 				42B3A67D18E8903600B46FBF /* satellite@2x.png */,
 				42B3A67E18E8903600B46FBF /* support@2x.png */,
 				42B3A68918E89B2600B46FBF /* bg@2x.png */,
+				427E8A1719005F290092504A /* logo@2x.png */,
 				42BBFF3018D3996E0065D4C3 /* Pins.h */,
 				42BBFF3118D3996E0065D4C3 /* Pins.m */,
 				42B3A66F18E7161900B46FBF /* Fields.h */,
@@ -767,6 +770,7 @@
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
+				427E8A1819005F290092504A /* logo@2x.png in Resources */,
 				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
 				42B3A6C218E8C5E700B46FBF /* MPDismissKeyboard.png in Resources */,

@@ -551,9 +551,9 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
-    DetailsTableViewCell *cell = (DetailsTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    //Field *f=_customFields[indexPath.row];
+    //NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    //DetailsTableViewCell *cell = (DetailsTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     if(editingStyle==UITableViewCellEditingStyleInsert) {
 //        _addedFields[key]=@"";
 //        cell.enabled=YES;
