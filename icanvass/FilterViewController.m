@@ -94,7 +94,7 @@
     cell.accessoryView = switchView;
     UILabel *label=(UILabel*)[cell viewWithTag:1];
     if(indexPath.section==kStatusSection) {
-        label.text=@"Disposition";
+        label.text=@"Status";
         switchView.on=_statusOn;
         [switchView addTarget:self action:@selector(statusSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     } else if(indexPath.section==kUserSection){

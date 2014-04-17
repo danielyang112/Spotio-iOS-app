@@ -132,7 +132,7 @@
     self.status=_pin.status;
     
     for(NSDictionary *d in _pin.customValues){
-        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        //Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
         NSString *v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
