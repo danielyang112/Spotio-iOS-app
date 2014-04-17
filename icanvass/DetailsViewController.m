@@ -444,6 +444,7 @@ static NSDateFormatter *dateFormatter;
         cell.top.text=@"Number";
         cell.field.placeholder=@"Number";
         cell.bottom.text=_streetNumber;
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         cell.field.text=_streetNumber;
         cell.field.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         cell.stepper.value=[_streetNumber doubleValue];
@@ -456,6 +457,7 @@ static NSDateFormatter *dateFormatter;
         cell.field.placeholder=@"Street";
         cell.field.keyboardType=UIKeyboardTypeDefault;
         cell.bottom.text=_streetName;
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         cell.field.text=_streetName;
         cell.field.delegate=self;
         return cell;
@@ -466,6 +468,7 @@ static NSDateFormatter *dateFormatter;
         cell.field.placeholder=@"Unit";
         cell.field.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         cell.bottom.text=_unit;
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         cell.field.text=_unit;
         cell.field.delegate=self;
         return cell;
@@ -501,6 +504,7 @@ static NSDateFormatter *dateFormatter;
             v=[dFormatter stringFromDate:date];
         }
         cell.bottom.text=v;
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         return cell;
     }
     
@@ -519,6 +523,7 @@ static NSDateFormatter *dateFormatter;
             dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
         }
         cell.bottom.text=[dFormatter stringFromDate:_addedFields[key]];
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         
         return cell;
     }if(f.type==FieldDropDown){
@@ -529,6 +534,7 @@ static NSDateFormatter *dateFormatter;
         
         cell.top.text=f.name;
         cell.bottom.text=_addedFields[key];
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         
         return cell;
     }else{

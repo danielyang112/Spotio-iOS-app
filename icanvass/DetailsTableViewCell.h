@@ -12,7 +12,7 @@
 @property (nonatomic,weak) IBOutlet UITextField *field;
 @property (nonatomic) BOOL enabled;
 @property (weak, nonatomic) IBOutlet UILabel *top;
-@property (weak, nonatomic) IBOutlet UILabel *bottom;
+@property (weak, nonatomic) IBOutlet UITextView *bottom;
 @end
 
 @interface DetailsStreetNumberCell : DetailsTableViewCell
