@@ -454,7 +454,7 @@
                                                         <action selector="stepperChanged:" destination="cDv-bY-OHf" eventType="valueChanged" id="zNR-6O-cyh"/>
                                                     </connections>
                                                 </stepper>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWj-4x-tYW">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWj-4x-tYW">
                                                     <rect key="frame" x="15" y="18" width="290" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -462,27 +462,27 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yIr-ka-yQ4">
-                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <rect key="frame" x="15" y="3" width="290" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="T9t-TR-kiZ" secondAttribute="bottom" constant="6" id="0do-Dr-Srp"/>
                                                 <constraint firstAttribute="bottom" secondItem="Edi-tk-feq" secondAttribute="bottom" constant="7" id="3Bf-IQ-afl"/>
-                                                <constraint firstItem="MWj-4x-tYW" firstAttribute="centerX" secondItem="HGW-pJ-b0E" secondAttribute="centerX" id="96u-BA-IoW"/>
-                                                <constraint firstItem="yIr-ka-yQ4" firstAttribute="leading" secondItem="HGW-pJ-b0E" secondAttribute="leading" constant="15" id="9NH-J1-yLw"/>
-                                                <constraint firstItem="yIr-ka-yQ4" firstAttribute="trailing" secondItem="MWj-4x-tYW" secondAttribute="trailing" id="AXC-1T-jpO"/>
-                                                <constraint firstItem="MWj-4x-tYW" firstAttribute="top" secondItem="yIr-ka-yQ4" secondAttribute="bottom" id="IAh-f8-0fk"/>
+                                                <constraint firstItem="MWj-4x-tYW" firstAttribute="leading" secondItem="HGW-pJ-b0E" secondAttribute="leading" constant="15" id="5rx-1w-YNb"/>
+                                                <constraint firstAttribute="trailing" secondItem="MWj-4x-tYW" secondAttribute="trailing" constant="15" id="8gI-3x-H0I"/>
+                                                <constraint firstItem="yIr-ka-yQ4" firstAttribute="leading" secondItem="HGW-pJ-b0E" secondAttribute="leading" constant="15" id="8qq-ZS-7rW"/>
                                                 <constraint firstItem="Edi-tk-feq" firstAttribute="leading" secondItem="T9t-TR-kiZ" secondAttribute="trailing" constant="8" id="Orf-dP-Jdz"/>
-                                                <constraint firstItem="yIr-ka-yQ4" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="3" id="SQd-j7-RrO"/>
                                                 <constraint firstItem="T9t-TR-kiZ" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="7" id="SnQ-Mt-1il"/>
+                                                <constraint firstItem="MWj-4x-tYW" firstAttribute="top" secondItem="yIr-ka-yQ4" secondAttribute="bottom" id="UZn-pr-OfB"/>
+                                                <constraint firstItem="yIr-ka-yQ4" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="3" id="egf-gu-EXs"/>
                                                 <constraint firstAttribute="trailing" secondItem="Edi-tk-feq" secondAttribute="trailing" constant="20" id="mJo-ro-sU9"/>
-                                                <constraint firstItem="MWj-4x-tYW" firstAttribute="leading" secondItem="yIr-ka-yQ4" secondAttribute="leading" id="mgu-dO-fIH"/>
                                                 <constraint firstItem="Edi-tk-feq" firstAttribute="top" secondItem="HGW-pJ-b0E" secondAttribute="top" constant="7" id="nYA-N8-tnp"/>
                                                 <constraint firstItem="T9t-TR-kiZ" firstAttribute="leading" secondItem="HGW-pJ-b0E" secondAttribute="leading" constant="20" id="p8g-XB-S7c"/>
+                                                <constraint firstAttribute="trailing" secondItem="yIr-ka-yQ4" secondAttribute="trailing" constant="15" id="v0U-ae-fqU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -506,31 +506,31 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cc-hs-q6p">
-                                                    <rect key="frame" x="15" y="18" width="290" height="22"/>
+                                                    <rect key="frame" x="15" y="15" width="290" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6x-5K-ztR">
-                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <rect key="frame" x="15" y="3" width="290" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="leading" secondItem="1cc-hs-q6p" secondAttribute="leading" id="1SZ-hf-hhN"/>
                                                 <constraint firstAttribute="bottom" secondItem="fxp-pj-lEW" secondAttribute="bottom" constant="6" id="2eI-he-ykA"/>
                                                 <constraint firstItem="fxp-pj-lEW" firstAttribute="leading" secondItem="B4k-MQ-MOP" secondAttribute="leading" constant="20" symbolic="YES" id="3x1-HC-EMk"/>
-                                                <constraint firstItem="1cc-hs-q6p" firstAttribute="centerX" secondItem="fxp-pj-lEW" secondAttribute="centerX" id="HNH-Fd-OrV"/>
-                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="leading" secondItem="B4k-MQ-MOP" secondAttribute="leading" constant="15" id="MyS-yI-gd2"/>
+                                                <constraint firstItem="1cc-hs-q6p" firstAttribute="leading" secondItem="B4k-MQ-MOP" secondAttribute="leading" constant="15" id="4VW-eJ-BIH"/>
                                                 <constraint firstAttribute="trailing" secondItem="fxp-pj-lEW" secondAttribute="trailing" constant="20" symbolic="YES" id="U1r-33-VnU"/>
                                                 <constraint firstItem="fxp-pj-lEW" firstAttribute="top" secondItem="B4k-MQ-MOP" secondAttribute="top" constant="7" id="Y3p-w9-Okm"/>
-                                                <constraint firstItem="1cc-hs-q6p" firstAttribute="top" secondItem="W6x-5K-ztR" secondAttribute="bottom" id="bd8-xg-mIO"/>
-                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="trailing" secondItem="1cc-hs-q6p" secondAttribute="trailing" id="gF7-tX-eiW"/>
-                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="top" secondItem="B4k-MQ-MOP" secondAttribute="top" constant="3" id="ni5-0A-T3I"/>
+                                                <constraint firstAttribute="trailing" secondItem="1cc-hs-q6p" secondAttribute="trailing" constant="15" id="bAK-QX-9jz"/>
+                                                <constraint firstItem="1cc-hs-q6p" firstAttribute="top" secondItem="W6x-5K-ztR" secondAttribute="bottom" id="bWD-Dd-BVs"/>
+                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="top" secondItem="B4k-MQ-MOP" secondAttribute="top" constant="3" id="oPj-YX-Ukw"/>
+                                                <constraint firstItem="W6x-5K-ztR" firstAttribute="leading" secondItem="B4k-MQ-MOP" secondAttribute="leading" constant="15" id="sKQ-M2-6rn"/>
+                                                <constraint firstAttribute="trailing" secondItem="W6x-5K-ztR" secondAttribute="trailing" constant="15" id="vx1-Pp-ir9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -547,14 +547,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muP-Ep-ipb">
-                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <rect key="frame" x="15" y="3" width="290" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCu-K9-F35">
-                                                    <rect key="frame" x="15" y="18" width="290" height="22"/>
+                                                    <rect key="frame" x="15" y="15" width="290" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -583,14 +583,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWg-8S-A6D">
-                                                    <rect key="frame" x="15" y="3" width="290" height="15"/>
+                                                    <rect key="frame" x="15" y="3" width="290" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Bottom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kck-iC-yVI">
-                                                    <rect key="frame" x="15" y="18" width="290" height="22"/>
+                                                    <rect key="frame" x="15" y="15" width="290" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
