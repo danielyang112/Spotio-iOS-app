@@ -7,6 +7,9 @@
 //
 
 #define kUserNameKey @"UserName"
+#define kCompanyNameKey @"CompanyName"
+#define kBaseUrl @"http://login.icanvassapp.com:888/"
+#define kPasswordKey @"Password"
 
 #import "AFHTTPRequestOperationManager.h"
 

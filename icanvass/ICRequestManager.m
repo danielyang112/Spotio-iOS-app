@@ -8,10 +8,6 @@
 
 #import "ICRequestManager.h"
 
-#define kBaseUrl @"http://login.icanvassapp.com:888/"
-#define kCompanyNameKey @"CompanyName"
-#define kPasswordKey @"Password"
-
 @implementation ICRequestManager
 
 + (ICRequestManager*)sharedManager {
@@ -52,8 +48,7 @@
     [[ICRequestManager sharedManager] POST:@"MobileApp/RegisterCompanyExtended" parameters:d success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *d=operation.responseObject;
         if(!d[@"Message"]){
-            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {}];
-            cb(YES,operation.responseObject);
+            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {cb(YES,operation.responseObject);}];
         }else{
             cb(NO,operation.responseObject);
         }

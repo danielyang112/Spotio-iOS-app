@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlmostDoneViewController : UIViewController
+@interface AlmostDoneViewController : UIViewController <UIActionSheetDelegate>
+
+@property (nonatomic,strong) NSString *company;
+@property (nonatomic,strong) NSString *username;
+
 @property (weak, nonatomic) IBOutlet UIButton *industryButton;
 @property (weak, nonatomic) IBOutlet UIButton *roleButton;
 @property (weak, nonatomic) IBOutlet UIButton *employeesButton;

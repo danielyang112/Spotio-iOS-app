@@ -7,6 +7,7 @@
 //
 
 #import "RegisterViewController.h"
+#import "AlmostDoneViewController.h"
 #import "ICRequestManager.h"
 #import "Mixpanel.h"
 
@@ -149,6 +150,16 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     _scrollView.contentInset = contentInsets;
     _scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    AlmostDoneViewController *advc=segue.destinationViewController;
+    advc.company=[self trim:_companyTextField];
+    advc.username=[self trim:_emailTextField];
 }
 
 @end

@@ -485,6 +485,7 @@
                     <connections>
                         <outlet property="employeesButton" destination="exJ-gL-04r" id="vLA-Vd-bKK"/>
                         <outlet property="getStartedButton" destination="ebm-Au-P4l" id="w2X-UH-JGx"/>
+                        <outlet property="industryButton" destination="fky-X7-aY7" id="dGI-ws-Hk4"/>
                         <outlet property="roleButton" destination="9QZ-gv-D4F" id="vtK-ns-iHF"/>
                     </connections>
                 </viewController>
