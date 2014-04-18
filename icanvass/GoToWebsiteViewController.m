@@ -60,6 +60,6 @@
 */
 
 - (IBAction)gotoWebsite:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://login.icanvassapp.com"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://app.spotio.com"]];
 }
 @end
