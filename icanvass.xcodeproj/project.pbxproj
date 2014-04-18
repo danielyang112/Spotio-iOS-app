@@ -41,6 +41,7 @@
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
 		427E8A1819005F290092504A /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1719005F290092504A /* logo@2x.png */; };
 		427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 427E8A1A190081400092504A /* AlmostDoneViewController.m */; };
+		427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1C1901B5CD0092504A /* Default-568h@2x.png */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -191,6 +192,7 @@
 		427E8A1719005F290092504A /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		427E8A19190081400092504A /* AlmostDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlmostDoneViewController.h; sourceTree = "<group>"; };
 		427E8A1A190081400092504A /* AlmostDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlmostDoneViewController.m; sourceTree = "<group>"; };
+		427E8A1C1901B5CD0092504A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -516,6 +518,7 @@
 				42B3A67E18E8903600B46FBF /* support@2x.png */,
 				42B3A68918E89B2600B46FBF /* bg@2x.png */,
 				427E8A1719005F290092504A /* logo@2x.png */,
+				427E8A1C1901B5CD0092504A /* Default-568h@2x.png */,
 				42BBFF3018D3996E0065D4C3 /* Pins.h */,
 				42BBFF3118D3996E0065D4C3 /* Pins.m */,
 				42B3A66F18E7161900B46FBF /* Fields.h */,
@@ -774,6 +777,7 @@
 				42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */,
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
+				427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				427E8A1819005F290092504A /* logo@2x.png in Resources */,
 				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
@@ -999,7 +1003,6 @@
 					armv7,
 					armv7s,
 				);
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1022,7 +1025,6 @@
 					armv7,
 					armv7s,
 				);
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

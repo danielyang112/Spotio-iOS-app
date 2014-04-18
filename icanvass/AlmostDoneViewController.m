@@ -94,8 +94,6 @@
 }
 
 - (IBAction)getStarted:(id)sender {
-    NSString *username=[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey];
-    NSString *company=[[NSUserDefaults standardUserDefaults] objectForKey:kCompanyNameKey];
     NSDictionary *dic=@{@"companyLogin":_company,
                         @"login":_username,
                         @"answers":@{@"Industry":_industryButton.titleLabel.text,
