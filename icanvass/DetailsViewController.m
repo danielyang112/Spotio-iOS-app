@@ -133,7 +133,6 @@
     self.status=_pin.status;
     
     for(NSDictionary *d in _pin.customValues){
-        //Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
         NSString *v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
@@ -151,7 +150,7 @@
             NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
             v=[dFormatter stringFromDate:date];
         }
-        _addedFields[[d[@"DefinitionId"] stringValue]]=v;
+        _addedFields[d[@"DefinitionId"]]=v;
     }
 }
 
@@ -292,12 +291,10 @@ static NSDateFormatter *dateFormatter;
     if(_unit&&![_unit isEqualToString:@""]){
         location[@"Unit"]=_unit;
     }
-    //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
-                            //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
     NSString *titleOfEvent;
     NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
-    for(NSString *key in [_addedFields allKeys]) {
+    for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[key];
         if(f.type==FieldDateTime){
             titleOfEvent=f.name;
@@ -366,12 +363,10 @@ static NSDateFormatter *dateFormatter;
     if(_unit&&![_unit isEqualToString:@""]){
         location[@"Unit"]=_unit;
     }
-    //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
-    //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
     NSString *titleOfEvent;
     NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
-    for(NSString *key in [_addedFields allKeys]) {
+    for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[key];
         if(f.type==FieldDateTime){
             titleOfEvent=f.name;
@@ -525,7 +520,7 @@ static NSDateFormatter *dateFormatter;
     }
     
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     
     if(f.type==FieldDateTime){
         NSString *CellIdentifier = @"DetailsDateCell";
@@ -655,7 +650,7 @@ static NSDateFormatter *dateFormatter;
     }
     
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     _addedFields[key]=[textField.text stringByReplacingCharactersInRange:range withString:string];
     return YES;
 }
@@ -677,7 +672,7 @@ static NSDateFormatter *dateFormatter;
     }
     
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     _addedFields[key]=cell.field.text;
     //f.clientData=cell.field.text;*/
     self.activeField=nil;
@@ -693,7 +688,7 @@ static NSDateFormatter *dateFormatter;
 - (void)datePicker:(DatePickerViewController *)picker changedDate:(NSDate *)date {
     NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     _addedFields[key]=date;
 }
 
@@ -702,7 +697,7 @@ static NSDateFormatter *dateFormatter;
 - (void)dropDown:(DropDownViewController *)dropDown changedTo:(NSString *)value {
     NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     _addedFields[key]=value;
 }
 
@@ -817,7 +812,7 @@ static NSDateFormatter *dateFormatter;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
     Field *f=_customFields[indexPath.row];
-    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
+    NSNumber *key=@(f.ident);
     if([segue.identifier isEqualToString:@"DatePicker"]) {
         DatePickerViewController *d=segue.destinationViewController;
         d.delegate=self;

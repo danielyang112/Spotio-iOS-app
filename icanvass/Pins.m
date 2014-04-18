@@ -125,6 +125,7 @@
         NSLog(@"JSON: %@", responseObject);
         PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
         [_pins insertObject:p atIndex:0];
+        p.customValues=dictionary[@"CustomValues"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         block(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -145,7 +146,7 @@
         //NSArray *c=p.customValues;
 //        [p updateWithDictionary:dictionary];
         [p updateWithDictionary:responseObject];
-        //p.customValues=c;
+        p.customValues=dictionary[@"CustomValues"];
         //NSInteger idx=[_pins indexOfObject:p];
         //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
 //        p.status=dictionary[@"Status"];
