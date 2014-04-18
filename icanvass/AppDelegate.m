@@ -40,7 +40,7 @@
     [GMSServices provideAPIKey:kGoogleAPIKey];
     [FDSupport setUpWithSite:kFreshDeskSite andApikey:kFreshDeskAPIKey];
     [Mixpanel sharedInstanceWithToken:kMixPanelToken];
-    [[Mixpanel sharedInstance] registerSuperProperties:@{@"version":@"iCanvass", @"platform":@"iOS"}];
+    [[Mixpanel sharedInstance] registerSuperProperties:@{@"version":@"spotio", @"platform":@"iOS"}];
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
@@ -61,7 +61,21 @@
     // This sends the deviceToken to Mixpanel
     [mixpanel.people addPushDeviceToken:deviceToken];
 }
-							
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Show alert for push notifications recevied while the
+    // app is running
+    NSString *message = [[userInfo objectForKey:@"aps"]
+                         objectForKey:@"alert"];
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@""
+                          message:message
+                          delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

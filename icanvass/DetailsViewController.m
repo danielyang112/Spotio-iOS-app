@@ -396,7 +396,7 @@ static NSDateFormatter *dateFormatter;
                              @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
                              @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
                              @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-//                             @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
+                             @"UpdateDate":[dateFormatter stringFromDate:[NSDate date]],
                              @"CustomValues":customValues};
     
         [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {

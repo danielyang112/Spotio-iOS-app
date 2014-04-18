@@ -102,7 +102,7 @@
         switchView.on=_userOn;
         [switchView addTarget:self action:@selector(userSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     } else if(indexPath.section==kCreationDateSection){
-        label.text=@"Creation Date";
+        label.text=@"Last Updated";
         switchView.on=_creationDateOn;
         [switchView addTarget:self action:@selector(creationDateSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     } else if(indexPath.section==kLastUpdatedSection){

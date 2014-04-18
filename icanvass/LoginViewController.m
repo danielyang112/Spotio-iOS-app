@@ -118,7 +118,7 @@
 #pragma mark - Actions
 
 - (IBAction)forgotPassword:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://login.icanvassapp.com/Account/ICanvassForgotPassword"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://app.spotio.com/Account/ForgotPassword"]];
 }
 
 - (IBAction)hideKeyboard:(UIButton *)sender {

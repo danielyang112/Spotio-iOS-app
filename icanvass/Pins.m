@@ -228,7 +228,7 @@
         PinTemp *p=(PinTemp*)o;
         if(cf){
             NSDateComponents *components = [calendar components:comps
-                                                         fromDate:p.creationDate];
+                                                         fromDate:p.updateDate];
             NSDate *date=[calendar dateFromComponents:components];
             ret=ret&&([cf compare:date]!=NSOrderedDescending);
             ret=ret&&([date compare:ct]!=NSOrderedDescending);
