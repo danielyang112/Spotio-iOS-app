@@ -51,6 +51,7 @@
     self=[super initWithCoder:aDecoder];
     if(self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fieldsChanged:) name:@"ICFields" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
                                                      name:UIKeyboardWillShowNotification object:nil];
@@ -128,7 +129,7 @@
     self.state=_pin.location.state;
     self.zipCode=_pin.location.zip;
     self.unit=_pin.location.unit;
-    
+    _coordinate=CLLocationCoordinate2DMake([_pin.latitude doubleValue], [_pin.longitude doubleValue]);
     self.status=_pin.status;
     
     for(NSDictionary *d in _pin.customValues){
@@ -365,32 +366,47 @@ static NSDateFormatter *dateFormatter;
     if(_unit&&![_unit isEqualToString:@""]){
         location[@"Unit"]=_unit;
     }
+    //NSArray *customFields=@[@{@"DefinitionId":@"1",@"StringValue":@"Abcdefgh"},
+    //@{@"DefinitionId":@"6",@"StringValue":@"note note note note"}];
+    NSString *titleOfEvent;
+    NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
-//    for(NSString *key in [_addedFields allKeys]) {
-//        Field *f=[Fields sharedInstance].fieldById[key];
-//        if(f.type==FieldDateTime){
-//            [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
-//        }else if(f.type==FieldNumber){
-//            [customValues addObject:@{@"DefinitionId":key,@"IntValue":_addedFields[key]}];
-//        }else if(f.type==FieldMoney){
-//            [customValues addObject:@{@"DefinitionId":key,@"DecimalValue":_addedFields[key]}];
-//        }else{
-//            [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
-//        }
-//    }
-    NSDictionary *data=@{@"Id":_pin.ident,
-                         @"Location":location,
-                         @"Status":_status,
-                         @"ClientData":@{},
-                         @"Latitude":[NSString stringWithFormat:@"%.6f",[_pin.latitude doubleValue]],
-                         @"Longitude":[NSString stringWithFormat:@"%.6f",[_pin.longitude doubleValue]],
-                         @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
-                         @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
-                         @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-                         @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
-                         @"CustomValues":customValues};
-    [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
-        [self adjustForViewing];
+    for(NSString *key in [_addedFields allKeys]) {
+        Field *f=[Fields sharedInstance].fieldById[key];
+        if(f.type==FieldDateTime){
+            titleOfEvent=f.name;
+            dateOfEvent=_addedFields[key];
+            [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
+        }else if(f.type==FieldNumber){
+            [customValues addObject:@{@"DefinitionId":key,@"IntValue":_addedFields[key]}];
+        }else if(f.type==FieldMoney){
+            [customValues addObject:@{@"DefinitionId":key,@"DecimalValue":_addedFields[key]}];
+        }else{
+            [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
+        }
+    }
+    [self locationForAddressDictionary:@{@"City":_city,@"State":_state,@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
+        CLLocationDegrees latitude=_coordinate.latitude;
+        CLLocationDegrees longitude=_coordinate.longitude;
+        if(l){
+            latitude=l.coordinate.latitude;
+            longitude=l.coordinate.longitude;
+        }
+        NSDictionary *data=@{@"Id":_pin.ident,
+                             @"Location":location,
+                             @"Status":_status,
+                             @"ClientData":@{},
+                             @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
+                             @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
+                             @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
+                             @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
+                             @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
+//                             @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
+                             @"CustomValues":customValues};
+    
+        [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
+            [self adjustForViewing];
+        }];
     }];
 }
 
@@ -732,6 +748,11 @@ static NSDateFormatter *dateFormatter;
 
 - (void)fieldsChanged:(NSNotification*)notification {
     [self updateFields];
+}
+
+- (void)pinsChanged:(NSNotification*)notification {
+    [self extractPin];
+    [self.tableView reloadData];
 }
 
 - (void)keyboardWasShown:(NSNotification*)aNotification {

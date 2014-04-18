@@ -135,16 +135,17 @@
 
 - (void)editPin:(PinTemp*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins(guid'%@')?$format=json",dictionary[@"Id"]];
-    [manager PATCH:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
+    [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         PinTemp *p=[_pins grepWith:^BOOL(NSObject *o) {
             PinTemp *_p=(PinTemp*)o;
             return [pin.ident isEqual:_p.ident];
         }][0];
-        NSArray *c=p.customValues;
-        [p updateWithDictionary:dictionary];
-        p.customValues=c;
+        //NSArray *c=p.customValues;
+//        [p updateWithDictionary:dictionary];
+        [p updateWithDictionary:responseObject];
+        //p.customValues=c;
         //NSInteger idx=[_pins indexOfObject:p];
         //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
 //        p.status=dictionary[@"Status"];
