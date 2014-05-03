@@ -223,7 +223,7 @@
 		427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon76x76@2x.png"; sourceTree = "<group>"; };
 		427E8A2C1901CFC30092504A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		42A6A57D18CBA3BF0043233C /* icanvass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icanvass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42A6A57D18CBA3BF0043233C /* door2doorapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = door2doorapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		42A6A58418CBA3BF0043233C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -497,7 +497,7 @@
 		42A6A57E18CBA3BF0043233C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42A6A57D18CBA3BF0043233C /* icanvass.app */,
+				42A6A57D18CBA3BF0043233C /* door2doorapp.app */,
 				42A6A59E18CBA3BF0043233C /* icanvassTests.xctest */,
 			);
 			name = Products;
@@ -729,9 +729,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		42A6A57C18CBA3BF0043233C /* icanvass */ = {
+		42A6A57C18CBA3BF0043233C /* door2doorapp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "icanvass" */;
+			buildConfigurationList = 42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "door2doorapp" */;
 			buildPhases = (
 				42A6A57918CBA3BF0043233C /* Sources */,
 				42A6A57A18CBA3BF0043233C /* Frameworks */,
@@ -741,9 +741,9 @@
 			);
 			dependencies = (
 			);
-			name = icanvass;
+			name = door2doorapp;
 			productName = icanvass;
-			productReference = 42A6A57D18CBA3BF0043233C /* icanvass.app */;
+			productReference = 42A6A57D18CBA3BF0043233C /* door2doorapp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		42A6A59D18CBA3BF0043233C /* icanvassTests */ = {
@@ -791,7 +791,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				42A6A57C18CBA3BF0043233C /* icanvass */,
+				42A6A57C18CBA3BF0043233C /* door2doorapp */,
 				42A6A59D18CBA3BF0043233C /* icanvassTests */,
 			);
 		};
@@ -947,7 +947,7 @@
 /* Begin PBXTargetDependency section */
 		42A6A5A418CBA3BF0043233C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 42A6A57C18CBA3BF0043233C /* icanvass */;
+			target = 42A6A57C18CBA3BF0043233C /* door2doorapp */;
 			targetProxy = 42A6A5A318CBA3BF0043233C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1148,7 +1148,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "icanvass" */ = {
+		42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "door2doorapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42A6A5B018CBA3BF0043233C /* Debug */,

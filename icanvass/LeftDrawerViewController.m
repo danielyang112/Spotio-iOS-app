@@ -95,7 +95,7 @@
 }
 
 - (IBAction)customizeQuestions:(id)sender {
-    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the iCanvass web app, click the button below to go to the login page." title:@"Customize Questions"];
+    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the SPOTIO web app, click the button below to go to the login page." title:@"Customize Questions"];
     [[Mixpanel sharedInstance] track:@"CustomizeQuestionsView"];
 }
 
