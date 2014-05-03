@@ -295,7 +295,7 @@ static NSDateFormatter *dateFormatter;
     NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
     for(NSNumber *key in [_addedFields allKeys]) {
-        Field *f=[Fields sharedInstance].fieldById[key];
+        Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
             titleOfEvent=f.name;
             dateOfEvent=_addedFields[key];
@@ -367,7 +367,7 @@ static NSDateFormatter *dateFormatter;
     NSDate *dateOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
     for(NSNumber *key in [_addedFields allKeys]) {
-        Field *f=[Fields sharedInstance].fieldById[key];
+        Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
             titleOfEvent=f.name;
             dateOfEvent=_addedFields[key];
