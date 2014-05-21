@@ -773,6 +773,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Roman Kot";
 				TargetAttributes = {
+					42A6A57C18CBA3BF0043233C = {
+						DevelopmentTeam = 75ZZLAH8MX;
+					};
 					42A6A59D18CBA3BF0043233C = {
 						TestTargetID = 42A6A57C18CBA3BF0043233C;
 					};
@@ -1081,7 +1084,7 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/romek/Documents/newicanvass/icanvass,
