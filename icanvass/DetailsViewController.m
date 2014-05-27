@@ -137,20 +137,26 @@
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
         if(!v) {
-            static NSDateFormatter *dFormatter;
-            static NSDateFormatter *ddFormatter;
-            if(!dFormatter){
-                dFormatter=[[NSDateFormatter alloc] init];
-                dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+            static NSDateFormatter *zoneFormatter;
+            static NSDateFormatter *nozoneFormatter;
+            if(!zoneFormatter) {
+                zoneFormatter=[[NSDateFormatter alloc] init];
+                zoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             }
-            if(!ddFormatter) {
-                ddFormatter=[[NSDateFormatter alloc] init];
-                ddFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+            if(!nozoneFormatter) {
+                nozoneFormatter=[[NSDateFormatter alloc] init];
+                nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
             }
-            NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
-            v=[dFormatter stringFromDate:date];
+            NSDate *date=[zoneFormatter dateFromString:d[@"DateTimeValue"]];
+            if(!date) {
+                date=[nozoneFormatter dateFromString:d[@"DateTimeValue"]];
+            }
+            _addedFields[d[@"DefinitionId"]]=date;
+            return;
         }
-        _addedFields[d[@"DefinitionId"]]=v;
+        if(v){
+            _addedFields[d[@"DefinitionId"]]=v;
+        }
     }
 }
 
@@ -510,16 +516,24 @@ static NSDateFormatter *dateFormatter;
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
         if(!v) {
             static NSDateFormatter *dFormatter;
-            static NSDateFormatter *ddFormatter;
             if(!dFormatter){
                 dFormatter=[[NSDateFormatter alloc] init];
                 dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
             }
-            if(!ddFormatter) {
-                ddFormatter=[[NSDateFormatter alloc] init];
-                ddFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+            static NSDateFormatter *zoneFormatter;
+            static NSDateFormatter *nozoneFormatter;
+            if(!zoneFormatter) {
+                zoneFormatter=[[NSDateFormatter alloc] init];
+                zoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             }
-            NSDate *date=[ddFormatter dateFromString:d[@"DateTimeValue"]];
+            if(!nozoneFormatter) {
+                nozoneFormatter=[[NSDateFormatter alloc] init];
+                nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+            }
+            NSDate *date=[zoneFormatter dateFromString:d[@"DateTimeValue"]];
+            if(!date) {
+                date=[nozoneFormatter dateFromString:d[@"DateTimeValue"]];
+            }
             v=[dFormatter stringFromDate:date];
         }
         cell.bottom.text=v;
