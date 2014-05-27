@@ -14,6 +14,7 @@
 #import <FreshdeskSDK/FreshdeskSDK.h>
 #import "Users.h"
 #import "Mixpanel.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
 #define kFreshDeskSite @"spotio.freshdesk.com"
@@ -28,6 +29,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [BugSenseController sharedControllerWithBugSenseAPIKey:@"9ebe29b0"
+                                            userDictionary:nil
+                                           sendImmediately:YES];
     
     MMDrawerController *drawerController=(MMDrawerController*)self.window.rootViewController;
     UINavigationController *navigationController=[drawerController.storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];

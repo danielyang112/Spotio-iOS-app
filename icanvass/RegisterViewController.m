@@ -10,6 +10,7 @@
 #import "AlmostDoneViewController.h"
 #import "ICRequestManager.h"
 #import "Mixpanel.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
@@ -90,6 +91,7 @@
             // You must call identify if you haven't already
             // (e.g., when your app launches).
             [mixpanel identify:d[@"EmailAdderss"]];
+            [BugSenseController setUserIdentifier:d[@"EmailAdderss"]];
             [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAdderss"]];
             [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyLogin"]}];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |

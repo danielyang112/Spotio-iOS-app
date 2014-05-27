@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "ICRequestManager.h"
 #import "Mixpanel.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 @interface LoginViewController ()
 @property (nonatomic,strong) NSString *username;
@@ -75,6 +76,7 @@
         if(success) {
             Mixpanel *mixpanel=[Mixpanel sharedInstance];
             [mixpanel identify:username];
+            [BugSenseController setUserIdentifier:username];
             [mixpanel registerSuperPropertiesOnce:@{@"company":company}];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
