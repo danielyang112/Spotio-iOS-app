@@ -60,9 +60,12 @@
 }
 
 - (NSArray*)statusesArrayFromArray:(NSArray*)a {
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"Order" ascending:YES];
+    a=[a sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
     NSMutableArray *ma=[[NSMutableArray alloc] initWithCapacity:[a count]];
     for(NSDictionary *dic in a) {
-        [ma addObject:dic[@"Name"]];
+        if([dic[@"IsActive"] boolValue])
+            [ma addObject:dic[@"Name"]];
     }
     return ma;
 }
