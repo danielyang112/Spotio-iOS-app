@@ -308,7 +308,7 @@ enum ICSortOrder : NSUInteger {
     // Pass the selected object to the new view controller.
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
-    dc.pin=_pins[selectedRowIndex.row];
+    dc.pin=_filtered[selectedRowIndex.row];
 }
 
 @end
