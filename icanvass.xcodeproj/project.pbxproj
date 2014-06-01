@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4226928B193B563D00FD0BE9 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */; };
 		42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F0B18D10FC60087941E /* DetailsViewController.m */; };
 		42284F5218D252970087941E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42284F5118D252970087941E /* CoreData.framework */; };
 		42284F5418D253F60087941E /* pins.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 42284F5318D253F60087941E /* pins.xcdatamodel */; };
@@ -58,7 +59,6 @@
 		427E8A3B1901CFC30092504A /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */; };
 		427E8A3C1901CFC30092504A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2C1901CFC30092504A /* iTunesArtwork.png */; };
 		427E8A3D1901CFC30092504A /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */; };
-		427F7EA819353C4E0092A593 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F7EA719353C4E0092A593 /* BugSense-iOS.framework */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -154,6 +154,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		42284F0A18D10FC60087941E /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		42284F0B18D10FC60087941E /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		42284F5118D252970087941E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -224,7 +225,6 @@
 		427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon76x76@2x.png"; sourceTree = "<group>"; };
 		427E8A2C1901CFC30092504A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		427F7EA719353C4E0092A593 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "BugSense-iOS.framework"; path = "../../../Downloads/BugSense 3-2.6/BugSense-iOS.framework"; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* door2doorapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = door2doorapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -361,7 +361,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				427F7EA819353C4E0092A593 /* BugSense-iOS.framework in Frameworks */,
 				42284F7C18D257820087941E /* SystemConfiguration.framework in Frameworks */,
 				42284F7A18D257770087941E /* QuartzCore.framework in Frameworks */,
 				42284F7818D2575A0087941E /* OpenGLES.framework in Frameworks */,
@@ -370,6 +369,7 @@
 				42B3A69018E8C3E100B46FBF /* FreshdeskSDK.framework in Frameworks */,
 				42284F7218D257330087941E /* libc++.dylib in Frameworks */,
 				42284F7018D257260087941E /* ImageIO.framework in Frameworks */,
+				4226928B193B563D00FD0BE9 /* BugSense-iOS.framework in Frameworks */,
 				42284F6E18D2571D0087941E /* GLKit.framework in Frameworks */,
 				42284F6C18D2570A0087941E /* CoreText.framework in Frameworks */,
 				42284F6A18D257010087941E /* CoreLocation.framework in Frameworks */,
@@ -509,7 +509,7 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				427F7EA719353C4E0092A593 /* BugSense-iOS.framework */,
+				4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */,
 				42284F7B18D257820087941E /* SystemConfiguration.framework */,
 				42284F7918D257770087941E /* QuartzCore.framework */,
 				42284F7718D2575A0087941E /* OpenGLES.framework */,
@@ -1072,8 +1072,7 @@
 					"$(inherited)",
 					/Users/romek/Documents/newicanvass/icanvass,
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
-					/Users/romek/Downloads/BugSense,
-					"3-2.6",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
@@ -1098,8 +1097,7 @@
 					"$(inherited)",
 					/Users/romek/Documents/newicanvass/icanvass,
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
-					/Users/romek/Downloads/BugSense,
-					"3-2.6",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
