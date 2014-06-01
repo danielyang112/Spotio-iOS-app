@@ -60,6 +60,7 @@
         self.fieldById=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(answeredQuestions:) name:@"ICQuestions" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }
@@ -74,10 +75,16 @@
 }
 
 - (NSArray*)fieldsArrayFromArray:(NSArray*)a {
-    return [a mapWith:^NSObject *(NSObject *o) {
-        Field *f=[[Field alloc] initWithDictionary:(NSDictionary*)o];
-        return f;
-    }];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"Order" ascending:YES];
+    a=[a sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    NSMutableArray *ma=[[NSMutableArray alloc] initWithCapacity:[a count]];
+    for(NSDictionary *dic in a) {
+        if(![dic[@"IsDisabled"] boolValue]) {
+            Field *f=[[Field alloc] initWithDictionary:dic];
+            [ma addObject:f];
+        }
+    }
+    return ma;
 }
 
 - (void)updateDictionary {
@@ -112,6 +119,10 @@
 }
 
 - (void)answeredQuestions:(NSNotification*)notification {
+    self.fields=nil;
+}
+
+- (void)appDidBecomeActive:(NSNotification*)notification {
     self.fields=nil;
 }
 
