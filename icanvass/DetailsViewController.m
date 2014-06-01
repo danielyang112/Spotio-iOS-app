@@ -473,6 +473,7 @@ static NSDateFormatter *dateFormatter;
         cell.field.text=_streetNumber;
         cell.field.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         cell.stepper.value=[_streetNumber doubleValue];
+        [cell.stepper addTarget:self action:@selector(stepperChanged:) forControlEvents:UIControlEventValueChanged];
         cell.field.delegate=self;
         return cell;
     } else if(indexPath.row==2){
@@ -498,6 +499,10 @@ static NSDateFormatter *dateFormatter;
         cell.field.delegate=self;
         return cell;
     }
+}
+
+- (IBAction)stepperChanged:(UIStepper*)sender {
+    _streetNumber=[NSString stringWithFormat:@"%.0f",sender.value];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

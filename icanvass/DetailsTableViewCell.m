@@ -42,7 +42,6 @@
 }
 
 - (IBAction)stepperChanged:(UIStepper*)sender {
-    //[self.field endEditing:YES];
     self.field.text=[NSString stringWithFormat:@"%.0f",sender.value];
 }
 
