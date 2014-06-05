@@ -148,6 +148,8 @@
             if(!nozoneFormatter) {
                 nozoneFormatter=[[NSDateFormatter alloc] init];
                 nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+                NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+                [nozoneFormatter setTimeZone:gmt];
             }
             NSDate *date=[zoneFormatter dateFromString:v];
             if(!date) {
@@ -313,7 +315,7 @@ static NSDateFormatter *dateFormatter;
     for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
-            titleOfEvent=f.name;
+            titleOfEvent=[NSString stringWithFormat:@"%@ %@",_streetNumber,_streetName];
             dateOfEvent=_addedFields[key];
             [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
         }else if(f.type==FieldNumber){
@@ -385,7 +387,7 @@ static NSDateFormatter *dateFormatter;
     for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
-            titleOfEvent=f.name;
+            titleOfEvent=[NSString stringWithFormat:@"%@ %@",_streetNumber,_streetName];;
             dateOfEvent=_addedFields[key];
             [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
         }else if(f.type==FieldNumber){
@@ -417,6 +419,19 @@ static NSDateFormatter *dateFormatter;
     
         [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
             [self adjustForViewing];
+            if(success && titleOfEvent){
+                EKEventStore *store = [[EKEventStore alloc] init];
+                [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                    if (!granted) { return; }
+                    EKEvent *event = [EKEvent eventWithEventStore:store];
+                    event.title = titleOfEvent;
+                    event.startDate = dateOfEvent;
+                    event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                    [event setCalendar:[store defaultCalendarForNewEvents]];
+                    NSError *err = nil;
+                    [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                }];
+            }
         }];
     }];
 }
@@ -547,6 +562,8 @@ static NSDateFormatter *dateFormatter;
             if(!nozoneFormatter) {
                 nozoneFormatter=[[NSDateFormatter alloc] init];
                 nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+                NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+                [nozoneFormatter setTimeZone:gmt];
             }
             NSDate *date=[zoneFormatter dateFromString:d[@"DateTimeValue"]];
             if(!date) {
@@ -595,7 +612,7 @@ static NSDateFormatter *dateFormatter;
         cell.note.text=_addedFields[key];
         cell.note.keyboardType=UIKeyboardTypeDefault;
         cell.note.layer.borderWidth = 1.f;
-        cell.note.layer.borderColor = [[UIColor lightGrayColorf] CGColor];
+        cell.note.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         cell.note.layer.cornerRadius = 5;
         //UITextField *field=(UITextField*)[cell viewWithTag:1];
         

@@ -24,6 +24,8 @@
     if(!dateFormatter){
         dateFormatter=[[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        [dateFormatter setTimeZone:gmt];
     }
     self.creationDate=[dateFormatter dateFromString:noMilliseconds];
     if(nilIfNull(dic[@"UpdateDate"])){
