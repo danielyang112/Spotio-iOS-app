@@ -137,6 +137,8 @@
         if(!v) v=nilIfNull(d[@"IntValue"]);
         if(!v) v=nilIfNull(d[@"DecimalValue"]);
         if(!v) {
+            v=nilIfNull(d[@"DateTimeValue"]);
+            if(!v) return;
             static NSDateFormatter *zoneFormatter;
             static NSDateFormatter *nozoneFormatter;
             if(!zoneFormatter) {
@@ -147,9 +149,9 @@
                 nozoneFormatter=[[NSDateFormatter alloc] init];
                 nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
             }
-            NSDate *date=[zoneFormatter dateFromString:d[@"DateTimeValue"]];
+            NSDate *date=[zoneFormatter dateFromString:v];
             if(!date) {
-                date=[nozoneFormatter dateFromString:d[@"DateTimeValue"]];
+                date=[nozoneFormatter dateFromString:v];
             }
             _addedFields[d[@"DefinitionId"]]=date;
             return;
