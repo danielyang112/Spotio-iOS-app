@@ -153,6 +153,7 @@
         UINavigationController *nc=(UINavigationController*)[segue destinationViewController];
         DetailsViewController *dc=(DetailsViewController*)nc.topViewController;
         dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
+        dc.userCoordinate=_locationManager.location.coordinate;
         _tapped=NO;
         dc.adding=YES;
     } else if([segue.identifier isEqualToString:@"ViewPin"]) {

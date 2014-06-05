@@ -220,7 +220,7 @@
     self.streetName=placemark.thoroughfare;
     self.initialStreetName=_streetName;
     self.streetNumber=placemark.subThoroughfare;
-    NSArray *range=[_streetNumber componentsSeparatedByString:@"–"];
+    NSArray *range=[_streetNumber componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"–-"]];
     if([range count]) {
         self.streetNumber=range[0];
     }
@@ -247,11 +247,30 @@
 - (void)addressForCoordinate2:(CLLocationCoordinate2D)coordinate {
     CLLocation *loc=[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
     [[CLGeocoder new] reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
-        for(CLPlacemark *placemark in placemarks){
-            NSLog(@"%@",placemark);
-        }
+        
         if([placemarks count]){
             [self addressFromPlacemark:[placemarks firstObject]];
+        }
+    }];
+}
+
+- (void)userAddressWithBlock:(void (^)(NSString*))block {
+    if(_coordinate.latitude==_userCoordinate.latitude
+       && _coordinate.longitude==_userCoordinate.longitude){
+        block([NSString stringWithFormat:@"%@ %@",_streetNumber,_streetName]);
+        return;
+    }
+    CLLocation *loc=[[CLLocation alloc] initWithLatitude:_userCoordinate.latitude longitude:_userCoordinate.longitude];
+    [[CLGeocoder new] reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+        if([placemarks count]){
+            CLPlacemark *placemark=[placemarks firstObject];
+            NSString *n=placemark.subThoroughfare;
+            NSArray *range=[_streetNumber componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"–-"]];
+            if([range count]) {
+                n=range[0];
+            }
+            NSString *s=[NSString stringWithFormat:@"%@ %@",n,placemark.thoroughfare];
+            block(s);
         }
     }];
 }
@@ -262,9 +281,6 @@
         return;
     }
     [[CLGeocoder new] geocodeAddressDictionary:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        for(CLPlacemark *placemark in placemarks){
-            NSLog(@"%@",placemark);
-        }
         CLPlacemark *placemark=[placemarks firstObject];
         block(placemark.location);
     }];
@@ -332,33 +348,36 @@ static NSDateFormatter *dateFormatter;
             latitude=l.coordinate.latitude;
             longitude=l.coordinate.longitude;
         }
-        NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
-                             @"Location":location,
-                             @"Status":_status,
-                             @"ClientData":@{},
-                             @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
-                             @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
-                             @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
-                             @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
-                             @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-                             @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
-                             @"CustomValues":customValues};
-        
-        [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
-            if(success && titleOfEvent){
-                EKEventStore *store = [[EKEventStore alloc] init];
-                [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-                    if (!granted) { return; }
-                    EKEvent *event = [EKEvent eventWithEventStore:store];
-                    event.title = titleOfEvent;
-                    event.startDate = dateOfEvent;
-                    event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-                    [event setCalendar:[store defaultCalendarForNewEvents]];
-                    NSError *err = nil;
-                    [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-                }];
-            }
-            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        [self userAddressWithBlock:^(NSString *ua) {
+            NSDictionary *data=@{//@"Id":@"85b16b78-4e7c-4f14-92ee-07c8a4a189bb",//[[NSUUID UUID] UUIDString],
+                                 @"Location":location,
+                                 @"Status":_status,
+                                 @"ClientData":@{},
+                                 @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
+                                 @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
+                                 @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
+                                 @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_userCoordinate.latitude],
+                                 @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_userCoordinate.longitude],
+                                 @"UserLocation":ua,
+                                 @"DateTimeInputted":[dateFormatter stringFromDate:[NSDate date]],
+                                 @"CustomValues":customValues};
+            
+            [[Pins sharedInstance] addPinWithDictionary:data block:^(BOOL success) {
+                if(success && titleOfEvent){
+                    EKEventStore *store = [[EKEventStore alloc] init];
+                    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                        if (!granted) { return; }
+                        EKEvent *event = [EKEvent eventWithEventStore:store];
+                        event.title = titleOfEvent;
+                        event.startDate = dateOfEvent;
+                        event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                        [event setCalendar:[store defaultCalendarForNewEvents]];
+                        NSError *err = nil;
+                        [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                    }];
+                }
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+            }];
         }];
     }];
 }

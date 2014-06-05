@@ -13,6 +13,7 @@
 @interface DetailsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic) CLLocationCoordinate2D userCoordinate;
 @property (nonatomic) BOOL adding;
 @property (nonatomic,strong) PinTemp *pin;
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
