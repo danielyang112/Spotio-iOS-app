@@ -26,6 +26,19 @@
 
 @end
 
+@implementation DetailsNotesCell
+
+- (void)setEnabled:(BOOL)enabled {
+    [super setEnabled:enabled];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    _note.hidden=!editing;
+}
+
+@end
+
 @implementation DetailsStreetNumberCell
 
 - (void)awakeFromNib {

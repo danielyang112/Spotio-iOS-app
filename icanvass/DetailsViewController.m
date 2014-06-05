@@ -17,7 +17,7 @@
 #import "Mixpanel.h"
 #import <EventKit/EventKit.h>
 
-@interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate>
+@interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate,UITextViewDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
 @property (nonatomic,strong) NSString *initialStreetNumber;
@@ -507,6 +507,17 @@ static NSDateFormatter *dateFormatter;
     _streetNumber=[NSString stringWithFormat:@"%.0f",sender.value];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section==0) return 44.f;
+    
+    Field *f=_customFields[indexPath.row];
+    if(f.type==FieldNoteBox){
+        return 132.f;
+    }
+    
+    return 44.f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0) {
         return [self tableView:tableView firstSectionForRowAtIndexPath:indexPath];
@@ -577,6 +588,23 @@ static NSDateFormatter *dateFormatter;
         [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         
         return cell;
+    }else if(f.type==FieldNoteBox){
+        NSString *CellIdentifier = @"DetailsNotesCell";
+        DetailsNotesCell *cell = (DetailsNotesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.note.delegate=self;
+        cell.note.text=_addedFields[key];
+        cell.note.keyboardType=UIKeyboardTypeDefault;
+        cell.note.layer.borderWidth = 1.f;
+        cell.note.layer.borderColor = [[UIColor lightGrayColorf] CGColor];
+        cell.note.layer.cornerRadius = 5;
+        //UITextField *field=(UITextField*)[cell viewWithTag:1];
+        
+//        cell.field.placeholder=f.name;
+//        cell.field.keyboardType=UIKeyboardTypeDefault;
+//        cell.field.text=_addedFields[key];
+//        cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
+        return cell;
     }else{
         NSString *CellIdentifier = @"DetailsTextCell";
         DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -586,7 +614,7 @@ static NSDateFormatter *dateFormatter;
         cell.field.placeholder=f.name;
         cell.field.keyboardType=UIKeyboardTypeDefault;
         cell.field.text=_addedFields[key];
-//        cell.enabled=!!_addedFields[key];
+        //        cell.enabled=!!_addedFields[key];
         cell.enabled=YES;
         return cell;
     }
@@ -681,6 +709,18 @@ static NSDateFormatter *dateFormatter;
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);
     _addedFields[key]=[textField.text stringByReplacingCharactersInRange:range withString:string];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    DetailsNotesCell *cell=(DetailsNotesCell*)(textView.superview.superview.superview);
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    if(!indexPath){
+        return YES;
+    }
+    Field *f=_customFields[indexPath.row];
+    NSNumber *key=@(f.ident);
+    _addedFields[key]=[textView.text stringByReplacingCharactersInRange:range withString:text];
     return YES;
 }
 

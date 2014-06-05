@@ -28,3 +28,8 @@
 @interface DetailsDropDownCell : DetailsTableViewCell
 
 @end
+
+@interface DetailsNotesCell : DetailsTableViewCell
+@property (nonatomic,weak) IBOutlet UITextView *note;
+
+@end

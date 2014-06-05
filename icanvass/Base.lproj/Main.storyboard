@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="JQR-GK-8EY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="JQR-GK-8EY">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -715,6 +715,52 @@
                                         <connections>
                                             <outlet property="bottom" destination="ij3-8m-hB1" id="4fG-yS-3Cj"/>
                                             <outlet property="top" destination="PWg-8S-A6D" id="AzH-jC-vcR"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="DetailsNotesCell" rowHeight="88" id="Ijp-zI-iSN" customClass="DetailsNotesCell">
+                                        <rect key="frame" x="0.0" y="275" width="320" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ijp-zI-iSN" id="EO1-gw-dfG">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IhX-so-RAK">
+                                                    <rect key="frame" x="20" y="3" width="280" height="78"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="top" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIz-xa-jVQ">
+                                                    <rect key="frame" x="15" y="3" width="290" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcT-ZW-gNO">
+                                                    <rect key="frame" x="10" y="6" width="280" height="84"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="jIz-xa-jVQ" secondAttribute="trailing" constant="15" id="9DN-kG-HNo"/>
+                                                <constraint firstItem="IcT-ZW-gNO" firstAttribute="leading" secondItem="EO1-gw-dfG" secondAttribute="leading" constant="10" id="EnN-EJ-CKV"/>
+                                                <constraint firstAttribute="trailing" secondItem="IcT-ZW-gNO" secondAttribute="trailing" constant="30" id="L8l-Fh-Yei"/>
+                                                <constraint firstItem="jIz-xa-jVQ" firstAttribute="leading" secondItem="EO1-gw-dfG" secondAttribute="leading" constant="15" id="Mur-of-KTS"/>
+                                                <constraint firstItem="IcT-ZW-gNO" firstAttribute="top" secondItem="EO1-gw-dfG" secondAttribute="top" constant="6" id="bYN-Yq-gGR"/>
+                                                <constraint firstAttribute="bottom" secondItem="IcT-ZW-gNO" secondAttribute="bottom" constant="-3" id="hTj-8P-2XC"/>
+                                                <constraint firstItem="jIz-xa-jVQ" firstAttribute="top" secondItem="EO1-gw-dfG" secondAttribute="top" constant="3" id="opc-rQ-YRH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bottom" destination="IcT-ZW-gNO" id="cYS-A5-kU8"/>
+                                            <outlet property="note" destination="IhX-so-RAK" id="af6-Cf-Pgq"/>
+                                            <outlet property="top" destination="jIz-xa-jVQ" id="BmE-ja-Kt6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
