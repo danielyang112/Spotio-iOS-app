@@ -75,7 +75,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[Mixpanel sharedInstance] track:@"MapView"];
     [self refresh];
 }
 

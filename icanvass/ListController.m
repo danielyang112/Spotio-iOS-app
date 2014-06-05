@@ -78,7 +78,6 @@ enum ICSortOrder : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[Mixpanel sharedInstance] track:@"ListView"];
     if(!_searchText || [_searchText isEqualToString:@""]){
         [self refresh];
     }
