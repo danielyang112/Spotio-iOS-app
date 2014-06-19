@@ -16,6 +16,6 @@
     #import <CoreData/CoreData.h>
 #endif
 
-//#ifdef NDEBUG
+#ifdef NDEBUG
     #define NSLog(...) /* suppress NSLog when in release mode */
-//#endif
+#endif
