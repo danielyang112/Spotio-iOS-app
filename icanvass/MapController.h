@@ -18,4 +18,6 @@
 @interface MapController : UIViewController<UISearchBarDelegate>
 @property (nonatomic,strong) CLLocation *location;
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
+@property (nonatomic,strong) NSArray *pins;
+@property (nonatomic,strong) NSArray *filtered;
 @end

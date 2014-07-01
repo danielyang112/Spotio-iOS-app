@@ -11,6 +11,7 @@
 #import "DetailsTableViewCell.h"
 #import "DatePickerViewController.h"
 #import "DropDownViewController.h"
+#import "NoteViewController.h"
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
@@ -265,10 +266,10 @@
         if([placemarks count]){
             CLPlacemark *placemark=[placemarks firstObject];
             NSString *n=placemark.subThoroughfare;
-            NSArray *range=[_streetNumber componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"–-"]];
+            /*NSArray *range=[_streetNumber componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"–-"]];
             if([range count]) {
                 n=range[0];
-            }
+            }*/
             NSString *s=[NSString stringWithFormat:@"%@ %@",n,placemark.thoroughfare];
             block(s);
         }
@@ -376,7 +377,8 @@ static NSDateFormatter *dateFormatter;
                         [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
                     }];
                 }
-                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+                //[self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+                [self.navigationController popViewControllerAnimated:YES];
             }];
         }];
     }];
@@ -561,6 +563,8 @@ static NSDateFormatter *dateFormatter;
         NSArray *c=_pin.customValues;
         NSDictionary *d=c[indexPath.row];
         Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        if([f.name isEqualToString:@"Notes"])
+            cell.enabled = YES;
         cell.top.text=f.name;
         NSString *v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
@@ -683,6 +687,9 @@ static NSDateFormatter *dateFormatter;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //[tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if(!tableView.isEditing){
+        
+    }
     Field *f=_customFields[indexPath.row];
     [_activeField endEditing:YES];
     if(f.type==FieldDateTime){
@@ -887,7 +894,8 @@ static NSDateFormatter *dateFormatter;
 - (IBAction)cancel:(id)sender {
     [_activeField endEditing:YES];
     if(_adding){
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        [self.navigationController popViewControllerAnimated:YES];
+        //[self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
     }else{
         [self setEditing:NO animated:YES];
     }
@@ -926,6 +934,9 @@ static NSDateFormatter *dateFormatter;
         DropDownViewController *drop=segue.destinationViewController;
         drop.delegate=self;
         drop.options=f.settings;
+    } else if([segue.identifier isEqualToString:@"noteView"]) {
+        NoteViewController *noteView=segue.destinationViewController;
+        noteView.note = ((DetailsDropDownCell *) sender).bottom.text;
     }
 }
 

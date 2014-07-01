@@ -53,11 +53,11 @@ enum ICSortOrder : NSUInteger {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         
         self.statusDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES],
-                                              [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO]];
+                                 [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO]];
         self.addressDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"address" ascending:YES],
-                                              [[NSSortDescriptor alloc] initWithKey:@"address" ascending:NO]];
+                                  [[NSSortDescriptor alloc] initWithKey:@"address" ascending:NO]];
         self.dateDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:YES],
-                                           [[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO]];
+                               [[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO]];
         self.headerView=[[[NSBundle mainBundle] loadNibNamed:@"ListHeader" owner:nil options:nil] lastObject];
         self.statusButton=(UIButton*)[_headerView viewWithTag:1];
         [_statusButton addTarget:self action:@selector(sortStatus:) forControlEvents:UIControlEventTouchUpInside];
@@ -228,57 +228,57 @@ enum ICSortOrder : NSUInteger {
     cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
     cell.icon.layer.borderWidth=1.f;
     /*
-    CGPathRef path=[PocketSVG pathFromDAttribute:@"M0 0 h80 c40 0 50 10 50 50 v80 c0 25 0 25 -25 50 l-45 50 c-10 10 -30 10 -40 0 l-45 -50 c-25 -25 -25 -25 -25 -50 v-80 c0 -40 10 -50 50 -50 z"];
-    
-    
-    CAShapeLayer *shapeLayer=[CAShapeLayer layer];
-    shapeLayer.path=path;
-    shapeLayer.lineWidth=20;
-    CGRect boundingBox = CGPathGetBoundingBox(shapeLayer.path);
-    
-    CGFloat boundingBoxAspectRatio = CGRectGetWidth(boundingBox)/CGRectGetHeight(boundingBox);
-    CGFloat viewAspectRatio = 1.0;
-    
-    CGFloat scaleFactor = 1.0;
-    if (boundingBoxAspectRatio > viewAspectRatio) {
-        // Width is limiting factor
-        scaleFactor = CGRectGetWidth(cell.icon.frame)/CGRectGetWidth(boundingBox);
-    } else {
-        // Height is limiting factor
-        scaleFactor = CGRectGetHeight(cell.icon.frame)/CGRectGetHeight(boundingBox);
-    }
-    
-    
-    // Scaling the path ...
-    CGAffineTransform scaleTransform = CGAffineTransformIdentity;
-    // Scale down the path first
-    scaleTransform = CGAffineTransformScale(scaleTransform, scaleFactor, scaleFactor);
-    // Then translate the path to the upper left corner
-    scaleTransform = CGAffineTransformTranslate(scaleTransform, -CGRectGetMinX(boundingBox), -CGRectGetMinY(boundingBox));
-    
-    // If you want to be fancy you could also center the path in the view
-    // i.e. if you don't want it to stick to the top.
-    // It is done by calculating the heigth and width difference and translating
-    // half the scaled value of that in both x and y (the scaled side will be 0)
-    CGSize scaledSize = CGSizeApplyAffineTransform(boundingBox.size, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
-    CGSize centerOffset = CGSizeMake((CGRectGetWidth(cell.icon.frame)-scaledSize.width)/(scaleFactor*2.0),
-                                     (CGRectGetHeight(cell.icon.frame)-scaledSize.height)/(scaleFactor*2.0));
-    scaleTransform = CGAffineTransformTranslate(scaleTransform, centerOffset.width, centerOffset.height);
-    // End of "center in view" transformation code
-    
-    CGPathRef scaledPath = CGPathCreateCopyByTransformingPath(shapeLayer.path,
-                                                              &scaleTransform);
-    shapeLayer.path=scaledPath;
-    shapeLayer.strokeColor=[[UIColor darkGrayColor] CGColor];
-    shapeLayer.lineWidth=2;
-    CAShapeLayer *another=[CAShapeLayer layer];
-    another.path=scaledPath;
-    another.strokeColor=[[UIColor whiteColor] CGColor];
-    another.fillColor=[[[Pins sharedInstance] colorForStatus:pin.status] CGColor];
-    another.lineWidth=1;
-    [cell.icon.layer addSublayer:shapeLayer];
-    [cell.icon.layer addSublayer:another];
-    */
+     CGPathRef path=[PocketSVG pathFromDAttribute:@"M0 0 h80 c40 0 50 10 50 50 v80 c0 25 0 25 -25 50 l-45 50 c-10 10 -30 10 -40 0 l-45 -50 c-25 -25 -25 -25 -25 -50 v-80 c0 -40 10 -50 50 -50 z"];
+     
+     
+     CAShapeLayer *shapeLayer=[CAShapeLayer layer];
+     shapeLayer.path=path;
+     shapeLayer.lineWidth=20;
+     CGRect boundingBox = CGPathGetBoundingBox(shapeLayer.path);
+     
+     CGFloat boundingBoxAspectRatio = CGRectGetWidth(boundingBox)/CGRectGetHeight(boundingBox);
+     CGFloat viewAspectRatio = 1.0;
+     
+     CGFloat scaleFactor = 1.0;
+     if (boundingBoxAspectRatio > viewAspectRatio) {
+     // Width is limiting factor
+     scaleFactor = CGRectGetWidth(cell.icon.frame)/CGRectGetWidth(boundingBox);
+     } else {
+     // Height is limiting factor
+     scaleFactor = CGRectGetHeight(cell.icon.frame)/CGRectGetHeight(boundingBox);
+     }
+     
+     
+     // Scaling the path ...
+     CGAffineTransform scaleTransform = CGAffineTransformIdentity;
+     // Scale down the path first
+     scaleTransform = CGAffineTransformScale(scaleTransform, scaleFactor, scaleFactor);
+     // Then translate the path to the upper left corner
+     scaleTransform = CGAffineTransformTranslate(scaleTransform, -CGRectGetMinX(boundingBox), -CGRectGetMinY(boundingBox));
+     
+     // If you want to be fancy you could also center the path in the view
+     // i.e. if you don't want it to stick to the top.
+     // It is done by calculating the heigth and width difference and translating
+     // half the scaled value of that in both x and y (the scaled side will be 0)
+     CGSize scaledSize = CGSizeApplyAffineTransform(boundingBox.size, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
+     CGSize centerOffset = CGSizeMake((CGRectGetWidth(cell.icon.frame)-scaledSize.width)/(scaleFactor*2.0),
+     (CGRectGetHeight(cell.icon.frame)-scaledSize.height)/(scaleFactor*2.0));
+     scaleTransform = CGAffineTransformTranslate(scaleTransform, centerOffset.width, centerOffset.height);
+     // End of "center in view" transformation code
+     
+     CGPathRef scaledPath = CGPathCreateCopyByTransformingPath(shapeLayer.path,
+     &scaleTransform);
+     shapeLayer.path=scaledPath;
+     shapeLayer.strokeColor=[[UIColor darkGrayColor] CGColor];
+     shapeLayer.lineWidth=2;
+     CAShapeLayer *another=[CAShapeLayer layer];
+     another.path=scaledPath;
+     another.strokeColor=[[UIColor whiteColor] CGColor];
+     another.fillColor=[[[Pins sharedInstance] colorForStatus:pin.status] CGColor];
+     another.lineWidth=1;
+     [cell.icon.layer addSublayer:shapeLayer];
+     [cell.icon.layer addSublayer:another];
+     */
     return cell;
 }
 

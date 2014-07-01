@@ -20,8 +20,6 @@
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSString *searchText;
-@property (nonatomic,strong) NSArray *pins;
-@property (nonatomic,strong) NSArray *filtered;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @end
 
@@ -59,6 +57,7 @@
 //    _searchBar.delegate=self;
 //    _searchBar.showsCancelButton=YES;
     [self.view addSubview:_searchBar];
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -83,7 +82,7 @@
 - (GMSCameraPosition*)cameraPosition {
     return [GMSCameraPosition cameraWithLatitude:_location.coordinate.latitude
                                        longitude:_location.coordinate.longitude
-                                            zoom:18];
+                                            zoom:21];
 }
 
 - (UIImage*)iconForPin:(PinTemp*)pin {

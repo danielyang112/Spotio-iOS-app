@@ -141,6 +141,8 @@
 		42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D28CE818E08285005E1758 /* LeftDrawerViewController.m */; };
 		42EF82EB18FBFA390045EB0E /* Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EF82EA18FBFA390045EB0E /* Users.m */; };
 		42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA1F6418E1DF970015D137 /* ListHeader.xib */; };
+		73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BFB8BF195D005600952C9A /* MessageUI.framework */; };
+		73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFB8C2195D670C00952C9A /* NoteViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,6 +356,9 @@
 		42EF82E918FBFA390045EB0E /* Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Users.h; sourceTree = "<group>"; };
 		42EF82EA18FBFA390045EB0E /* Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Users.m; sourceTree = "<group>"; };
 		42FA1F6418E1DF970015D137 /* ListHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListHeader.xib; sourceTree = "<group>"; };
+		73BFB8BF195D005600952C9A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		73BFB8C1195D670C00952C9A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
+		73BFB8C2195D670C00952C9A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */,
 				42284F7C18D257820087941E /* SystemConfiguration.framework in Frameworks */,
 				42284F7A18D257770087941E /* QuartzCore.framework in Frameworks */,
 				42284F7818D2575A0087941E /* OpenGLES.framework in Frameworks */,
@@ -442,6 +448,8 @@
 				42B3A6D418E9781800B46FBF /* DatePickerViewController.m */,
 				42B3A6D618E9783500B46FBF /* DropDownViewController.h */,
 				42B3A6D718E9783500B46FBF /* DropDownViewController.m */,
+				73BFB8C1195D670C00952C9A /* NoteViewController.h */,
+				73BFB8C2195D670C00952C9A /* NoteViewController.m */,
 				427E8A19190081400092504A /* AlmostDoneViewController.h */,
 				427E8A1A190081400092504A /* AlmostDoneViewController.m */,
 			);
@@ -509,6 +517,7 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73BFB8BF195D005600952C9A /* MessageUI.framework */,
 				4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */,
 				42284F7B18D257820087941E /* SystemConfiguration.framework */,
 				42284F7918D257770087941E /* QuartzCore.framework */,
@@ -883,6 +892,7 @@
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
+				73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */,
 				42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */,
 				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
@@ -1077,7 +1087,8 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "32970C29-39E7-4105-A532-FB52F8CDDD29";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1101,7 +1112,8 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "32970C29-39E7-4105-A532-FB52F8CDDD29";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

@@ -26,20 +26,31 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"DatePickerCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text=_name;
     static NSDateFormatter *dateFormatter;
     if(!dateFormatter){
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat=@"MM/dd/yy hh:mm a";
     }
-    cell.detailTextLabel.text=[dateFormatter stringFromDate:_date];
+    
+    NSDate *mdate = [[NSDate alloc] init];
+    if(indexPath.row == 0){
+        _name = @"Start Time";
+        mdate = _date;
+    }else{
+        _name = @"End Time";
+        NSTimeInterval interval = 1 * 60 * 60;
+        mdate = [_date dateByAddingTimeInterval:interval];
+    }
+    
+    cell.textLabel.text=_name;
+    cell.detailTextLabel.text=[dateFormatter stringFromDate:mdate];
     
     return cell;
 }

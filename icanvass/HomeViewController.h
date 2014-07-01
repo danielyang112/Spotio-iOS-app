@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MessageUI/MessageUI.h>
 #import "MMDrawerController/UIViewController+MMDrawerController.h"
 
-@interface HomeViewController : UIViewController <CLLocationManagerDelegate>
+@interface HomeViewController : UIViewController <CLLocationManagerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
 @property (weak, nonatomic) IBOutlet UIView *container;
 - (IBAction)filter:(id)sender;
 - (IBAction)valueChanged:(id)sender;
+- (IBAction)shareClicked:(id)sender;
 @end

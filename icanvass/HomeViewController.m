@@ -108,7 +108,93 @@
                             completion:completion];
 }
 
+#pragma mark - Delegate to MailComposer
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    if (error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Mail Error" message:[error localizedDescription] delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+        [alert show];
+    }
+    UIAlertView *resultAlert;
+    switch (result) {
+        case MFMailComposeResultSent:
+            resultAlert = [[UIAlertView alloc] initWithTitle:@"Sent" message:@"Mail sent successfully." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+            [resultAlert show];
+            break;
+        case MFMailComposeResultFailed:
+            resultAlert = [[UIAlertView alloc] initWithTitle:@"Failed" message:@"Failed to send mail." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+            [resultAlert show];
+            break;
+        case MFMailComposeResultSaved:
+            resultAlert = [[UIAlertView alloc] initWithTitle:@"Saved" message:@"Mail saved successfully." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+            [resultAlert show];
+            break;
+        case MFMailComposeResultCancelled:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Actions
+
+- (IBAction)shareClicked:(id)sender {
+    
+    NSMutableString *mainString=[[NSMutableString alloc]initWithString:@""];
+    NSString *headerStr = @"\"Status\",\"Address\",\"City\",\"State\",\"Zip\",\"Name\",\"Phone\",\"Email\",\"Notes\",\"Created Dates\",\"Created Time\",\"Last Updated Date\",\"Last Updated Time\",\"User Name\"";
+    [mainString appendString:headerStr];
+    
+    for(PinTemp *pin in self.map.filtered){
+        NSString *name, *phone, *email, *notes;
+        name = @"";
+        phone = @"";
+        email = @"";
+        notes = @"";
+        for(NSDictionary *d in pin.customValues){
+            NSNumber *id = d[@"DefinitionId"];
+            switch([id intValue]){
+                case 1:
+                    name = d[@"StringValue"];
+                    break;
+                case 2:
+                    phone = d[@"StringValue"];
+                    break;
+                case 3:
+                    email = d[@"StringValue"];
+                    break;
+                case 4:
+                    notes = d[@"StringValue"];
+                    break;
+            }
+            
+        }
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *creationDate = [formatter stringFromDate:pin.creationDate];
+        NSString *updateDate = [formatter stringFromDate:pin.updateDate];
+        [formatter setDateFormat:@"HH:mm:ss"];
+        NSString *creationTime = [formatter stringFromDate:pin.creationDate];
+        NSString *updateTime = [formatter stringFromDate:pin.updateDate];
+        
+        NSString *dataString = [NSString stringWithFormat:@"\n\"%@\",\"%@ %@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"", pin.status, pin.location.streetNumber, pin.location.streetName, pin.location.city, pin.location.state, pin.location.zip, name, phone, email, notes, creationDate, creationTime, updateDate, updateTime, pin.user];
+        [mainString appendString:dataString];
+    }
+    
+    NSLog(@"getdatafor csv:%@",mainString);
+    
+    /*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,  NSUserDomainMask, YES);
+    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectoryPath  stringByAppendingPathComponent:@"history.csv"];
+    //        filePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];*/
+    NSData *myData = [mainString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    mailer.mailComposeDelegate = self;
+    [mailer setSubject:@"CSV File"];
+    [mailer addAttachmentData:myData mimeType:@"text/csv" fileName:@"Spreadsheet.csv"];
+    [self presentViewController:mailer animated:YES completion:nil];
+}
 
 - (IBAction)filter:(id)sender {
     
@@ -125,7 +211,16 @@
     NSLog(@"%f, %f",coordinate.latitude, coordinate.longitude);
     self.tappedCoordinate=coordinate;
     self.tapped=YES;
-    [self performSegueWithIdentifier:@"AddPin" sender:nil];
+    //[self performSegueWithIdentifier:@"AddPin" sender:nil];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *navController = (UINavigationController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"navController"];
+    DetailsViewController *dc=(DetailsViewController*)navController.topViewController;
+    dc.coordinate=_tapped?_tappedCoordinate:_locationManager.location.coordinate;
+    dc.userCoordinate=_locationManager.location.coordinate;
+    _tapped=NO;
+    dc.adding=YES;
+    [self.navigationController pushViewController:dc animated:YES];
 }
 
 #pragma mark - CLLocationManagerDelegate
