@@ -77,11 +77,17 @@
     dict[@"Password"] = [_txtPassword.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"Phone"] = [_txtPhone.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
  */
+    NSString *email=[self trim:_emailTextField];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+//    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     NSDictionary *d=@{@"FirstName":[self trim:_firstNameTextField],
                       @"LastName":[self trim:_lastNameTextField],
-                      @"CompanyLogin":[self trim:_companyTextField],
+                      @"CompanyLogin":[NSString stringWithFormat:@"%@+%@",email,date],
                       @"Phone":[self trim:_phoneTextField],
-                      @"EmailAddress":[self trim:_emailTextField],
+                      @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
     [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
         if(success) {

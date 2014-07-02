@@ -25,6 +25,8 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     _getStartedButton.enabled=NO;
+    self.navigationItem.hidesBackButton=YES;
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStyleDone target:self action:@selector(skip:)];
 	// Do any additional setup after loading the view.
 }
 
@@ -80,6 +82,10 @@
 }
 
 #pragma mark - Actions
+
+- (void)skip:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+}
 
 - (IBAction)industry:(id)sender {
     [self showIndustries];

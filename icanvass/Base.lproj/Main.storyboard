@@ -282,25 +282,12 @@
                                             <outlet property="delegate" destination="QRK-Xz-1X3" id="tEz-M7-Eyu"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Xq-Cj-5K3">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-Aq-pOf">
                                         <rect key="frame" x="40" y="166" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="P5s-45-uun"/>
-                                            <constraint firstAttribute="width" constant="240" id="Vrf-D3-72K"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="QRK-Xz-1X3" id="9H0-a2-1eH"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-Aq-pOf">
-                                        <rect key="frame" x="40" y="204" width="240" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Qby-5d-kM4"/>
-                                            <constraint firstAttribute="width" constant="240" id="lTh-In-EEf"/>
+                                            <constraint firstAttribute="width" constant="240" id="BOo-bM-VQK"/>
+                                            <constraint firstAttribute="height" constant="30" id="I47-P3-scF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -309,11 +296,11 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KC3-VO-X3m">
-                                        <rect key="frame" x="40" y="242" width="240" height="30"/>
+                                        <rect key="frame" x="40" y="204" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="lCd-VD-gKa"/>
-                                            <constraint firstAttribute="width" constant="240" id="zgA-Dk-kmG"/>
+                                            <constraint firstAttribute="width" constant="240" id="0Xq-1g-ATV"/>
+                                            <constraint firstAttribute="height" constant="30" id="GvC-Ct-LBo"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -322,11 +309,11 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pED-h9-GyE">
-                                        <rect key="frame" x="40" y="280" width="240" height="30"/>
+                                        <rect key="frame" x="40" y="242" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="9vw-RZ-vQv"/>
-                                            <constraint firstAttribute="width" constant="240" id="Z1g-1F-EzH"/>
+                                            <constraint firstAttribute="width" constant="240" id="6fm-EC-Bca"/>
+                                            <constraint firstAttribute="height" constant="30" id="eKh-BS-0vN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
@@ -336,25 +323,25 @@
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="1Xq-Cj-5K3" secondAttribute="trailing" constant="40" id="1nQ-v8-sjD"/>
-                                    <constraint firstItem="1Xq-Cj-5K3" firstAttribute="top" secondItem="u2i-Xk-l92" secondAttribute="bottom" constant="8" id="2gZ-Nb-XKK"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="leading" secondItem="KC3-VO-X3m" secondAttribute="leading" id="5em-uc-ysW"/>
+                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="Cth-K2-kdA"/>
                                     <constraint firstItem="u2i-Xk-l92" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="D9r-dG-9Wg"/>
-                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="HPW-CY-WFh"/>
-                                    <constraint firstItem="pED-h9-GyE" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="N3k-Yd-uW8"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="FoZ-Sc-eem"/>
+                                    <constraint firstAttribute="bottom" secondItem="pED-h9-GyE" secondAttribute="bottom" constant="232" id="LVC-xy-QOM"/>
                                     <constraint firstItem="TLa-KP-InW" firstAttribute="top" secondItem="EcD-za-ldh" secondAttribute="top" constant="90" id="QhP-yI-jcY"/>
-                                    <constraint firstAttribute="bottom" secondItem="pED-h9-GyE" secondAttribute="bottom" constant="194" id="UiF-Iu-UZg"/>
-                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="UjF-FL-REl"/>
-                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="top" secondItem="8bF-Aq-pOf" secondAttribute="bottom" constant="8" id="VSc-ue-L5D"/>
+                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="top" secondItem="u2i-Xk-l92" secondAttribute="bottom" constant="8" id="Rbe-rT-Td3"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="top" secondItem="KC3-VO-X3m" secondAttribute="bottom" constant="8" id="Z4q-MN-rE7"/>
                                     <constraint firstAttribute="trailing" secondItem="TLa-KP-InW" secondAttribute="trailing" constant="40" id="Zbl-t1-cam"/>
                                     <constraint firstItem="TLa-KP-InW" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="aPk-NP-L2S"/>
-                                    <constraint firstAttribute="trailing" secondItem="pED-h9-GyE" secondAttribute="trailing" constant="40" id="bwy-yd-6F4"/>
-                                    <constraint firstItem="1Xq-Cj-5K3" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="dlx-Fa-Klc"/>
-                                    <constraint firstItem="pED-h9-GyE" firstAttribute="top" secondItem="KC3-VO-X3m" secondAttribute="bottom" constant="8" id="mfr-JQ-NsS"/>
-                                    <constraint firstItem="8bF-Aq-pOf" firstAttribute="top" secondItem="1Xq-Cj-5K3" secondAttribute="bottom" constant="8" id="nCG-fu-xL9"/>
+                                    <constraint firstAttribute="trailing" secondItem="pED-h9-GyE" secondAttribute="trailing" constant="40" id="b6H-ol-ORe"/>
+                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="leading" secondItem="EcD-za-ldh" secondAttribute="leading" constant="40" id="bDl-FN-wLn"/>
+                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="leading" secondItem="8bF-Aq-pOf" secondAttribute="leading" id="dru-8M-7QO"/>
+                                    <constraint firstAttribute="trailing" secondItem="8bF-Aq-pOf" secondAttribute="trailing" constant="40" id="h1P-fQ-vyK"/>
                                     <constraint firstItem="u2i-Xk-l92" firstAttribute="top" secondItem="TLa-KP-InW" secondAttribute="bottom" constant="8" id="nun-jh-t13"/>
-                                    <constraint firstAttribute="trailing" secondItem="8bF-Aq-pOf" secondAttribute="trailing" constant="40" id="qYH-8U-oMn"/>
-                                    <constraint firstAttribute="trailing" secondItem="KC3-VO-X3m" secondAttribute="trailing" constant="40" id="tnc-Fy-eek"/>
+                                    <constraint firstAttribute="trailing" secondItem="KC3-VO-X3m" secondAttribute="trailing" constant="40" id="oIv-FT-OX4"/>
+                                    <constraint firstItem="KC3-VO-X3m" firstAttribute="top" secondItem="8bF-Aq-pOf" secondAttribute="bottom" constant="8" id="wOK-pN-5GC"/>
                                     <constraint firstAttribute="trailing" secondItem="u2i-Xk-l92" secondAttribute="trailing" constant="40" id="xb9-O1-rHV"/>
+                                    <constraint firstItem="pED-h9-GyE" firstAttribute="trailing" secondItem="KC3-VO-X3m" secondAttribute="trailing" id="zmo-FV-QPB"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -369,7 +356,6 @@
                     <navigationItem key="navigationItem" title="Register" id="0Zi-QO-axG"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="companyTextField" destination="1Xq-Cj-5K3" id="fLs-GQ-Uji"/>
                         <outlet property="emailTextField" destination="KC3-VO-X3m" id="qTg-O0-q4V"/>
                         <outlet property="firstNameTextField" destination="TLa-KP-InW" id="wfS-eV-IG3"/>
                         <outlet property="lastNameTextField" destination="u2i-Xk-l92" id="3Jp-qY-8mG"/>
@@ -378,7 +364,6 @@
                         <outlet property="scrollView" destination="EcD-za-ldh" id="Wok-t6-hhN"/>
                         <outletCollection property="fieldsCollection" destination="TLa-KP-InW" id="hqb-c6-5vN"/>
                         <outletCollection property="fieldsCollection" destination="u2i-Xk-l92" id="GfC-Tt-RMm"/>
-                        <outletCollection property="fieldsCollection" destination="1Xq-Cj-5K3" id="VN0-bq-mg8"/>
                         <outletCollection property="fieldsCollection" destination="8bF-Aq-pOf" id="geh-Ki-8TD"/>
                         <outletCollection property="fieldsCollection" destination="KC3-VO-X3m" id="6pa-E7-ZLI"/>
                         <outletCollection property="fieldsCollection" destination="pED-h9-GyE" id="eLx-Es-LnA"/>
