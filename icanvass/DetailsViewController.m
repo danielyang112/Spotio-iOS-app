@@ -688,6 +688,7 @@ static NSDateFormatter *dateFormatter;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //[tableView deselectRowAtIndexPath:indexPath animated:NO];
     if(!tableView.isEditing){
+        [self performSegueWithIdentifier:@"NoteView" sender:nil];
         
     }
     Field *f=_customFields[indexPath.row];
@@ -934,9 +935,11 @@ static NSDateFormatter *dateFormatter;
         DropDownViewController *drop=segue.destinationViewController;
         drop.delegate=self;
         drop.options=f.settings;
-    } else if([segue.identifier isEqualToString:@"noteView"]) {
+    } else if([segue.identifier isEqualToString:@"NoteView"]) {
         NoteViewController *noteView=segue.destinationViewController;
-        noteView.note = ((DetailsDropDownCell *) sender).bottom.text;
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        DetailsDropDownCell *cell=(DetailsDropDownCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        noteView.note = cell.bottom.text;
     }
 }
 

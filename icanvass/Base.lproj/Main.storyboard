@@ -715,7 +715,6 @@
                                         <connections>
                                             <outlet property="bottom" destination="ij3-8m-hB1" id="4fG-yS-3Cj"/>
                                             <outlet property="top" destination="PWg-8S-A6D" id="AzH-jC-vcR"/>
-                                            <segue destination="ZST-GM-b9R" kind="push" identifier="noteView" id="BXq-qe-Cwj"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="DetailsNotesCell" rowHeight="88" id="Ijp-zI-iSN" customClass="DetailsNotesCell">
@@ -784,6 +783,7 @@
                         <outlet property="tableView" destination="CyY-uh-ZO2" id="LIN-Qb-QBn"/>
                         <segue destination="LD9-wc-RYM" kind="push" identifier="DatePicker" id="M2m-88-WZN"/>
                         <segue destination="liY-2U-eKU" kind="push" identifier="DropDown" id="kp3-5n-kfy"/>
+                        <segue destination="ZST-GM-b9R" kind="push" identifier="NoteView" id="8Nd-oD-eqL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFV-eq-hPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
