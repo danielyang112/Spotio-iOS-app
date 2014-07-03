@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import "PinTemp.h"
 
 @interface DetailsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
@@ -23,5 +24,6 @@
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)status:(id)sender;
+- (IBAction)viewOnMap:(id)sender;
 
 @end

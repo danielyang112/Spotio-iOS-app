@@ -11,9 +11,13 @@
 #import <MessageUI/MessageUI.h>
 #import "MMDrawerController/UIViewController+MMDrawerController.h"
 
+@class  MapController;
+
 @interface HomeViewController : UIViewController <CLLocationManagerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
 @property (weak, nonatomic) IBOutlet UIView *container;
+@property (nonatomic,strong) MapController *map;
+
 - (IBAction)filter:(id)sender;
 - (IBAction)valueChanged:(id)sender;
 - (IBAction)shareClicked:(id)sender;

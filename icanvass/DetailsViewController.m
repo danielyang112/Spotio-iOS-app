@@ -12,10 +12,12 @@
 #import "DatePickerViewController.h"
 #import "DropDownViewController.h"
 #import "NoteViewController.h"
+#import "HomeViewController.h"
 #import "Pins.h"
 #import "Fields.h"
 #import "utilities.h"
 #import "Mixpanel.h"
+#import "MapController.h"
 #import <EventKit/EventKit.h>
 
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate,UITextViewDelegate>
@@ -99,6 +101,20 @@
 }
 
 - (void)adjustForViewing {
+    UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
+    buttonContainer.backgroundColor = [UIColor clearColor];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 150, 44)];
+    [button setTitleColor:[UIColor colorWithRed:(243.0/255) green:(156.0/255) blue:(18.0/255) alpha:1.0f] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithRed:(243.0/255) green:(156.0/255) blue:(18.0/255) alpha:0.3f] forState:UIControlStateHighlighted];
+    [button setTitle:@"View on Map" forState:UIControlStateNormal];
+    button.showsTouchWhenHighlighted = TRUE;
+    [button addTarget:self action:@selector(viewOnMap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [buttonContainer addSubview:button];
+    
+    self.navigationItem.titleView = buttonContainer;
     self.navigationItem.rightBarButtonItem=[self editButtonItem];
     [self extractPin];
     [self enableChanges:NO];
@@ -818,7 +834,9 @@ static NSDateFormatter *dateFormatter;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
 //    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    
     [_tableView setEditing:editing animated:animated];
+    [self.navigationItem.titleView setHidden:YES];
     [_tableView reloadData];
     if(!editing) {
         [self editPin];
@@ -918,6 +936,19 @@ static NSDateFormatter *dateFormatter;
         as.cancelButtonIndex=[a count];
         [as showInView:self.view];
     }];
+}
+
+
+- (IBAction)viewOnMap:(id)sender {
+    HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
+    [homeViewController.segment setSelectedSegmentIndex:0];
+    [homeViewController valueChanged:homeViewController.segment];
+    
+    CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
+    homeViewController.map.location = loc;
+    GMSMarker *marker = [homeViewController.map markerForPin:self.pin];
+    homeViewController.map.mapView.selectedMarker = marker;
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
 }
 
 #pragma mark - Navigation

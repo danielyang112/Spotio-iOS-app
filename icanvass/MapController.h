@@ -10,6 +10,8 @@
 #import "HomeViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 
+@class PinTemp;
+
 @class MapController;
 @protocol MapControllerDelegate <NSObject>
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate;
@@ -20,4 +22,9 @@
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *filtered;
+@property (nonatomic,strong) GMSMapView *mapView;
+
+- (GMSMarker*)markerForPin:(PinTemp*)pin;
+- (void)setLocation:(CLLocation *)location;
+
 @end

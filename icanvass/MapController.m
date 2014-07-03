@@ -15,7 +15,6 @@
 #import "utilities.h"
 
 @interface MapController () <GMSMapViewDelegate>
-@property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
@@ -69,7 +68,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    //_moved=NO;    //still weird
+    _moved=NO;    //still weird
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -232,6 +231,7 @@
 #pragma mark - API
 
 - (void)setLocation:(CLLocation *)location {
+    NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
     _location=location;
     if(!_moved) {
         [_mapView animateToCameraPosition:[self cameraPosition]];
