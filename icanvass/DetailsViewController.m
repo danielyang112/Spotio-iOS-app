@@ -37,6 +37,9 @@
 @property (nonatomic,strong) NSArray *customFields;
 @property (nonatomic,strong) NSMutableDictionary *addedFields;
 
+@property (nonatomic, strong) UIActivityIndicatorView * activityView;
+@property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UILabel *loadingLabel;
 
 @property (nonatomic,weak) UITextField *activeField;
 
@@ -72,7 +75,29 @@
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.backgroundColor=[UIColor clearColor];
     if(_adding) {
+        //Show Loading Circle
+        _loadingView = [[UIView alloc] initWithFrame:CGRectMake(75, 155, 170, 170)];
+        _loadingView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+        _loadingView.clipsToBounds = YES;
+        _loadingView.layer.cornerRadius = 10.0;
+        
+        _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _activityView.frame = CGRectMake(65, 40, _activityView.bounds.size.width, _activityView.bounds.size.height);
+        [_loadingView addSubview:_activityView];
+        
+        _loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 22)];
+        _loadingLabel.backgroundColor = [UIColor clearColor];
+        _loadingLabel.textColor = [UIColor whiteColor];
+        _loadingLabel.adjustsFontSizeToFitWidth = YES;
+        //_loadingLabel.textAlignment = UITextAlignmentCenter;
+        _loadingLabel.text = @"Hold on, App is working";
+        [_loadingView addSubview:_loadingLabel];
+        
+        [self.view addSubview:_loadingView];
+        [_activityView startAnimating];
+        
         [self adjustForAdding];
+        
     } else if(_pin){
         [self adjustForViewing];
     }
@@ -246,6 +271,10 @@
     self.state=placemark.addressDictionary[@"State"];
     self.zipCode=placemark.postalCode;
     [self updateAddressTextFields];
+    dispatch_async(dispatch_get_main_queue(),^{
+        [_activityView stopAnimating];
+        [_loadingView removeFromSuperview];
+    });
 }
 
 //- (void)addressForCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -729,6 +758,16 @@ static NSDateFormatter *dateFormatter;
 //    Field *f=_customFields[indexPath.row];
 //    NSString *key=[NSString stringWithFormat:@"%d",f.ident];
 //    return _addedFields[key]?UITableViewCellEditingStyleDelete:UITableViewCellEditingStyleInsert;
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView.isEditing){
+        if([indexPath row] == ([_customFields count] + 4 - 1) && tableView.isEditing){
+            //end of loading
+            //for example [activityIndicator stopAnimating];
+        }
+    }
 }
 
 #pragma mark - UITextFieldDelegate
