@@ -192,6 +192,7 @@
                 NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
                 [nozoneFormatter setTimeZone:gmt];
             }
+            v=[v componentsSeparatedByString:@"."][0];
             NSDate *date=[zoneFormatter dateFromString:v];
             if(!date) {
                 date=[nozoneFormatter dateFromString:v];
@@ -632,9 +633,10 @@ static NSDateFormatter *dateFormatter;
                 NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
                 [nozoneFormatter setTimeZone:gmt];
             }
-            NSDate *date=[zoneFormatter dateFromString:d[@"DateTimeValue"]];
+            NSString *noMilliseconds=[d[@"DateTimeValue"] componentsSeparatedByString:@"."][0];
+            NSDate *date=[zoneFormatter dateFromString:noMilliseconds];
             if(!date) {
-                date=[nozoneFormatter dateFromString:d[@"DateTimeValue"]];
+                date=[nozoneFormatter dateFromString:noMilliseconds];
             }
             v=[dFormatter stringFromDate:date];
         }

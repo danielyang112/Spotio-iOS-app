@@ -16,7 +16,7 @@
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
 
-#define kGoogleAPIKey @"AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y"//AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I
+#define kGoogleAPIKey @"AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y"//AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
