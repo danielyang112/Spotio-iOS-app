@@ -18,7 +18,7 @@
 - (void)updateWithDictionary:(NSDictionary*)dic {
     self.ident=dic[@"Id"];
     self.user=dic[@"UserName"];
-    self.status=dic[@"Status"];
+    self.status=nilIfNull(dic[@"Status"]);
     NSString *noMilliseconds=[dic[@"CreationDate"] componentsSeparatedByString:@"."][0];
     static NSDateFormatter *dateFormatter;
     if(!dateFormatter){
@@ -32,23 +32,23 @@
         noMilliseconds=[dic[@"UpdateDate"] componentsSeparatedByString:@"."][0];
     }
     self.updateDate=[dateFormatter dateFromString:noMilliseconds];
-    self.latitude=dic[@"Latitude"];
-    self.longitude=dic[@"Longitude"];
+    self.latitude=nilIfNull(dic[@"Latitude"]);
+    self.longitude=nilIfNull(dic[@"Longitude"]);
     LocationTemp *loc=[LocationTemp new];
     NSDictionary *ld=dic[@"Location"];
     NSArray *a=[self addressComponents:ld[@"Address"]];
     loc.streetNumber=a[0];
     loc.streetName=a[1];
-    loc.city=ld[@"City"];
+    loc.city=nilIfNull(ld[@"City"]);
     NSObject *u=nilIfNull(ld[@"Unit"]);
     if([u isKindOfClass:[NSNumber class]]){
         u=[(NSNumber*)u stringValue];
     }
     loc.unit=(NSString*)u;
-    loc.zip=ld[@"Zip"];
-    loc.state=ld[@"State"];
+    loc.zip=nilIfNull(ld[@"Zip"]);
+    loc.state=nilIfNull(ld[@"State"]);
     self.location=loc;
-    self.customValues=dic[@"CustomValues"];
+    self.customValues=nilIfNull(dic[@"CustomValues"]);
 }
 
 - (PinTemp*)initWithDictionary:(NSDictionary*)dic {

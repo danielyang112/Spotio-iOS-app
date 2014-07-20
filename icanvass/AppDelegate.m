@@ -104,6 +104,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
