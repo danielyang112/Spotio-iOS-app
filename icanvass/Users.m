@@ -82,10 +82,11 @@
                     if([per[@"PermissionCode"] isEqualToString:@"AllowedToShareReports"]) {
                         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"sharing"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
-                        return ;
+                        return;
                     }
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUsers" object:nil];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharing"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
             }];
