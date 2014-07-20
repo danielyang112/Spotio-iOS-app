@@ -12,6 +12,7 @@
 #import "Pin.h"
 #import "PinTemp.h"
 
+
 @interface Pins () {
 }
 @property (nonatomic,strong) NSMutableArray *filteredPins;
@@ -47,6 +48,9 @@
 
 - (NSMutableArray*)pinsArrayFromArray:(NSArray*)a {
     NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
+    if(_pins){
+        ma=[_pins mutableCopy];
+    }
     for(NSDictionary *dic in a){
         [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
     }
@@ -87,10 +91,28 @@
 }
 
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
+    [self fetchPinsFrom:0 withBlock:block];
+}
+
+- (void)fetchPinsFrom:(int)skip withBlock:(void (^)(NSArray *a))block {
     NSLog(@"%s",__FUNCTION__);
     self.gettingPins=YES;
+    static NSDateFormatter *nozoneFormatter;
+    if(!nozoneFormatter) {
+        nozoneFormatter=[[NSDateFormatter alloc] init];
+        nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        [nozoneFormatter setTimeZone:gmt];
+    }
+    NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
+    
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
+//    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$top=500&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
+    if(date){
+        u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
+    }
+    NSLog(@"%@",u);
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -98,6 +120,8 @@
         self.oldest=[[_pins lastObject] updateDate];
         self.newest=[[_pins firstObject] updateDate];
         if(block) block(_pins);
+        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         self.gettingPins=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

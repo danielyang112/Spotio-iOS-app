@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)forgotPassword:(id)sender;
+- (IBAction)login:(id)sender;
 - (IBAction)hideKeyboard:(UIButton *)sender;
 @end

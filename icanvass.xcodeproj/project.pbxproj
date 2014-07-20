@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4202519D197722A600F77D39 /* register@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4202519C197722A600F77D39 /* register@2x.png */; };
+		4202519F197722AD00F77D39 /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4202519E197722AD00F77D39 /* login@2x.png */; };
+		420251A2197729E800F77D39 /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 420251A0197729E800F77D39 /* password@2x.png */; };
+		420251A3197729E800F77D39 /* name@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 420251A1197729E800F77D39 /* name@2x.png */; };
+		420251A519772D4100F77D39 /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 420251A419772D4100F77D39 /* next@2x.png */; };
 		4226928B193B563D00FD0BE9 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */; };
 		42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F0B18D10FC60087941E /* DetailsViewController.m */; };
 		42284F5218D252970087941E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42284F5118D252970087941E /* CoreData.framework */; };
@@ -156,6 +161,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4202519C197722A600F77D39 /* register@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register@2x.png"; sourceTree = "<group>"; };
+		4202519E197722AD00F77D39 /* login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@2x.png"; sourceTree = "<group>"; };
+		420251A0197729E800F77D39 /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
+		420251A1197729E800F77D39 /* name@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "name@2x.png"; sourceTree = "<group>"; };
+		420251A419772D4100F77D39 /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "next@2x.png"; sourceTree = "<group>"; };
 		4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = SOURCE_ROOT; };
 		42284F0A18D10FC60087941E /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		42284F0B18D10FC60087941E /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
@@ -558,7 +568,12 @@
 				42B3A67D18E8903600B46FBF /* satellite@2x.png */,
 				42B3A67E18E8903600B46FBF /* support@2x.png */,
 				42B3A68918E89B2600B46FBF /* bg@2x.png */,
+				420251A419772D4100F77D39 /* next@2x.png */,
+				420251A0197729E800F77D39 /* password@2x.png */,
+				420251A1197729E800F77D39 /* name@2x.png */,
 				427E8A1719005F290092504A /* logo@2x.png */,
+				4202519E197722AD00F77D39 /* login@2x.png */,
+				4202519C197722A600F77D39 /* register@2x.png */,
 				427E8A1C1901B5CD0092504A /* Default-568h@2x.png */,
 				427E8A1E1901CFC30092504A /* AppIcon29x29.png */,
 				427E8A1F1901CFC30092504A /* AppIcon29x29@2x.png */,
@@ -820,6 +835,7 @@
 			files = (
 				42B3A6BD18E8C5E700B46FBF /* MPArrowRight@2x.png in Resources */,
 				42B3A68518E8903600B46FBF /* satellite@2x.png in Resources */,
+				4202519F197722AD00F77D39 /* login@2x.png in Resources */,
 				427E8A391901CFC30092504A /* AppIcon72x72@2x.png in Resources */,
 				42B3A6BB18E8C5E700B46FBF /* MPArrowLeft@2x.png in Resources */,
 				427E8A3D1901CFC30092504A /* iTunesArtwork@2x.png in Resources */,
@@ -839,11 +855,14 @@
 				42B3A6C018E8C5E700B46FBF /* MPCloseBtn.png in Resources */,
 				42B3A6BC18E8C5E700B46FBF /* MPArrowRight.png in Resources */,
 				427E8A321901CFC30092504A /* AppIcon50x50.png in Resources */,
+				420251A3197729E800F77D39 /* name@2x.png in Resources */,
+				420251A519772D4100F77D39 /* next@2x.png in Resources */,
 				42B3A67618E82FB900B46FBF /* InfoView.xib in Resources */,
 				42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */,
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
 				427E8A361901CFC30092504A /* AppIcon60x60.png in Resources */,
+				420251A2197729E800F77D39 /* password@2x.png in Resources */,
 				427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				427E8A1819005F290092504A /* logo@2x.png in Resources */,
@@ -853,6 +872,7 @@
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
 				42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */,
 				42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */,
+				4202519D197722A600F77D39 /* register@2x.png in Resources */,
 				427E8A301901CFC30092504A /* AppIcon40x40.png in Resources */,
 				427E8A341901CFC30092504A /* AppIcon57x57.png in Resources */,
 				42B3A6C318E8C5E700B46FBF /* MPDismissKeyboard@2x.png in Resources */,
@@ -1087,7 +1107,7 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "32970C29-39E7-4105-A532-FB52F8CDDD29";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1101,8 +1121,8 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1112,7 +1132,7 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "32970C29-39E7-4105-A532-FB52F8CDDD29";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

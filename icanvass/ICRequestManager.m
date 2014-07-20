@@ -62,6 +62,8 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserNameKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCompanyNameKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPasswordKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICNetFailed" object:nil userInfo:@{@"status":@(401)}];

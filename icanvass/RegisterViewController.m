@@ -32,7 +32,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    //    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    UIColor *color = [UIColor lightGrayColor];
+    for(UITextField *f in _fieldsCollection) {
+        f.attributedPlaceholder = [[NSAttributedString alloc] initWithString:f.placeholder attributes:@{NSForegroundColorAttributeName:color}];
+    }
 	// Do any additional setup after loading the view.
 }
 

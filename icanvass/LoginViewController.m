@@ -37,8 +37,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 	// Do any additional setup after loading the view.
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    UIColor *color = [UIColor whiteColor];
+    _loginTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"email address" attributes:@{NSForegroundColorAttributeName: color}];
+    _loginTextField.leftViewMode=UITextFieldViewModeAlways;
+    _loginTextField.leftView = paddingView;
+    _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"password" attributes:@{NSForegroundColorAttributeName: color}];
+    _passwordTextField.leftViewMode=UITextFieldViewModeAlways;
+    paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    _passwordTextField.leftView = paddingView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,6 +133,10 @@
 
 - (IBAction)hideKeyboard:(UIButton *)sender {
     [_activeField resignFirstResponder];
+}
+
+- (IBAction)login:(id)sender {
+    [self loginWithUsername:_loginTextField.text password:_passwordTextField.text];
 }
 
 #pragma mark - UIActionSheetDelegate
