@@ -87,9 +87,17 @@
 //    [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     NSString *date = [dateFormatter stringFromDate:[NSDate date]];
-    NSDictionary *d=@{@"FirstName":[self trim:_firstNameTextField],
-                      @"LastName":[self trim:_lastNameTextField],
-                      @"CompanyLogin":[NSString stringWithFormat:@"%@+%@",email,date],
+    
+    NSArray *names=[[self trim:_firstNameTextField] componentsSeparatedByString:@" "];
+    
+    NSString *c=[self trim:_lastNameTextField];
+    if([c isEqualToString:@""]) {
+        c=[NSString stringWithFormat:@"%@+%@",email,date];
+    }
+    
+    NSDictionary *d=@{@"FirstName":names[0],
+                      @"LastName":[names count]>1?names[1]:@" ",
+                      @"CompanyLogin":c,
                       @"Phone":[self trim:_phoneTextField],
                       @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
@@ -137,6 +145,10 @@
         [_fieldsCollection[idx+1] becomeFirstResponder];
     }
     return YES;
+}
+
+- (IBAction)next:(id)sender {
+    [self proceedWithRegistration];
 }
 
 #pragma mark - Notifications
