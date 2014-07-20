@@ -15,6 +15,7 @@
 
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
+@property (nonatomic,strong) NSString *companyName;
 @end
 
 @implementation RegisterViewController
@@ -95,14 +96,14 @@
     
     NSArray *names=[[self trim:_firstNameTextField] componentsSeparatedByString:@" "];
     
-    NSString *c=[self trim:_lastNameTextField];
-    if([c isEqualToString:@""]) {
-        c=[NSString stringWithFormat:@"%@+%@",email,date];
+    self.companyName=[self trim:_lastNameTextField];
+    if([_companyName isEqualToString:@""]) {
+        self.companyName=[NSString stringWithFormat:@"%@+%@",email,date];
     }
     
     NSDictionary *d=@{@"FirstName":names[0],
-                      @"LastName":[names count]>1?names[1]:@" ",
-                      @"CompanyLogin":c,
+                      @"LastName":[names count]>1?names[1]:@"",
+                      @"CompanyLogin":_companyName,
                       @"Phone":[self trim:_phoneTextField],
                       @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
@@ -187,7 +188,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     AlmostDoneViewController *advc=segue.destinationViewController;
-    advc.company=[self trim:_companyTextField];
+    advc.company=_companyName;
     advc.username=[self trim:_emailTextField];
 }
 
