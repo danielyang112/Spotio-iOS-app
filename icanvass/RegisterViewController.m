@@ -11,6 +11,7 @@
 #import "ICRequestManager.h"
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
@@ -36,6 +37,10 @@
     UIColor *color = [UIColor lightGrayColor];
     for(UITextField *f in _fieldsCollection) {
         f.attributedPlaceholder = [[NSAttributedString alloc] initWithString:f.placeholder attributes:@{NSForegroundColorAttributeName:color}];
+        CALayer *bottomBorder = [CALayer layer];
+        bottomBorder.frame = CGRectMake(0.0f, f.frame.size.height-1.0f, f.frame.size.width, 1.0f);
+        bottomBorder.backgroundColor = color.CGColor;
+        [f.layer addSublayer:bottomBorder];
     }
 	// Do any additional setup after loading the view.
 }
