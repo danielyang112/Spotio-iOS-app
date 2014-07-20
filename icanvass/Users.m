@@ -68,14 +68,40 @@
     }
 }
 
+- (void)getPermissions:(NSArray*)a{
+    for(NSDictionary *d in a) {
+        if([d[@"UserName"] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey]]) {
+            NSString *roleId=d[@"UserRoles"][0][@"RoleId"];
+            ICRequestManager *manager=[ICRequestManager sharedManager];
+            NSString *u=[NSString stringWithFormat:@"PinService.svc/PermissionItemBasics()?$filter=RoleId eq %@&$top=100&$format=json",roleId];
+            u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"JSON: %@", responseObject);
+                NSArray *permissions=responseObject[@"value"];
+                for(NSDictionary *per in permissions) {
+                    if([per[@"PermissionCode"] isEqualToString:@"AllowedToShareReports"]) {
+                        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"sharing"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        return ;
+                    }
+                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUsers" object:nil];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+        }
+    }
+}
+
 - (void)fetchUsersWithBlock:(void (^)(NSArray *a))block {
     _gettingUsers=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=@"PinService.svc/UserProfileBasics?$format=json";
+    NSString *u=@"PinService.svc/UserProfileBasics?$format=json&$expand=UserRoles";
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.users=[self usersArrayFromArray:responseObject[@"value"]];
+        [self getPermissions:responseObject[@"value"]];
         [self updateDictionary];
         if(block) block(_users);
         _gettingUsers=NO;

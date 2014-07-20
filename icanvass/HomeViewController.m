@@ -139,6 +139,18 @@
 
 - (IBAction)shareClicked:(id)sender {
     
+    BOOL allowed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sharing"] isEqualToString:@"1"];
+    if(!allowed) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Share"
+                              message:@"You do not have permission to share the reports."
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
     NSMutableString *mainString=[[NSMutableString alloc]initWithString:@""];
     NSString *headerStr = @"\"Status\",\"Address\",\"City\",\"State\",\"Zip\",\"Name\",\"Phone\",\"Email\",\"Notes\",\"Created Dates\",\"Created Time\",\"Last Updated Date\",\"Last Updated Time\",\"User Name\"";
     [mainString appendString:headerStr];
