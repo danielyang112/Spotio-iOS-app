@@ -88,22 +88,22 @@
     dict[@"Phone"] = [_txtPhone.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
  */
     NSString *email=[self trim:_emailTextField];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
 //    [dateFormatter setTimeZone:timeZone];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+//    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     
     NSArray *names=[[self trim:_firstNameTextField] componentsSeparatedByString:@" "];
     
     self.companyName=[self trim:_lastNameTextField];
-    if([_companyName isEqualToString:@""]) {
-        self.companyName=[NSString stringWithFormat:@"%@+%@",email,date];
-    }
+//    if([_companyName isEqualToString:@""]) {
+//        self.companyName=[NSString stringWithFormat:@"%@+%@",email,date];
+//    }
     
     NSDictionary *d=@{@"FirstName":names[0],
                       @"LastName":[names count]>1?names[1]:@"",
-                      @"CompanyLogin":_companyName,
+                      @"CompanyName":_companyName,
                       @"Phone":[self trim:_phoneTextField],
                       @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
