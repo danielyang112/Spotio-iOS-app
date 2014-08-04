@@ -174,12 +174,8 @@
     self.status=_pin.status;
     
     for(NSDictionary *d in _pin.customValues){
-        NSString *v=nilIfNull(d[@"StringValue"]);
-        if(!v) v=nilIfNull(d[@"IntValue"]);
-        if(!v) v=nilIfNull(d[@"DecimalValue"]);
-        if(!v) {
-            v=nilIfNull(d[@"DateTimeValue"]);
-            if(!v) return;
+        NSString *v=nilIfNull(d[@"DateTimeValue"]);
+        if(v){
             static NSDateFormatter *zoneFormatter;
             static NSDateFormatter *nozoneFormatter;
             if(!zoneFormatter) {
@@ -200,6 +196,9 @@
             _addedFields[d[@"DefinitionId"]]=date;
             return;
         }
+        v=nilIfNull(d[@"StringValue"]);
+        if(!v) v=nilIfNull(d[@"IntValue"]);
+        if(!v) v=nilIfNull(d[@"DecimalValue"]);
         if(v){
             _addedFields[d[@"DefinitionId"]]=v;
         }

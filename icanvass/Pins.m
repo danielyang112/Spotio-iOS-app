@@ -56,6 +56,7 @@
     }
     self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
     ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
+    
     return ma;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
@@ -120,8 +121,8 @@
         self.oldest=[[_pins lastObject] updateDate];
         self.newest=[[_pins firstObject] updateDate];
         if(block) block(_pins);
-        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
         self.gettingPins=NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
