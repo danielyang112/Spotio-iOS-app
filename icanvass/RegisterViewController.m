@@ -101,7 +101,7 @@
 //        self.companyName=[NSString stringWithFormat:@"%@+%@",email,date];
 //    }
     
-    NSDictionary *d=@{@"FirstName":names[0],
+    NSDictionary *d=@{@"FirstName":[names count]>0?names[0]:@"",
                       @"LastName":[names count]>1?names[1]:@"",
                       @"CompanyName":_companyName,
                       @"Phone":[self trim:_phoneTextField],
