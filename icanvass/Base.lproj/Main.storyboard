@@ -485,6 +485,9 @@
                                         <state key="normal" title="Get Started!" backgroundImage="button.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="getStarted:" destination="NC4-gf-bsw" eventType="touchUpInside" id="Jhe-yI-6UN"/>
                                         </connections>
