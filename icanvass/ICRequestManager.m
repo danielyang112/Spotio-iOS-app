@@ -48,7 +48,7 @@
     [[ICRequestManager sharedManager] POST:@"MobileApp/RegisterCompanyExtended" parameters:d success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic=operation.responseObject;
         if(!dic[@"Message"]){
-            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:d[@"CompanyLogin"] cb:^(BOOL success) {cb(YES,operation.responseObject);}];
+            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:dic[@"CompanyLogin"] cb:^(BOOL success) {cb(YES,operation.responseObject);}];
         }else{
             cb(NO,operation.responseObject);
         }
