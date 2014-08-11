@@ -65,6 +65,12 @@
 		427E8A3B1901CFC30092504A /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */; };
 		427E8A3C1901CFC30092504A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2C1901CFC30092504A /* iTunesArtwork.png */; };
 		427E8A3D1901CFC30092504A /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */; };
+		4291C3EA1999592900C64E36 /* tutorial1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E61999592900C64E36 /* tutorial1@2x.png */; };
+		4291C3EB1999592900C64E36 /* tutorial2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E71999592900C64E36 /* tutorial2@2x.png */; };
+		4291C3EC1999592900C64E36 /* tutorial3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E81999592900C64E36 /* tutorial3@2x.png */; };
+		4291C3ED1999592900C64E36 /* tutorial4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E91999592900C64E36 /* tutorial4@2x.png */; };
+		4291C3F0199959B400C64E36 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4291C3EF199959B400C64E36 /* TutorialViewController.m */; };
+		4291C3F3199959EB00C64E36 /* TutorialPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4291C3F2199959EB00C64E36 /* TutorialPageViewController.m */; };
 		42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58018CBA3BF0043233C /* Foundation.framework */; };
 		42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58218CBA3BF0043233C /* CoreGraphics.framework */; };
 		42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A6A58418CBA3BF0043233C /* UIKit.framework */; };
@@ -239,6 +245,14 @@
 		427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon76x76@2x.png"; sourceTree = "<group>"; };
 		427E8A2C1901CFC30092504A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		4291C3E61999592900C64E36 /* tutorial1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial1@2x.png"; sourceTree = "<group>"; };
+		4291C3E71999592900C64E36 /* tutorial2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial2@2x.png"; sourceTree = "<group>"; };
+		4291C3E81999592900C64E36 /* tutorial3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial3@2x.png"; sourceTree = "<group>"; };
+		4291C3E91999592900C64E36 /* tutorial4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial4@2x.png"; sourceTree = "<group>"; };
+		4291C3EE199959B400C64E36 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		4291C3EF199959B400C64E36 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		4291C3F1199959EB00C64E36 /* TutorialPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialPageViewController.h; sourceTree = "<group>"; };
+		4291C3F2199959EB00C64E36 /* TutorialPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialPageViewController.m; sourceTree = "<group>"; };
 		42A6A57D18CBA3BF0043233C /* door2doorapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = door2doorapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A6A58018CBA3BF0043233C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42A6A58218CBA3BF0043233C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -464,6 +478,10 @@
 				73BFB8C2195D670C00952C9A /* NoteViewController.m */,
 				427E8A19190081400092504A /* AlmostDoneViewController.h */,
 				427E8A1A190081400092504A /* AlmostDoneViewController.m */,
+				4291C3EE199959B400C64E36 /* TutorialViewController.h */,
+				4291C3EF199959B400C64E36 /* TutorialViewController.m */,
+				4291C3F1199959EB00C64E36 /* TutorialPageViewController.h */,
+				4291C3F2199959EB00C64E36 /* TutorialPageViewController.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -570,6 +588,10 @@
 				42B3A67C18E8903600B46FBF /* reports@2x.png */,
 				42B3A67D18E8903600B46FBF /* satellite@2x.png */,
 				42B3A67E18E8903600B46FBF /* support@2x.png */,
+				4291C3E61999592900C64E36 /* tutorial1@2x.png */,
+				4291C3E71999592900C64E36 /* tutorial2@2x.png */,
+				4291C3E81999592900C64E36 /* tutorial3@2x.png */,
+				4291C3E91999592900C64E36 /* tutorial4@2x.png */,
 				42B3A68918E89B2600B46FBF /* bg@2x.png */,
 				420251A419772D4100F77D39 /* next@2x.png */,
 				420251A0197729E800F77D39 /* password@2x.png */,
@@ -841,6 +863,7 @@
 				4202519F197722AD00F77D39 /* login@2x.png in Resources */,
 				427E8A391901CFC30092504A /* AppIcon72x72@2x.png in Resources */,
 				42B3A6BB18E8C5E700B46FBF /* MPArrowLeft@2x.png in Resources */,
+				4291C3EA1999592900C64E36 /* tutorial1@2x.png in Resources */,
 				427E8A3D1901CFC30092504A /* iTunesArtwork@2x.png in Resources */,
 				427E8A381901CFC30092504A /* AppIcon72x72.png in Resources */,
 				42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */,
@@ -878,11 +901,14 @@
 				42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */,
 				4202519D197722A600F77D39 /* register@2x.png in Resources */,
 				427E8A301901CFC30092504A /* AppIcon40x40.png in Resources */,
+				4291C3EC1999592900C64E36 /* tutorial3@2x.png in Resources */,
 				427E8A341901CFC30092504A /* AppIcon57x57.png in Resources */,
 				42B3A6C318E8C5E700B46FBF /* MPDismissKeyboard@2x.png in Resources */,
+				4291C3ED1999592900C64E36 /* tutorial4@2x.png in Resources */,
 				427E8A351901CFC30092504A /* AppIcon57x57@2x.png in Resources */,
 				42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */,
 				42B3A6BA18E8C5E700B46FBF /* MPArrowLeft.png in Resources */,
+				4291C3EB1999592900C64E36 /* tutorial2@2x.png in Resources */,
 				42B3A6C418E8C5E700B46FBF /* MPLogo.png in Resources */,
 				427E8A2F1901CFC30092504A /* AppIcon29x29@2x.png in Resources */,
 				42B3A68818E891C200B46FBF /* status@2x.png in Resources */,
@@ -915,6 +941,7 @@
 				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
+				4291C3F0199959B400C64E36 /* TutorialViewController.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
 				73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */,
 				42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */,
@@ -929,6 +956,7 @@
 				42BBFF3218D3996E0065D4C3 /* Pins.m in Sources */,
 				42B3A6B918E8C5E700B46FBF /* Mixpanel.m in Sources */,
 				42A6A59118CBA3BF0043233C /* AppDelegate.m in Sources */,
+				4291C3F3199959EB00C64E36 /* TutorialPageViewController.m in Sources */,
 				42B3A67118E7161900B46FBF /* Fields.m in Sources */,
 				42A7BEC318D719BF00973EA8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				42D28CE618E06702005E1758 /* UIViewController+MMDrawerController.m in Sources */,

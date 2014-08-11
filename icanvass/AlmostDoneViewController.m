@@ -84,7 +84,8 @@
 #pragma mark - Actions
 
 - (void)skip:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+//    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    [self performSegueWithIdentifier:@"Tutorial" sender:nil];
 }
 
 - (IBAction)industry:(id)sender {
