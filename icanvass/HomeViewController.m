@@ -245,7 +245,7 @@
     if (abs(howRecent) < 15.0) {
         // If the event is recent, do something with it.
         NSLog(@"recent latitude %.6f, longitude %.6f\n", location.coordinate.latitude, location.coordinate.longitude);
-        //_map.location=location;
+        _map.location=location;
     }
 }
 

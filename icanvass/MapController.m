@@ -15,7 +15,6 @@
 #import "utilities.h"
 
 @interface MapController () <GMSMapViewDelegate>
-@property (nonatomic) BOOL moved;
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSString *searchText;
@@ -68,7 +67,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    _moved=NO;    //still weird
+//    _moved=NO;    //still weird
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,6 +160,11 @@
     if(gesture) {
         self.moved=YES;
     }
+}
+
+- (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView {
+    _moved=NO;
+    return NO;
 }
 
 - (void)mapView:(GMSMapView*)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {

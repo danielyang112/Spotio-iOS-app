@@ -23,6 +23,7 @@
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *filtered;
 @property (nonatomic,strong) GMSMapView *mapView;
+@property (nonatomic) BOOL moved;
 
 - (GMSMarker*)markerForPin:(PinTemp*)pin;
 - (void)setLocation:(CLLocation *)location;

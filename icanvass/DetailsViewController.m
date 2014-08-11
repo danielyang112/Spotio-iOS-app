@@ -986,6 +986,7 @@ static NSDateFormatter *dateFormatter;
     
     CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
     homeViewController.map.location = loc;
+    homeViewController.map.moved = YES;
     GMSMarker *marker = [homeViewController.map markerForPin:self.pin];
     homeViewController.map.mapView.selectedMarker = marker;
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
