@@ -65,6 +65,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharing"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICLogOut" object:nil userInfo:nil];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
     [self.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICNetFailed" object:nil userInfo:@{@"status":@(401)}];

@@ -11,6 +11,7 @@
 #import "utilities.h"
 #import "Pin.h"
 #import "PinTemp.h"
+#import "AppDelegate.h"
 
 
 @interface Pins () {
@@ -30,6 +31,8 @@
     if(self) {
         self.colors=@{};
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [self sendStatusesTo:nil];
@@ -114,7 +117,11 @@
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
     NSLog(@"%@",u);
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if(!date){
+        [appDelegate showLoading:YES];
+    }
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
@@ -124,9 +131,11 @@
 //        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
 //        [[NSUserDefaults standardUserDefaults] synchronize];
         self.gettingPins=NO;
+        [appDelegate showLoading:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.gettingPins=NO;
+        [appDelegate showLoading:NO];
         NSLog(@"Error: %@", error);
     }];
 }
@@ -220,6 +229,10 @@
 }
 
 - (void)userLoggedIn:(NSNotification*)notification {
+    [self clear];
+}
+
+- (void)userLoggedOut:(NSNotification*)notification {
     [self clear];
 }
 

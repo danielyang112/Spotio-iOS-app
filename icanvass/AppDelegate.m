@@ -102,6 +102,15 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
+- (void)showLoading:(BOOL)yeah {
+    if(!yeah){
+        [_alert dismissWithClickedButtonIndex:0 animated:YES];
+        return;
+    }
+    self.alert=[[UIAlertView alloc] initWithTitle:nil message:@"Please wait while your pins are downloading, this will only happen once." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    [_alert show];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
