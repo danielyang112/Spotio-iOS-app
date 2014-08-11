@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNeedsStatusBarAppearanceUpdate];
 	// Do any additional setup after loading the view.
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     UIColor *color = [UIColor whiteColor];
@@ -47,6 +48,10 @@
     _passwordTextField.leftViewMode=UITextFieldViewModeAlways;
     paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     _passwordTextField.leftView = paddingView;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
