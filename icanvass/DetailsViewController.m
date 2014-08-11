@@ -387,6 +387,17 @@ static NSDateFormatter *dateFormatter;
             [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
         }
     }
+    
+    [customValues sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDictionary *a=(NSDictionary*)obj1;
+        NSDictionary *b=(NSDictionary*)obj2;
+        
+        if([[Fields sharedInstance].fieldById[a[@"DefinitionId"]] order] > [[Fields sharedInstance].fieldById[b[@"DefinitionId"]] order]){
+            return NSOrderedDescending;
+        }
+        return NSOrderedAscending;
+    }];
+    
     [self locationForAddressDictionary:@{@"City":_city,@"State":_state,@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
         CLLocationDegrees latitude=_coordinate.latitude;
         CLLocationDegrees longitude=_coordinate.longitude;
@@ -463,6 +474,20 @@ static NSDateFormatter *dateFormatter;
             [customValues addObject:@{@"DefinitionId":key,@"StringValue":_addedFields[key]}];
         }
     }
+    
+    [customValues sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDictionary *a=(NSDictionary*)obj1;
+        NSDictionary *b=(NSDictionary*)obj2;
+        
+        NSInteger orderA = [[Fields sharedInstance].fieldById[[a[@"DefinitionId"] stringValue]] order];
+        NSInteger orderB = [[Fields sharedInstance].fieldById[[b[@"DefinitionId"] stringValue]] order];
+        
+        if(orderA > orderB){
+            return NSOrderedDescending;
+        }
+        return NSOrderedAscending;
+    }];
+    
     [self locationForAddressDictionary:@{@"City":_city,@"State":_state,@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
         CLLocationDegrees latitude=_coordinate.latitude;
         CLLocationDegrees longitude=_coordinate.longitude;
