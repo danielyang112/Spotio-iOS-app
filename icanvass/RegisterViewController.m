@@ -117,7 +117,7 @@
             [mixpanel identify:d[@"EmailAdderss"]];
             [BugSenseController setUserIdentifier:d[@"EmailAdderss"]];
             [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAdderss"]];
-            [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyLogin"]}];
+            [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyName"]}];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
