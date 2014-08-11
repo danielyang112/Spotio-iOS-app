@@ -118,10 +118,11 @@
             [BugSenseController setUserIdentifier:d[@"EmailAddress"]];
             [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAddress"]];
             [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyName"]}];
+            [self performSegueWithIdentifier:@"AlmostDone" sender:nil];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
-            [self performSegueWithIdentifier:@"AlmostDone" sender:nil];
+            
         } else {
             if(response[@"Message"]) {
                 [self showErrors:response[@"Message"]];
