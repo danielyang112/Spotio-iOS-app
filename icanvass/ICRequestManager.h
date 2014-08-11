@@ -8,8 +8,8 @@
 
 #define kUserNameKey @"UserName"
 #define kCompanyNameKey @"CompanyName"
-//#define kBaseUrl @"http://app.spotio.com:888/"
-#define kBaseUrl @"http://app.spotio.com:8080/"
+#define kBaseUrl @"http://services.spotio.com:888/"
+//#define kBaseUrl @"http://services.spotio.com:8080/"
 #define kPasswordKey @"Password"
 #define kRefreshDate @"refreshdate"
 
