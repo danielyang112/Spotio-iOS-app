@@ -114,9 +114,9 @@
             //[mixpanel createAlias:_txtEMail.text forDistinctID:mixpanel.distinctId];
             // You must call identify if you haven't already
             // (e.g., when your app launches).
-            [mixpanel identify:d[@"EmailAdderss"]];
-            [BugSenseController setUserIdentifier:d[@"EmailAdderss"]];
-            [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAdderss"]];
+            [mixpanel identify:d[@"EmailAddress"]];
+            [BugSenseController setUserIdentifier:d[@"EmailAddress"]];
+            [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAddress"]];
             [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyName"]}];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
