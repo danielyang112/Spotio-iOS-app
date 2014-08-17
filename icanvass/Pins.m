@@ -100,6 +100,10 @@
 
 - (void)fetchPinsFrom:(int)skip withBlock:(void (^)(NSArray *a))block {
     NSLog(@"%s",__FUNCTION__);
+    if(![[ICRequestManager sharedManager] isUserLoggedIn]) {
+        if(block) block(nil);
+        return;
+    }
     self.gettingPins=YES;
     static NSDateFormatter *nozoneFormatter;
     if(!nozoneFormatter) {

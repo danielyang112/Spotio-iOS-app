@@ -27,6 +27,10 @@
     return sharedManager;
 }
 
+- (BOOL)isUserLoggedIn {
+    return !![[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey];
+}
+
 - (void)loginUserName:(NSString*)userName password:(NSString*)password
               company:(NSString*)company cb:(void(^)(BOOL success))cb {
     

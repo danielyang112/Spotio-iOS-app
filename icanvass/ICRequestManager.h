@@ -21,4 +21,5 @@
               company:(NSString*)company cb:(void(^)(BOOL success))cb;
 - (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success, id response))cb;
 - (void)logoutWithCb:(void(^)(BOOL success))cb;
+- (BOOL)isUserLoggedIn;
 @end
