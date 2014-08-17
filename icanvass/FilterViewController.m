@@ -43,26 +43,6 @@
     if (self) {
         self.selectedStatuses=[NSMutableArray arrayWithCapacity:5];
         self.selectedUsers=[NSMutableArray arrayWithCapacity:5];
-        self.creationFrom=[Pins sharedInstance].oldest;
-        self.updateFrom=[Pins sharedInstance].oldest;
-        self.creationTo=[Pins sharedInstance].newest;
-        self.updateTo=[Pins sharedInstance].newest;
-        NSDictionary *d=[Pins sharedInstance].filter;
-        if(d){
-            if(d[@"statuses"]) {
-                self.selectedStatuses=d[@"statuses"];
-                _statusOn=YES;
-            }
-            if(d[@"createdFrom"]) {
-                self.creationFrom=d[@"createdFrom"];
-                self.creationTo=d[@"createdTo"];
-                _creationDateOn=YES;
-            }
-            if(d[@"users"]) {
-                self.selectedUsers=d[@"users"];
-                _userOn=YES;
-            }
-        }
     }
     return self;
 }
@@ -76,6 +56,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self updateFilterData];
     [[Mixpanel sharedInstance] track:@"FilterView"];
     [[Pins sharedInstance] sendStatusesTo:^(NSArray *a) {
         self.statuses=a;
@@ -85,6 +66,30 @@
         self.users=a;
         [self.statusTableView reloadData];
     }];
+}
+
+- (void)updateFilterData {
+    self.creationFrom=[Pins sharedInstance].oldest;
+    self.updateFrom=[Pins sharedInstance].oldest;
+    self.creationTo=[Pins sharedInstance].newest;
+    self.updateTo=[Pins sharedInstance].newest;
+    NSDictionary *d=[Pins sharedInstance].filter;
+    if(d){
+        if(d[@"statuses"]) {
+            self.selectedStatuses=[d[@"statuses"] mutableCopy];
+            _statusOn=YES;
+        }
+        if(d[@"createdFrom"]) {
+            self.creationFrom=[d[@"createdFrom"] copy];
+            self.creationTo=[d[@"createdTo"] copy];
+            _creationDateOn=YES;
+        }
+        if(d[@"users"]) {
+            self.selectedUsers=[d[@"users"] mutableCopy];
+            _userOn=YES;
+        }
+    }
+    [self.statusTableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView switchCellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -316,18 +321,18 @@
 - (IBAction)done:(id)sender {
     NSMutableDictionary *d=[NSMutableDictionary dictionaryWithCapacity:2];
     if(_statusOn&&[_selectedStatuses count]){
-        d[@"statuses"]=_selectedStatuses;
+        d[@"statuses"]=[_selectedStatuses copy];
     }
     if(_userOn&&[_selectedUsers count]){
-        d[@"users"]=_selectedUsers;
+        d[@"users"]=[_selectedUsers copy];
     }
     if(_creationDateOn){
-        d[@"createdFrom"]=_creationFrom;
-        d[@"createdTo"]=_creationTo;
+        d[@"createdFrom"]=[_creationFrom copy];
+        d[@"createdTo"]=[_creationTo copy];
     }
     if(_updateDateOn){
-        d[@"updatedFrom"]=_updateFrom;
-        d[@"updatedTo"]=_updateTo;
+        d[@"updatedFrom"]=[_updateFrom copy];
+        d[@"updatedTo"]=[_updateTo copy];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFilter" object:nil userInfo:d];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
@@ -335,7 +340,7 @@
 
 - (IBAction)cancel:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFilter" object:nil userInfo:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFilter" object:nil userInfo:nil];
     }];
 }
 
