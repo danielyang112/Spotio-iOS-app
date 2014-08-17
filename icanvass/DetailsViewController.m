@@ -1010,6 +1010,7 @@ static NSDateFormatter *dateFormatter;
     [homeViewController valueChanged:homeViewController.segment];
     
     CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
+    homeViewController.map.moved = NO;
     homeViewController.map.location = loc;
     homeViewController.map.moved = YES;
     GMSMarker *marker = [homeViewController.map markerForPin:self.pin];
