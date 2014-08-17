@@ -49,10 +49,21 @@
 }
 
 - (void)registerWithDictionary:(NSDictionary*)d cb:(void(^)(BOOL success, id response))cb {
+    static NSDateFormatter *nozoneFormatter;
+    if(!nozoneFormatter) {
+        nozoneFormatter=[[NSDateFormatter alloc] init];
+        nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        [nozoneFormatter setTimeZone:gmt];
+    }
     [[ICRequestManager sharedManager] POST:@"MobileApp/RegisterCompanyExtended" parameters:d success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic=operation.responseObject;
         if(!dic[@"Message"]){
-            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:dic[@"CompanyLogin"] cb:^(BOOL success) {cb(YES,operation.responseObject);}];
+            [self loginUserName:d[@"EmailAddress"] password:d[@"Password"] company:dic[@"CompanyLogin"] cb:^(BOOL success) {
+                [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                cb(YES,operation.responseObject);
+            }];
         }else{
             cb(NO,operation.responseObject);
         }
