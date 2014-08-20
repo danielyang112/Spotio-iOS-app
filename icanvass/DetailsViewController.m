@@ -164,7 +164,7 @@
 - (void)extractPin {
     self.streetName=_pin.location.streetName;
     self.initialStreetName=_streetName;
-    self.streetNumber=_pin.location.streetNumber;
+    self.streetNumber=[_pin.location.streetNumber stringValue];
     self.initialStreetNumber=_streetNumber;
     self.city=_pin.location.city;
     self.state=_pin.location.state;
@@ -173,7 +173,7 @@
     _coordinate=CLLocationCoordinate2DMake([_pin.latitude doubleValue], [_pin.longitude doubleValue]);
     self.status=_pin.status;
     
-    for(NSDictionary *d in _pin.customValues){
+    for(NSDictionary *d in _pin.customValuesOld){
         NSString *v=nilIfNull(d[@"DateTimeValue"]);
         if(v){
             static NSDateFormatter *zoneFormatter;
@@ -194,7 +194,7 @@
                 date=[nozoneFormatter dateFromString:v];
             }
             _addedFields[d[@"DefinitionId"]]=date;
-            return;
+            continue;
         }
         v=nilIfNull(d[@"StringValue"]);
         if(!v) v=nilIfNull(d[@"IntValue"]);
@@ -335,10 +335,10 @@
 - (BOOL)addressExists:(NSString*)streetName number:(NSString*)number unit:(NSString*)unit{
     if(!unit) unit=@"";
     NSArray *a=[[Pins sharedInstance].pins grepWith:^BOOL(NSObject *o) {
-        PinTemp *p=(PinTemp*)o;
+        Pin *p=(Pin*)o;
         if([p.ident isEqualToString:_pin.ident]) return NO;
         NSString *pu=p.location.unit?p.location.unit:@"";
-        return [p.location.streetName isEqualToString:streetName] && [p.location.streetNumber isEqualToString:number]
+        return [p.location.streetName isEqualToString:streetName] && [[p.location.streetNumber stringValue] isEqualToString:number]
         && [unit isEqualToString:pu];
     }];
     return [a count];
@@ -539,7 +539,7 @@ static NSDateFormatter *dateFormatter;
     if(section==0) {
         return 4;
     } else {
-        return tableView.isEditing?[_customFields count]:[_pin.customValues count];
+        return tableView.isEditing?[_customFields count]:[_pin.customValuesOld count];
     }
     
     /*
@@ -630,7 +630,7 @@ static NSDateFormatter *dateFormatter;
         NSString *CellIdentifier = @"DetailsDropDownCell";
         DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         cell.enabled=NO;
-        NSArray *c=_pin.customValues;
+        NSArray *c=_pin.customValuesOld;
         NSDictionary *d=c[indexPath.row];
         Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
         if([f.name isEqualToString:@"Notes"])

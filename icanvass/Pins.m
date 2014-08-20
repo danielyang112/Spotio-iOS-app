@@ -10,8 +10,8 @@
 #import "ICRequestManager.h"
 #import "utilities.h"
 #import "Pin.h"
-#import "PinTemp.h"
 #import "AppDelegate.h"
+#import "Location.h"
 
 
 @interface Pins () {
@@ -22,6 +22,7 @@
 @property (nonatomic,strong) NSSortDescriptor *descriptor;
 @property (nonatomic) BOOL sendingStatuses;
 @property (nonatomic) BOOL gettingPins;
+@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
 @end
 
 @implementation Pins
@@ -49,18 +50,78 @@
     return sharedInstance;
 }
 
-- (NSMutableArray*)pinsArrayFromArray:(NSArray*)a {
-    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
-    if(_pins){
-        ma=[_pins mutableCopy];
-    }
+- (NSArray*)pinsArrayFromArray:(NSArray*)a {
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    [_managedObjectContext setUndoManager:nil];
+    NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     for(NSDictionary *dic in a){
-        [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
+        
+        Pin *newPin;
+        if(date){
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            [fetchRequest setEntity:
+             [NSEntityDescription entityForName:@"Pin" inManagedObjectContext:_managedObjectContext]];
+            [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(ident == %@)", dic[@"Id"]]];
+            NSError *error;
+            NSArray *pinsmatching = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+            newPin=pinsmatching.firstObject;
+        }
+        if(!newPin)
+            newPin = [NSEntityDescription insertNewObjectForEntityForName:@"Pin"
+                                                          inManagedObjectContext:_managedObjectContext];
+        [newPin updateWithDictionary:dic];
+        
+        Location *loc=[NSEntityDescription insertNewObjectForEntityForName:@"Location"
+                                                    inManagedObjectContext:_managedObjectContext];
+        NSDictionary *ld=dic[@"Location"];
+        loc.streetNumber=[NSNumber numberWithInt:[ld[@"HouseNumber"] integerValue]];
+        loc.streetName=ld[@"Street"];
+        loc.city=nilIfNull(ld[@"City"]);
+        NSObject *u=nilIfNull(ld[@"Unit"]);
+        if([u isKindOfClass:[NSNumber class]]){
+            u=[(NSNumber*)u stringValue];
+        }
+        loc.unit=(NSString*)u;
+        loc.zip=nilIfNull(ld[@"Zip"]);
+        loc.state=nilIfNull(ld[@"State"]);
+        newPin.location=loc;
+        
+        if(nilIfNull(dic[@"CustomValues"])){
+            NSMutableOrderedSet *os=[NSMutableOrderedSet orderedSet];
+            for(NSDictionary *d in dic[@"CustomValues"]){
+                CustomValue *cv = [NSEntityDescription insertNewObjectForEntityForName:@"CustomValue"
+                                                                inManagedObjectContext:_managedObjectContext];
+                [cv updateWithDictionary:d];
+                [os addObject:cv];
+            }
+    //        [newPin addCustomValues:[NSOrderedSet orderedSetWithOrderedSet:os]];
+            newPin.customValues=os;
+        }
     }
-    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
-    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
     
-    return ma;
+    NSError *error=nil;
+    [_managedObjectContext save:&error];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pin"
+                                              inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Query on managedObjectContext With Generated fetchRequest
+    NSArray *fetchedRecords = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    
+//    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
+//    if(_pins){
+//        ma=[_pins mutableCopy];
+//    }
+//    for(NSDictionary *dic in a){
+//        [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
+//    }
+//    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
+//    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
+    
+    return fetchedRecords;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
 //        return [[PinTemp alloc] initWithDictionary:dic];
@@ -115,8 +176,8 @@
     NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     
     ICRequestManager *manager=[ICRequestManager sharedManager];
-    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
-//    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$top=500&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
+//    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
+    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$top=500&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
     if(date){
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
@@ -132,8 +193,8 @@
         self.oldest=[[_pins lastObject] updateDate];
         self.newest=[[_pins firstObject] updateDate];
         if(block) block(_pins);
-//        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         self.gettingPins=NO;
         [appDelegate showLoading:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
@@ -164,35 +225,39 @@
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
-        PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
-        [_pins insertObject:p atIndex:0];
-        p.customValues=dictionary[@"CustomValues"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-        block(YES);
+//        PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
+//        [_pins insertObject:p atIndex:0];
+//        p.customValues=dictionary[@"CustomValues"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+        [self fetchPinsWithBlock:^(NSArray *a) {
+            block(YES);
+        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         block(NO);
     }];
 }
 
-- (void)editPin:(PinTemp*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
+- (void)editPin:(Pin*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
-        PinTemp *p=[_pins grepWith:^BOOL(NSObject *o) {
-            PinTemp *_p=(PinTemp*)o;
-            return [pin.ident isEqual:_p.ident];
-        }][0];
-        //NSArray *c=p.customValues;
-//        [p updateWithDictionary:dictionary];
-        [p updateWithDictionary:responseObject];
-        p.customValues=dictionary[@"CustomValues"];
-        //NSInteger idx=[_pins indexOfObject:p];
-        //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
-//        p.status=dictionary[@"Status"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-        block(YES);
+//        PinTemp *p=[_pins grepWith:^BOOL(NSObject *o) {
+//            PinTemp *_p=(PinTemp*)o;
+//            return [pin.ident isEqual:_p.ident];
+//        }][0];
+//        //NSArray *c=p.customValues;
+////        [p updateWithDictionary:dictionary];
+//        [p updateWithDictionary:responseObject];
+////        p.customValues=dictionary[@"CustomValues"];
+//        //NSInteger idx=[_pins indexOfObject:p];
+//        //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
+////        p.status=dictionary[@"Status"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+        [self fetchPinsWithBlock:^(NSArray *a) {
+            block(YES);
+        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         block(NO);
@@ -224,7 +289,23 @@
     [self fetchStatusesWithBlock:block];
 }
 
+- (void)clearPins {
+    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
+    [allCars setEntity:[NSEntityDescription entityForName:@"Pin" inManagedObjectContext:_managedObjectContext]];
+    [allCars setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError * error = nil;
+    NSArray * ps = [_managedObjectContext executeFetchRequest:allCars error:&error];
+    //error handling goes here
+    for (NSManagedObject * p in ps) {
+        [_managedObjectContext deleteObject:p];
+    }
+    NSError *saveError = nil;
+    [_managedObjectContext save:&saveError];
+}
+
 - (void)clear {
+    [self clearPins];
     self.pins=nil;
     self.filteredPins=nil;
     self.statuses=nil;
@@ -270,7 +351,7 @@
     
     self.filteredPins=[_pins grepWith:^BOOL(NSObject *o) {
         BOOL ret=YES;
-        PinTemp *p=(PinTemp*)o;
+        Pin *p=(Pin*)o;
         if(cf){
             NSDateComponents *components = [calendar components:comps
                                                          fromDate:p.updateDate];

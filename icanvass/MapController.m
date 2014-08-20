@@ -9,7 +9,7 @@
 #import "MapController.h"
 #import "DetailsViewController.h"
 #import "Pins.h"
-#import "PinTemp.h"
+#import "Pin.h"
 #import "Mixpanel.h"
 #import "Users.h"
 #import "utilities.h"
@@ -83,14 +83,14 @@
                                             zoom:21];
 }
 
-- (UIImage*)iconForPin:(PinTemp*)pin {
+- (UIImage*)iconForPin:(Pin*)pin {
     if(!_icons[pin.status]){
         _icons[pin.status]=[GMSMarker markerImageWithColor:[[Pins sharedInstance] colorForStatus:pin.status]];
     }
     return _icons[pin.status];
 }
 
-- (GMSMarker*)markerForPin:(PinTemp*)pin {
+- (GMSMarker*)markerForPin:(Pin*)pin {
     CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
     GMSMarker *marker=[GMSMarker markerWithPosition:position];
     marker.userData=pin;
@@ -107,7 +107,7 @@
         return;
     }
     self.filtered=[_pins grepWith:^BOOL(NSObject *o) {
-        PinTemp *p=(PinTemp*)o;
+        Pin *p=(Pin*)o;
         return ([p.status rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
         || ([p.address rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
         || ([p.address2 rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound);
@@ -120,7 +120,7 @@
         m.map=nil;
     }
     [_markers removeAllObjects];
-    for(PinTemp *pin in _filtered){
+    for(Pin *pin in _filtered){
         GMSMarker *marker=[self markerForPin:pin];
         self.markers[pin.ident]=marker;
     }
@@ -174,13 +174,13 @@
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
-    //PinTemp *pin=marker.userData;
+    //Pin *pin=marker.userData;
     //[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
     return NO;
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-    PinTemp *pin=marker.userData;
+    Pin *pin=marker.userData;
     UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
     UIView *icon=[view viewWithTag:7];
     icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
@@ -199,7 +199,7 @@
 //    l.text=pin.user;
     l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
     l=(UILabel*)[view viewWithTag:3];
-    l.text=[PinTemp formatDate:pin.creationDate];
+    l.text=[Pin formatDate:pin.creationDate];
     l=(UILabel*)[view viewWithTag:4];
     l.text=pin.address;
     l=(UILabel*)[view viewWithTag:5];
@@ -209,7 +209,7 @@
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
-    PinTemp *pin=marker.userData;
+    Pin *pin=marker.userData;
     [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
 }
 

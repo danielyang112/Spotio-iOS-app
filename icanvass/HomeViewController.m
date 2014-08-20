@@ -155,13 +155,13 @@
     NSString *headerStr = @"\"Status\",\"Address\",\"City\",\"State\",\"Zip\",\"Name\",\"Phone\",\"Email\",\"Notes\",\"Created Dates\",\"Created Time\",\"Last Updated Date\",\"Last Updated Time\",\"User Name\"";
     [mainString appendString:headerStr];
     
-    for(PinTemp *pin in self.map.filtered){
+    for(Pin *pin in self.map.filtered){
         NSString *name, *phone, *email, *notes;
         name = @"";
         phone = @"";
         email = @"";
         notes = @"";
-        for(NSDictionary *d in pin.customValues){
+        for(NSDictionary *d in pin.customValuesOld){
             NSNumber *id = d[@"DefinitionId"];
             switch([id intValue]){
                 case 1:

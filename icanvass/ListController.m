@@ -10,7 +10,7 @@
 #import "DetailsViewController.h"
 #import "Pins.h"
 #import "PinCell.h"
-#import "PinTemp.h"
+#import "Pin.h"
 #import "PocketSVG.h"
 #import "utilities.h"
 #import "Mixpanel.h"
@@ -139,7 +139,7 @@ enum ICSortOrder : NSUInteger {
         return;
     }
     self.filtered=[_pins grepWith:^BOOL(NSObject *o) {
-        PinTemp *p=(PinTemp*)o;
+        Pin *p=(Pin*)o;
         return ([p.status rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
         || ([p.address rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound)
         || ([p.address2 rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound);
@@ -220,10 +220,10 @@ enum ICSortOrder : NSUInteger {
     PinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PinTemp *pin=_filtered[indexPath.row];
+    Pin *pin=_filtered[indexPath.row];
     cell.topLabel.text=pin.address;
     cell.bottomLabel.text=pin.address2;
-    cell.rightLabel.text=[PinTemp formatDate:pin.creationDate];
+    cell.rightLabel.text=[Pin formatDate:pin.creationDate];
     cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
     cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
     cell.icon.layer.borderWidth=1.f;

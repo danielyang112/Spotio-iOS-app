@@ -8,7 +8,7 @@
 
 #import "FilterViewController.h"
 #import "Pins.h"
-#import "PinTemp.h"
+#import "Pin.h"
 #import "Users.h"
 #import "Mixpanel.h"
 #import "utilities.h"
@@ -152,13 +152,13 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     UILabel *label=(UILabel*)[cell viewWithTag:1];
     if(indexPath.section==kCreationDateSection) {
-        label.text=[PinTemp formatDate:_creationFrom];
+        label.text=[Pin formatDate:_creationFrom];
         label=(UILabel*)[cell viewWithTag:2];
-        label.text=[PinTemp formatDate:_creationTo];
+        label.text=[Pin formatDate:_creationTo];
     } else {
-        label.text=[PinTemp formatDate:_updateFrom];
+        label.text=[Pin formatDate:_updateFrom];
         label=(UILabel*)[cell viewWithTag:2];
-        label.text=[PinTemp formatDate:_updateTo];
+        label.text=[Pin formatDate:_updateTo];
     }
     
     return cell;

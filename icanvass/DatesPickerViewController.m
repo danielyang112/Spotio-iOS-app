@@ -7,7 +7,7 @@
 //
 
 #import "DatesPickerViewController.h"
-#import "PinTemp.h"
+#import "Pin.h"
 
 @interface DatesPickerViewController () {
     NSInteger _selectedRow;
@@ -40,11 +40,11 @@
     if(indexPath.row==0) {
         label.text=@"From:";
         label=(UILabel*)[cell viewWithTag:2];
-        label.text=[PinTemp formatDate:_from];
+        label.text=[Pin formatDate:_from];
     } else {
         label.text=@"To:";
         label=(UILabel*)[cell viewWithTag:2];
-        label.text=[PinTemp formatDate:_to];
+        label.text=[Pin formatDate:_to];
     }
     
     return cell;

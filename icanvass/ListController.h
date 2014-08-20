@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PinTemp.h"
+#import "Pin.h"
 
 @interface ListController : UITableViewController<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

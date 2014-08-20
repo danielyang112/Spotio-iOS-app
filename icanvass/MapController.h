@@ -10,7 +10,7 @@
 #import "HomeViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 
-@class PinTemp;
+@class Pin;
 
 @class MapController;
 @protocol MapControllerDelegate <NSObject>
@@ -25,7 +25,7 @@
 @property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
 
-- (GMSMarker*)markerForPin:(PinTemp*)pin;
+- (GMSMarker*)markerForPin:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;
 
 @end

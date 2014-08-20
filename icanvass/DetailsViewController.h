@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <GoogleMaps/GoogleMaps.h>
-#import "PinTemp.h"
+#import "Pin.h"
 
 @interface DetailsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) CLLocationCoordinate2D userCoordinate;
 @property (nonatomic) BOOL adding;
-@property (nonatomic,strong) PinTemp *pin;
+@property (nonatomic,strong) Pin *pin;
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
 @property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

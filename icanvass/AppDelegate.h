@@ -20,5 +20,5 @@
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
 - (void)showLoading:(BOOL)yeah;
-
+- (void)clearStore;
 @end
