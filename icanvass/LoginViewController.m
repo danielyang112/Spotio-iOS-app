@@ -10,6 +10,7 @@
 #import "ICRequestManager.h"
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
+#import "SVProgressHUD.h"
 
 @interface LoginViewController ()
 @property (nonatomic,strong) NSString *username;
@@ -17,6 +18,7 @@
 @property (nonatomic,strong) NSString *company;
 @property (nonatomic,strong) NSArray *companies;
 @property (nonatomic,weak) UITextField *activeField;
+@property (nonatomic) BOOL loggingIn;
 @end
 
 @implementation LoginViewController
@@ -57,6 +59,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
+    _loggingIn=NO;
     [[Mixpanel sharedInstance] track:@"LoginView"];
 }
 
@@ -85,13 +88,25 @@
 }
 
 - (void)showWrongPassword:(BOOL)show {
-    self.wrongPassLabel.hidden=!show;
+//    self.wrongPassLabel.hidden=!show;
+    if(!show) return;
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil
+                                                      message:@"Wrong username or password"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    
+    [message show];
 }
 
 - (void)loginWithUsername:(NSString*)username password:(NSString*)password company:(NSString*)company {
+    [SVProgressHUD show];
+    _loggingIn=YES;
     self.company=company;
     [self showWrongPassword:NO];
     [[ICRequestManager sharedManager] loginUserName:username password:password company:company cb:^(BOOL success) {
+        [SVProgressHUD dismiss];
+        _loggingIn=NO;
         if(success) {
             Mixpanel *mixpanel=[Mixpanel sharedInstance];
             [mixpanel identify:username];
@@ -114,14 +129,19 @@
     [[ICRequestManager sharedManager] POST:@"MobileApp/GetActiveCompanies" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.companies=(NSArray*)responseObject;
         if(![_companies count]){
+            [SVProgressHUD dismiss];
+            _loggingIn=NO;
             [self showWrongPassword:YES];
         } else if(_companies.count==1) {
             [self loginWithUsername:username password:password company:_companies[0]];
         } else {
+            _loggingIn=NO;
             [self showCompanySelection];
+            [SVProgressHUD dismiss];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -139,6 +159,7 @@
 #pragma mark - Actions
 
 - (IBAction)forgotPassword:(id)sender {
+    if(_loggingIn) return;
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://app.spotio.com/Account/ForgotPassword"]];
 }
 
@@ -147,6 +168,10 @@
 }
 
 - (IBAction)login:(id)sender {
+    if(_loggingIn) return;
+    [_activeField resignFirstResponder];
+    _loggingIn=YES;
+    [SVProgressHUD show];
     [self loginWithUsername:_loginTextField.text password:_passwordTextField.text];
 }
 
@@ -201,6 +226,10 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     _scrollView.contentInset = contentInsets;
     _scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    return !_loggingIn;
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
 #import <QuartzCore/QuartzCore.h>
+#import "SVProgressHUD.h"
 
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
@@ -79,6 +80,7 @@
 }
 
 - (void)proceedWithRegistration {
+    [SVProgressHUD show];
 /*    dict[@"CompanyLogin"] = [_txtCompanyName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"EmailAddress"] = [_txtEMail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"FirstName"] = [_txtFirstName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -108,6 +110,7 @@
                       @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
     [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
+        [SVProgressHUD dismiss];
         if(success) {
             Mixpanel *mixpanel=[Mixpanel sharedInstance];
             NSString *distinctID=mixpanel.distinctId;

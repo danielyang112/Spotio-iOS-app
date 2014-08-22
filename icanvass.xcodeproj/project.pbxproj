@@ -46,6 +46,9 @@
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
 		42480DE819A3ECC100E6DF7B /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 42480DE719A3ECC100E6DF7B /* Location.m */; };
 		42480DEB19A3ECC100E6DF7B /* Pin.m in Sources */ = {isa = PBXBuildFile; fileRef = 42480DEA19A3ECC100E6DF7B /* Pin.m */; };
+		4255E68019A7AE2A007657E9 /* HilightedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255E67F19A7AE2A007657E9 /* HilightedButton.m */; };
+		4255E68619A7B40B007657E9 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4255E68319A7B40B007657E9 /* SVProgressHUD.bundle */; };
+		4255E68719A7B40B007657E9 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255E68519A7B40B007657E9 /* SVProgressHUD.m */; };
 		427E8A1819005F290092504A /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1719005F290092504A /* logo@2x.png */; };
 		427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 427E8A1A190081400092504A /* AlmostDoneViewController.m */; };
 		427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A1C1901B5CD0092504A /* Default-568h@2x.png */; };
@@ -226,6 +229,12 @@
 		42480DE719A3ECC100E6DF7B /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		42480DE919A3ECC100E6DF7B /* Pin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pin.h; sourceTree = "<group>"; };
 		42480DEA19A3ECC100E6DF7B /* Pin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pin.m; sourceTree = "<group>"; };
+		4255E67E19A7AE2A007657E9 /* HilightedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HilightedButton.h; sourceTree = "<group>"; };
+		4255E67F19A7AE2A007657E9 /* HilightedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HilightedButton.m; sourceTree = "<group>"; };
+		4255E68219A7B40B007657E9 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		4255E68319A7B40B007657E9 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		4255E68419A7B40B007657E9 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		4255E68519A7B40B007657E9 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		427E8A1719005F290092504A /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		427E8A19190081400092504A /* AlmostDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlmostDoneViewController.h; sourceTree = "<group>"; };
 		427E8A1A190081400092504A /* AlmostDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlmostDoneViewController.m; sourceTree = "<group>"; };
@@ -494,6 +503,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				4255E68119A7B40B007657E9 /* SVProgressHUD */,
 				42B3A69218E8C5E600B46FBF /* Mixpanel */,
 				42B3A68D18E8C3E100B46FBF /* FreshdeskSDK */,
 				42B3A66718E5732200B46FBF /* PocketSVG */,
@@ -528,6 +538,17 @@
 				42284F9118D26AF10087941E /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		4255E68119A7B40B007657E9 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4255E68219A7B40B007657E9 /* SVProgressHUD-Prefix.pch */,
+				4255E68319A7B40B007657E9 /* SVProgressHUD.bundle */,
+				4255E68419A7B40B007657E9 /* SVProgressHUD.h */,
+				4255E68519A7B40B007657E9 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		42A6A57418CBA3BF0043233C = {
@@ -700,6 +721,8 @@
 			children = (
 				42A7BECB18D71D7400973EA8 /* PinCell.h */,
 				42A7BECC18D71D7400973EA8 /* PinCell.m */,
+				4255E67E19A7AE2A007657E9 /* HilightedButton.h */,
+				4255E67F19A7AE2A007657E9 /* HilightedButton.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -918,6 +941,7 @@
 				427E8A2F1901CFC30092504A /* AppIcon29x29@2x.png in Resources */,
 				42B3A68818E891C200B46FBF /* status@2x.png in Resources */,
 				42B3A68418E8903600B46FBF /* reports@2x.png in Resources */,
+				4255E68619A7B40B007657E9 /* SVProgressHUD.bundle in Resources */,
 				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
 				42B3A68A18E89B2600B46FBF /* bg@2x.png in Resources */,
 				427E8A3B1901CFC30092504A /* AppIcon76x76@2x.png in Resources */,
@@ -945,6 +969,7 @@
 				42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */,
 				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
 				42480DE819A3ECC100E6DF7B /* Location.m in Sources */,
+				4255E68719A7B40B007657E9 /* SVProgressHUD.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				4291C3F0199959B400C64E36 /* TutorialViewController.m in Sources */,
@@ -972,6 +997,7 @@
 				42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */,
 				42A7BEC218D719BF00973EA8 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				42D28CE318E06702005E1758 /* MMDrawerBarButtonItem.m in Sources */,
+				4255E68019A7AE2A007657E9 /* HilightedButton.m in Sources */,
 				42284F9418D26AF10087941E /* AFHTTPSessionManager.m in Sources */,
 				42480DEB19A3ECC100E6DF7B /* Pin.m in Sources */,
 				42A7BEC418D719BF00973EA8 /* UIAlertView+AFNetworking.m in Sources */,
