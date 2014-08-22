@@ -108,7 +108,7 @@
                                      @"EstimateUsersNumber":_employeesButton.titleLabel.text}};
     [[ICRequestManager sharedManager] POST:@"MobileApp/SaveRegistrantionQuestionsAnswers" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICQuestions" object:nil];
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+        [self performSegueWithIdentifier:@"Tutorial" sender:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
