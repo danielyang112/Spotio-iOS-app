@@ -185,6 +185,10 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return !_loggingIn;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeField=textField;
 }

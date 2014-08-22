@@ -17,6 +17,7 @@
 @interface RegisterViewController ()
 @property (nonatomic,weak) UITextField *activeField;
 @property (nonatomic,strong) NSString *companyName;
+@property (nonatomic) BOOL registering;
 @end
 
 @implementation RegisterViewController
@@ -80,6 +81,9 @@
 }
 
 - (void)proceedWithRegistration {
+    if(_registering) return;
+    _registering=YES;
+    [_activeField resignFirstResponder];
     [SVProgressHUD show];
 /*    dict[@"CompanyLogin"] = [_txtCompanyName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"EmailAddress"] = [_txtEMail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -109,8 +113,10 @@
                       @"Phone":[self trim:_phoneTextField],
                       @"EmailAddress":email,
                       @"Password":[self trim:_passwordTextField]};
+    RegisterViewController __weak *weakSelf=self;
     [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
         [SVProgressHUD dismiss];
+        _registering=NO;
         if(success) {
             Mixpanel *mixpanel=[Mixpanel sharedInstance];
             NSString *distinctID=mixpanel.distinctId;
@@ -121,22 +127,26 @@
             [BugSenseController setUserIdentifier:d[@"EmailAddress"]];
             [mixpanel createAlias:distinctID forDistinctID:d[@"EmailAddress"]];
             [mixpanel registerSuperPropertiesOnce:@{@"company":d[@"CompanyName"]}];
-            [self performSegueWithIdentifier:@"AlmostDone" sender:nil];
+            [weakSelf performSegueWithIdentifier:@"AlmostDone" sender:nil];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
             
         } else {
             if(response[@"Message"]) {
-                [self showErrors:response[@"Message"]];
+                [weakSelf showErrors:response[@"Message"]];
             }else{
-                [self showErrors:@[@"An error occured."]];
+                [weakSelf showErrors:@[@"An error occured."]];
             }
         }
     }];
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return !_registering;
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeField=textField;
