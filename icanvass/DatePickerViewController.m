@@ -50,7 +50,9 @@
     }
     
     cell.textLabel.text=_name;
+    cell.textLabel.textColor=indexPath.row==0?[UIColor darkTextColor]:[UIColor lightGrayColor];
     cell.detailTextLabel.text=[dateFormatter stringFromDate:mdate];
+    cell.detailTextLabel.textColor=indexPath.row==0?[UIColor colorWithRed:243.f/255.f green:156.f/255.f blue:18.f/255.f alpha:1.f]:[UIColor lightGrayColor];
     
     return cell;
 }
