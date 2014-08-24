@@ -364,9 +364,11 @@ static NSDateFormatter *dateFormatter;
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
     NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumber,_streetName],
-                             @"City":_city,
-                             @"State":_state,
-                             @"Zip":_zipCode} mutableCopy];
+                                     @"HouseNumber":_streetNumber?_streetNumber:@"",
+                                     @"Street":_streetName?_streetName:@"",
+                                     @"City":_city?_city:@"",
+                                     @"State":_state?_state:@"",
+                                     @"Zip":_zipCode?_zipCode:@""} mutableCopy];
     if(_unit&&![_unit isEqualToString:@""]){
         location[@"Unit"]=_unit;
     }
@@ -451,9 +453,11 @@ static NSDateFormatter *dateFormatter;
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     }
     NSMutableDictionary *location=[@{@"Address":[NSString stringWithFormat:@"%@\n%@",_streetNumber,_streetName],
-                                     @"City":_city,
-                                     @"State":_state,
-                                     @"Zip":_zipCode} mutableCopy];
+                                     @"HouseNumber":_streetNumber?_streetNumber:@"",
+                                     @"Street":_streetName?_streetName:@"",
+                                     @"City":_city?_city:@"",
+                                     @"State":_state?_state:@"",
+                                     @"Zip":_zipCode?_zipCode:@""} mutableCopy];
     if(_unit&&![_unit isEqualToString:@""]){
         location[@"Unit"]=_unit;
     }
