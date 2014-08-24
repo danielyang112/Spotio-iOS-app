@@ -290,6 +290,9 @@
 }
 
 - (void)clearPins {
+    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    [_managedObjectContext setUndoManager:nil];
     NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
     [allCars setEntity:[NSEntityDescription entityForName:@"Pin" inManagedObjectContext:_managedObjectContext]];
     [allCars setIncludesPropertyValues:NO]; //only fetch the managedObjectID
@@ -315,6 +318,7 @@
 
 - (void)userLoggedIn:(NSNotification*)notification {
     [self clear];
+    [self fetchStatusesWithBlock:nil];
 }
 
 - (void)userLoggedOut:(NSNotification*)notification {

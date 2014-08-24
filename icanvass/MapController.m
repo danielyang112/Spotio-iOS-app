@@ -36,6 +36,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
     }
     return self;
 }
@@ -126,6 +127,10 @@
     }
 }
 
+- (void)clear {
+    [self.mapView clear];
+}
+
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
@@ -146,6 +151,11 @@
 - (void)pinsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
     [self refresh];
+}
+
+- (void)userLoggedOut:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
+    [self clear];
 }
 
 - (void)mapSettingsChanged:(NSNotification*)notification {
