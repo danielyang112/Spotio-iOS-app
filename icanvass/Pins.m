@@ -265,6 +265,11 @@
 }
 
 - (void)fetchStatusesWithBlock:(void (^)(NSArray *a))block {
+    NSLog(@"%s",__FUNCTION__);
+    if(![[ICRequestManager sharedManager] isUserLoggedIn]) {
+        if(block) block(nil);
+        return;
+    }
     self.sendingStatuses=YES;
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/PinStatus?$format=json";

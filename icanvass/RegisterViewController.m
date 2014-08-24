@@ -131,6 +131,7 @@
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
             
         } else {
             if(response[@"Message"]) {

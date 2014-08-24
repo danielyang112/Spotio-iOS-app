@@ -115,6 +115,7 @@
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                    UIRemoteNotificationTypeSound |
                                                                                    UIRemoteNotificationTypeAlert)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
             [self close];
         } else {
             [self showWrongPassword:YES];
