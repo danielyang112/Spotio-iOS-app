@@ -455,6 +455,7 @@
                                         <rect key="frame" x="20" y="49" width="280" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="your industry..">
+                                            <color key="titleColor" red="0.95294117649999999" green="0.61176470589999998" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1546,7 +1547,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EiV-72-VDm">
-                                <rect key="frame" x="20" y="174" width="260" height="44"/>
+                                <rect key="frame" x="20" y="196" width="260" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8J5-ls-AwR"/>
@@ -1559,8 +1560,22 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <action selector="addUser:" destination="c8l-G7-mJQ" eventType="touchUpInside" id="lyz-Jc-kRF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aS9-Lq-Rgk">
+                                <rect key="frame" x="20" y="152" width="260" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TPC-vp-El7"/>
+                                </constraints>
+                                <state key="normal" title="Refresh" image="refresh.png">
+                                    <color key="titleColor" red="0.95294117649999999" green="0.61176470589999998" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refresh:" destination="c8l-G7-mJQ" eventType="touchUpInside" id="wCA-pv-Hvl"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LQ-GP-AAE">
-                                <rect key="frame" x="20" y="218" width="260" height="44"/>
+                                <rect key="frame" x="20" y="240" width="260" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="c7X-R6-ItJ"/>
@@ -1574,7 +1589,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enP-O8-2nU">
-                                <rect key="frame" x="20" y="262" width="260" height="44"/>
+                                <rect key="frame" x="20" y="284" width="260" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="oYL-bp-SUy"/>
@@ -1588,7 +1603,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9U-94-gmf">
-                                <rect key="frame" x="20" y="306" width="260" height="44"/>
+                                <rect key="frame" x="20" y="328" width="260" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="LrB-jv-4Ao"/>
@@ -1602,7 +1617,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2G-NG-Ndp">
-                                <rect key="frame" x="20" y="350" width="260" height="44"/>
+                                <rect key="frame" x="20" y="372" width="260" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="91O-mg-ehx"/>
@@ -1675,14 +1690,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <constraint firstItem="enP-O8-2nU" firstAttribute="top" secondItem="1LQ-GP-AAE" secondAttribute="bottom" id="Zto-j4-Clv"/>
                             <constraint firstItem="EiV-72-VDm" firstAttribute="leading" secondItem="Ghl-K7-ioT" secondAttribute="leading" constant="20" id="bmV-v9-8W2"/>
                             <constraint firstItem="6XD-r5-NsG" firstAttribute="top" secondItem="Ezd-Tk-fxs" secondAttribute="bottom" id="cX0-5c-pXZ"/>
+                            <constraint firstAttribute="trailing" secondItem="aS9-Lq-Rgk" secondAttribute="trailing" constant="40" id="ctE-1v-soe"/>
                             <constraint firstItem="o0s-5p-MK4" firstAttribute="top" secondItem="GsM-tq-oeD" secondAttribute="bottom" id="fGJ-6x-MZg"/>
+                            <constraint firstItem="aS9-Lq-Rgk" firstAttribute="leading" secondItem="Ghl-K7-ioT" secondAttribute="leading" constant="20" id="jgD-bH-8vl"/>
                             <constraint firstAttribute="trailing" secondItem="Ezd-Tk-fxs" secondAttribute="trailing" constant="40" id="lAp-1o-Hmv"/>
                             <constraint firstAttribute="trailing" secondItem="1LQ-GP-AAE" secondAttribute="trailing" constant="40" id="nyu-5I-CVt"/>
                             <constraint firstItem="1LQ-GP-AAE" firstAttribute="leading" secondItem="Ghl-K7-ioT" secondAttribute="leading" constant="20" id="roD-qd-sxE"/>
-                            <constraint firstAttribute="centerY" secondItem="enP-O8-2nU" secondAttribute="centerY" id="rqA-UQ-gtb"/>
+                            <constraint firstAttribute="centerY" secondItem="enP-O8-2nU" secondAttribute="centerY" constant="-22" id="rqA-UQ-gtb"/>
                             <constraint firstItem="k2G-NG-Ndp" firstAttribute="leading" secondItem="Ghl-K7-ioT" secondAttribute="leading" constant="20" id="scr-JI-gti"/>
                             <constraint firstItem="j9U-94-gmf" firstAttribute="top" secondItem="enP-O8-2nU" secondAttribute="bottom" id="taW-oG-3CM"/>
                             <constraint firstAttribute="trailing" secondItem="EiV-72-VDm" secondAttribute="trailing" constant="40" id="utq-8F-rba"/>
+                            <constraint firstItem="EiV-72-VDm" firstAttribute="top" secondItem="aS9-Lq-Rgk" secondAttribute="bottom" id="wRU-56-yEq"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1780,6 +1798,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="next.png" width="293" height="47"/>
         <image name="password.png" width="261" height="43"/>
         <image name="questions.png" width="33" height="33"/>
+        <image name="refresh.png" width="33" height="33"/>
         <image name="register.png" width="261" height="43"/>
         <image name="reports.png" width="33" height="33"/>
         <image name="satellite.png" width="33" height="33"/>

@@ -20,5 +20,7 @@
 - (IBAction)reports:(id)sender;
 - (IBAction)support:(id)sender;
 - (IBAction)logout:(id)sender;
+- (IBAction)refresh:(id)sender;
+
 
 @end

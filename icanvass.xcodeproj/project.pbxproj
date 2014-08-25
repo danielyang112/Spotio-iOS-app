@@ -68,6 +68,7 @@
 		427E8A3B1901CFC30092504A /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */; };
 		427E8A3C1901CFC30092504A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2C1901CFC30092504A /* iTunesArtwork.png */; };
 		427E8A3D1901CFC30092504A /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */; };
+		42870FA919ABD65500A5263E /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42870FA819ABD65500A5263E /* refresh@2x.png */; };
 		4291C3EA1999592900C64E36 /* tutorial1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E61999592900C64E36 /* tutorial1@2x.png */; };
 		4291C3EB1999592900C64E36 /* tutorial2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E71999592900C64E36 /* tutorial2@2x.png */; };
 		4291C3EC1999592900C64E36 /* tutorial3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4291C3E81999592900C64E36 /* tutorial3@2x.png */; };
@@ -255,6 +256,7 @@
 		427E8A2B1901CFC30092504A /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon76x76@2x.png"; sourceTree = "<group>"; };
 		427E8A2C1901CFC30092504A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		427E8A2D1901CFC30092504A /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		42870FA819ABD65500A5263E /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
 		4291C3E61999592900C64E36 /* tutorial1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial1@2x.png"; sourceTree = "<group>"; };
 		4291C3E71999592900C64E36 /* tutorial2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial2@2x.png"; sourceTree = "<group>"; };
 		4291C3E81999592900C64E36 /* tutorial3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial3@2x.png"; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				42284F6218D2546A0087941E /* viewcontrollers */,
 				42284F6118D254560087941E /* coredata */,
 				42B3A67718E8903600B46FBF /* adduser@2x.png */,
+				42870FA819ABD65500A5263E /* refresh@2x.png */,
 				42B3A68718E891C200B46FBF /* status@2x.png */,
 				42B3A67818E8903600B46FBF /* delete@2x.png */,
 				42B3A67918E8903600B46FBF /* home@2x.png */,
@@ -922,6 +925,7 @@
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				427E8A1819005F290092504A /* logo@2x.png in Resources */,
 				42B3A68018E8903600B46FBF /* delete@2x.png in Resources */,
+				42870FA919ABD65500A5263E /* refresh@2x.png in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
 				42B3A6C218E8C5E700B46FBF /* MPDismissKeyboard.png in Resources */,
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,

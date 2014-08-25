@@ -14,6 +14,7 @@
 #import "ICRequestManager.h"
 #import <FreshdeskSDK/FreshdeskSDK.h>
 #import "Mixpanel.h"
+#import "Pins.h"
 
 
 @interface LeftDrawerViewController ()
@@ -119,5 +120,11 @@
     [[ICRequestManager sharedManager] logoutWithCb:^(BOOL success) {
         [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
     }];
+}
+
+- (IBAction)refresh:(id)sender {
+    [[Mixpanel sharedInstance] track:@"Refresh"];
+    [[Pins sharedInstance] fetchPinsWithBlock:nil];
+    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
 }
 @end
