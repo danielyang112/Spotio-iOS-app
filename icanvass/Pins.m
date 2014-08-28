@@ -177,7 +177,7 @@
     
     ICRequestManager *manager=[ICRequestManager sharedManager];
 //    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
-    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$top=500&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
+    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
     if(date){
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
