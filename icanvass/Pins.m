@@ -56,7 +56,6 @@
     [_managedObjectContext setUndoManager:nil];
     NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     for(NSDictionary *dic in a){
-        
         Pin *newPin;
         if(date){
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -76,7 +75,7 @@
                                                     inManagedObjectContext:_managedObjectContext];
         NSDictionary *ld=dic[@"Location"];
         loc.streetNumber=[NSNumber numberWithInt:[ld[@"HouseNumber"] integerValue]];
-        loc.streetName=ld[@"Street"];
+        loc.streetName=nilIfNull(ld[@"Street"]);
         loc.city=nilIfNull(ld[@"City"]);
         NSObject *u=nilIfNull(ld[@"Unit"]);
         if([u isKindOfClass:[NSNumber class]]){

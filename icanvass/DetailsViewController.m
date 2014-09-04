@@ -443,6 +443,14 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)editPin {
+    if(!_streetName){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Street name" message:@"You can't add a PIN with no street name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }else if(!_streetNumber){
+        _streetNumber=@"";
+    }
+    
     if([self addressExists:_streetName number:_streetNumber unit:_unit]){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Duplicate" message:@"PIN with the same address already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
