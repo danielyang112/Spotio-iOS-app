@@ -639,7 +639,14 @@ static NSDateFormatter *dateFormatter;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0) return 44.f;
     
-    Field *f=_customFields[indexPath.row];
+    Field *f;
+    if(tableView.isEditing) {
+        f=_customFields[indexPath.row];
+    } else {
+        NSArray *c=_pin.customValuesOld;
+        NSDictionary *d=c[indexPath.row];
+        f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+    }
     if(f.type==FieldNoteBox){
         return 132.f;
     }
