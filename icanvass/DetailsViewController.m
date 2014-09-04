@@ -317,6 +317,8 @@
             }*/
             NSString *s=[NSString stringWithFormat:@"%@ %@",n,placemark.thoroughfare];
             block(s);
+        }else{
+            block(@"");
         }
     }];
 }
@@ -346,6 +348,11 @@
 
 static NSDateFormatter *dateFormatter;
 - (void)addPin {
+    if(!_status){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Status" message:@"You can't add a PIN with no status" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     if(!_streetName){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Street name" message:@"You can't add a PIN with no street name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -443,6 +450,11 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)editPin {
+    if(!_status){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Status" message:@"You can't add a PIN with no status" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     if(!_streetName){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Street name" message:@"You can't add a PIN with no street name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
