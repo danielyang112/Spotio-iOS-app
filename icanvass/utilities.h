@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define nilIfNull(foo) ((foo == [NSNull null]) ? nil : foo)
+#define emptyStringIfNil(foo) (foo ? foo : @"")
 
 @interface NSArray (RKFunctional)
 - (NSMutableArray*)mapWith:(NSObject*(^)(NSObject*))f;
