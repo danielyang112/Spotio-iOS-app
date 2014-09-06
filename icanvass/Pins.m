@@ -105,9 +105,12 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pin"
                                               inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                    initWithKey:@"updateDate" ascending:NO];
     // Query on managedObjectContext With Generated fetchRequest
     NSArray *fetchedRecords = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
+    self.oldest=[[fetchedRecords lastObject] updateDate];
+    self.newest=[[fetchedRecords firstObject] updateDate];
     
 //    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
 //    if(_pins){
@@ -190,9 +193,9 @@
             //Background Thread
             NSLog(@"JSON: %@", responseObject);
             self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
-            self.oldest=[[_pins lastObject] updateDate];
-            self.newest=[[_pins firstObject] updateDate];
-            
+//            self.oldest=[[_pins lastObject] updateDate];
+//            self.newest=[[_pins firstObject] updateDate];
+        
             [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
             [[NSUserDefaults standardUserDefaults] synchronize];
             self.gettingPins=NO;

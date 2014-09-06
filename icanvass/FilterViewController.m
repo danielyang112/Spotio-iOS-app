@@ -51,12 +51,13 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.backgroundColor=[UIColor clearColor];
+    [self updateFilterData];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateFilterData];
+//    [self updateFilterData];
     [[Mixpanel sharedInstance] track:@"FilterView"];
     [[Pins sharedInstance] sendStatusesTo:^(NSArray *a) {
         self.statuses=a;
@@ -339,6 +340,7 @@
 }
 
 - (IBAction)cancel:(id)sender {
+    [self updateFilterData];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFilter" object:nil userInfo:nil];
     }];
