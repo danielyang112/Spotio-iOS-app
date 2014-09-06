@@ -381,11 +381,14 @@ static NSDateFormatter *dateFormatter;
     }
     NSString *titleOfEvent;
     NSDate *dateOfEvent;
+    NSString *locationOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
     for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
-            titleOfEvent=[NSString stringWithFormat:@"%@ %@",_streetNumber,_streetName];
+            titleOfEvent=[NSString stringWithFormat:@"%@",_status];;
+            locationOfEvent=[NSString stringWithFormat:@"%@ %@, %@, %@, %@",
+                             emptyStringIfNil(_streetNumber),emptyStringIfNil(_streetName),emptyStringIfNil(_city),emptyStringIfNil(_state),emptyStringIfNil(_zipCode)];
             dateOfEvent=_addedFields[key];
             [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
         }else if(f.type==FieldNumber){
@@ -435,6 +438,7 @@ static NSDateFormatter *dateFormatter;
                         if (!granted) { return; }
                         EKEvent *event = [EKEvent eventWithEventStore:store];
                         event.title = titleOfEvent;
+                        event.location=locationOfEvent;
                         event.startDate = dateOfEvent;
                         event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
                         [event setCalendar:[store defaultCalendarForNewEvents]];
@@ -483,11 +487,14 @@ static NSDateFormatter *dateFormatter;
     }
     NSString *titleOfEvent;
     NSDate *dateOfEvent;
+    NSString *locationOfEvent;
     NSMutableArray *customValues=[NSMutableArray arrayWithCapacity:[_addedFields count]];
     for(NSNumber *key in [_addedFields allKeys]) {
         Field *f=[Fields sharedInstance].fieldById[[key stringValue]];
         if(f.type==FieldDateTime){
-            titleOfEvent=[NSString stringWithFormat:@"%@ %@",_streetNumber,_streetName];;
+            titleOfEvent=[NSString stringWithFormat:@"%@",_status];;
+            locationOfEvent=[NSString stringWithFormat:@"%@ %@, %@, %@, %@",
+                             emptyStringIfNil(_streetNumber),emptyStringIfNil(_streetName),emptyStringIfNil(_city),emptyStringIfNil(_state),emptyStringIfNil(_zipCode)];
             dateOfEvent=_addedFields[key];
             [customValues addObject:@{@"DefinitionId":key,@"DateTimeValue":[dateFormatter stringFromDate:_addedFields[key]]}];
         }else if(f.type==FieldNumber){
@@ -539,6 +546,7 @@ static NSDateFormatter *dateFormatter;
                     if (!granted) { return; }
                     EKEvent *event = [EKEvent eventWithEventStore:store];
                     event.title = titleOfEvent;
+                    event.location=locationOfEvent;
                     event.startDate = dateOfEvent;
                     event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
                     [event setCalendar:[store defaultCalendarForNewEvents]];
