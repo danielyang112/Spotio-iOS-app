@@ -29,6 +29,7 @@
 
 
 @property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *sortAddress;
 @property (nonatomic, strong) NSString *address2;
 
 - (void)updateWithDictionary:(NSDictionary*)dic;

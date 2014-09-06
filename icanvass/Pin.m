@@ -28,6 +28,7 @@
 
 @synthesize address;
 @synthesize address2;
+@synthesize sortAddress;
 
 - (void)updateWithDictionary:(NSDictionary*)dic {
     self.ident=dic[@"Id"];
@@ -57,6 +58,13 @@
         address=[NSString stringWithFormat:@"%@ %@",self.location.streetNumber, self.location.streetName];
     }
     return address;
+}
+
+- (NSString*)sortAddress {
+    if(!sortAddress) {
+        sortAddress=[NSString stringWithFormat:@"%@ %@",self.location.streetName,self.location.streetNumber];
+    }
+    return sortAddress;
 }
 
 - (NSString*)address2 {

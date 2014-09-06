@@ -54,8 +54,8 @@ enum ICSortOrder : NSUInteger {
         
         self.statusDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES],
                                  [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO]];
-        self.addressDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"address" ascending:YES],
-                                  [[NSSortDescriptor alloc] initWithKey:@"address" ascending:NO]];
+        self.addressDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"sortAddress" ascending:YES],
+                                  [[NSSortDescriptor alloc] initWithKey:@"sortAddress" ascending:NO]];
         self.dateDescriptors=@[[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:YES],
                                [[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO]];
         self.headerView=[[[NSBundle mainBundle] loadNibNamed:@"ListHeader" owner:nil options:nil] lastObject];
