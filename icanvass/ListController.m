@@ -14,7 +14,6 @@
 #import "PocketSVG.h"
 #import "utilities.h"
 #import "Mixpanel.h"
-#import "AppDelegate.h"
 
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
@@ -39,7 +38,6 @@ enum ICSortOrder : NSUInteger {
 @property (nonatomic,strong) NSSortDescriptor *currentDescriptor;
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic) enum ICSortOrder sortOrder;
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @end
 
 @implementation ListController
@@ -74,64 +72,6 @@ enum ICSortOrder : NSUInteger {
     return self;
 }
 
-- (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Pin" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sort;
-    
-    switch (_sortOrder) {
-        case ICSortOrderAddressAscending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"location.streetName" ascending:YES];
-            break;
-        case ICSortOrderAddressDescending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"location.streetName" ascending:NO];
-            break;
-        case ICSortOrderStatusAscending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"status" ascending:YES];
-            break;
-        case ICSortOrderStatusDescending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"status" ascending:NO];
-            break;
-        case ICSortOrderDateAscending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"updateDate" ascending:YES];
-            break;
-        case ICSortOrderDateDescending:
-            sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"updateDate" ascending:NO];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController *theFetchedResultsController =
-    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"Root"];
-    self.fetchedResultsController = theFetchedResultsController;
-//    _fetchedResultsController.delegate = self;
-    
-    return _fetchedResultsController;
-    
-}
-
 - (void)viewWillLayoutSubviews {
     
 }
@@ -150,10 +90,6 @@ enum ICSortOrder : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[UIView new];
-}
-
-- (void)viewDidUnload {
-    self.fetchedResultsController = nil;
 }
 
 - (void)updateArrows {
@@ -193,8 +129,7 @@ enum ICSortOrder : NSUInteger {
     NSArray *descriptors=@[_currentDescriptor];
     self.pins=[self.pins sortedArrayUsingDescriptors:descriptors];
     self.filtered=[self.filtered sortedArrayUsingDescriptors:descriptors];
-    [self refresh];
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)filterArray {
@@ -214,19 +149,11 @@ enum ICSortOrder : NSUInteger {
 
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
-//    [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
-//        self.pins=a;
-//        self.filtered=a;
-//        [self sort];
-//    }];
-    NSError *error;
-    _fetchedResultsController=nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//		exit(-1);  // Fail
-	}
-    [self.tableView reloadData];
+    [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
+        self.pins=a;
+        self.filtered=a;
+        [self sort];
+    }];
 }
 
 - (void)sortStatus:(id)sender {
@@ -277,8 +204,7 @@ enum ICSortOrder : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [_filtered count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -294,7 +220,7 @@ enum ICSortOrder : NSUInteger {
     PinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    Pin *pin=[_fetchedResultsController objectAtIndexPath:indexPath];
+    Pin *pin=_filtered[indexPath.row];
     cell.topLabel.text=pin.address;
     cell.bottomLabel.text=pin.address2;
     cell.rightLabel.text=[Pin formatDate:pin.creationDate];
@@ -383,8 +309,7 @@ enum ICSortOrder : NSUInteger {
     // Pass the selected object to the new view controller.
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
-    Pin *pin=[_fetchedResultsController objectAtIndexPath:selectedRowIndex];
-    dc.pin=pin;
+    dc.pin=_filtered[selectedRowIndex.row];
 }
 
 @end
