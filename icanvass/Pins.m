@@ -122,7 +122,7 @@
 //    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
 //    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
     
-    return @[];//fetchedRecords;
+    return fetchedRecords;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
 //        return [[PinTemp alloc] initWithDictionary:dic];
