@@ -512,7 +512,7 @@ static NSDateFormatter *dateFormatter;
         return NSOrderedAscending;
     }];
     
-    [self locationForAddressDictionary:@{@"City":_city,@"State":_state,@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
+    [self locationForAddressDictionary:@{@"City":emptyStringIfNil(_city),@"State":emptyStringIfNil(_state),@"ZIP":_zipCode,@"Thoroughfare":_streetName,@"SubThoroughfare":_streetNumber} block:^(CLLocation *l) {
         CLLocationDegrees latitude=_coordinate.latitude;
         CLLocationDegrees longitude=_coordinate.longitude;
         if(l){

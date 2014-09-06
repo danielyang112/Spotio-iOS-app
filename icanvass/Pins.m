@@ -22,7 +22,6 @@
 @property (nonatomic,strong) NSSortDescriptor *descriptor;
 @property (nonatomic) BOOL sendingStatuses;
 @property (nonatomic) BOOL gettingPins;
-@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
 @end
 
 @implementation Pins
@@ -52,27 +51,27 @@
 
 - (NSArray*)pinsArrayFromArray:(NSArray*)a {
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    self.managedObjectContext = appDelegate.managedObjectContext;
-    [_managedObjectContext setUndoManager:nil];
+    NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
+    [managedObjectContext setUndoManager:nil];
     NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     for(NSDictionary *dic in a){
         Pin *newPin;
         if(date){
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             [fetchRequest setEntity:
-             [NSEntityDescription entityForName:@"Pin" inManagedObjectContext:_managedObjectContext]];
+             [NSEntityDescription entityForName:@"Pin" inManagedObjectContext:managedObjectContext]];
             [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(ident == %@)", dic[@"Id"]]];
             NSError *error;
-            NSArray *pinsmatching = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+            NSArray *pinsmatching = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
             newPin=pinsmatching.firstObject;
         }
         if(!newPin)
             newPin = [NSEntityDescription insertNewObjectForEntityForName:@"Pin"
-                                                          inManagedObjectContext:_managedObjectContext];
+                                                          inManagedObjectContext:managedObjectContext];
         [newPin updateWithDictionary:dic];
         
         Location *loc=[NSEntityDescription insertNewObjectForEntityForName:@"Location"
-                                                    inManagedObjectContext:_managedObjectContext];
+                                                    inManagedObjectContext:managedObjectContext];
         NSDictionary *ld=dic[@"Location"];
         loc.streetNumber=[NSNumber numberWithInt:[ld[@"HouseNumber"] integerValue]];
         loc.streetName=nilIfNull(ld[@"Street"]);
@@ -90,7 +89,7 @@
             NSMutableOrderedSet *os=[NSMutableOrderedSet orderedSet];
             for(NSDictionary *d in dic[@"CustomValues"]){
                 CustomValue *cv = [NSEntityDescription insertNewObjectForEntityForName:@"CustomValue"
-                                                                inManagedObjectContext:_managedObjectContext];
+                                                                inManagedObjectContext:managedObjectContext];
                 [cv updateWithDictionary:d];
                 [os addObject:cv];
             }
@@ -100,14 +99,14 @@
     }
     
     NSError *error=nil;
-    [_managedObjectContext save:&error];
+//    [appDelegate.managedObjectContext save:&error];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pin"
-                                              inManagedObjectContext:_managedObjectContext];
+                                              inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     // Query on managedObjectContext With Generated fetchRequest
-    NSArray *fetchedRecords = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedRecords = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
     
 //    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
@@ -120,7 +119,7 @@
 //    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
 //    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
     
-    return fetchedRecords;
+    return @[];//fetchedRecords;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
 //        return [[PinTemp alloc] initWithDictionary:dic];
@@ -187,16 +186,25 @@
         [appDelegate showLoading:YES];
     }
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
-        self.oldest=[[_pins lastObject] updateDate];
-        self.newest=[[_pins firstObject] updateDate];
-        if(block) block(_pins);
-        [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        self.gettingPins=NO;
-        [appDelegate showLoading:NO];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            //Background Thread
+            NSLog(@"JSON: %@", responseObject);
+            self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
+            self.oldest=[[_pins lastObject] updateDate];
+            self.newest=[[_pins firstObject] updateDate];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            self.gettingPins=NO;
+//            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //Run UI UpdatesNSError *error=nil;
+                NSError *error;
+                [appDelegate.managedObjectContext save:&error];
+                if(block) block(_pins);
+                [appDelegate showLoading:NO];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+//            });
+//        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.gettingPins=NO;
         [appDelegate showLoading:NO];
@@ -294,21 +302,21 @@
 }
 
 - (void)clearPins {
-    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
-    self.managedObjectContext = appDelegate.managedObjectContext;
-    [_managedObjectContext setUndoManager:nil];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
+    [managedObjectContext setUndoManager:nil];
     NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
-    [allCars setEntity:[NSEntityDescription entityForName:@"Pin" inManagedObjectContext:_managedObjectContext]];
+    [allCars setEntity:[NSEntityDescription entityForName:@"Pin" inManagedObjectContext:managedObjectContext]];
     [allCars setIncludesPropertyValues:NO]; //only fetch the managedObjectID
     
     NSError * error = nil;
-    NSArray * ps = [_managedObjectContext executeFetchRequest:allCars error:&error];
+    NSArray * ps = [managedObjectContext executeFetchRequest:allCars error:&error];
     //error handling goes here
     for (NSManagedObject * p in ps) {
-        [_managedObjectContext deleteObject:p];
+        [managedObjectContext deleteObject:p];
     }
     NSError *saveError = nil;
-    [_managedObjectContext save:&saveError];
+    [managedObjectContext save:&saveError];
 }
 
 - (void)clear {

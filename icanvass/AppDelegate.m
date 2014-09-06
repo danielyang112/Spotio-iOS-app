@@ -103,6 +103,7 @@
 }
 
 - (void)showLoading:(BOOL)yeah {
+    NSLog(@"%s:%@",__FUNCTION__,@(yeah));
     if(!yeah){
         [_alert dismissWithClickedButtonIndex:0 animated:YES];
         return;
