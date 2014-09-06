@@ -223,7 +223,7 @@ enum ICSortOrder : NSUInteger {
     Pin *pin=_filtered[indexPath.row];
     cell.topLabel.text=pin.address;
     cell.bottomLabel.text=pin.address2;
-    cell.rightLabel.text=[Pin formatDate:pin.creationDate];
+    cell.rightLabel.text=[Pin formatDate:pin.updateDate];
     cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
     cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
     cell.icon.layer.borderWidth=1.f;
