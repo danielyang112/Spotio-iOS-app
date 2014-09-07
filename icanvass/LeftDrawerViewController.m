@@ -118,6 +118,7 @@
 - (IBAction)logout:(id)sender {
     [[Mixpanel sharedInstance] track:@"Logout"];
     [[ICRequestManager sharedManager] logoutWithCb:^(BOOL success) {
+        [Pins sharedInstance].filter=nil;
         [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
     }];
 }
