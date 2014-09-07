@@ -72,6 +72,12 @@ enum ICSortOrder : NSUInteger {
     return self;
 }
 
+- (void)setSearchText:(NSString *)searchText {
+    _searchText=searchText;
+    [Pins sharedInstance].searchText=searchText;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICSearch" object:nil];
+}
+
 - (void)viewWillLayoutSubviews {
     
 }

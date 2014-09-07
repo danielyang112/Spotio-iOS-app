@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSDate *oldest;
 @property (nonatomic,strong) NSDate *newest;
 @property (nonatomic,strong) NSDictionary *filter;
+@property (nonatomic,strong) NSString *searchText;
 + (Pins*)sharedInstance;
 - (void)sendPinsTo:(void (^)(NSArray *a))block;
 - (void)sendStatusesTo:(void (^)(NSArray *a))block;

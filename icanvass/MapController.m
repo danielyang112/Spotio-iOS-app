@@ -34,6 +34,7 @@
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchChanged:) name:@"ICSearch" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
@@ -140,8 +141,18 @@
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
-        self.pins=a;
-        self.filtered=a;
+        NSString *s=[Pins sharedInstance].searchText;
+        if(s && ![s isEqualToString:@""]){
+            self.pins=[a grepWith:^BOOL(NSObject *o) {
+                Pin *p=(Pin*)o;
+                return ([p.status rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
+                || ([p.address rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
+                || ([p.address2 rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound);
+            }];
+        }else{
+            self.pins=a;
+        }
+        self.filtered=_pins;
         [self refreshMarkers];
     }];
 }
@@ -151,6 +162,11 @@
 - (void)colorsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
     [_icons removeAllObjects];
+    [self refresh];
+}
+- (void)searchChanged:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
+    self.mapView.selectedMarker=nil;
     [self refresh];
 }
 
