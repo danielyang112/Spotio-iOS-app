@@ -108,6 +108,7 @@
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
                     initWithKey:@"updateDate" ascending:NO];
     // Query on managedObjectContext With Generated fetchRequest
+    fetchRequest.sortDescriptors=@[sort];
     NSArray *fetchedRecords = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
     self.oldest=[[fetchedRecords lastObject] updateDate];
     self.newest=[[fetchedRecords firstObject] updateDate];
@@ -386,6 +387,7 @@
         }
         return ret;
     }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 }
 
 - (UIColor*)colorForStatus:(NSString*)status {

@@ -73,7 +73,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self refresh];
+    if(!_pins)  [self refresh];
 }
 
 #pragma mark - Helpers
@@ -150,6 +150,7 @@
 
 - (void)pinsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
+    self.mapView.selectedMarker=nil;
     [self refresh];
 }
 
