@@ -26,6 +26,7 @@
 @property (nonatomic) BOOL moved;
 
 - (GMSMarker*)markerForPin:(Pin*)pin;
+- (void)viewOnMap:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;
 
 @end

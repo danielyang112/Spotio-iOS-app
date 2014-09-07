@@ -127,6 +127,12 @@
     }
 }
 
+- (void)viewOnMap:(Pin*)pin {
+    if(_markers[pin.ident]){
+        self.mapView.selectedMarker=_markers[pin.ident];
+    }
+}
+
 - (void)clear {
     [self.mapView clear];
 }

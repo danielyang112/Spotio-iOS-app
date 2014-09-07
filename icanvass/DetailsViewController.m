@@ -1046,15 +1046,19 @@ static NSDateFormatter *dateFormatter;
 - (IBAction)viewOnMap:(id)sender {
     HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
     [homeViewController.segment setSelectedSegmentIndex:0];
-    [homeViewController valueChanged:homeViewController.segment];
+    [homeViewController switchToViewController:homeViewController.controllers[0] animated:NO];
+//    [homeViewController valueChanged:homeViewController.segment];
     
     CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
     homeViewController.map.moved = NO;
     homeViewController.map.location = loc;
     homeViewController.map.moved = YES;
-    GMSMarker *marker = [homeViewController.map markerForPin:self.pin];
-    homeViewController.map.mapView.selectedMarker = marker;
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+    [homeViewController.map viewOnMap:self.pin];
+//    GMSMarker *marker = [homeViewController.map markerForPin:self.pin];
+//    homeViewController.map.mapView.selectedMarker = marker;
+    NSArray *vcs=self.navigationController.viewControllers;
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Navigation

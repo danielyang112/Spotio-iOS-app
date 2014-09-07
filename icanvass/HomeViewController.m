@@ -13,7 +13,6 @@
 #import "MMDrawerController/MMDrawerBarButtonItem.h"
 
 @interface HomeViewController () <MapControllerDelegate>
-@property (nonatomic,strong) NSArray *controllers;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationCoordinate2D tappedCoordinate;
 @property (nonatomic) BOOL tapped;
@@ -45,7 +44,7 @@
     _map.delegate=self;
     _map.location=_locationManager.location;
     self.controllers=@[_map,list];
-    [self switchToViewController:_controllers[0]];
+    [self switchToViewController:_controllers[0] animated:NO];
     
 }
 
@@ -77,13 +76,13 @@
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (void)switchToViewController:(UIViewController*)vc {
+- (void)switchToViewController:(UIViewController*)vc animated:(BOOL)animated {
     if(vc==_current) return;
     
-    [self cycleFromViewController:_current toViewController:vc];
+    [self cycleFromViewController:_current toViewController:vc animated:animated];
 }
 
-- (void)cycleFromViewController:(UIViewController*)oldv toViewController:(UIViewController*)newv {
+- (void)cycleFromViewController:(UIViewController*)oldv toViewController:(UIViewController*)newv animated:(BOOL)animated{
     [oldv willMoveToParentViewController:nil];
     [self addChildViewController:newv];
     
@@ -97,6 +96,12 @@
     
     if(!oldv) { //transitionFromVC toVC requires both vcs, if there is no old I need to add new view myself and call completion block
         [self.container addSubview:newv.view];
+        completion(YES);
+        return;
+    }
+    
+    if(!animated){
+        [oldv.view removeFromSuperview];[self.container addSubview:newv.view];
         completion(YES);
         return;
     }
@@ -213,7 +218,7 @@
 
 - (IBAction)valueChanged:(id)sender {
     UISegmentedControl *segmented=(UISegmentedControl*)sender;
-    [self switchToViewController:_controllers[segmented.selectedSegmentIndex]];
+    [self switchToViewController:_controllers[segmented.selectedSegmentIndex] animated:YES];
 }
 
 #pragma mark - MapControllerDelegate
