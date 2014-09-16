@@ -19,7 +19,7 @@
 #import "Mixpanel.h"
 #import "MapController.h"
 #import <EventKit/EventKit.h>
-#import "SVProgressHUD/SVProgressHUD.h"
+
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate,UITextViewDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
@@ -111,9 +111,9 @@
 #pragma mark - Helpers
 
 - (void)updateFields {
-    __weak typeof(self) weakSelf = self;
     [[Fields sharedInstance] sendFieldsTo:^(NSArray *a) {
-        weakSelf.customFields=a;
+        self.customFields=a;
+        [self extractPin];
         [_tableView reloadData];
     }];
 }
@@ -175,8 +175,10 @@
     self.status=_pin.status;
     
     for(NSDictionary *d in _pin.customValuesOld){
+        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        if(!f) continue;
         NSString *v=nilIfNull(d[@"DateTimeValue"]);
-        if(v){
+        if(v&&f.type==FieldDateTime){
             static NSDateFormatter *zoneFormatter;
             static NSDateFormatter *nozoneFormatter;
             if(!zoneFormatter) {
@@ -539,9 +541,8 @@ static NSDateFormatter *dateFormatter;
                              @"UpdateDate":[dateFormatter stringFromDate:[NSDate date]],
                              @"CustomValues":customValues};
     
-        __weak typeof(self) weakSelf = self;
         [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
-            [weakSelf adjustForViewing];
+            [self adjustForViewing];
             if(success && titleOfEvent){
                 EKEventStore *store = [[EKEventStore alloc] init];
                 [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
