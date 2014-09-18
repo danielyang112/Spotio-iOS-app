@@ -103,10 +103,11 @@
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/FieldDefinitions?$format=json";
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    __weak typeof(self) weakSelf = self;
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
-        self.fields=[self fieldsArrayFromArray:responseObject[@"value"]];
-        [self updateDictionary];
+        weakSelf.fields=[weakSelf fieldsArrayFromArray:responseObject[@"value"]];
+        [weakSelf updateDictionary];
         block(_fields);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICFields" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

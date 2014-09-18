@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Pin.h"
 
-@interface ListController : UITableViewController<UISearchBarDelegate>
+@interface ListController : UITableViewController<UISearchBarDelegate,NSFetchedResultsControllerDelegate>
+
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @end

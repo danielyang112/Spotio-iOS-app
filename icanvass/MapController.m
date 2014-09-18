@@ -140,20 +140,21 @@
 
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
+    __weak typeof(self) weakSelf = self;
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         NSString *s=[Pins sharedInstance].searchText;
         if(s && ![s isEqualToString:@""]){
-            self.pins=[a grepWith:^BOOL(NSObject *o) {
+            weakSelf.pins=[a grepWith:^BOOL(NSObject *o) {
                 Pin *p=(Pin*)o;
                 return ([p.status rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
                 || ([p.address rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
                 || ([p.address2 rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound);
             }];
         }else{
-            self.pins=a;
+            weakSelf.pins=a;
         }
-        self.filtered=_pins;
-        [self refreshMarkers];
+        weakSelf.filtered=_pins;
+        [weakSelf refreshMarkers];
     }];
 }
 

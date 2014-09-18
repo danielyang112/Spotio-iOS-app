@@ -158,16 +158,18 @@
 }
 
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
+    
     [self fetchPinsFrom:0 withBlock:block];
 }
 
 - (void)fetchPinsFrom:(int)skip withBlock:(void (^)(NSArray *a))block {
+    __weak typeof(self) weakSelf = self;
     NSLog(@"%s",__FUNCTION__);
     if(![[ICRequestManager sharedManager] isUserLoggedIn]) {
         if(block) block(nil);
         return;
     }
-    self.gettingPins=YES;
+    weakSelf.gettingPins=YES;
     static NSDateFormatter *nozoneFormatter;
     if(!nozoneFormatter) {
         nozoneFormatter=[[NSDateFormatter alloc] init];
@@ -193,13 +195,13 @@
 //        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
             NSLog(@"JSON: %@", responseObject);
-            self.pins=[self pinsArrayFromArray:responseObject[@"value"]];
+            weakSelf.pins=[self pinsArrayFromArray:responseObject[@"value"]];
 //            self.oldest=[[_pins lastObject] updateDate];
 //            self.newest=[[_pins firstObject] updateDate];
         
             [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            self.gettingPins=NO;
+            weakSelf.gettingPins=NO;
 //            dispatch_async(dispatch_get_main_queue(), ^(void){
                 //Run UI UpdatesNSError *error=nil;
                 NSError *error;
@@ -210,9 +212,10 @@
 //            });
 //        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.gettingPins=NO;
+        weakSelf.gettingPins=NO;
         [appDelegate showLoading:NO];
         NSLog(@"Error: %@", error);
+
     }];
 }
 

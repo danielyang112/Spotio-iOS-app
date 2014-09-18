@@ -8,12 +8,17 @@
 
 #import "ListController.h"
 #import "DetailsViewController.h"
+#import "SVProgressHUD/SVProgressHUD.h"
 #import "Pins.h"
 #import "PinCell.h"
 #import "Pin.h"
 #import "PocketSVG.h"
 #import "utilities.h"
 #import "Mixpanel.h"
+#import "AppDelegate.h"
+#import "Pin.h"
+#import <CoreData/CoreData.h>
+
 
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
@@ -25,6 +30,7 @@ enum ICSortOrder : NSUInteger {
 };
 
 @interface ListController ()
+
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *sorted;
 @property (nonatomic,strong) NSArray *filtered;
@@ -68,6 +74,13 @@ enum ICSortOrder : NSUInteger {
         
         _currentDescriptor=_dateDescriptors[1];
         self.sortOrder=ICSortOrderDateDescending;
+        
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+//        NSFetchedResultsController* listResultController = appDelegate.fetchResultController;
+//        listResultController.delegate = self;
+//        [listResultController fetchRequest];
+        
     }
     return self;
 }
@@ -92,9 +105,13 @@ enum ICSortOrder : NSUInteger {
 - (void)viewWillDisappear:(BOOL)animated {
     [_searchBar resignFirstResponder];
 }
-
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller;
+{
+    [self refresh];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView.tableFooterView=[UIView new];
 }
 
@@ -155,11 +172,15 @@ enum ICSortOrder : NSUInteger {
 
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
+    __weak typeof(self) weakSelf = self;
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
-        self.pins=a;
-        self.filtered=a;
-        [self sort];
+        weakSelf.pins=a;
+        weakSelf.filtered=a;
+        [weakSelf sort];
     }];
+    
+
+
 }
 
 - (void)sortStatus:(id)sender {
