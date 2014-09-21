@@ -163,6 +163,8 @@
 }
 
 - (void)extractPin {
+    if(!_pin) return;
+    
     self.streetName=_pin.location.streetName;
     self.initialStreetName=_streetName;
     self.streetNumber=[_pin.location.streetNumber stringValue];
