@@ -111,9 +111,10 @@
 #pragma mark - Helpers
 
 - (void)updateFields {
+    __weak typeof(self) weakSelf = self;
     [[Fields sharedInstance] sendFieldsTo:^(NSArray *a) {
-        self.customFields=a;
-        [self extractPin];
+        weakSelf.customFields=a;
+        [weakSelf extractPin];
         [_tableView reloadData];
     }];
 }
