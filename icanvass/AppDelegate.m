@@ -15,11 +15,14 @@
 #import "Users.h"
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
+#import "FanOut.h"
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"//AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
+
+#define kFanOutRealm @"3f449354"
 
 @implementation AppDelegate
 
@@ -54,6 +57,8 @@
     [Users sharedInstance];
     
     [[UINavigationBar appearance] setTintColor: [UIColor colorWithRed:243/255.0 green:156/255.0 blue:18/255.0 alpha:1.0]];
+    
+    [[FanOut sharedInstance] subscribe:[[NSUserDefaults standardUserDefaults] objectForKey:kCompanyNameKey] realm:kFanOutRealm];
     
     return YES;
 }

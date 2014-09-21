@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="http://pubsub.fanout.io/static/json2.js"></script>
+    <script type="text/javascript" src="http://pubsub.fanout.io/static/fppclient-1.0.1.min.js"></script>
+
+    <script type="text/javascript">
+      (function($) {
+        $.qs = (function(a) {
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i)
+            {
+                var p=a[i].split('=');
+                if (p.length != 2) continue;
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+        })(window.location.search.substr(1).split('&'))
+      })(jQuery);
+
+      var realmId=$.qs["r"];
+      var ch=$.qs["c"];
+
+      var notify = function(x) {
+          window.location="pin://";
+      };
+
+      // note: timeout hack to prevent busy-indicator on safari/chrome
+      $(function() {
+          window.setTimeout(function() {
+              var client = new Fpp.Client('http://pubsub.fanout.io/r/'+realmId)
+              var channel = client.Channel(ch)
+              channel.on('data', function(data) {
+                  var pinId = data.PinId;
+                  var operation = data.PinOperation; // Add, Update, Delete
+                  var notificationType = data.NotificationType; // NotificationType: Pin
+                  notify();
+              });
+          }, 50);
+      });
+    </script>
+  </head>
+
+  <body>
+  </body>
+</html>

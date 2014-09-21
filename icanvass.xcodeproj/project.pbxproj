@@ -41,6 +41,8 @@
 		42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F8F18D26AF10087941E /* AFURLResponseSerialization.m */; };
 		42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9118D26AF10087941E /* AFURLSessionManager.m */; };
 		42284F9D18D26B110087941E /* ICRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F9C18D26B110087941E /* ICRequestManager.m */; };
+		42341CE219CF0BB4000D61E3 /* FanOut.m in Sources */ = {isa = PBXBuildFile; fileRef = 42341CE119CF0BB4000D61E3 /* FanOut.m */; };
+		42341CE419CF0BCC000D61E3 /* fanout.html in Resources */ = {isa = PBXBuildFile; fileRef = 42341CE319CF0BCC000D61E3 /* fanout.html */; };
 		4238E2C7197C683700CE8299 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4238E2C6197C683700CE8299 /* button@2x.png */; };
 		4239345A18E2F56E0041EF93 /* DatesPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4239345918E2F56E0041EF93 /* DatesPickerViewController.m */; };
 		423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 423EA49018E0B4DB00E22FF8 /* GoToWebsiteViewController.m */; };
@@ -221,6 +223,9 @@
 		42284F9118D26AF10087941E /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		42284F9B18D26B110087941E /* ICRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICRequestManager.h; sourceTree = "<group>"; };
 		42284F9C18D26B110087941E /* ICRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICRequestManager.m; sourceTree = "<group>"; };
+		42341CE019CF0BB4000D61E3 /* FanOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FanOut.h; sourceTree = "<group>"; };
+		42341CE119CF0BB4000D61E3 /* FanOut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FanOut.m; sourceTree = "<group>"; };
+		42341CE319CF0BCC000D61E3 /* fanout.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = fanout.html; sourceTree = "<group>"; };
 		4238E2C6197C683700CE8299 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
 		4239345818E2F56E0041EF93 /* DatesPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatesPickerViewController.h; sourceTree = "<group>"; };
 		4239345918E2F56E0041EF93 /* DatesPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatesPickerViewController.m; sourceTree = "<group>"; };
@@ -606,6 +611,9 @@
 				42A7BECA18D71D5400973EA8 /* views */,
 				42284F6218D2546A0087941E /* viewcontrollers */,
 				42284F6118D254560087941E /* coredata */,
+				42341CE319CF0BCC000D61E3 /* fanout.html */,
+				42341CE019CF0BB4000D61E3 /* FanOut.h */,
+				42341CE119CF0BB4000D61E3 /* FanOut.m */,
 				42B3A67718E8903600B46FBF /* adduser@2x.png */,
 				42870FA819ABD65500A5263E /* refresh@2x.png */,
 				42B3A68718E891C200B46FBF /* status@2x.png */,
@@ -920,6 +928,7 @@
 				4238E2C7197C683700CE8299 /* button@2x.png in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
 				427E8A361901CFC30092504A /* AppIcon60x60.png in Resources */,
+				42341CE419CF0BCC000D61E3 /* fanout.html in Resources */,
 				420251A2197729E800F77D39 /* password@2x.png in Resources */,
 				427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
@@ -1007,6 +1016,7 @@
 				42A7BEC418D719BF00973EA8 /* UIAlertView+AFNetworking.m in Sources */,
 				42D28CE518E06702005E1758 /* MMDrawerVisualState.m in Sources */,
 				42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */,
+				42341CE219CF0BB4000D61E3 /* FanOut.m in Sources */,
 				42284F9518D26AF10087941E /* AFNetworkReachabilityManager.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
 				42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */,

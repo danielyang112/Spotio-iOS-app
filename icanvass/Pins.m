@@ -35,6 +35,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOut:) name:@"FanOutPin" object:nil];
+        
         [self sendStatusesTo:nil];
     }
     return self;
@@ -346,6 +348,12 @@
 
 - (void)appDidBecomeActive:(NSNotification*)notification {
     [self fetchStatusesWithBlock:nil];
+    if(!_gettingPins) {
+        [self fetchPinsWithBlock:nil];
+    }
+}
+
+- (void)fanOut:(NSNotification*)notification {
     if(!_gettingPins) {
         [self fetchPinsWithBlock:nil];
     }
