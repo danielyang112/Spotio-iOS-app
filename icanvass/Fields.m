@@ -96,8 +96,8 @@
 #pragma mark - API
 
 - (void)sendFieldsTo:(void (^)(NSArray *a))block {
-    block(_fields);
     if(_fields){
+        block(_fields);
         return;
     }
     ICRequestManager *manager=[ICRequestManager sharedManager];
