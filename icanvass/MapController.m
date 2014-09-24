@@ -18,7 +18,7 @@
 #import "GDefaultClusterRenderer.h"
 #import "GClusterItem.h"
 #import "CustomClusterManager.h"
-#import <sys/utsname.h>
+//#import <sys/utsname.h>
 
 
 
@@ -58,15 +58,15 @@
     }
     return self;
 }
--(NSString*)machineName
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
-}
-
+//-(NSString*)machineName
+//{
+//    struct utsname systemInfo;
+//    uname(&systemInfo);
+//    
+//    return [NSString stringWithCString:systemInfo.machine
+//                              encoding:NSUTF8StringEncoding];
+//}
+//
 
 
 - (void)viewDidLoad {
@@ -77,17 +77,17 @@
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
     [_mapView isMyLocationEnabled];
-    if ([[self machineName] isEqualToString:@"iPhone3,1"]||[[self machineName] isEqualToString:@"iPhone4,1"])
-    {
-        _mapView.indoorEnabled = NO;
-        _mapView.buildingsEnabled = NO;
-    }
-    else
-    {
-        _mapView.indoorEnabled = YES;
-        _mapView.buildingsEnabled = YES;
-
-    }
+//    if ([[self machineName] isEqualToString:@"iPhone3,1"]||[[self machineName] isEqualToString:@"iPhone4,1"])
+//    {
+//        _mapView.indoorEnabled = NO;
+//        _mapView.buildingsEnabled = NO;
+//    }
+//    else
+//    {
+//        _mapView.indoorEnabled = YES;
+//        _mapView.buildingsEnabled = YES;
+//
+//    }
 //    [_mapView addObserver:self
 //               forKeyPath:@"myLocation"
 //                  options:NSKeyValueObservingOptionNew
