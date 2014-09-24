@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB9833419D18A8A000A9269 /* CustomClusterManager.m */; };
+		2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */; };
+		2CB9833919D1A6B0000A9269 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2CB9833819D1A6B0000A9269 /* GoogleMaps.bundle */; };
+		2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6DA19D07BF7008C7B51 /* GQuadItem.m */; };
+		2CDCA6F319D07BF7008C7B51 /* GStaticCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6DC19D07BF7008C7B51 /* GStaticCluster.m */; };
+		2CDCA6F419D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6DE19D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m */; };
+		2CDCA6F519D07BF7008C7B51 /* GClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6E219D07BF7008C7B51 /* GClusterManager.m */; };
+		2CDCA6F619D07BF7008C7B51 /* GDefaultClusterRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6E619D07BF7008C7B51 /* GDefaultClusterRenderer.m */; };
+		2CDCA6F719D07BF7008C7B51 /* SphericalMercatorProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6E919D07BF7008C7B51 /* SphericalMercatorProjection.m */; };
+		2CDCA6F819D07BF7008C7B51 /* GQTPointQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6EE19D07BF7008C7B51 /* GQTPointQuadTree.m */; };
+		2CDCA6F919D07BF7008C7B51 /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6F019D07BF7008C7B51 /* GQTPointQuadTreeChild.m */; };
 		4202519D197722A600F77D39 /* register@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4202519C197722A600F77D39 /* register@2x.png */; };
 		4202519F197722AD00F77D39 /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4202519E197722AD00F77D39 /* login@2x.png */; };
 		420251A2197729E800F77D39 /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 420251A0197729E800F77D39 /* password@2x.png */; };
@@ -173,6 +184,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2CB9833319D18A8A000A9269 /* CustomClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomClusterManager.h; sourceTree = "<group>"; };
+		2CB9833419D18A8A000A9269 /* CustomClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomClusterManager.m; sourceTree = "<group>"; };
+		2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		2CB9833819D1A6B0000A9269 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		2CDCA6D819D07BF7008C7B51 /* GClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClusterAlgorithm.h; sourceTree = "<group>"; };
+		2CDCA6D919D07BF7008C7B51 /* GQuadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQuadItem.h; sourceTree = "<group>"; };
+		2CDCA6DA19D07BF7008C7B51 /* GQuadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GQuadItem.m; sourceTree = "<group>"; };
+		2CDCA6DB19D07BF7008C7B51 /* GStaticCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStaticCluster.h; sourceTree = "<group>"; };
+		2CDCA6DC19D07BF7008C7B51 /* GStaticCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStaticCluster.m; sourceTree = "<group>"; };
+		2CDCA6DD19D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonHierarchicalDistanceBasedAlgorithm.h; sourceTree = "<group>"; };
+		2CDCA6DE19D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonHierarchicalDistanceBasedAlgorithm.m; sourceTree = "<group>"; };
+		2CDCA6DF19D07BF7008C7B51 /* GCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCluster.h; sourceTree = "<group>"; };
+		2CDCA6E019D07BF7008C7B51 /* GClusterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClusterItem.h; sourceTree = "<group>"; };
+		2CDCA6E119D07BF7008C7B51 /* GClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClusterManager.h; sourceTree = "<group>"; };
+		2CDCA6E219D07BF7008C7B51 /* GClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GClusterManager.m; sourceTree = "<group>"; };
+		2CDCA6E419D07BF7008C7B51 /* GClusterRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClusterRenderer.h; sourceTree = "<group>"; };
+		2CDCA6E519D07BF7008C7B51 /* GDefaultClusterRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDefaultClusterRenderer.h; sourceTree = "<group>"; };
+		2CDCA6E619D07BF7008C7B51 /* GDefaultClusterRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDefaultClusterRenderer.m; sourceTree = "<group>"; };
+		2CDCA6E819D07BF7008C7B51 /* SphericalMercatorProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphericalMercatorProjection.h; sourceTree = "<group>"; };
+		2CDCA6E919D07BF7008C7B51 /* SphericalMercatorProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SphericalMercatorProjection.m; sourceTree = "<group>"; };
+		2CDCA6EB19D07BF7008C7B51 /* GQTBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTBounds.h; sourceTree = "<group>"; };
+		2CDCA6EC19D07BF7008C7B51 /* GQTPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPoint.h; sourceTree = "<group>"; };
+		2CDCA6ED19D07BF7008C7B51 /* GQTPointQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTree.h; sourceTree = "<group>"; };
+		2CDCA6EE19D07BF7008C7B51 /* GQTPointQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GQTPointQuadTree.m; sourceTree = "<group>"; };
+		2CDCA6EF19D07BF7008C7B51 /* GQTPointQuadTreeChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeChild.h; sourceTree = "<group>"; };
+		2CDCA6F019D07BF7008C7B51 /* GQTPointQuadTreeChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GQTPointQuadTreeChild.m; sourceTree = "<group>"; };
+		2CDCA6F119D07BF7008C7B51 /* GQTPointQuadTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeItem.h; sourceTree = "<group>"; };
 		4202519C197722A600F77D39 /* register@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register@2x.png"; sourceTree = "<group>"; };
 		4202519E197722AD00F77D39 /* login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@2x.png"; sourceTree = "<group>"; };
 		420251A0197729E800F77D39 /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
@@ -399,6 +437,8 @@
 		73BFB8BF195D005600952C9A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		73BFB8C1195D670C00952C9A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		73BFB8C2195D670C00952C9A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
+		8582D548F5B6439AA0F09ACC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A908AAF1E28446FBB6253A48 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +446,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42284F6A18D257010087941E /* CoreLocation.framework in Frameworks */,
 				73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */,
 				42284F7C18D257820087941E /* SystemConfiguration.framework in Frameworks */,
 				42284F7A18D257770087941E /* QuartzCore.framework in Frameworks */,
@@ -418,12 +459,12 @@
 				4226928B193B563D00FD0BE9 /* BugSense-iOS.framework in Frameworks */,
 				42284F6E18D2571D0087941E /* GLKit.framework in Frameworks */,
 				42284F6C18D2570A0087941E /* CoreText.framework in Frameworks */,
-				42284F6A18D257010087941E /* CoreLocation.framework in Frameworks */,
 				42284F6818D256FA0087941E /* AVFoundation.framework in Frameworks */,
 				42284F5218D252970087941E /* CoreData.framework in Frameworks */,
 				42A6A58318CBA3BF0043233C /* CoreGraphics.framework in Frameworks */,
 				42A6A58518CBA3BF0043233C /* UIKit.framework in Frameworks */,
 				42284F6418D256A20087941E /* GoogleMaps.framework in Frameworks */,
+				2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */,
 				42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +482,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CB9832719D06ECC000A9269 /* CGClustering */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CGClustering;
+			sourceTree = "<group>";
+		};
+		2CDCA6D619D07BF7008C7B51 /* Clustering */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCA6D719D07BF7008C7B51 /* Algorithms */,
+				2CDCA6DF19D07BF7008C7B51 /* GCluster.h */,
+				2CB9833319D18A8A000A9269 /* CustomClusterManager.h */,
+				2CB9833419D18A8A000A9269 /* CustomClusterManager.m */,
+				2CDCA6E019D07BF7008C7B51 /* GClusterItem.h */,
+				2CDCA6E119D07BF7008C7B51 /* GClusterManager.h */,
+				2CDCA6E219D07BF7008C7B51 /* GClusterManager.m */,
+				2CDCA6E319D07BF7008C7B51 /* View */,
+			);
+			path = Clustering;
+			sourceTree = "<group>";
+		};
+		2CDCA6D719D07BF7008C7B51 /* Algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCA6D819D07BF7008C7B51 /* GClusterAlgorithm.h */,
+				2CDCA6D919D07BF7008C7B51 /* GQuadItem.h */,
+				2CDCA6DA19D07BF7008C7B51 /* GQuadItem.m */,
+				2CDCA6DB19D07BF7008C7B51 /* GStaticCluster.h */,
+				2CDCA6DC19D07BF7008C7B51 /* GStaticCluster.m */,
+				2CDCA6DD19D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.h */,
+				2CDCA6DE19D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m */,
+			);
+			path = Algorithms;
+			sourceTree = "<group>";
+		};
+		2CDCA6E319D07BF7008C7B51 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCA6E419D07BF7008C7B51 /* GClusterRenderer.h */,
+				2CDCA6E519D07BF7008C7B51 /* GDefaultClusterRenderer.h */,
+				2CDCA6E619D07BF7008C7B51 /* GDefaultClusterRenderer.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2CDCA6E719D07BF7008C7B51 /* Projection */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCA6E819D07BF7008C7B51 /* SphericalMercatorProjection.h */,
+				2CDCA6E919D07BF7008C7B51 /* SphericalMercatorProjection.m */,
+			);
+			path = Projection;
+			sourceTree = "<group>";
+		};
+		2CDCA6EA19D07BF7008C7B51 /* QuadTree */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCA6EB19D07BF7008C7B51 /* GQTBounds.h */,
+				2CDCA6EC19D07BF7008C7B51 /* GQTPoint.h */,
+				2CDCA6ED19D07BF7008C7B51 /* GQTPointQuadTree.h */,
+				2CDCA6EE19D07BF7008C7B51 /* GQTPointQuadTree.m */,
+				2CDCA6EF19D07BF7008C7B51 /* GQTPointQuadTreeChild.h */,
+				2CDCA6F019D07BF7008C7B51 /* GQTPointQuadTreeChild.m */,
+				2CDCA6F119D07BF7008C7B51 /* GQTPointQuadTreeItem.h */,
+			);
+			path = QuadTree;
+			sourceTree = "<group>";
+		};
 		42284F6118D254560087941E /* coredata */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +615,10 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				2CDCA6D619D07BF7008C7B51 /* Clustering */,
+				2CDCA6E719D07BF7008C7B51 /* Projection */,
+				2CDCA6EA19D07BF7008C7B51 /* QuadTree */,
+				2CB9832719D06ECC000A9269 /* CGClustering */,
 				4255E68119A7B40B007657E9 /* SVProgressHUD */,
 				42B3A69218E8C5E600B46FBF /* Mixpanel */,
 				42B3A68D18E8C3E100B46FBF /* FreshdeskSDK */,
@@ -560,6 +674,7 @@
 				42A6A5A518CBA3BF0043233C /* icanvassTests */,
 				42A6A57F18CBA3BF0043233C /* Frameworks */,
 				42A6A57E18CBA3BF0043233C /* Products */,
+				A908AAF1E28446FBB6253A48 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -575,9 +690,11 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */,
 				73BFB8BF195D005600952C9A /* MessageUI.framework */,
 				4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */,
 				42284F7B18D257820087941E /* SystemConfiguration.framework */,
+				2CB9833819D1A6B0000A9269 /* GoogleMaps.bundle */,
 				42284F7918D257770087941E /* QuartzCore.framework */,
 				42284F7718D2575A0087941E /* OpenGLES.framework */,
 				42284F7518D2574B0087941E /* libz.dylib */,
@@ -595,6 +712,7 @@
 				42A6A58218CBA3BF0043233C /* CoreGraphics.framework */,
 				42A6A58418CBA3BF0043233C /* UIKit.framework */,
 				42A6A59F18CBA3BF0043233C /* XCTest.framework */,
+				8582D548F5B6439AA0F09ACC /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -817,9 +935,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "door2doorapp" */;
 			buildPhases = (
+				4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */,
 				42A6A57918CBA3BF0043233C /* Sources */,
 				42A6A57A18CBA3BF0043233C /* Frameworks */,
 				42A6A57B18CBA3BF0043233C /* Resources */,
+				F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -920,6 +1040,7 @@
 				4238E2C7197C683700CE8299 /* button@2x.png in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
 				427E8A361901CFC30092504A /* AppIcon60x60.png in Resources */,
+				2CB9833919D1A6B0000A9269 /* GoogleMaps.bundle in Resources */,
 				420251A2197729E800F77D39 /* password@2x.png in Resources */,
 				427E8A1D1901B5CD0092504A /* Default-568h@2x.png in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
@@ -963,12 +1084,46 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		42A6A57918CBA3BF0043233C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */,
+				2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */,
 				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
 				42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */,
 				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
@@ -983,6 +1138,7 @@
 				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
 				42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */,
+				2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */,
 				42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */,
 				42B3A6C818E8C5E700B46FBF /* MPNotificationViewController.m in Sources */,
 				42B3A6CE18E8C5E700B46FBF /* NSData+MPBase64.m in Sources */,
@@ -1000,6 +1156,8 @@
 				42A7BEC918D719BF00973EA8 /* UIWebView+AFNetworking.m in Sources */,
 				42284F9A18D26AF10087941E /* AFURLSessionManager.m in Sources */,
 				42A7BEC218D719BF00973EA8 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				2CDCA6F719D07BF7008C7B51 /* SphericalMercatorProjection.m in Sources */,
+				2CDCA6F619D07BF7008C7B51 /* GDefaultClusterRenderer.m in Sources */,
 				42D28CE318E06702005E1758 /* MMDrawerBarButtonItem.m in Sources */,
 				4255E68019A7AE2A007657E9 /* HilightedButton.m in Sources */,
 				42284F9418D26AF10087941E /* AFHTTPSessionManager.m in Sources */,
@@ -1011,6 +1169,7 @@
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
 				42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */,
 				42A7BECD18D71D7400973EA8 /* PinCell.m in Sources */,
+				2CDCA6F319D07BF7008C7B51 /* GStaticCluster.m in Sources */,
 				42284F9918D26AF10087941E /* AFURLResponseSerialization.m in Sources */,
 				42BBFF2F18D398210065D4C3 /* RegisterViewController.m in Sources */,
 				42284F9D18D26B110087941E /* ICRequestManager.m in Sources */,
@@ -1023,15 +1182,19 @@
 				42284F9318D26AF10087941E /* AFHTTPRequestOperationManager.m in Sources */,
 				42B3A6CC18E8C5E700B46FBF /* MPSurveyQuestion.m in Sources */,
 				42284F6018D254020087941E /* User.m in Sources */,
+				2CDCA6F419D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m in Sources */,
+				2CDCA6F819D07BF7008C7B51 /* GQTPointQuadTree.m in Sources */,
 				42EF82EB18FBFA390045EB0E /* Users.m in Sources */,
 				42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */,
 				42284F9618D26AF10087941E /* AFSecurityPolicy.m in Sources */,
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
 				42284F5E18D254020087941E /* Status.m in Sources */,
 				42A7BEC518D719BF00973EA8 /* UIButton+AFNetworking.m in Sources */,
+				2CDCA6F519D07BF7008C7B51 /* GClusterManager.m in Sources */,
 				42A7BEC818D719BF00973EA8 /* UIRefreshControl+AFNetworking.m in Sources */,
 				427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */,
 				42B3A66A18E5734800B46FBF /* PocketSVG.m in Sources */,
+				2CDCA6F919D07BF7008C7B51 /* GQTPointQuadTreeChild.m in Sources */,
 				42F79B4219A4DEBD00DCBB08 /* CustomValue.m in Sources */,
 				42A7BEAF18D7150200973EA8 /* PinTemp.m in Sources */,
 				42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */,
@@ -1101,7 +1264,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1120,6 +1284,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "484e8c90-61b1-4597-9801-bc18f7ec8790";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1140,7 +1305,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1152,6 +1318,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1159,13 +1326,14 @@
 		};
 		42A6A5B018CBA3BF0043233C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A908AAF1E28446FBB6253A48 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1175,7 +1343,7 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "484e8c90-61b1-4597-9801-bc18f7ec8790";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1184,13 +1352,14 @@
 		};
 		42A6A5B118CBA3BF0043233C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A908AAF1E28446FBB6253A48 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1200,7 +1369,7 @@
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

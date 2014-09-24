@@ -78,7 +78,7 @@
     static NSDateFormatter *dateFormatter;
     if(!dateFormatter) {
         dateFormatter=[[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"MM/dd/yy";
+        dateFormatter.dateFormat=@"MM/dd/yy\nhh:mm a";
     }
     return [dateFormatter stringFromDate:date];
 }

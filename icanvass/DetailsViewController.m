@@ -33,6 +33,7 @@
 @property (nonatomic,strong) NSString *status;
 @property (nonatomic,strong) NSArray *statuses;
 
+
 @property (nonatomic,strong) NSMutableArray *fields;
 @property (nonatomic,strong) NSArray *customFields;
 @property (nonatomic,strong) NSMutableDictionary *addedFields;
@@ -853,8 +854,16 @@ static NSDateFormatter *dateFormatter;
     self.activeField=textField;
 }
 
+- (UITableViewCell *)cellWithSubview:(UIView *)subview {
+    
+    while (subview && ![subview isKindOfClass:[UITableViewCell self]])
+        subview = subview.superview;
+    return (UITableViewCell *)subview;
+}
+
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
+    UITableViewCell *cell= [self cellWithSubview:textField];
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     if(!indexPath){
         return YES;
@@ -878,7 +887,7 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    DetailsNotesCell *cell=(DetailsNotesCell*)(textView.superview.superview.superview);
+    UITableViewCell *cell=[self cellWithSubview:textView];
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     if(!indexPath){
         return YES;
@@ -1081,5 +1090,8 @@ static NSDateFormatter *dateFormatter;
         noteView.note = cell.bottom.text;
     }
 }
+
+
+
 
 @end

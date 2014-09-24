@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
-	
+#import "Clustering/GClusterManager.h"
+
+
+
 @class Pin;
 
 @class MapController;

@@ -5,6 +5,7 @@
 //  Created by Roman Kot on 08.03.2014.
 //  Copyright (c) 2014 Roman Kot. All rights reserved.
 //
+#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 #import "MapController.h"
 #import "DetailsViewController.h"
@@ -13,9 +14,25 @@
 #import "Mixpanel.h"
 #import "Users.h"
 #import "utilities.h"
+#import "NonHierarchicalDistanceBasedAlgorithm.h"
+#import "GDefaultClusterRenderer.h"
+#import "GClusterItem.h"
+#import "CustomClusterManager.h"
+#import <sys/utsname.h>
+
+
+
 
 @interface MapController () <GMSMapViewDelegate>
+{
+    CustomClusterManager *clusterManager_;
+    BOOL firstLocationUpdate_;
+    GMSCameraPosition *previousCameraPosition;
+
+}
 @property (nonatomic,strong) NSMutableDictionary *markers;
+@property (nonatomic,strong) GMSMapView *allAnnotationMapView;
+
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic,strong) UISearchBar *searchBar;
@@ -41,15 +58,60 @@
     }
     return self;
 }
+-(NSString*)machineName
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     CGRect f=self.view.bounds;
     self.mapView=[GMSMapView mapWithFrame:f camera:[self cameraPosition]];
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
+    [_mapView isMyLocationEnabled];
+    if ([[self machineName] isEqualToString:@"iPhone3,1"]||[[self machineName] isEqualToString:@"iPhone4,1"])
+    {
+        _mapView.indoorEnabled = NO;
+        _mapView.buildingsEnabled = NO;
+    }
+    else
+    {
+        _mapView.indoorEnabled = YES;
+        _mapView.buildingsEnabled = YES;
+
+    }
+//    [_mapView addObserver:self
+//               forKeyPath:@"myLocation"
+//                  options:NSKeyValueObservingOptionNew
+//                  context:NULL];
+    
+
     _mapView.settings.myLocationButton=YES;
+    NSLog(@"User's location: %@", _mapView.myLocation);
+
     _mapView.settings.compassButton=YES;
+    clusterManager_ = [CustomClusterManager managerWithMapView:_mapView
+                                                algorithm:[[NonHierarchicalDistanceBasedAlgorithm alloc] init]
+                                                 renderer:[[GDefaultClusterRenderer alloc] initWithMapView:_mapView]];
+    clusterManager_.trueDelegate = self;
+    clusterManager_.clustered = NO;
+    [_mapView setDelegate:clusterManager_];
+    [clusterManager_ cluster];
+
+    
+    
+    
+    
+
+
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
     [self.view insertSubview:_mapView atIndex:0];
@@ -58,7 +120,25 @@
 //    _searchBar.showsCancelButton=YES;
     [self.view addSubview:_searchBar];
     [self.view layoutIfNeeded];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        _mapView.myLocationEnabled = YES;
+//    });
+
 }
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if (!firstLocationUpdate_) {
+        // If the first location update has not yet been recieved, then jump to that
+        // location.
+        firstLocationUpdate_ = YES;
+        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                         zoom:14];
+    }
+}
+
 
 - (void)viewWillLayoutSubviews {
     CGRect f=self.view.bounds;
@@ -94,11 +174,13 @@
 
 - (GMSMarker*)markerForPin:(Pin*)pin {
     CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
+    
     GMSMarker *marker=[GMSMarker markerWithPosition:position];
     marker.userData=pin;
     marker.title=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
     marker.icon=[self iconForPin:pin];
     marker.map=_mapView;
+    [clusterManager_ addItem:marker];
     return marker;
 }
 
@@ -119,11 +201,13 @@
 
 - (void)refreshMarkers {
     for(GMSMarker *m in [_markers allValues]){
+        [clusterManager_ removeItems];
         m.map=nil;
     }
     [_markers removeAllObjects];
     for(Pin *pin in _filtered){
         GMSMarker *marker=[self markerForPin:pin];
+        [clusterManager_ addItem:marker];
         self.markers[pin.ident]=marker;
     }
 }
@@ -136,6 +220,12 @@
 
 - (void)clear {
     [self.mapView clear];
+}
+
+- (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)cameraPosition
+{
+    [_mapView clear];
+    [self refresh];
 }
 
 - (void)refresh {
@@ -233,7 +323,7 @@
 //    l.text=pin.user;
     l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
     l=(UILabel*)[view viewWithTag:3];
-    l.text=[Pin formatDate:pin.creationDate];
+    l.text=[Pin formatDate:pin.updateDate];
     l=(UILabel*)[view viewWithTag:4];
     l.text=pin.address;
     l=(UILabel*)[view viewWithTag:5];
@@ -275,6 +365,7 @@
         [_mapView animateToCameraPosition:[self cameraPosition]];
     }
 }
+
 
 #pragma mark - Navigation
 

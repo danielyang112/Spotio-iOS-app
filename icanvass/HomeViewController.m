@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Roman Kot. All rights reserved.
 //
 
+#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 #import "HomeViewController.h"
 #import "ListController.h"
 #import "MapController.h"
@@ -38,6 +40,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupLeftMenuButton];
+    if(IS_OS_8_OR_LATER) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    
+    [self.locationManager startUpdatingLocation];
+
     ListController *list=[self.storyboard instantiateViewControllerWithIdentifier:@"ListController"];
     //list.delegate=self;
     self.map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];

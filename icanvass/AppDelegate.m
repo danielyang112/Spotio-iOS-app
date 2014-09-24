@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Roman Kot. All rights reserved.
 //
 
+
 #import "AppDelegate.h"
 #import "ICRequestManager.h"
 #import "AFNetworkActivityIndicatorManager.h"
@@ -16,10 +17,13 @@
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
 
-#define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"//AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y
+
+
+#define kGoogleAPIKey @"AIzaSyBQOFuKzEwdOxN2eAQoUwBcPqYQWWL4_8k"//AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
+
 
 @implementation AppDelegate
 
@@ -35,6 +39,8 @@
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"9ebe29b0"
                                             userDictionary:nil
                                            sendImmediately:YES];
+    [NewRelicAgent startWithApplicationToken:@"AA06ece2f1fe67f34192ff2f3602b18a48f16af3c1"];
+
     
     MMDrawerController *drawerController=(MMDrawerController*)self.window.rootViewController;
     UINavigationController *navigationController=[drawerController.storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
