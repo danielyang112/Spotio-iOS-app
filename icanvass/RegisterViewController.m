@@ -209,10 +209,10 @@
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField ==_firstNameTextField)
-    {
-        [self checkFullName];
-    }
+//    if (textField ==_firstNameTextField)
+//    {
+//        [self checkFullName];
+//    }
 }
 
 -(BOOL)checkFullName
@@ -245,22 +245,22 @@
         [textField resignFirstResponder];
         [self showIndustries];
     }
+//    else
+//        if (textField ==_firstNameTextField)
+//        {
+//            if ([self checkFullName])
+//            {
+//                NSUInteger idx=[_fieldsCollection indexOfObject:_firstNameTextField];
+//                [_fieldsCollection[idx+1] becomeFirstResponder];
+//            }
+//        }
     else
-        if (textField ==_firstNameTextField)
-        {
-            if ([self checkFullName])
-            {
-                NSUInteger idx=[_fieldsCollection indexOfObject:_firstNameTextField];
-                [_fieldsCollection[idx+1] becomeFirstResponder];
-            }
-        }
-        else
-        {
-            NSUInteger idx=[_fieldsCollection indexOfObject:textField];
-            [_fieldsCollection[idx+1] becomeFirstResponder];
-            
-        }
-
+    {
+        NSUInteger idx=[_fieldsCollection indexOfObject:textField];
+        [_fieldsCollection[idx+1] becomeFirstResponder];
+        
+    }
+    
     return YES;
 }
 
