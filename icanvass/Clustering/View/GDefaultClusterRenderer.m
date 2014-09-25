@@ -29,12 +29,12 @@
         [_markerCache addObject:marker];
         
         NSUInteger count = cluster.items.count;
-        if (count > 1) {
-            marker.icon = [self generateClusterIconWithCount:count];
-        }
-        else {
-            marker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
-        }
+//        if (count > 1) {
+        marker.icon = [self generateClusterIconWithCount:count];
+//        }
+//        else {
+//            marker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+//        }
         marker.position = cluster.position;
         marker.map = _map;
     }

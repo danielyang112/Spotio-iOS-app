@@ -14,6 +14,7 @@
 #import "Mixpanel.h"
 #import "Users.h"
 #import "utilities.h"
+#import "GClusterAlgorithm.h"
 #import "NonHierarchicalDistanceBasedAlgorithm.h"
 #import "GDefaultClusterRenderer.h"
 #import "GClusterItem.h"

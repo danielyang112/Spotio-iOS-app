@@ -50,16 +50,24 @@
 }
 - (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)cameraPosition
 {
-    if (cameraPosition.zoom<16)
+    if (cameraPosition.zoom<12)
     {
         _clustered = YES;
         [super mapView:mapView idleAtCameraPosition:cameraPosition];
         return;
-    }else
+    }
+    else
     {
-        _clustered = NO;
-        [self.trueDelegate mapView:mapView idleAtCameraPosition:cameraPosition];
-        return;
+        if (_clustered)
+        {
+            _clustered = NO;
+            [self.trueDelegate mapView:mapView idleAtCameraPosition:cameraPosition];
+            return;
+        }
+        else
+        {
+            return;
+        }
     }
 }
 
