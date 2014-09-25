@@ -19,6 +19,7 @@
 #import "Mixpanel.h"
 #import "MapController.h"
 #import <EventKit/EventKit.h>
+#import "SVProgressHUD/SVProgressHUD.h"
 
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate,UITextViewDelegate>
 @property (nonatomic,strong) NSString *streetNumber;
@@ -455,12 +456,14 @@ static NSDateFormatter *dateFormatter;
                 }
                 //[self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
                 [self.navigationController popViewControllerAnimated:YES];
+
             }];
         }];
     }];
 }
 
 - (void)editPin {
+
     if(!_status){
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Status" message:@"You can't add a PIN with no status" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -559,6 +562,7 @@ static NSDateFormatter *dateFormatter;
                     [event setCalendar:[store defaultCalendarForNewEvents]];
                     NSError *err = nil;
                     [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+
                 }];
             }
         }];
@@ -903,6 +907,7 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
     /*DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     if(!indexPath || indexPath.section==0){
@@ -951,6 +956,7 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - API
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [_activeField resignFirstResponder];
     [super setEditing:editing animated:animated];
 //    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
     
@@ -1025,6 +1031,7 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
+    
     [self textFieldDidEndEditing:_activeField];
     [self addPin];
 }
