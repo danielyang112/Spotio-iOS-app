@@ -111,12 +111,9 @@
     [alert show];
 }
 
-- (void)proceedWithRegistration {
-    
-    if(_registering) return;
-    _registering=YES;
+- (void)proceedWithRegistration
+{
     [_activeField resignFirstResponder];
-    [SVProgressHUD show];
     
 /*    dict[@"CompanyLogin"] = [_txtCompanyName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"EmailAddress"] = [_txtEMail.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -139,7 +136,12 @@
 //    }
     */
     BOOL allOk = [self checkFullName];
-    if (allOk) {
+    if (allOk)
+    {
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        
+        if(_registering) return;
+        _registering=YES;
         
         NSArray *fullName = [_firstNameTextField.text componentsSeparatedByString:@" "];
         NSDictionary *d=@{@"FirstName":[fullName firstObject],
@@ -149,10 +151,12 @@
                           @"EmailAddress":[self trim:_emailTextField],
                           @"Password":[self trim:_passwordTextField]};
         RegisterViewController __weak *weakSelf=self;
-        [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response) {
+        [[ICRequestManager sharedManager] registerWithDictionary:d cb:^(BOOL success, id response)
+        {
             [SVProgressHUD dismiss];
             _registering=NO;
-            if(success) {
+            if(success)
+            {
                 Mixpanel *mixpanel=[Mixpanel sharedInstance];
                 NSString *distinctID=mixpanel.distinctId;
                 //[mixpanel createAlias:_txtEMail.text forDistinctID:mixpanel.distinctId];
@@ -183,10 +187,15 @@
                                                                                        UIRemoteNotificationTypeAlert)];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
                 
-            } else {
-                if(response[@"Message"]) {
+            }
+            else
+            {
+                if(response[@"Message"])
+                {
                     [weakSelf showErrors:response[@"Message"]];
-                }else{
+                }
+                else
+                {
                     [weakSelf showErrors:@[@"An error occured."]];
                 }
             }
@@ -226,14 +235,14 @@
         }
         else
         {
-            UIAlertView* showError = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Enter Full Name" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView* showError = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Enter Full Name: First and Last" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [showError show];
         }
         
     }
     else
     {
-        UIAlertView* showError = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Enter Full Name" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView* showError = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Enter Full Name: First and Last" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [showError show];
     }
     return NO;

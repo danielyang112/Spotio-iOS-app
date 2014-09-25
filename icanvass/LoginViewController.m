@@ -102,10 +102,9 @@
 }
 
 - (void)loginWithUsername:(NSString*)username password:(NSString*)password company:(NSString*)company {
-    [SVProgressHUD show];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     _loggingIn=YES;
     self.company=company;
-    [self showWrongPassword:NO];
     [[ICRequestManager sharedManager] loginUserName:username password:password company:company cb:^(BOOL success) {
         [SVProgressHUD dismiss];
         _loggingIn=NO;
@@ -174,7 +173,7 @@
     if(_loggingIn) return;
     [_activeField resignFirstResponder];
     _loggingIn=YES;
-    [SVProgressHUD show];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [self loginWithUsername:_loginTextField.text password:_passwordTextField.text];
 }
 
