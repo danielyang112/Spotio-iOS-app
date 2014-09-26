@@ -12,7 +12,7 @@
 #import "Pin.h"
 #import "AppDelegate.h"
 #import "Location.h"
-
+#import "SVProgressHUD/SVProgressHUD.h"
 
 @interface Pins () {
 }
@@ -257,6 +257,7 @@
 - (void)editPin:(Pin*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
 //        PinTemp *p=[_pins grepWith:^BOOL(NSObject *o) {
@@ -273,9 +274,11 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         [self fetchPinsWithBlock:^(NSArray *a) {
             block(YES);
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         block(NO);
     }];
 }
