@@ -714,6 +714,9 @@ static NSDateFormatter *dateFormatter;
             }
             v=[dFormatter stringFromDate:date];
         }
+        if([v isKindOfClass:[NSNumber class]]){
+            v=[(NSNumber*)v stringValue];
+        }
         cell.bottom.text=v;
         [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
         return cell;
@@ -773,7 +776,7 @@ static NSDateFormatter *dateFormatter;
         
         cell.field.placeholder=f.name;
         cell.field.keyboardType=UIKeyboardTypeDefault;
-        cell.field.text=_addedFields[key];
+        cell.field.text=[NSString stringWithFormat:@"%@",_addedFields[key]];
         //        cell.enabled=!!_addedFields[key];
         cell.enabled=YES;
         return cell;
