@@ -74,8 +74,8 @@
         
         Location *loc=[NSEntityDescription insertNewObjectForEntityForName:@"Location"
                                                     inManagedObjectContext:managedObjectContext];
-        NSDictionary *ld=dic[@"Location"];
-        loc.streetNumber=[NSNumber numberWithInt:[ld[@"HouseNumber"] integerValue]];
+        NSDictionary *ld=nilIfNull(dic[@"Location"]);
+        loc.streetNumber=[NSNumber numberWithInt:[nilIfNull(ld[@"HouseNumber"]) integerValue]];
         loc.streetName=nilIfNull(ld[@"Street"]);
         loc.city=nilIfNull(ld[@"City"]);
         NSObject *u=nilIfNull(ld[@"Unit"]);
