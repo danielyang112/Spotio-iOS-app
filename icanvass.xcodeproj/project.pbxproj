@@ -424,7 +424,8 @@
 		73BFB8C1195D670C00952C9A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		73BFB8C2195D670C00952C9A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		8582D548F5B6439AA0F09ACC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A908AAF1E28446FBB6253A48 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		EDB41C5574CA7CD010DBAB61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF88AC35EDE62B87AA1C2225 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -650,7 +651,7 @@
 				42A6A58618CBA3BF0043233C /* icanvass */,
 				42A6A57F18CBA3BF0043233C /* Frameworks */,
 				42A6A57E18CBA3BF0043233C /* Products */,
-				A908AAF1E28446FBB6253A48 /* Pods.xcconfig */,
+				C8E9790B71637CDF8E3B5264 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -888,6 +889,15 @@
 			path = MMDrawerController;
 			sourceTree = "<group>";
 		};
+		C8E9790B71637CDF8E3B5264 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF88AC35EDE62B87AA1C2225 /* Pods.debug.xcconfig */,
+				EDB41C5574CA7CD010DBAB61 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1042,7 +1052,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1233,15 +1243,15 @@
 		};
 		42A6A5B018CBA3BF0043233C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A908AAF1E28446FBB6253A48 /* Pods.xcconfig */;
+			baseConfigurationReference = EF88AC35EDE62B87AA1C2225 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1255,7 +1265,7 @@
 				);
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "484e8c90-61b1-4597-9801-bc18f7ec8790";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1264,15 +1274,15 @@
 		};
 		42A6A5B118CBA3BF0043233C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A908AAF1E28446FBB6253A48 /* Pods.xcconfig */;
+			baseConfigurationReference = EDB41C5574CA7CD010DBAB61 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1286,7 +1296,7 @@
 				);
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

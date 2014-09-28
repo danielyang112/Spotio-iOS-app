@@ -16,13 +16,15 @@
 #import "Users.h"
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
+#import "FanOut.h"
 
 
 
-#define kGoogleAPIKey @"AIzaSyBQOFuKzEwdOxN2eAQoUwBcPqYQWWL4_8k"//AIzaSyD3Sls68EcfBmldDmKUuy4ZcvhCdivdl3Y
+#define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
+#define kFanOutRealm @"3f449354"
 
 
 @implementation AppDelegate
@@ -56,6 +58,7 @@
     [[Mixpanel sharedInstance] registerSuperProperties:@{@"version":@"spotio", @"platform":@"iOS"}];
     [AFNetworkActivityIndicatorManager sharedManager].enabled=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ICNetFailed:) name:@"ICNetFailed" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
     [Users sharedInstance];
     
@@ -108,6 +111,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self startFanout];
+}
+
+- (void)startFanout {
+    [[FanOut sharedInstance] subscribe:[[NSUserDefaults standardUserDefaults] objectForKey:kCompanyNameKey] realm:kFanOutRealm];
 }
 
 - (void)showLoading:(BOOL)yeah {
@@ -126,6 +134,10 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+- (void)userLoggedIn:(NSNotification*)notification {
+    [self startFanout];
 }
 
 - (void)ICNetFailed:(NSNotification*)notification {
