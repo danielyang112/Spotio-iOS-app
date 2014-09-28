@@ -239,6 +239,7 @@
 - (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
 //        PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
@@ -246,11 +247,13 @@
 //        p.customValues=dictionary[@"CustomValues"];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         [self fetchPinsWithBlock:^(NSArray *a) {
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
             block(YES);
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         block(NO);
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];        
     }];
 }
 
