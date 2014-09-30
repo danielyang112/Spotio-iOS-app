@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "Location.h"
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "SyncPinsOperation.h"
 
 @interface Pins () {
 }
@@ -159,12 +160,29 @@
     return md;
 }
 
-- (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
-    
-    [self fetchPinsFrom:0 withBlock:block];
++ (NSOperationQueue*)operationQueue
+{
+    static NSOperationQueue *opQueue;
+    if (!opQueue)
+    {
+        opQueue = [NSOperationQueue new];
+    }
+    return opQueue;
 }
 
-- (void)fetchPinsFrom:(int)skip withBlock:(void (^)(NSArray *a))block {
+
+- (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
+    NSDictionary* parameteres = @{@"$top":@20, @"$skip":@0};
+    SyncPinsOperation* operation = [[SyncPinsOperation alloc]initWithParameters:parameteres];
+    [operation setCompletionBlock:^{
+        
+    }];
+    [[Pins operationQueue] addOperation:operation];
+    
+}
+
+- (void)fetchPinsWithParameteres:(NSDictionary *)parameteres block:(void (^)(NSArray *))block
+{
     __weak typeof(self) weakSelf = self;
     NSLog(@"%s",__FUNCTION__);
     if(![[ICRequestManager sharedManager] isUserLoggedIn]) {
@@ -183,7 +201,7 @@
     
     ICRequestManager *manager=[ICRequestManager sharedManager];
 //    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
-    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$skip=%d&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues",skip];
+    NSString *u=@"PinService.svc/Pins?$format=json&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues&";
     if(date){
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
@@ -193,10 +211,10 @@
     if(!date){
         [appDelegate showLoading:YES];
     }
-    [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:u parameters:parameteres success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
-            NSLog(@"JSON: %@", responseObject);
+//            NSLog(@"JSON: %@", responseObject);
             weakSelf.pins=[self pinsArrayFromArray:responseObject[@"value"]];
 //            self.oldest=[[_pins lastObject] updateDate];
 //            self.newest=[[_pins firstObject] updateDate];
@@ -238,6 +256,7 @@
 
 - (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -246,9 +265,11 @@
 //        p.customValues=dictionary[@"CustomValues"];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
         [self fetchPinsWithBlock:^(NSArray *a) {
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
             block(YES);
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         NSLog(@"Error: %@", error);
         block(NO);
     }];

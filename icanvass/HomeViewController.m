@@ -231,6 +231,7 @@
 
 #pragma mark - MapControllerDelegate
 
+
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate {
     NSLog(@"%f, %f",coordinate.latitude, coordinate.longitude);
     self.tappedCoordinate=coordinate;

@@ -125,7 +125,7 @@
 
 - (IBAction)refresh:(id)sender {
     [[Mixpanel sharedInstance] track:@"Refresh"];
-    [[Pins sharedInstance] fetchPinsWithBlock:nil];
+    [[Pins sharedInstance] fetchPinsWithParameteres:nil block:nil];
     [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
 }
 @end

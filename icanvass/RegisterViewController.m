@@ -20,7 +20,7 @@
 
 @interface RegisterViewController ()
 {
-    NSInteger mask;
+    BOOL industrySelected;
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBottom;
 @property (nonatomic,weak) UITextField *activeField;
@@ -46,6 +46,7 @@
         NSString *title=[actionSheet buttonTitleAtIndex:buttonIndex];
         if(actionSheet.tag==kIndustrySheet){
             [_industryButton setTitle:title forState:UIControlStateNormal];
+            industrySelected = TRUE;
 //            [_scrollView scrollRectToVisible:[ frame] animated:YES];
 //            [self proceedWithRegistration];
 /*
@@ -67,6 +68,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    industrySelected = FALSE;
+    
     //    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     UIColor *color = [UIColor lightGrayColor];
     for(UITextField *f in _fieldsCollection) {
@@ -123,7 +126,7 @@
     dict[@"Password"] = [_txtPassword.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     dict[@"Phone"] = [_txtPhone.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
  */
-    NSString *email=[self trim:_emailTextField];
+//    NSString *email=[self trim:_emailTextField];
 /*
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -250,26 +253,32 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if(textField==_passwordTextField) {
-        [textField resignFirstResponder];
-        [self showIndustries];
-    }
-//    else
-//        if (textField ==_firstNameTextField)
-//        {
-//            if ([self checkFullName])
-//            {
-//                NSUInteger idx=[_fieldsCollection indexOfObject:_firstNameTextField];
-//                [_fieldsCollection[idx+1] becomeFirstResponder];
-//            }
-//        }
-    else
+    if (industrySelected)
     {
-        NSUInteger idx=[_fieldsCollection indexOfObject:textField];
-        [_fieldsCollection[idx+1] becomeFirstResponder];
-        
+        [self proceedWithRegistration];
     }
+    else
+        if(textField==_passwordTextField)
+        {
+            [textField resignFirstResponder];
+            [self showIndustries];
+        }
     
+    //    else
+    //        if (textField ==_firstNameTextField)
+    //        {
+    //            if ([self checkFullName])
+    //            {
+    //                NSUInteger idx=[_fieldsCollection indexOfObject:_firstNameTextField];
+    //                [_fieldsCollection[idx+1] becomeFirstResponder];
+    //            }
+    //        }
+        else
+        {
+            NSUInteger idx=[_fieldsCollection indexOfObject:textField];
+            [_fieldsCollection[idx+1] becomeFirstResponder];
+            
+        }
     return YES;
 }
 
@@ -333,6 +342,7 @@
 }
 
 - (void)showIndustries {
+    [_activeField resignFirstResponder];
     UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"Select your industry:"
                                                      delegate:self
                                             cancelButtonTitle:nil

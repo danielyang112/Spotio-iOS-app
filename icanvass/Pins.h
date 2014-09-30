@@ -22,5 +22,7 @@
 - (void)editPin:(Pin*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block;
 - (UIColor*)colorForStatus:(NSString*)status;
 - (void)clear;
-- (void)fetchPinsWithBlock:(void (^)(NSArray *a))block;
+- (void)fetchPinsWithParameteres:(NSDictionary*)parameteres block:(void (^)(NSArray *a))block;
++ (NSOperationQueue*)operationQueue;
+
 @end

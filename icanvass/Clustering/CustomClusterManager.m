@@ -17,11 +17,11 @@
     [self.trueDelegate mapView:mapView didTapAtCoordinate:coordinate];
 }
 
--(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
     [self.trueDelegate mapView:mapView didTapInfoWindowOfMarker:marker];
 }
--(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
     if (mapView.camera.zoom>12)
     {
@@ -30,7 +30,7 @@
     return NO;
 }
 
--(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker
 {
     if (mapView.camera.zoom>12)
     {
@@ -41,7 +41,7 @@
 
 }
 
--(void)mapView:(GMSMapView*)mapView willMove:(BOOL)gesture {
+- (void)mapView:(GMSMapView*)mapView willMove:(BOOL)gesture {
     [self.trueDelegate mapView:mapView willMove:gesture];
 }
 - (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView {

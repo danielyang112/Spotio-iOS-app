@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C72F8E319DAC1DD00BE6C96 /* SyncPinsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C72F8E219DAC1DD00BE6C96 /* SyncPinsOperation.m */; };
 		2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB9833419D18A8A000A9269 /* CustomClusterManager.m */; };
 		2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */; };
 		2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6DA19D07BF7008C7B51 /* GQuadItem.m */; };
@@ -171,6 +172,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C72F8E119DAC1DD00BE6C96 /* SyncPinsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPinsOperation.h; sourceTree = "<group>"; };
+		2C72F8E219DAC1DD00BE6C96 /* SyncPinsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPinsOperation.m; sourceTree = "<group>"; };
 		2CB9833319D18A8A000A9269 /* CustomClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomClusterManager.h; sourceTree = "<group>"; };
 		2CB9833419D18A8A000A9269 /* CustomClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomClusterManager.m; sourceTree = "<group>"; };
 		2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
@@ -544,6 +547,8 @@
 				42284F5C18D254020087941E /* User.m */,
 				42A7BEAD18D7150200973EA8 /* PinTemp.h */,
 				42A7BEAE18D7150200973EA8 /* PinTemp.m */,
+				2C72F8E119DAC1DD00BE6C96 /* SyncPinsOperation.h */,
+				2C72F8E219DAC1DD00BE6C96 /* SyncPinsOperation.m */,
 			);
 			name = coredata;
 			sourceTree = "<group>";
@@ -1121,6 +1126,7 @@
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
 				42284F5E18D254020087941E /* Status.m in Sources */,
 				42A7BEC518D719BF00973EA8 /* UIButton+AFNetworking.m in Sources */,
+				2C72F8E319DAC1DD00BE6C96 /* SyncPinsOperation.m in Sources */,
 				2CDCA6F519D07BF7008C7B51 /* GClusterManager.m in Sources */,
 				42A7BEC818D719BF00973EA8 /* UIRefreshControl+AFNetworking.m in Sources */,
 				427E8A1B190081400092504A /* AlmostDoneViewController.m in Sources */,
@@ -1225,7 +1231,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
+				PROVISIONING_PROFILE = "010f6616-7653-4e31-97d8-97344a6f4cd0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1286,7 +1292,7 @@
 				);
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
+				PROVISIONING_PROFILE = "010f6616-7653-4e31-97d8-97344a6f4cd0";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
