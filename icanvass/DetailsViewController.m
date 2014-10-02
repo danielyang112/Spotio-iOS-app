@@ -776,7 +776,9 @@ static NSDateFormatter *dateFormatter;
         
         cell.field.placeholder=f.name;
         cell.field.keyboardType=UIKeyboardTypeDefault;
-        cell.field.text=[NSString stringWithFormat:@"%@",_addedFields[key]];
+        if(_addedFields[key]){
+            cell.field.text=_addedFields[key];
+        }
         //        cell.enabled=!!_addedFields[key];
         cell.enabled=YES;
         return cell;
