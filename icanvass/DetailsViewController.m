@@ -455,6 +455,8 @@ static NSDateFormatter *dateFormatter;
                     }];
                 }
                 //[self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+                [[Pins sharedInstance] fetchPinsWithBlock:nil];
+
                 [self.navigationController popViewControllerAnimated:YES];
 
             }];

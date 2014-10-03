@@ -52,10 +52,48 @@
     return sharedInstance;
 }
 
+- (void)fetchPinsFromCoreData
+{
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
+    [managedObjectContext setUndoManager:nil];
+    
+    NSError *error=nil;
+    //    [appDelegate.managedObjectContext save:&error];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pin"
+                                              inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"updateDate" ascending:NO];
+    // Query on managedObjectContext With Generated fetchRequest
+    fetchRequest.sortDescriptors=@[sort];
+    NSArray *fetchedRecords = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.oldest=[[fetchedRecords lastObject] updateDate];
+    self.newest=[[fetchedRecords firstObject] updateDate];
+    self.pins = [fetchedRecords copy];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+
+
+    //    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
+    //    if(_pins){
+    //        ma=[_pins mutableCopy];
+    //    }
+    //    for(NSDictionary *dic in a){
+    //        [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
+    //    }
+    //    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
+    //    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
+    
+//    self.pins = fetchedRecords;
+}
+
 - (NSArray*)pinsArrayFromArray:(NSArray*)a {
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
     [managedObjectContext setUndoManager:nil];
+
     NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     for(NSDictionary *dic in a){
         Pin *newPin;
@@ -100,33 +138,10 @@
             newPin.customValues=os;
         }
     }
-    
-    NSError *error=nil;
-//    [appDelegate.managedObjectContext save:&error];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pin"
-                                              inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                    initWithKey:@"updateDate" ascending:NO];
-    // Query on managedObjectContext With Generated fetchRequest
-    fetchRequest.sortDescriptors=@[sort];
-    NSArray *fetchedRecords = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    self.oldest=[[fetchedRecords lastObject] updateDate];
-    self.newest=[[fetchedRecords firstObject] updateDate];
-    
-//    NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[a count]];
-//    if(_pins){
-//        ma=[_pins mutableCopy];
+//    if (![a count]) {
+//        a = [self fetchPinsFromCoreData];
 //    }
-//    for(NSDictionary *dic in a){
-//        [ma addObject:[[PinTemp alloc] initWithDictionary:dic]];
-//    }
-//    self.descriptor=[[NSSortDescriptor alloc] initWithKey:@"updateDate" ascending:NO];
-//    ma=[[ma sortedArrayUsingDescriptors:@[_descriptor]] mutableCopy];
-    
-    return fetchedRecords;
+    return nil;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
 //        return [[PinTemp alloc] initWithDictionary:dic];
@@ -172,13 +187,32 @@
 
 
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block {
-    NSDictionary* parameteres = @{@"$top":@20, @"$skip":@0};
+    if (![[ICRequestManager sharedManager] isUserLoggedIn])
+    {
+        if (block) block(nil);
+        return;
+    }
+    NSDictionary* parameteres = @{@"$top":@500, @"$skip":@0};
     SyncPinsOperation* operation = [[SyncPinsOperation alloc]initWithParameters:parameteres];
-    [operation setCompletionBlock:^{
-        
-    }];
     [[Pins operationQueue] addOperation:operation];
-    
+    [operation setCompletionBlock:^{
+        NSLog(@"Finished!");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchPinsFromCoreData];
+            static NSDateFormatter *nozoneFormatter;
+            if(!nozoneFormatter) {
+                nozoneFormatter=[[NSDateFormatter alloc] init];
+                nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+                NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+                [nozoneFormatter setTimeZone:gmt];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        });
+
+    }];
+
 }
 
 - (void)fetchPinsWithParameteres:(NSDictionary *)parameteres block:(void (^)(NSArray *))block
@@ -190,52 +224,54 @@
         return;
     }
     weakSelf.gettingPins=YES;
-    static NSDateFormatter *nozoneFormatter;
-    if(!nozoneFormatter) {
-        nozoneFormatter=[[NSDateFormatter alloc] init];
-        nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
-        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-        [nozoneFormatter setTimeZone:gmt];
-    }
     NSString *date=[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshDate];
     
     ICRequestManager *manager=[ICRequestManager sharedManager];
 //    NSString *u=@"PinService.svc/Pins?$format=json&$orderby=CreationDate desc&$expand=CustomValues";
-    NSString *u=@"PinService.svc/Pins?$format=json&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues&";
+    NSString *u=[NSString stringWithFormat:@"PinService.svc/Pins?$format=json&$select=CustomValues,Id,Status,Location,UserName,Latitude,Longitude,CreationDate,UpdateDate&$orderby=CreationDate desc&$expand=CustomValues&$top=%d&$skip=%d&$inlinecount=allpages",[parameteres[@"$top"] integerValue],[parameteres[@"$skip"] integerValue]] ;
+    
     if(date){
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
     NSLog(@"%@",u);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if(!date){
-        [appDelegate showLoading:YES];
-    }
-    [manager GET:u parameters:parameteres success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//    if(!date){
+//        [appDelegate showLoading:YES];
+//    }
+    [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
 //            NSLog(@"JSON: %@", responseObject);
-            weakSelf.pins=[self pinsArrayFromArray:responseObject[@"value"]];
-//            self.oldest=[[_pins lastObject] updateDate];
-//            self.newest=[[_pins firstObject] updateDate];
         
-            [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            weakSelf.gettingPins=NO;
-//            dispatch_async(dispatch_get_main_queue(), ^(void){
-                //Run UI UpdatesNSError *error=nil;
-                NSError *error;
-                [appDelegate.managedObjectContext save:&error];
-                if(block) block(_pins);
-                [appDelegate showLoading:NO];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-//            });
-//        });
+
+        if(!weakSelf.pins)
+        {
+            weakSelf.pins = [NSMutableArray new];
+        }
+        
+        [self pinsArrayFromArray:responseObject[@"value"]];
+    
+        //            self.oldest=[[_pins lastObject] updateDate];
+        //            self.newest=[[_pins firstObject] updateDate];
+        
+        weakSelf.gettingPins=NO;
+        //            dispatch_async(dispatch_get_main_queue(), ^(void){
+        //Run UI UpdatesNSError *error=nil;
+        NSError *error;
+        [appDelegate.managedObjectContext save:&error];
+        if(block) block(responseObject[@"value"]);
+
+//        if(block) block(_pins);
+//        [appDelegate showLoading:NO];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+        //            });
+        //        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         weakSelf.gettingPins=NO;
-        [appDelegate showLoading:NO];
+//        [appDelegate showLoading:NO];
         NSLog(@"Error: %@", error);
-
+        
     }];
 }
 
@@ -264,10 +300,10 @@
 //        [_pins insertObject:p atIndex:0];
 //        p.customValues=dictionary[@"CustomValues"];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-        [self fetchPinsWithBlock:^(NSArray *a) {
+//        [self fetchPinsWithBlock:^(NSArray *a) {
             [SVProgressHUD showSuccessWithStatus:@"Success"];
             block(YES);
-        }];
+//        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         NSLog(@"Error: %@", error);
@@ -293,14 +329,13 @@
 //        //[_pins replaceObjectAtIndex:idx withObject:[[PinTemp alloc] initWithDictionary:dictionary]];
 ////        p.status=dictionary[@"Status"];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-        [self fetchPinsWithBlock:^(NSArray *a) {
-            block(YES);
+//        [self fetchPinsWithBlock:^(NSArray *a) {
+//            block(NO);
             [SVProgressHUD showSuccessWithStatus:@"Success"];
-        }];
+//        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        block(NO);
     }];
 }
 

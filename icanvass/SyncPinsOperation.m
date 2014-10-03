@@ -1,4 +1,4 @@
-//
+	//
 //  SyncPinsOperation.m
 //  icanvass
 //
@@ -12,6 +12,7 @@
 @interface SyncPinsOperation ()
 {
     BOOL _finished;
+    BOOL _executing;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *parameters;
@@ -29,6 +30,10 @@
 {
     return _finished;
 }
+- (BOOL)isExecuting
+{
+    return _executing;
+}
 
 - (instancetype)initWithParameters:(NSDictionary*)parameters
 {
@@ -42,7 +47,10 @@
 
 - (void)start
 {
-    [self getPinsWithLimit:20 offset:0];
+    if (![self isCancelled])
+    {
+        [self getPinsWithLimit:500 offset:0];
+    }
 }
 
 - (void)getPinsWithLimit:(NSUInteger)limit offset:(NSUInteger)offset
@@ -53,17 +61,20 @@
         if ([a count]) {
             [self getPinsWithLimit:[self.parameters[@"$top"] unsignedLongValue]
                             offset:([self.parameters[@"$skip"] unsignedIntegerValue] + [self.parameters[@"$top"] unsignedIntegerValue])];
-             
+            
         }
         else
         {
+            
+            //            [[Pins sharedInstance]fetchPinsFromCoreData];
             [self willChangeValueForKey:@"isFinished"];
             _finished = YES;
             [self didChangeValueForKey:@"isFinished"];
-
+            
+            
         }
     }];
-    }
+}
 
 
 

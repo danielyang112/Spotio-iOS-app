@@ -36,6 +36,7 @@
 
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSString *searchText;
+@property (nonatomic,strong) GMSMarker* selectedMarker;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @end
 
@@ -105,14 +106,12 @@
     clusterManager_.trueDelegate = self;
     clusterManager_.clustered = NO;
     [_mapView setDelegate:clusterManager_];
-    [clusterManager_ cluster];
-
-    
-    
-    
-    
-
-
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [clusterManager_ removeItems];
+        [self createClusterItems];
+        [_mapView clear];
+//        [clusterManager_ cluster];
+    });
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
     [self.view insertSubview:_mapView atIndex:0];
@@ -180,8 +179,8 @@
     marker.userData=pin;
     marker.title=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
     marker.icon=[self iconForPin:pin];
+    [marker setAppearAnimation:kGMSMarkerAnimationPop];
     marker.map=_mapView;
-    [clusterManager_ addItem:marker];
     return marker;
 }
 
@@ -202,16 +201,22 @@
 
 - (void)refreshMarkers {
     for(GMSMarker *m in [_markers allValues]){
-        [clusterManager_ removeItems];
+//        [clusterManager_ removeItems];
         m.map=nil;
     }
     [_markers removeAllObjects];
-    for(Pin *pin in _filtered){
+    
+    for(Pin *pin in _filtered)
+    {
         GMSMarker *marker=[self markerForPin:pin];
-        [clusterManager_ addItem:marker];
+        [marker appearAnimation];
+
+//        [clusterManager_ addItem:marker];
         self.markers[pin.ident]=marker;
     }
 }
+
+
 
 - (void)viewOnMap:(Pin*)pin {
     if(_markers[pin.ident]){
@@ -229,9 +234,27 @@
     [self refresh];
 }
 
+- (GMSMarker*)clusterItem:(Pin*)pin {
+    CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
+    
+    GMSMarker *marker=[GMSMarker markerWithPosition:position];
+    return marker;
+}
+
+
+- (void)createClusterItems
+{
+    for (Pin *pin in [[Pins sharedInstance]pins])
+    {
+        GMSMarker *marker=[self clusterItem:pin];
+        [clusterManager_ addItem:marker];
+    }
+}
+
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
     __weak typeof(self) weakSelf = self;
+    GMSVisibleRegion myRegion = _mapView.projection.visibleRegion;
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         NSString *s=[Pins sharedInstance].searchText;
         if(s && ![s isEqualToString:@""]){
@@ -241,10 +264,22 @@
                 || ([p.address rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
                 || ([p.address2 rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound);
             }];
-        }else{
+        }
+        else
+        {
             weakSelf.pins=a;
         }
+        double maxLatitude = MAX(MAX(myRegion.farRight.latitude,myRegion.nearRight.latitude),MAX(myRegion.farLeft.latitude,myRegion.farRight.latitude));
+        double maxLongitude = MAX(MAX(myRegion.farRight.longitude,myRegion.nearRight.longitude),MAX(myRegion.farLeft.longitude,myRegion.farRight.longitude));
+        double minLatitude = MIN(MIN(myRegion.farRight.latitude,myRegion.nearRight.latitude),MIN(myRegion.farLeft.latitude,myRegion.farRight.latitude));
+        double minLongitude = MIN(MIN(myRegion.farRight.longitude,myRegion.nearRight.longitude),MIN(myRegion.farLeft.longitude,myRegion.farRight.longitude));
+
+
+        NSPredicate* predicateForRegion = [NSPredicate predicateWithFormat:@"SELF.latitude <= %f+0.009 AND SELF.longitude<= %f+0.009 AND self.latitude >= %f-0.009 AND SELF.longitude>= %f-0.009",maxLatitude,maxLongitude,minLatitude,minLongitude];
         weakSelf.filtered=_pins;
+       self.filtered =  [weakSelf.filtered filteredArrayUsingPredicate:predicateForRegion];
+        
+        
         [weakSelf refreshMarkers];
     }];
 }
@@ -285,6 +320,11 @@
     if(gesture) {
         self.moved=YES;
     }
+    if (_selectedMarker) {
+        [self showInfoMarker];
+    }
+
+    
 }
 
 - (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView {
@@ -296,16 +336,25 @@
     if(!mapView.selectedMarker){
         [_delegate mapController:self didSelectBuildingAtCoordinate:coordinate];
     }
+    else
+    {
+        _mapView.selectedMarker = nil;
+    }
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    _selectedMarker = marker;
     //Pin *pin=marker.userData;
     //[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
-    return NO;
+    return YES;
+}
+-(void) showInfoMarker
+{
+    [self mapView:_mapView markerInfoWindow:_mapView.selectedMarker];
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-    Pin *pin=marker.userData;
+    Pin *pin=_mapView.selectedMarker.userData;
     UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
     UIView *icon=[view viewWithTag:7];
     icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
@@ -334,7 +383,7 @@
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
-    Pin *pin=marker.userData;
+    Pin *pin=_selectedMarker.userData;
     [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
 }
 

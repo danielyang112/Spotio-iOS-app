@@ -42,7 +42,7 @@
 
 - (UIImage*) generateClusterIconWithCount:(NSUInteger)count {
     
-    int diameter = 40;
+    int diameter = 46;
     float inset = 3;
     
     CGRect rect = CGRectMake(0, 0, diameter, diameter);
@@ -51,7 +51,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 
     // set stroking color and draw circle
-    [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.8] setStroke];
+    [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5] setStroke];
     [[UIColor blueColor] setFill];
 
     CGContextSetLineWidth(ctx, inset);
@@ -71,8 +71,15 @@
                     [UIColor whiteColor], (id)kCTForegroundColorAttributeName, nil];
 
     // create a naked string
-    NSString *string = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)count];
-
+    NSString *string;
+    if (count<1000)
+    {
+         string= [[NSString alloc] initWithFormat:@"%d", (NSUInteger)count];
+    }
+    else
+    {
+        string= [[NSString alloc] initWithFormat:@"%.1fk", (float)count/1000];
+    }
     NSAttributedString *stringToDraw = [[NSAttributedString alloc] initWithString:string
                                                                        attributes:attributesDict];
 
@@ -100,7 +107,7 @@
 
     CTLineRef line = CTLineCreateWithAttributedString(
             (__bridge CFAttributedStringRef)stringToDraw);
-    CGContextSetTextPosition(ctx, midWidth, 12);
+    CGContextSetTextPosition(ctx, midWidth, 15);
     CTLineDraw(line, ctx);
 
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

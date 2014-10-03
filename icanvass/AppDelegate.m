@@ -35,7 +35,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"9ebe29b0"
                                             userDictionary:nil
                                            sendImmediately:YES];
@@ -194,6 +195,13 @@
     _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return _managedObjectModel;
 }
+
+void uncaughtExceptionHandler(NSException *exception)
+{
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+}
+
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.

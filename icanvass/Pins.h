@@ -10,7 +10,7 @@
 #import "Pin.h"
 
 @interface Pins : NSObject
-@property (nonatomic,strong) NSArray *pins;
+@property (nonatomic,strong) NSMutableArray *pins;
 @property (nonatomic,strong) NSDate *oldest;
 @property (nonatomic,strong) NSDate *newest;
 @property (nonatomic,strong) NSDictionary *filter;
@@ -22,7 +22,9 @@
 - (void)editPin:(Pin*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block;
 - (UIColor*)colorForStatus:(NSString*)status;
 - (void)clear;
+- (void)fetchPinsWithBlock:(void (^)(NSArray *a))block;
 - (void)fetchPinsWithParameteres:(NSDictionary*)parameteres block:(void (^)(NSArray *a))block;
+- (void)fetchPinsFromCoreData;
 + (NSOperationQueue*)operationQueue;
 
 @end

@@ -10,5 +10,6 @@
 
 @interface SyncPinsOperation : NSOperation
 - (instancetype)initWithParameters:(NSDictionary*)parameters;
+@property(readonly, getter=isFinished) BOOL finished;
 
 @end
