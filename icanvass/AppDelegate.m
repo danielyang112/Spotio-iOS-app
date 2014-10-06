@@ -30,7 +30,6 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize fetchResultController = _fetchResultController;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -168,21 +167,6 @@
     return _managedObjectContext;
 }
 
-- (NSFetchedResultsController *)fetchResultController
-{
-    if (_fetchResultController !=nil) {
-        return _fetchResultController;
-    }
-    NSManagedObjectContext* context = [self managedObjectContext];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Pin" inManagedObjectContext:context]];
-    _fetchResultController = [NSFetchedResultsController new];
-    [_fetchResultController initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    
-    return _fetchResultController;
-    
-}
 
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.

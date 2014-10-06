@@ -15,6 +15,8 @@
 @property (nonatomic,strong) NSDate *newest;
 @property (nonatomic,strong) NSDictionary *filter;
 @property (nonatomic,strong) NSString *searchText;
+@property (nonatomic,strong) NSFetchedResultsController* fetchController;
+
 + (Pins*)sharedInstance;
 - (void)sendPinsTo:(void (^)(NSArray *a))block;
 - (void)sendStatusesTo:(void (^)(NSArray *a))block;
@@ -24,6 +26,7 @@
 - (void)clear;
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block;
 - (void)fetchPinsWithParameteres:(NSDictionary*)parameteres block:(void (^)(NSArray *a))block;
+- (void)fetchPinsFromCoreDataWithPredicate:(NSPredicate*)predicate
 - (void)fetchPinsFromCoreData;
 + (NSOperationQueue*)operationQueue;
 

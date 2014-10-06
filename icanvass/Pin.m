@@ -76,7 +76,8 @@
 
 + (NSString*)formatDate:(NSDate*)date {
     static NSDateFormatter *dateFormatter;
-    if(!dateFormatter) {
+    if(!dateFormatter)
+    {
         dateFormatter=[[NSDateFormatter alloc] init];
         dateFormatter.dateFormat=@"MM/dd/yy\nhh:mm a";
     }
@@ -85,7 +86,8 @@
 
 - (NSArray*)customValuesOld {
     NSMutableArray *ma=[NSMutableArray arrayWithCapacity:[self.customValues count]];
-    for(CustomValue *cv in self.customValues){
+    for(CustomValue *cv in self.customValues)
+    {
         [ma addObject:[cv dict]];
     }
     return [NSArray arrayWithArray:ma];

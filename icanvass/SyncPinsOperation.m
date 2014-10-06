@@ -47,10 +47,7 @@
 
 - (void)start
 {
-    if (![self isCancelled])
-    {
         [self getPinsWithLimit:500 offset:0];
-    }
 }
 
 - (void)getPinsWithLimit:(NSUInteger)limit offset:(NSUInteger)offset

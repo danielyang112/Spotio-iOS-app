@@ -24,7 +24,7 @@
 
 
 
-@interface MapController () <GMSMapViewDelegate>
+@interface MapController () <GMSMapViewDelegate,NSFetchedResultsControllerDelegate>
 {
     CustomClusterManager *clusterManager_;
     BOOL firstLocationUpdate_;
@@ -38,6 +38,7 @@
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic,strong) GMSMarker* selectedMarker;
 @property (nonatomic,strong) UISearchBar *searchBar;
+@property (nonatomic,strong) NSFetchedResultsController* fetchController;
 @end
 
 @implementation MapController
@@ -52,7 +53,7 @@
         // Custom initialization
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchChanged:) name:@"ICSearch" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
@@ -106,10 +107,16 @@
     clusterManager_.trueDelegate = self;
     clusterManager_.clustered = NO;
     [_mapView setDelegate:clusterManager_];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
         [clusterManager_ removeItems];
         [self createClusterItems];
         [_mapView clear];
+        _fetchController = [Pins sharedInstance].fetchController;
+        _fetchController.delegate = self;
+        [_fetchController performFetch:nil];
+        
+
 //        [clusterManager_ cluster];
     });
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
@@ -140,6 +147,16 @@
 }
 
 
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [clusterManager_ removeItems];
+    [[Pins sharedInstance] fetchPinsFromCoreData];
+}
+
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self createClusterItems];
+}
 - (void)viewWillLayoutSubviews {
     CGRect f=self.view.bounds;
 //    f.size.height-=44.f;
@@ -154,6 +171,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [_mapView clear];
+    [self refresh];
     if(!_pins)  [self refresh];
 }
 
@@ -225,12 +244,15 @@
 }
 
 - (void)clear {
+    [clusterManager_ removeItems];
     [self.mapView clear];
 }
 
 - (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)cameraPosition
 {
-    [_mapView clear];
+//    _mapView.selectedMarker?:[_mapView clear];
+
+    [mapView clear];
     [self refresh];
 }
 
