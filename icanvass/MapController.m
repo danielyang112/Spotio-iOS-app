@@ -107,11 +107,11 @@
     clusterManager_.trueDelegate = self;
     clusterManager_.clustered = NO;
     [_mapView setDelegate:clusterManager_];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [clusterManager_ removeItems];
-        [self createClusterItems];
-        [_mapView clear];
+//        [clusterManager_ removeItems];
+//        [self createClusterItems];
+//        [_mapView clear];
         _fetchController = [Pins sharedInstance].fetchController;
         _fetchController.delegate = self;
         [_fetchController performFetch:nil];
@@ -172,8 +172,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [_mapView clear];
-    [self refresh];
-    if(!_pins)  [self refresh];
+    if ([_mapView.camera zoom]<12) {
+        [clusterManager_ removeItems];
+        [self createClusterItems];
+        [clusterManager_ cluster];
+    }
+    else
+    {
+        [self refresh];
+    }
 }
 
 #pragma mark - Helpers
@@ -291,10 +298,10 @@
         {
             weakSelf.pins=a;
         }
-        double maxLatitude = MAX(MAX(myRegion.farRight.latitude,myRegion.nearRight.latitude),MAX(myRegion.farLeft.latitude,myRegion.farRight.latitude));
-        double maxLongitude = MAX(MAX(myRegion.farRight.longitude,myRegion.nearRight.longitude),MAX(myRegion.farLeft.longitude,myRegion.farRight.longitude));
-        double minLatitude = MIN(MIN(myRegion.farRight.latitude,myRegion.nearRight.latitude),MIN(myRegion.farLeft.latitude,myRegion.farRight.latitude));
-        double minLongitude = MIN(MIN(myRegion.farRight.longitude,myRegion.nearRight.longitude),MIN(myRegion.farLeft.longitude,myRegion.farRight.longitude));
+        double maxLatitude = MAX(MAX(myRegion.farRight.latitude,myRegion.nearRight.latitude),MAX(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
+        double maxLongitude = MAX(MAX(myRegion.farRight.longitude,myRegion.nearRight.longitude),MAX(myRegion.farLeft.longitude,myRegion.nearLeft.longitude));
+        double minLatitude = MIN(MIN(myRegion.farRight.latitude,myRegion.nearRight.latitude),MIN(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
+        double minLongitude = MIN(MIN(myRegion.farRight.longitude,myRegion.nearRight.longitude),MIN(myRegion.farLeft.longitude,myRegion.nearLeft.longitude));
 
 
         NSPredicate* predicateForRegion = [NSPredicate predicateWithFormat:@"SELF.latitude <= %f+0.009 AND SELF.longitude<= %f+0.009 AND self.latitude >= %f-0.009 AND SELF.longitude>= %f-0.009",maxLatitude,maxLongitude,minLatitude,minLongitude];

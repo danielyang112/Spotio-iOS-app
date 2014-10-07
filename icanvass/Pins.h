@@ -26,7 +26,7 @@
 - (void)clear;
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block;
 - (void)fetchPinsWithParameteres:(NSDictionary*)parameteres block:(void (^)(NSArray *a))block;
-- (void)fetchPinsFromCoreDataWithPredicate:(NSPredicate*)predicate
+- (void)fetchPinsFromCoreDataWithPredicate:(NSPredicate*)predicate;
 - (void)fetchPinsFromCoreData;
 + (NSOperationQueue*)operationQueue;
 
