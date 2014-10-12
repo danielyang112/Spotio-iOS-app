@@ -40,6 +40,8 @@
     if(self) {
         self.usersByUserName=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOut:) name:@"FanOutUsers" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOut:) name:@"FanOutRoles" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
     }
     return self;
@@ -138,7 +140,9 @@
     [self fetchUsersWithBlock:nil];
 }
 
-
+- (void)fanOut:(NSNotification*)notification {
+    [self fetchUsersWithBlock:nil];
+}
 
 - (void)userLoggedIn:(NSNotification*)notification {
     [self fetchUsersWithBlock:nil];

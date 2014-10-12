@@ -23,7 +23,7 @@
       var ch=$.qs["c"];
 
       var notify = function(x) {
-          window.location="pin://";
+          window.location=x+"://";
       };
 
       // note: timeout hack to prevent busy-indicator on safari/chrome
@@ -32,10 +32,12 @@
               var client = new Fpp.Client('http://pubsub.fanout.io/r/'+realmId)
               var channel = client.Channel(ch)
               channel.on('data', function(data) {
-                  var pinId = data.PinId;
-                  var operation = data.PinOperation; // Add, Update, Delete
-                  var notificationType = data.NotificationType; // NotificationType: Pin
-                  notify();
+                         var n=data.NotificationType; // NotificationType: Pin
+                         if(n=="Settings"){
+                            var o=data.Operation;
+                            n+="_"+o;
+                         }
+                         notify(n);
               });
           }, 50);
       });

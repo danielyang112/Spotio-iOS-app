@@ -52,8 +52,8 @@
     [_web loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-- (void)notify {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FanOutPin" object:nil];
+- (void)notify:(NSString*)name {
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 
 /*
@@ -67,8 +67,20 @@
 #pragma mark - UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if([request.URL.scheme isEqualToString:@"pin"]){
-        [self notify];
+    if([request.URL.scheme isEqualToString:@"Pin"]){
+        [self notify:@"FanOutPin"];
+        return NO;
+    }else if([request.URL.scheme isEqualToString:@"Settings_USER_ADDED"]){
+        [self notify:@"FanOutUsers"];
+        return NO;
+    }else if([request.URL.scheme isEqualToString:@"Settings_ROLE_CHANGED"]){
+        [self notify:@"FanOutRoles"];
+        return NO;
+    }else if([request.URL.scheme isEqualToString:@"Settings_STATUSES_CHANGED"]){
+        [self notify:@"FanOutStatuses"];
+        return NO;
+    }else if([request.URL.scheme isEqualToString:@"Settings_QUESTIONS_CHANGED"]){
+        [self notify:@"FanOutQuestions"];
         return NO;
     }else{
         return YES;
