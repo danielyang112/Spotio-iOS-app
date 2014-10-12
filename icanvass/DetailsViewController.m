@@ -103,11 +103,11 @@
     } else if(_pin){
         [self adjustForViewing];
     }
+    [self updateFields];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateFields];
 }
 
 #pragma mark - Helpers
@@ -949,6 +949,7 @@ static NSDateFormatter *dateFormatter;
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);
     _addedFields[key]=date;
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - DropDownDelegate
@@ -958,6 +959,7 @@ static NSDateFormatter *dateFormatter;
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);
     _addedFields[key]=value;
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - API
