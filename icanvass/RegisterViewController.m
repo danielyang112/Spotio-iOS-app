@@ -252,7 +252,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if(textField==_passwordTextField) {
         [textField resignFirstResponder];
-        [self showIndustries];
+        [self proceedWithRegistration];
     }
 //    else
 //        if (textField ==_firstNameTextField)
