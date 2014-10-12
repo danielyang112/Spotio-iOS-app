@@ -913,25 +913,27 @@ static NSDateFormatter *dateFormatter;
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
-    /*DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
+    
+    UITableViewCell *cell= [self cellWithSubview:textField];
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-    if(!indexPath || indexPath.section==0){
+    if(!indexPath){
         return;
     }
     if(indexPath.section==0) {
-        if(indexPath.row==0) {
-            self.streetNumber=textField.text;
-        }else{
-            self.streetName=textField.text;
+        if(indexPath.row==1){
+            _streetNumber=textField.text;
+        }else if(indexPath.row==2){
+            _streetName=textField.text;
         }
-        [textField endEditing:YES];
-        return;
+        if(indexPath.row==3){
+            _unit=textField.text;
+        }
+    }else{
+        Field *f=_customFields[indexPath.row];
+        NSNumber *key=@(f.ident);
+        _addedFields[key]=textField.text;
     }
     
-    Field *f=_customFields[indexPath.row];
-    NSNumber *key=@(f.ident);
-    _addedFields[key]=cell.field.text;
-    //f.clientData=cell.field.text;*/
     self.activeField=nil;
 }
 
