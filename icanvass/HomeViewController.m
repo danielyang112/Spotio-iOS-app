@@ -213,11 +213,23 @@
     //        filePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];*/
     NSData *myData = [mainString dataUsingEncoding:NSUTF8StringEncoding];
     
-    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-    mailer.mailComposeDelegate = self;
-    [mailer setSubject:@"CSV File"];
-    [mailer addAttachmentData:myData mimeType:@"text/csv" fileName:@"Spreadsheet.csv"];
-    [self presentViewController:mailer animated:YES completion:nil];
+    
+    if ([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self;
+        [mailer setSubject:@"CSV File"];
+        [mailer addAttachmentData:myData mimeType:@"text/csv" fileName:@"Spreadsheet.csv"];
+        [self presentViewController:mailer animated:YES completion:nil];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Share"
+                              message:@"You have no mail accounts configured."
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
 }
 
 - (IBAction)filter:(id)sender {
