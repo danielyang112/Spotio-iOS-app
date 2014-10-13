@@ -913,12 +913,18 @@ static NSDateFormatter *dateFormatter;
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
+    self.activeField=nil;
+    
+    if(!textField.text){    //default is nil
+        return;
+    }
     
     UITableViewCell *cell= [self cellWithSubview:textField];
     NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
     if(!indexPath){
         return;
     }
+    
     if(indexPath.section==0) {
         if(indexPath.row==1){
             _streetNumber=textField.text;
@@ -933,8 +939,6 @@ static NSDateFormatter *dateFormatter;
         NSNumber *key=@(f.ident);
         _addedFields[key]=textField.text;
     }
-    
-    self.activeField=nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -945,7 +949,8 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - DatePickerDelegate
 
 - (void)datePicker:(DatePickerViewController *)picker changedDate:(NSDate *)date {
-    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    NSIndexPath *indexPath=picker.indexPath;
+    if(!indexPath) return;
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);
     _addedFields[key]=date;
@@ -955,7 +960,8 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - DropDownDelegate
 
 - (void)dropDown:(DropDownViewController *)dropDown changedTo:(NSString *)value {
-    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    NSIndexPath *indexPath=dropDown.indexPath;
+    if(!indexPath) return;
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);
     _addedFields[key]=value;
@@ -1096,11 +1102,13 @@ static NSDateFormatter *dateFormatter;
     NSNumber *key=@(f.ident);
     if([segue.identifier isEqualToString:@"DatePicker"]) {
         DatePickerViewController *d=segue.destinationViewController;
+        d.indexPath=indexPath;
         d.delegate=self;
         d.name=f.name;
         d.date=[_addedFields[key] isKindOfClass:[NSDate class]]?_addedFields[key]:[NSDate date];
     } else if([segue.identifier isEqualToString:@"DropDown"]) {
         DropDownViewController *drop=segue.destinationViewController;
+        drop.indexPath=indexPath;
         drop.delegate=self;
         drop.options=f.settings;
     } else if([segue.identifier isEqualToString:@"NoteView"]) {

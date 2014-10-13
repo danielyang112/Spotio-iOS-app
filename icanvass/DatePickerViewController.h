@@ -19,4 +19,5 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) NSString *name;
 @property (nonatomic,strong) NSDate *date;
+@property (nonatomic,strong) NSIndexPath *indexPath;
 @end
