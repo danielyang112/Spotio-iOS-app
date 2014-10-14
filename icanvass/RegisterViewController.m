@@ -76,6 +76,7 @@
         bottomBorder.backgroundColor = color.CGColor;
         [f.layer addSublayer:bottomBorder];
     }
+    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _doneButton.frame.origin.y + _doneButton.frame.size.height + 10.f)];
 	// Do any additional setup after loading the view.
 }
 
@@ -292,7 +293,8 @@
     // Your app might not need or want this behavior.
 //    CGRect aRect = self.scrollView.frame;
 //    aRect.size.height -= kbRect.size.height;
-    _constraintBottom.constant = kbRect.size.height;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
+    _scrollView.contentInset = contentInsets;
     [self.scrollView layoutIfNeeded];
 
 //    if (!CGRectContainsPoint(aRect, _activeField.frame.origin) ) {
