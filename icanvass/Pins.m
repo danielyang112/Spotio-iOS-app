@@ -201,9 +201,12 @@
             weakSelf.pins=[self pinsArrayFromArray:responseObject[@"value"]];
 //            self.oldest=[[_pins lastObject] updateDate];
 //            self.newest=[[_pins firstObject] updateDate];
-        
-            [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:[NSDate date]] forKey:kRefreshDate];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            Pin *newestPin=[weakSelf.pins firstObject];
+            NSDate *refreshDate=newestPin.creationDate;
+            if(refreshDate){
+                [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:refreshDate] forKey:kRefreshDate];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
             weakSelf.gettingPins=NO;
 //            dispatch_async(dispatch_get_main_queue(), ^(void){
                 //Run UI UpdatesNSError *error=nil;
