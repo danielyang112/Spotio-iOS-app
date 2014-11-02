@@ -1264,6 +1264,7 @@
 					"\"${PODS_ROOT}/Headers/NewRelicAgent\"",
 				);
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1295,6 +1296,7 @@
 					"\"${PODS_ROOT}/Headers/NewRelicAgent\"",
 				);
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
