@@ -23,6 +23,8 @@
       var ch=$.qs["c"];
 
       var notify = function(x) {
+          x=x.replace(/_/g,"");
+          x=x.toLowerCase();
           window.location=x+"://";
       };
 
@@ -35,7 +37,7 @@
                          var n=data.NotificationType; // NotificationType: Pin
                          if(n=="Settings"){
                             var o=data.Operation;
-                            n+="_"+o;
+                            n+=o;
                          }
                          notify(n);
               });

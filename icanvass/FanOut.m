@@ -67,19 +67,24 @@
 #pragma mark - UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if([request.URL.scheme isEqualToString:@"Pin"]){
+    NSLog(@"fanout: %@",request.URL);
+    NSString *scheme=[request.URL.scheme lowercaseString];
+    if([scheme isEqualToString:@"pin"]){
         [self notify:@"FanOutPin"];
         return NO;
-    }else if([request.URL.scheme isEqualToString:@"Settings_USER_ADDED"]){
+    }else if([scheme isEqualToString:@"settingsuseradded"]){
         [self notify:@"FanOutUsers"];
         return NO;
-    }else if([request.URL.scheme isEqualToString:@"Settings_ROLE_CHANGED"]){
+    }else if([scheme isEqualToString:@"settingsrolechanged"]){
         [self notify:@"FanOutRoles"];
         return NO;
-    }else if([request.URL.scheme isEqualToString:@"Settings_STATUSES_CHANGED"]){
+    }else if([scheme isEqualToString:@"settingspermissionschanged"]){
+        [self notify:@"FanOutRoles"];
+        return NO;
+    }else if([scheme isEqualToString:@"settingsstatuseschanged"]){
         [self notify:@"FanOutStatuses"];
         return NO;
-    }else if([request.URL.scheme isEqualToString:@"Settings_QUESTIONS_CHANGED"]){
+    }else if([scheme isEqualToString:@"settingsquestionschanged"]){
         [self notify:@"FanOutQuestions"];
         return NO;
     }else{
