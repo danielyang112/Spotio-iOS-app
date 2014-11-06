@@ -113,8 +113,10 @@
 #pragma mark - Helpers
 
 - (void)updateFields {
+    
     __weak typeof(self) weakSelf = self;
-    [[Fields sharedInstance] sendFieldsTo:^(NSArray *a) {
+    [[Fields sharedInstance] sendFieldsTo:^(NSArray *a)
+    {
         weakSelf.customFields=a;
         [weakSelf extractPin];
         [_tableView reloadData];
@@ -122,6 +124,7 @@
 }
 
 - (void)adjustForAdding {
+    
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
     self.navigationItem.rightBarButtonItem.enabled=NO;
@@ -1080,6 +1083,7 @@ static NSDateFormatter *dateFormatter;
 
 
 - (IBAction)viewOnMap:(id)sender {
+    
     HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
     [homeViewController.segment setSelectedSegmentIndex:0];
     [homeViewController switchToViewController:homeViewController.controllers[0] animated:NO];  //animation here conflicts with popping to root animation
@@ -1096,6 +1100,7 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
     Field *f=_customFields[indexPath.row];
     NSNumber *key=@(f.ident);

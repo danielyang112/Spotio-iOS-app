@@ -18,14 +18,11 @@
 #import <BugSense-iOS/BugSenseController.h>
 #import "FanOut.h"
 
-
-
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
 #define kFanOutRealm @"3f449354"
-
 
 @implementation AppDelegate
 
@@ -36,7 +33,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"9ebe29b0"
                                             userDictionary:nil

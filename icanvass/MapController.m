@@ -21,8 +21,15 @@
 #import "CustomClusterManager.h"
 //#import <sys/utsname.h>
 
+#import "REVClusterMap.h"
+#import "REVClusterAnnotationView.h"
+#import "myButton.h"
 
+#define BASE_RADIUS .5 // = 1 mile
+#define MINIMUM_LATITUDE_DELTA 0.20
+#define BLOCKS 4
 
+#define MINIMUM_ZOOM_LEVEL 100000
 
 @interface MapController () <GMSMapViewDelegate>
 {
@@ -30,6 +37,7 @@
     BOOL firstLocationUpdate_;
     GMSCameraPosition *previousCameraPosition;
 
+    
 }
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic,strong) GMSMapView *allAnnotationMapView;
@@ -69,11 +77,21 @@
 //}
 //
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     CGRect f=self.view.bounds;
+    
+    _mapview = [[REVClusterMapView alloc] initWithFrame:f];
+    _mapview.delegate = self;
+    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
+    _mapview.mapType=satellite?MKMapTypeSatellite:MKMapTypeStandard;
+    _mapview.showsUserLocation = YES;
+    [self.view addSubview:_mapview];
+    
+    [_mapview addAnnotations:nil];
+    
+    /*
     self.mapView=[GMSMapView mapWithFrame:f camera:[self cameraPosition]];
     _mapView.delegate=self;
     _mapView.myLocationEnabled=YES;
@@ -107,12 +125,6 @@
     [_mapView setDelegate:clusterManager_];
     [clusterManager_ cluster];
 
-    
-    
-    
-    
-
-
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
     [self.view insertSubview:_mapView atIndex:0];
@@ -125,6 +137,7 @@
 //        _mapView.myLocationEnabled = YES;
 //    });
 
+     */
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -139,7 +152,6 @@
                                                          zoom:14];
     }
 }
-
 
 - (void)viewWillLayoutSubviews {
     CGRect f=self.view.bounds;
@@ -201,22 +213,46 @@
 }
 
 - (void)refreshMarkers {
-    for(GMSMarker *m in [_markers allValues]){
-        [clusterManager_ removeItems];
-        m.map=nil;
-    }
+    
     [_markers removeAllObjects];
-    for(Pin *pin in _filtered){
-        GMSMarker *marker=[self markerForPin:pin];
-        [clusterManager_ addItem:marker];
-        self.markers[pin.ident]=marker;
+    
+    NSMutableArray *tempPlaces=[[NSMutableArray alloc] initWithCapacity:0];
+    for(Pin *pin in _filtered) {
+        
+        REVClusterPin *place = [[REVClusterPin alloc] init];
+        place.userData = pin;
+        place.title = [NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
+        place.subtitle = @"";
+        place.coordinate = CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
+        place.image = [self iconForPin:pin];
+        [tempPlaces addObject:place];
+        
+        self.markers[pin.ident]=place;
     }
+
+    [_mapview addAnnotations:tempPlaces];
+    
+//    for(GMSMarker *m in [_markers allValues]){
+//        [clusterManager_ removeItems];
+//        m.map=nil;
+//    }
+//    [_markers removeAllObjects];
+//    for(Pin *pin in _filtered){
+//        GMSMarker *marker=[self markerForPin:pin];
+//        [clusterManager_ addItem:marker];
+//        self.markers[pin.ident]=marker;
+//    }
 }
 
 - (void)viewOnMap:(Pin*)pin {
-    if(_markers[pin.ident]){
-        self.mapView.selectedMarker=_markers[pin.ident];
-    }
+    
+    [self performSelector:@selector(openCallout:)
+               withObject:_markers[pin.ident]
+               afterDelay:0.5];
+    
+//    if(_markers[pin.ident]){
+//        self.mapView.selectedMarker=_markers[pin.ident];
+//    }
 }
 
 - (void)clear {
@@ -275,8 +311,168 @@
 
 - (void)mapSettingsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
+//    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
+//    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
+    
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
-    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
+    _mapview.mapType=satellite?MKMapTypeSatellite:MKMapTypeStandard;
+}
+
+#pragma mark -
+#pragma mark Map view delegate
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if([annotation class] == MKUserLocation.class) {
+		//userLocation = annotation;
+		return nil;
+	}
+    
+    REVClusterPin *pin = (REVClusterPin *)annotation;
+    
+    MKAnnotationView *annView;
+    
+    if( [pin nodeCount] > 0 ){
+        pin.title = @"___";
+        
+        annView = (REVClusterAnnotationView*)
+        [mapView dequeueReusableAnnotationViewWithIdentifier:@"cluster"];
+        
+        if( !annView )
+            annView = (REVClusterAnnotationView*)
+            [[REVClusterAnnotationView alloc] initWithAnnotation:annotation
+                                                  reuseIdentifier:@"cluster"];
+        
+        annView.image = [UIImage imageNamed:@"cluster.png"];
+        
+        [(REVClusterAnnotationView*)annView setClusterText:
+         [NSString stringWithFormat:@"%i",[pin nodeCount]]];
+        
+        annView.canShowCallout = NO;
+    } else {
+        annView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+        
+        if( !annView )
+            annView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+                                                    reuseIdentifier:@"pin"];
+        
+        annView.image = pin.image;
+        annView.canShowCallout = NO;
+        [annView setSelected:YES animated:YES];
+        annView.calloutOffset = CGPointMake(-6.0, 0.0);
+    }
+    return annView;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view1
+{
+
+    NSLog(@"REVMapViewController mapView didSelectAnnotationView:");
+    
+    if ([view1 isKindOfClass:[REVClusterAnnotationView class]])
+        return;
+    
+//    CLLocationCoordinate2D centerCoordinate = [(REVClusterPin *)view1.annotation coordinate];
+//    
+//    MKCoordinateSpan newSpan =
+//    MKCoordinateSpanMake(mapView.region.span.latitudeDelta/2.0,
+//                         mapView.region.span.longitudeDelta/2.0);
+//    
+//    //mapView.region = MKCoordinateRegionMake(centerCoordinate, newSpan);
+//    
+//    [mapView setRegion:MKCoordinateRegionMake(centerCoordinate, newSpan)
+//              animated:YES];
+    
+    REVClusterPin *pin1 = (REVClusterPin *)view1.annotation;
+    
+    Pin *pin=pin1.userData;
+    UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
+    
+    CGRect calloutViewFrame = view.frame;
+
+    calloutViewFrame.origin = CGPointMake(-calloutViewFrame.size.width/2 + 15, -calloutViewFrame.size.height);
+    view.frame = calloutViewFrame;
+    
+    UIView *icon=[view viewWithTag:7];
+    icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
+    icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
+    icon.layer.borderWidth=1.f;
+    UIView *bg=view;//[view viewWithTag:9];
+    bg.layer.masksToBounds = NO;
+    bg.layer.shadowOffset = CGSizeMake(-5, 5);
+    bg.layer.shadowRadius = 3;
+    bg.layer.shadowOpacity = 0.8;
+    bg.layer.borderWidth = 1.f;
+    bg.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    UILabel *l=(UILabel*)[view viewWithTag:1];
+    l.text=pin.status;
+    l=(UILabel*)[view viewWithTag:2];
+    //    l.text=pin.user;
+    l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
+    l=(UILabel*)[view viewWithTag:3];
+    l.text=[Pin formatDate:pin.updateDate];
+    l=(UILabel*)[view viewWithTag:4];
+    l.text=pin.address;
+    l=(UILabel*)[view viewWithTag:5];
+    l.text=pin.address2;
+    //view.backgroundColor=[UIColor whiteColor];
+    myButton *bt = (myButton*)[view viewWithTag:100];
+    [bt setExclusiveTouch:NO];
+    [bt setUserData:pin1.userData];
+    //[bt setBackgroundColor:[UIColor blueColor]];
+    [bt addTarget:self action:@selector(openPinDetail:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:bt];
+    
+    [view1 addSubview:view];
+}
+
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    
+    CGPoint touchLocation = [anntouch locationInView:view];
+    
+    for (UIView *subview in view.subviews ){
+        
+        if (CGRectContainsPoint(subview.frame, touchLocation))
+        {
+            for (UIView *view1 in subview.subviews)
+            {
+                if ([view1 isKindOfClass:[myButton class]])
+                {
+                    myButton *btn = (myButton*)view1;
+                    Pin *pin=btn.userData;
+                    [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+                }
+            }
+        }
+        
+        [subview removeFromSuperview];
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    anntouch = [touches anyObject];
+}
+
+
+- (void) openPinDetail:(myButton *)sender {
+    
+    Pin *pin=sender.userData;
+    [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+}
+
+- (void)openCallout:(id <MKAnnotation>)annotation {
+    
+    CLLocationDistance distance = 1.0;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, distance, distance);
+    [_mapview setRegion:region animated:YES];
+    [_mapview deselectAnnotation:annotation
+                               animated:NO];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_mapview selectAnnotation:annotation animated:YES];
+    });
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -305,6 +501,7 @@
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    
     Pin *pin=marker.userData;
     UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
     UIView *icon=[view viewWithTag:7];
@@ -366,7 +563,6 @@
         [_mapView animateToCameraPosition:[self cameraPosition]];
     }
 }
-
 
 #pragma mark - Navigation
 

@@ -22,7 +22,6 @@
     }
     return self;
 }
-
 @end
 
 @interface Users () {

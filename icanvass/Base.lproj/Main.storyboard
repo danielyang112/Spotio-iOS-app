@@ -781,7 +781,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Ylr-H4-YqP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xC8-y0-Sok">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                     </view>
@@ -1230,7 +1230,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lhp-0e-9BA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="535" y="408"/>
+            <point key="canvasLocation" x="533" y="473"/>
         </scene>
         <!--Map Controller-->
         <scene sceneID="yzf-Uk-zcO">
@@ -1673,8 +1673,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ior-pu-iih"/>
-        <segue reference="Bv0-GQ-wPh"/>
+        <segue reference="b0p-iL-zeW"/>
+        <segue reference="gig-RQ-cdP"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.95294117649999999" green="0.61176470589999998" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

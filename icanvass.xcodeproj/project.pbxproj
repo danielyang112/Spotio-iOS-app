@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149498FD1A039904006AE1FF /* REVAnnotationsCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F31A039904006AE1FF /* REVAnnotationsCollection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149498FE1A039904006AE1FF /* REVClusterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F51A039904006AE1FF /* REVClusterBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149498FF1A039904006AE1FF /* REVClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F71A039904006AE1FF /* REVClusterManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499001A039904006AE1FF /* REVClusterMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498FA1A039904006AE1FF /* REVClusterMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499011A039904006AE1FF /* REVClusterPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498FC1A039904006AE1FF /* REVClusterPin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499041A0399C8006AE1FF /* REVClusterAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499091A039BE0006AE1FF /* cluster.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499051A039BE0006AE1FF /* cluster.png */; };
+		1494990A1A039BE0006AE1FF /* cluster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499061A039BE0006AE1FF /* cluster@2x.png */; };
+		1494990B1A039BE0006AE1FF /* pinpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499071A039BE0006AE1FF /* pinpoint.png */; };
+		1494990C1A039BE0006AE1FF /* pinpoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499081A039BE0006AE1FF /* pinpoint@2x.png */; };
+		1494990E1A039C3C006AE1FF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1494990D1A039C3C006AE1FF /* MapKit.framework */; };
+		14AE51CF1A076BF4007C88A2 /* myButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE51CE1A076BF4007C88A2 /* myButton.m */; };
 		2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB9833419D18A8A000A9269 /* CustomClusterManager.m */; };
 		2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */; };
 		2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6DA19D07BF7008C7B51 /* GQuadItem.m */; };
@@ -165,12 +177,32 @@
 		42EF82EB18FBFA390045EB0E /* Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EF82EA18FBFA390045EB0E /* Users.m */; };
 		42F79B4219A4DEBD00DCBB08 /* CustomValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F79B4119A4DEBD00DCBB08 /* CustomValue.m */; };
 		42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA1F6418E1DF970015D137 /* ListHeader.xib */; };
-		46662274F8094FC9A143034A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8582D548F5B6439AA0F09ACC /* libPods.a */; };
+		49B7D99C19E4EEA500771630 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */; };
 		73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BFB8BF195D005600952C9A /* MessageUI.framework */; };
 		73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFB8C2195D670C00952C9A /* NoteViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		149498F21A039904006AE1FF /* REVAnnotationsCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVAnnotationsCollection.h; sourceTree = "<group>"; };
+		149498F31A039904006AE1FF /* REVAnnotationsCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVAnnotationsCollection.m; sourceTree = "<group>"; };
+		149498F41A039904006AE1FF /* REVClusterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterBlock.h; sourceTree = "<group>"; };
+		149498F51A039904006AE1FF /* REVClusterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterBlock.m; sourceTree = "<group>"; };
+		149498F61A039904006AE1FF /* REVClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterManager.h; sourceTree = "<group>"; };
+		149498F71A039904006AE1FF /* REVClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterManager.m; sourceTree = "<group>"; };
+		149498F81A039904006AE1FF /* REVClusterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterMap.h; sourceTree = "<group>"; };
+		149498F91A039904006AE1FF /* REVClusterMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterMapView.h; sourceTree = "<group>"; };
+		149498FA1A039904006AE1FF /* REVClusterMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterMapView.m; sourceTree = "<group>"; };
+		149498FB1A039904006AE1FF /* REVClusterPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterPin.h; sourceTree = "<group>"; };
+		149498FC1A039904006AE1FF /* REVClusterPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterPin.m; sourceTree = "<group>"; };
+		149499021A0399C8006AE1FF /* REVClusterAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterAnnotationView.h; sourceTree = "<group>"; };
+		149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterAnnotationView.m; sourceTree = "<group>"; };
+		149499051A039BE0006AE1FF /* cluster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cluster.png; sourceTree = "<group>"; };
+		149499061A039BE0006AE1FF /* cluster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cluster@2x.png"; sourceTree = "<group>"; };
+		149499071A039BE0006AE1FF /* pinpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinpoint.png; sourceTree = "<group>"; };
+		149499081A039BE0006AE1FF /* pinpoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinpoint@2x.png"; sourceTree = "<group>"; };
+		1494990D1A039C3C006AE1FF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		14AE51CD1A076BF4007C88A2 /* myButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myButton.h; sourceTree = "<group>"; };
+		14AE51CE1A076BF4007C88A2 /* myButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myButton.m; sourceTree = "<group>"; };
 		2CB9833319D18A8A000A9269 /* CustomClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomClusterManager.h; sourceTree = "<group>"; };
 		2CB9833419D18A8A000A9269 /* CustomClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomClusterManager.m; sourceTree = "<group>"; };
 		2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
@@ -420,6 +452,7 @@
 		42F79B4019A4DEBD00DCBB08 /* CustomValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomValue.h; sourceTree = "<group>"; };
 		42F79B4119A4DEBD00DCBB08 /* CustomValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomValue.m; sourceTree = "<group>"; };
 		42FA1F6418E1DF970015D137 /* ListHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListHeader.xib; sourceTree = "<group>"; };
+		49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		73BFB8BF195D005600952C9A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		73BFB8C1195D670C00952C9A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		73BFB8C2195D670C00952C9A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
@@ -433,6 +466,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1494990E1A039C3C006AE1FF /* MapKit.framework in Frameworks */,
+				49B7D99C19E4EEA500771630 /* NewRelicAgent.framework in Frameworks */,
 				42284F6A18D257010087941E /* CoreLocation.framework in Frameworks */,
 				73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */,
 				42284F7C18D257820087941E /* SystemConfiguration.framework in Frameworks */,
@@ -453,13 +488,36 @@
 				42284F6418D256A20087941E /* GoogleMaps.framework in Frameworks */,
 				2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */,
 				42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */,
-				46662274F8094FC9A143034A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		149498F11A039904006AE1FF /* REVClusterMap */ = {
+			isa = PBXGroup;
+			children = (
+				149499051A039BE0006AE1FF /* cluster.png */,
+				149499061A039BE0006AE1FF /* cluster@2x.png */,
+				149499071A039BE0006AE1FF /* pinpoint.png */,
+				149499081A039BE0006AE1FF /* pinpoint@2x.png */,
+				149499021A0399C8006AE1FF /* REVClusterAnnotationView.h */,
+				149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */,
+				149498F21A039904006AE1FF /* REVAnnotationsCollection.h */,
+				149498F31A039904006AE1FF /* REVAnnotationsCollection.m */,
+				149498F41A039904006AE1FF /* REVClusterBlock.h */,
+				149498F51A039904006AE1FF /* REVClusterBlock.m */,
+				149498F61A039904006AE1FF /* REVClusterManager.h */,
+				149498F71A039904006AE1FF /* REVClusterManager.m */,
+				149498F81A039904006AE1FF /* REVClusterMap.h */,
+				149498F91A039904006AE1FF /* REVClusterMapView.h */,
+				149498FA1A039904006AE1FF /* REVClusterMapView.m */,
+				149498FB1A039904006AE1FF /* REVClusterPin.h */,
+				149498FC1A039904006AE1FF /* REVClusterPin.m */,
+			);
+			path = REVClusterMap;
+			sourceTree = "<group>";
+		};
 		2CB9832719D06ECC000A9269 /* CGClustering */ = {
 			isa = PBXGroup;
 			children = (
@@ -593,6 +651,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
+				149498F11A039904006AE1FF /* REVClusterMap */,
 				2CDCA6D619D07BF7008C7B51 /* Clustering */,
 				2CDCA6E719D07BF7008C7B51 /* Projection */,
 				2CDCA6EA19D07BF7008C7B51 /* QuadTree */,
@@ -666,6 +725,8 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1494990D1A039C3C006AE1FF /* MapKit.framework */,
+				49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */,
 				2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */,
 				73BFB8BF195D005600952C9A /* MessageUI.framework */,
 				4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */,
@@ -805,6 +866,8 @@
 				42A7BECC18D71D7400973EA8 /* PinCell.m */,
 				4255E67E19A7AE2A007657E9 /* HilightedButton.h */,
 				4255E67F19A7AE2A007657E9 /* HilightedButton.m */,
+				14AE51CD1A076BF4007C88A2 /* myButton.h */,
+				14AE51CE1A076BF4007C88A2 /* myButton.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -905,11 +968,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "door2doorapp" */;
 			buildPhases = (
-				4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */,
 				42A6A57918CBA3BF0043233C /* Sources */,
 				42A6A57A18CBA3BF0043233C /* Frameworks */,
 				42A6A57B18CBA3BF0043233C /* Resources */,
-				F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -971,6 +1032,7 @@
 				427E8A311901CFC30092504A /* AppIcon40x40@2x.png in Resources */,
 				42B3A68218E8903600B46FBF /* logout@2x.png in Resources */,
 				42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */,
+				1494990B1A039BE0006AE1FF /* pinpoint.png in Resources */,
 				427E8A371901CFC30092504A /* AppIcon60x60@2x.png in Resources */,
 				42B3A6BE18E8C5E700B46FBF /* MPCheckmark.png in Resources */,
 				42B3A68618E8903600B46FBF /* support@2x.png in Resources */,
@@ -987,6 +1049,7 @@
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
 				4238E2C7197C683700CE8299 /* button@2x.png in Resources */,
 				42B3A67F18E8903600B46FBF /* adduser@2x.png in Resources */,
+				149499091A039BE0006AE1FF /* cluster.png in Resources */,
 				427E8A361901CFC30092504A /* AppIcon60x60.png in Resources */,
 				42341CE419CF0BCC000D61E3 /* fanout.html in Resources */,
 				420251A2197729E800F77D39 /* password@2x.png in Resources */,
@@ -1001,6 +1064,7 @@
 				42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */,
 				42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */,
 				4202519D197722A600F77D39 /* register@2x.png in Resources */,
+				1494990A1A039BE0006AE1FF /* cluster@2x.png in Resources */,
 				427E8A301901CFC30092504A /* AppIcon40x40.png in Resources */,
 				4291C3EC1999592900C64E36 /* tutorial3@2x.png in Resources */,
 				427E8A341901CFC30092504A /* AppIcon57x57.png in Resources */,
@@ -1017,45 +1081,13 @@
 				4255E68619A7B40B007657E9 /* SVProgressHUD.bundle in Resources */,
 				42B3A68118E8903600B46FBF /* home@2x.png in Resources */,
 				42B3A68A18E89B2600B46FBF /* bg@2x.png in Resources */,
+				1494990C1A039BE0006AE1FF /* pinpoint@2x.png in Resources */,
 				427E8A3B1901CFC30092504A /* AppIcon76x76@2x.png in Resources */,
 				427E8A3C1901CFC30092504A /* iTunesArtwork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		42A6A57918CBA3BF0043233C /* Sources */ = {
@@ -1064,19 +1096,24 @@
 			files = (
 				42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */,
 				2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */,
+				149499041A0399C8006AE1FF /* REVClusterAnnotationView.m in Sources */,
 				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
 				42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */,
 				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
 				42480DE819A3ECC100E6DF7B /* Location.m in Sources */,
+				149498FE1A039904006AE1FF /* REVClusterBlock.m in Sources */,
 				4255E68719A7B40B007657E9 /* SVProgressHUD.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
+				149499011A039904006AE1FF /* REVClusterPin.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				4291C3F0199959B400C64E36 /* TutorialViewController.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
 				73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */,
 				42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */,
+				14AE51CF1A076BF4007C88A2 /* myButton.m in Sources */,
 				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
+				149499001A039904006AE1FF /* REVClusterMapView.m in Sources */,
 				42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */,
 				2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */,
 				42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */,
@@ -1105,6 +1142,7 @@
 				42A7BEC418D719BF00973EA8 /* UIAlertView+AFNetworking.m in Sources */,
 				42D28CE518E06702005E1758 /* MMDrawerVisualState.m in Sources */,
 				42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */,
+				149498FF1A039904006AE1FF /* REVClusterManager.m in Sources */,
 				42341CE219CF0BB4000D61E3 /* FanOut.m in Sources */,
 				42284F9518D26AF10087941E /* AFNetworkReachabilityManager.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
@@ -1126,6 +1164,7 @@
 				2CDCA6F419D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				2CDCA6F819D07BF7008C7B51 /* GQTPointQuadTree.m in Sources */,
 				42EF82EB18FBFA390045EB0E /* Users.m in Sources */,
+				149498FD1A039904006AE1FF /* REVAnnotationsCollection.m in Sources */,
 				42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */,
 				42284F9618D26AF10087941E /* AFSecurityPolicy.m in Sources */,
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
@@ -1181,8 +1220,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1201,7 +1240,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "484e8c90-61b1-4597-9801-bc18f7ec8790";
+				PROVISIONING_PROFILE = "ac8685ba-8709-4a4b-9d45-359d05c6f078";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1222,8 +1261,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugene Altynpara (C6RLMB5Y7D)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1235,7 +1274,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "e638e050-56e4-4123-8568-74bf0fd4be6a";
+				PROVISIONING_PROFILE = "ac8685ba-8709-4a4b-9d45-359d05c6f078";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1250,12 +1289,13 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 					"$(PROJECT_DIR)",
+					/Users/imac2/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
@@ -1266,7 +1306,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ac8685ba-8709-4a4b-9d45-359d05c6f078";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1282,12 +1322,13 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 					"$(PROJECT_DIR)",
+					/Users/imac2/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
@@ -1298,7 +1339,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ac8685ba-8709-4a4b-9d45-359d05c6f078";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

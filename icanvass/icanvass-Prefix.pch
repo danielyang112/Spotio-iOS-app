@@ -15,7 +15,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <NewRelicAgent/NewRelic.h>
-
+    #import <MapKit/MapKit.h>
 #endif
 
 #ifdef NDEBUG

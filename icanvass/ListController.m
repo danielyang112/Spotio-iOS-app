@@ -19,7 +19,6 @@
 #import "Pin.h"
 #import <CoreData/CoreData.h>
 
-
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
     ICSortOrderStatusDescending,

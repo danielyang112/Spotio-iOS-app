@@ -11,7 +11,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "Clustering/GClusterManager.h"
 
-
+#import "REVClusterMapView.h"
 
 @class Pin;
 
@@ -20,7 +20,11 @@
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate;
 @end
 
-@interface MapController : UIViewController<UISearchBarDelegate>
+@interface MapController : UIViewController<UISearchBarDelegate,MKMapViewDelegate>{
+    
+    REVClusterMapView *_mapview;
+    UITouch *anntouch;
+}
 @property (nonatomic,strong) CLLocation *location;
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @property (nonatomic,strong) NSArray *pins;
@@ -31,5 +35,6 @@
 - (GMSMarker*)markerForPin:(Pin*)pin;
 - (void)viewOnMap:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view1;
 
 @end

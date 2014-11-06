@@ -38,10 +38,12 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self setupLeftMenuButton];
-    if(IS_OS_8_OR_LATER) {
-        [self.locationManager requestAlwaysAuthorization];
+    if(IS_OS_8_OR_LATER)
+    {
+        //[self.locationManager requestAlwaysAuthorization];
     }
     
     [self.locationManager startUpdatingLocation];
@@ -53,44 +55,47 @@
     _map.location=_locationManager.location;
     self.controllers=@[_map,list];
     [self switchToViewController:_controllers[0] animated:NO];
-    
 }
-
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
     [self.locationManager startUpdatingLocation];
 }
-
 - (void)viewDidDisappear:(BOOL)animated {
+    
     [super viewDidDisappear:animated];
     [self.locationManager stopUpdatingLocation];
 }
-
 - (void)viewWillLayoutSubviews {
+    
     CGRect f=self.view.bounds;
     f.size.height-=44.f;
     self.container.frame=f;
     _current.view.frame=_container.bounds;
 }
 
+#pragma mark -
 #pragma mark - Helpers
-
 -(void)setupLeftMenuButton{
+    
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
+    
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 - (void)switchToViewController:(UIViewController*)vc animated:(BOOL)animated {
+    
     if(vc==_current) return;
     
     [self cycleFromViewController:_current toViewController:vc animated:animated];
 }
 
 - (void)cycleFromViewController:(UIViewController*)oldv toViewController:(UIViewController*)newv animated:(BOOL)animated{
+    
     [oldv willMoveToParentViewController:nil];
     [self addChildViewController:newv];
     
@@ -108,7 +113,8 @@
         return;
     }
     
-    if(!animated){
+    if(!animated)
+    {
         [oldv.view removeFromSuperview];[self.container addSubview:newv.view];
         completion(YES);
         return;
@@ -120,16 +126,19 @@
                             completion:completion];
 }
 
+#pragma mark -
 #pragma mark - Delegate to MailComposer
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    if (error) {
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+    
+    if (error)
+    {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Mail Error" message:[error localizedDescription] delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
         [alert show];
     }
     UIAlertView *resultAlert;
-    switch (result) {
+    switch (result)
+    {
         case MFMailComposeResultSent:
             resultAlert = [[UIAlertView alloc] initWithTitle:@"Sent" message:@"Mail sent successfully." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
             [resultAlert show];
@@ -149,7 +158,6 @@
 }
 
 #pragma mark - Actions
-
 - (IBAction)shareClicked:(id)sender {
     
     BOOL allowed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sharing"] isEqualToString:@"1"];
@@ -168,7 +176,8 @@
     NSString *headerStr = @"\"Status\",\"Address\",\"City\",\"State\",\"Zip\",\"Name\",\"Phone\",\"Email\",\"Notes\",\"Created Dates\",\"Created Time\",\"Last Updated Date\",\"Last Updated Time\",\"User Name\"";
     [mainString appendString:headerStr];
     
-    for(Pin *pin in self.map.filtered){
+    for(Pin *pin in self.map.filtered)
+    {
         NSString *name, *phone, *email, *notes;
         name = @"";
         phone = @"";
@@ -176,7 +185,8 @@
         notes = @"";
         for(NSDictionary *d in pin.customValuesOld){
             NSNumber *id = d[@"DefinitionId"];
-            switch([id intValue]){
+            switch([id intValue])
+            {
                 case 1:
                     name = d[@"StringValue"];
                     break;
@@ -190,7 +200,6 @@
                     notes = d[@"StringValue"];
                     break;
             }
-            
         }
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -206,11 +215,12 @@
     }
     
     NSLog(@"getdatafor csv:%@",mainString);
-    
-    /*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,  NSUserDomainMask, YES);
-    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectoryPath  stringByAppendingPathComponent:@"history.csv"];
-    //        filePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];*/
+    /*
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,  NSUserDomainMask, YES);
+        NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+        NSString *filePath = [documentsDirectoryPath  stringByAppendingPathComponent:@"history.csv"];
+        //filePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+     */
     NSData *myData = [mainString dataUsingEncoding:NSUTF8StringEncoding];
     
     
@@ -237,6 +247,7 @@
 }
 
 - (IBAction)valueChanged:(id)sender {
+    
     UISegmentedControl *segmented=(UISegmentedControl*)sender;
     [self switchToViewController:_controllers[segmented.selectedSegmentIndex] animated:YES];
 }
@@ -244,6 +255,7 @@
 #pragma mark - MapControllerDelegate
 
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    
     NSLog(@"%f, %f",coordinate.latitude, coordinate.longitude);
     self.tappedCoordinate=coordinate;
     self.tapped=YES;
@@ -262,6 +274,7 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
     // If it's a relatively recent event, turn off updates to save power.
     CLLocation *location = [locations lastObject];
     NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
@@ -275,7 +288,6 @@
 }
 
 #pragma mark - Navigation
-
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
