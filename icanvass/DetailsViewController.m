@@ -772,14 +772,13 @@ static NSDateFormatter *dateFormatter;
         NSString *CellIdentifier = @"DetailsTextCell";
         DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         cell.field.delegate=self;
-        //UITextField *field=(UITextField*)[cell viewWithTag:1];
-        
         cell.field.placeholder=f.name;
         cell.field.keyboardType=UIKeyboardTypeDefault;
         if(_addedFields[key]){
             cell.field.text=_addedFields[key];
+        }else{
+            cell.field.text=@"";
         }
-        //        cell.enabled=!!_addedFields[key];
         cell.enabled=YES;
         return cell;
     }
