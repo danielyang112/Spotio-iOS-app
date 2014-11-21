@@ -13,7 +13,7 @@
 
 @class  MapController;
 
-@interface HomeViewController : UIViewController <CLLocationManagerDelegate, MFMailComposeViewControllerDelegate>
+@interface HomeViewController : UIViewController <CLLocationManagerDelegate>
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
 @property (weak, nonatomic) IBOutlet UIView *container;
 @property (nonatomic,strong) MapController *map;

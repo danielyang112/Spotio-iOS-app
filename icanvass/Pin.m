@@ -10,6 +10,7 @@
 #import "CustomValue.h"
 #import "Location.h"
 #import "utilities.h"
+#import "Fields.h"
 
 
 @implementation Pin
@@ -90,6 +91,20 @@
     {
         [ma addObject:[cv dict]];
     }
+	
+	[ma sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSDictionary *a=(NSDictionary*)obj1;
+		NSDictionary *b=(NSDictionary*)obj2;
+		
+		int idA = [a[@"DefinitionId"] integerValue];
+		int idB = [b[@"DefinitionId"] integerValue];
+		
+		if(idA > idB){
+			return NSOrderedDescending;
+		}
+		return NSOrderedAscending;
+	}];
+	
     return [NSArray arrayWithArray:ma];
 }
 

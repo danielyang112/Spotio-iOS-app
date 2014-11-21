@@ -58,6 +58,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMapPositionAfterAddPin:) name:@"SetMapPositionAfterAddPin" object:nil];
     }
     return self;
 }
@@ -298,6 +299,9 @@
         {
             weakSelf.pins=a;
         }
+		
+		NSLog(@"++++++++++++++++++ %d", [a count]);
+		
         double maxLatitude = MAX(MAX(myRegion.farRight.latitude,myRegion.nearRight.latitude),MAX(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
         double maxLongitude = MAX(MAX(myRegion.farRight.longitude,myRegion.nearRight.longitude),MAX(myRegion.farLeft.longitude,myRegion.nearLeft.longitude));
         double minLatitude = MIN(MIN(myRegion.farRight.latitude,myRegion.nearRight.latitude),MIN(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
@@ -306,9 +310,7 @@
 
         NSPredicate* predicateForRegion = [NSPredicate predicateWithFormat:@"SELF.latitude <= %f+0.009 AND SELF.longitude<= %f+0.009 AND self.latitude >= %f-0.009 AND SELF.longitude>= %f-0.009",maxLatitude,maxLongitude,minLatitude,minLongitude];
         weakSelf.filtered=_pins;
-       self.filtered =  [weakSelf.filtered filteredArrayUsingPredicate:predicateForRegion];
-        
-        
+		self.filtered =  [weakSelf.filtered filteredArrayUsingPredicate:predicateForRegion];
         [weakSelf refreshMarkers];
     }];
 }
@@ -341,6 +343,16 @@
     NSLog(@"%s",__FUNCTION__);
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
+}
+
+- (void)setMapPositionAfterAddPin:(NSNotification*)notification {
+	NSNumber *lonNumber = [notification.userInfo objectForKey:@"lon"];
+	NSNumber *latNumber = [notification.userInfo objectForKey:@"lat"];
+	double lon = [lonNumber doubleValue];
+	double lat = [latNumber doubleValue];
+	CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(lat,lon);
+	[self.mapView animateToLocation:coordinates];
+	[self refresh];
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -436,6 +448,11 @@
 }
 
 #pragma mark - API
+
+-(void)setFiltered:(NSArray *)filtered {
+	[[Pins sharedInstance] filteredPinsWithArray: filtered];
+	_filtered = filtered;
+}
 
 - (void)setLocation:(CLLocation *)location {
     NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);

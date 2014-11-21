@@ -19,9 +19,10 @@
 
 + (Pins*)sharedInstance;
 - (void)sendPinsTo:(void (^)(NSArray *a))block;
-- (void)sendStatusesTo:(void (^)(NSArray *a))block;
-- (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block;
+- (void)sendStatusesTo:(void (^)(NSArray *a))block failure:(void (^)(NSError *error))failure;
+- (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(NSError *error))block;
 - (void)editPin:(Pin*)pin withDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block;
+- (void)deletePin:(Pin*)pin block:(void (^)(BOOL success))block;
 - (UIColor*)colorForStatus:(NSString*)status;
 - (void)clear;
 - (void)fetchPinsWithBlock:(void (^)(NSArray *a))block;
@@ -29,5 +30,6 @@
 - (void)fetchPinsFromCoreDataWithPredicate:(NSPredicate*)predicate;
 - (void)fetchPinsFromCoreData;
 + (NSOperationQueue*)operationQueue;
-
+-(void) filteredPinsWithArray:(NSArray*) filteredPins;
+-(NSArray*) filteredPinsArray;
 @end

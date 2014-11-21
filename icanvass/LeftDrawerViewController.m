@@ -15,9 +15,10 @@
 #import <FreshdeskSDK/FreshdeskSDK.h>
 #import "Mixpanel.h"
 #import "Pins.h"
+#import "AppDetailViewController.h"
 
 
-@interface LeftDrawerViewController ()
+@interface LeftDrawerViewController () <MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -42,26 +43,12 @@
     [super viewWillAppear:animated];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+//	[self.mm_drawerController setRightDrawerViewController: vc];
 }
-*/
 
-- (void)goToWebsiteWithText:(NSString*)text title:(NSString*)title{
-    GoToWebsiteViewController *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"GoToWebsiteViewController"];
-    vc.text=text;
-    vc.title=title;
-    UINavigationController *nc=[[UINavigationController alloc] initWithRootViewController:vc];
-    [self.mm_drawerController setCenterViewController:nc
-                                   withCloseAnimation:YES
-                                           completion:nil];
-}
 
 #pragma mark - Actions
 
@@ -84,29 +71,83 @@
     [self.mm_drawerController closeDrawerAnimated:YES completion:nil];
 }
 
-- (IBAction)addUser:(id)sender {
-    [self goToWebsiteWithText:@"Want to add some people to your team? No problem! Just click the button to go to the web app and hit the \"Add User\" button in the top right corner." title:@"Add User"];
-    [[Mixpanel sharedInstance] track:@"AddUserView"];
-}
-
-- (IBAction)customizeStatus:(id)sender {
-    [self goToWebsiteWithText:@"Make it work for you! Go ahead and login to the web app by clicking the button below and in the settings menu in the top right you can customize pretty much everything." title:@"Customize Status"];
-    [[Mixpanel sharedInstance] track:@"CustomizeStatusView"];
-}
-
-- (IBAction)customizeQuestions:(id)sender {
-    [self goToWebsiteWithText:@"Need to gather more info? Add all you want in the SPOTIO web app, click the button below to go to the login page." title:@"Customize Questions"];
-    [[Mixpanel sharedInstance] track:@"CustomizeQuestionsView"];
-}
-
-- (IBAction)deletePin:(id)sender {
-    [self goToWebsiteWithText:@"I know, I know. Made a mistake and need to delete a PIN. Go to the web app where you can do that and much more, just click below to go to the login screen." title:@"Delete PIN"];
-    [[Mixpanel sharedInstance] track:@"DeletePINView"];
-}
-
 - (IBAction)reports:(id)sender {
-    [self goToWebsiteWithText:@"Custom reports with all your data are right around the corner in the web app, click below." title:@"Reports"];
-    [[Mixpanel sharedInstance] track:@"ReportsView"];
+	if (![MFMailComposeViewController canSendMail]) {
+		UIAlertView *alert = [[UIAlertView alloc]
+							  initWithTitle:@"No Mail Account"
+							  message:@"Please set up a Mail account in order to send email."
+							  delegate:nil
+							  cancelButtonTitle:@"OK"
+							  otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+
+	BOOL allowed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"sharing"] isEqualToString:@"1"];
+	if(!allowed) {
+		UIAlertView *alert = [[UIAlertView alloc]
+							  initWithTitle:@"Share"
+							  message:@"You do not have permission to share the reports."
+							  delegate:nil
+							  cancelButtonTitle:@"OK"
+							  otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	NSMutableString *mainString=[[NSMutableString alloc]initWithString:@""];
+	NSString *headerStr = @"\"Status\",\"Address\",\"City\",\"State\",\"Zip\",\"Name\",\"Phone\",\"Email\",\"Notes\",\"Created Dates\",\"Created Time\",\"Last Updated Date\",\"Last Updated Time\",\"User Name\"";
+	[mainString appendString:headerStr];
+	
+	NSArray *filtered = [[Pins sharedInstance] filteredPinsArray];
+	
+	for(Pin *pin in filtered){
+		NSString *name, *phone, *email, *notes;
+		name = @"";
+		phone = @"";
+		email = @"";
+		notes = @"";
+		for(NSDictionary *d in pin.customValuesOld){
+			NSNumber *id = d[@"DefinitionId"];
+			switch([id intValue]){
+				case 1:
+					name = d[@"StringValue"];
+					break;
+				case 2:
+					phone = d[@"StringValue"];
+					break;
+				case 3:
+					email = d[@"StringValue"];
+					break;
+				case 4:
+					notes = d[@"StringValue"];
+					break;
+			}
+			
+		}
+		
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+		[formatter setDateFormat:@"yyyy-MM-dd"];
+		NSString *creationDate = [formatter stringFromDate:pin.creationDate];
+		NSString *updateDate = [formatter stringFromDate:pin.updateDate];
+		[formatter setDateFormat:@"HH:mm:ss"];
+		NSString *creationTime = [formatter stringFromDate:pin.creationDate];
+		NSString *updateTime = [formatter stringFromDate:pin.updateDate];
+		
+		NSString *dataString = [NSString stringWithFormat:@"\n\"%@\",\"%@ %@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"", pin.status, pin.location.streetNumber, pin.location.streetName, pin.location.city, pin.location.state, pin.location.zip, name, phone, email, notes, creationDate, creationTime, updateDate, updateTime, pin.user];
+		[mainString appendString:dataString];
+	}
+	
+	NSLog(@"getdatafor csv:%@",mainString);
+	
+	NSData *myData = [mainString dataUsingEncoding:NSUTF8StringEncoding];
+
+	MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+	mailer.mailComposeDelegate = self;
+	[mailer setSubject:@"CSV File"];
+	[mailer addAttachmentData:myData mimeType:@"text/csv" fileName:@"Spreadsheet.csv"];
+	[self presentViewController:mailer animated:YES completion:nil];
+	
 }
 
 - (IBAction)support:(id)sender {
@@ -123,9 +164,42 @@
     }];
 }
 
-- (IBAction)refresh:(id)sender {
-    [[Mixpanel sharedInstance] track:@"Refresh"];
-    [[Pins sharedInstance] fetchPinsWithBlock:nil];
-    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
+- (IBAction)appDetails:(id)sender {
+	AppDetailViewController *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"AppDetailViewController"];
+//	UINavigationController *nc=[[UINavigationController alloc] initWithRootViewController:vc];
+//	[self.mm_drawerController setCenterViewController:nc
+//								   withCloseAnimation:YES
+//										   completion:nil];
+	[self presentViewController:vc animated:YES completion:nil];
 }
+
+#pragma mark - Delegate to MailComposer
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	if (error) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Mail Error" message:[error localizedDescription] delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+		[alert show];
+	}
+	UIAlertView *resultAlert;
+	switch (result) {
+		case MFMailComposeResultSent:
+			resultAlert = [[UIAlertView alloc] initWithTitle:@"Sent" message:@"Mail sent successfully." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+			[resultAlert show];
+			break;
+		case MFMailComposeResultFailed:
+			resultAlert = [[UIAlertView alloc] initWithTitle:@"Failed" message:@"Failed to send mail." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+			[resultAlert show];
+			break;
+		case MFMailComposeResultSaved:
+			resultAlert = [[UIAlertView alloc] initWithTitle:@"Saved" message:@"Mail saved successfully." delegate:NULL cancelButtonTitle:@"OK" otherButtonTitles:NULL];
+			[resultAlert show];
+			break;
+		case MFMailComposeResultCancelled:
+			break;
+	}
+	[self dismissViewControllerAnimated:NO completion:nil];
+}
+
+
 @end

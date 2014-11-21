@@ -1244,8 +1244,15 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
 
 #pragma mark - UIGestureRecognizerDelegate
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    
+	
     BOOL shouldReceiveTouch = NO;
+	// for delete in table on swipe
+	CGFloat x = [touch previousLocationInView: self.view].x;
+	CGFloat width = self.view.frame.size.width;
+	if( (x > width*0.75) && self.openSide == MMDrawerSideNone) {
+		return NO;
+	}
+	
     if(self.openSide == MMDrawerSideNone){
         MMOpenDrawerGestureMode possibleOpenGestureModes = [self possibleOpenGestureModesForGestureRecognizer:gestureRecognizer
                                                                                                     withTouch:touch];

@@ -13,14 +13,8 @@
 - (IBAction)pins:(id)sender;
 - (IBAction)satelliteView:(id)sender;
 - (IBAction)switchChanged:(UISwitch *)sender;
-- (IBAction)addUser:(id)sender;
-- (IBAction)customizeStatus:(id)sender;
-- (IBAction)customizeQuestions:(id)sender;
-- (IBAction)deletePin:(id)sender;
 - (IBAction)reports:(id)sender;
 - (IBAction)support:(id)sender;
 - (IBAction)logout:(id)sender;
-- (IBAction)refresh:(id)sender;
-
 
 @end

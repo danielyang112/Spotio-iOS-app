@@ -2,6 +2,7 @@
 # platform :ios, "6.0"
 
 pod 'NewRelicAgent'
+pod 'MDCFocusView'
 
 post_install do |installer|
     installer.project.targets.each do |target|

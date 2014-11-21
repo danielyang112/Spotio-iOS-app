@@ -41,7 +41,6 @@
         [[NSUserDefaults standardUserDefaults] setObject:company  forKey:kCompanyNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:kPasswordKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
         cb(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         cb(NO);

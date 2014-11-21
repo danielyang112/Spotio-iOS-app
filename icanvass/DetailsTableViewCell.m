@@ -47,6 +47,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     _stepper.hidden=!editing;
+	_directionsButton.hidden = editing;
 }
 
 - (IBAction)textFieldDidChange:(UITextField*)sender {
@@ -71,7 +72,6 @@
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
-//    self.accessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 }
 
 @end
@@ -81,14 +81,30 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     self.top.hidden=NO;
-    self.bottom.hidden=NO;
+    self.bottom.hidden = !self.phoneOrEmailButton.hidden;
 }
 
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
+	self.bottom.hidden = !self.phoneOrEmailButton.hidden;
     self.editingAccessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
     self.accessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 }
 
+- (void)phoneOrEmail:(BOOL) isPhoneOrEmail {
+	[self.phoneOrEmailButton setTitle:self.bottom.text forState:UIControlStateNormal];
+	self.phoneOrEmailButton.hidden = !isPhoneOrEmail;
+	self.bottom.hidden = isPhoneOrEmail;
+}
+
 @end
 
+@implementation DeletePinCell
+- (void)setEnabled:(BOOL)enabled {
+	[super setEnabled:enabled];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+}
+@end

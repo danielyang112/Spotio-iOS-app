@@ -18,6 +18,7 @@
 @interface Pins () {
 }
 @property (nonatomic,strong) NSMutableArray *filteredPins;
+@property (nonatomic,strong) NSArray *mapFilteredPins;
 @property (nonatomic,strong) NSArray *statuses;
 @property (nonatomic,strong) NSDictionary *colors;
 @property (nonatomic,strong) NSSortDescriptor *descriptor;
@@ -37,8 +38,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOut:) name:@"FanOutPin" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:@"UpdatePinFields" object:nil];
         
-        [self sendStatusesTo:nil];
+        [self sendStatusesTo:nil failure:nil];
     }
     return self;
 }
@@ -106,6 +108,9 @@
     self.oldest=[[fetchedRecords lastObject] updateDate];
     self.newest=[[fetchedRecords firstObject] updateDate];
     self.pins = [fetchedRecords copy];
+	
+	NSLog( @"4444 %d", [self.pins count]);
+	
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 
 
@@ -232,8 +237,14 @@
     [[Pins operationQueue] addOperation:operation];
     [operation setCompletionBlock:^{
         NSLog(@"Finished!");
+		
+		NSLog(@"----___________ %d", [_pins count]);
+		
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchPinsFromCoreData];
+			
+			NSLog(@"----___________ %d", [_pins count]);
+			
             static NSDateFormatter *nozoneFormatter;
             if(!nozoneFormatter) {
                 nozoneFormatter=[[NSDateFormatter alloc] init];
@@ -268,7 +279,7 @@
     if(date){
         u=[NSString stringWithFormat:@"%@&$filter=CreationDate ge datetime'%@' or UpdateDate ge datetime'%@'",u,date,date];
     }
-    NSLog(@"%@",u);
+    NSLog(@"[fetchPinsWithParameteres] >>> %@",u);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    if(!date){
@@ -295,6 +306,8 @@
         //Run UI UpdatesNSError *error=nil;
         if(block) block(responseObject[@"value"]);
 
+		NSLog( @"responseObject[value] $$$$$$$$$$ %@", responseObject[@"value"]);
+		
 //        if(block) block(_pins);
 //        [appDelegate showLoading:NO];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
@@ -323,7 +336,23 @@
     [self fetchPinsWithBlock:block];
 }
 
-- (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(BOOL success))block {
+- (void)deletePin:(Pin*)pin block:(void (^)(BOOL success))block {
+	ICRequestManager *manager=[ICRequestManager sharedManager];
+	NSString *u = [NSString stringWithFormat:@"PinService.svc/Pins(guid'%@')", pin.ident];
+	[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+	[manager DELETE:u
+	   parameters:@{}
+			success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		[SVProgressHUD showSuccessWithStatus:@"Success"];
+		block(YES);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		[SVProgressHUD showErrorWithStatus:error.localizedDescription];
+		block(NO);
+		
+	}];
+}
+
+- (void)addPinWithDictionary:(NSDictionary*)dictionary block:(void (^)(NSError *error))block {
     ICRequestManager *manager=[ICRequestManager sharedManager];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
@@ -335,12 +364,11 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 //        [self fetchPinsWithBlock:^(NSArray *a) {
             [SVProgressHUD showSuccessWithStatus:@"Success"];
-            block(YES);
+            block(nil);
 //        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         NSLog(@"Error: %@", error);
-        block(NO);
+        block(error);
     }];
 }
 
@@ -376,7 +404,7 @@
     }];
 }
 
-- (void)fetchStatusesWithBlock:(void (^)(NSArray *a))block {
+- (void)fetchStatusesWithBlock:(void (^)(NSArray *a))block failure:(void (^)(NSError *error))failure {
     NSLog(@"%s",__FUNCTION__);
     if(![[ICRequestManager sharedManager] isUserLoggedIn]) {
         if(block) block(nil);
@@ -394,16 +422,19 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinColors" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+		if (failure) {
+			failure(error);
+		}
         self.sendingStatuses=NO;
     }];
 }
 
-- (void)sendStatusesTo:(void (^)(NSArray *a))block {
+- (void)sendStatusesTo:(void (^)(NSArray *a))block failure:(void (^)(NSError *error))failure {
     if(_statuses){
         block(_statuses);
         return;
     }
-    [self fetchStatusesWithBlock:block];
+    [self fetchStatusesWithBlock:block failure:failure];
 }
 
 - (void)clearPins {
@@ -435,7 +466,7 @@
 
 - (void)userLoggedIn:(NSNotification*)notification {
     [self clear];
-    [self fetchStatusesWithBlock:nil];
+    [self fetchStatusesWithBlock:nil failure:nil];
 }
 
 - (void)userLoggedOut:(NSNotification*)notification {
@@ -443,7 +474,7 @@
 }
 
 - (void)appDidBecomeActive:(NSNotification*)notification {
-    [self fetchStatusesWithBlock:nil];
+    [self fetchStatusesWithBlock:nil failure:nil];
     if(!_gettingPins) {
         [self fetchPinsWithBlock:nil];
     }
@@ -497,15 +528,24 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 }
 
+
 - (UIColor*)colorForStatus:(NSString*)status {
     if(!_colors&&!_sendingStatuses) {
-        [self sendStatusesTo:nil];
+        [self sendStatusesTo:nil failure:nil];
     }
     UIColor *c=_colors[status];
     if(!c){
         c=[UIColor whiteColor];
     }
     return c;
+}
+
+-(void) filteredPinsWithArray:(NSArray*) filteredPins {
+	self.mapFilteredPins = filteredPins;
+}
+
+-(NSArray*) filteredPinsArray {
+	return self.mapFilteredPins;
 }
 
 @end

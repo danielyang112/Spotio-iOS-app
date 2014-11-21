@@ -17,6 +17,7 @@
 #import <BugSense-iOS/BugSenseController.h>
 #import <QuartzCore/QuartzCore.h>
 #import "SVProgressHUD.h"
+#import "TutorialViewController.h"
 
 @interface RegisterViewController ()
 {
@@ -69,8 +70,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     industrySelected = FALSE;
-    
-    //    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     UIColor *color = [UIColor lightGrayColor];
     for(UITextField *f in _fieldsCollection) {
         f.attributedPlaceholder = [[NSAttributedString alloc] initWithString:f.placeholder attributes:@{NSForegroundColorAttributeName:color}];
@@ -87,17 +86,40 @@
     [[Mixpanel sharedInstance] track:@"RegisterView"];
 }
 
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+
+	self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.doneButton.frame.size.height + self.doneButton.frame.origin.y);
+}
+
 #pragma mark - Helpers
 
 - (void)registerForKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
+                                             selector:@selector(handleKeyboardNotification:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
+                                             selector:@selector(handleKeyboardNotification:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
+}
+
+- (void)handleKeyboardNotification:(NSNotification*)sender {
+	CGRect beginFrame = [sender.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+	CGRect endFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+	CGFloat yDiff = endFrame.origin.y - beginFrame.origin.y;
+	CGFloat duration = [sender.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+	[UIView animateWithDuration:duration animations:^{
+		UIEdgeInsets insets = self.scrollView.contentInset;
+		insets.bottom -= yDiff;
+		self.scrollView.contentInset = insets;
+		insets = self.scrollView.scrollIndicatorInsets;
+		insets.bottom -= yDiff;
+		self.scrollView.scrollIndicatorInsets = insets;
+
+	}];
 }
 
 - (NSString*)trim:(UITextField*)textField {
@@ -178,7 +200,9 @@
                 [[ICRequestManager sharedManager] POST:@"MobileApp/SaveRegistrantionQuestionsAnswers" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
                  {
                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ICQuestions" object:nil];
-                     [self performSegueWithIdentifier:@"Tutorial" sender:nil];
+					 [TutorialViewController showTutorial];
+					 [[NSNotificationCenter defaultCenter] postNotificationName:@"ICRegister" object:nil];
+                     [self dismissViewControllerAnimated:YES completion:^{}];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                  {
                      NSLog(@"%@",error);
@@ -188,8 +212,7 @@
                 [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                                        UIRemoteNotificationTypeSound |
                                                                                        UIRemoteNotificationTypeAlert)];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil];
-                
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"ICUserLoggedInn" object:nil userInfo:@{@"fromRegister": @(YES)}];
             }
             else
             {
@@ -284,38 +307,6 @@
 
 - (IBAction)next:(id)sender {
     [self proceedWithRegistration];
-}
-
-#pragma mark - Notifications
-
-- (void)keyboardWasShown:(NSNotification*)aNotification {
-    NSDictionary* info = [aNotification userInfo];
-    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
-
-//    _scrollView.contentInset = contentInsets;
-//    _scrollView.scrollIndicatorInsets = contentInsets;
-//    
-//    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-//    CGRect aRect = self.scrollView.frame;
-//    aRect.size.height -= kbRect.size.height;
-    _constraintBottom.constant = kbRect.size.height;
-    [self.scrollView layoutIfNeeded];
-
-//    if (!CGRectContainsPoint(aRect, _activeField.frame.origin) ) {
-        [self.scrollView scrollRectToVisible:_activeField.frame animated:YES];
-//    }
-
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-//    _scrollView.contentInset = contentInsets;
-//    _scrollView.scrollIndicatorInsets = contentInsets;
-    _constraintBottom.constant+= _constraintBottom.constant - _doneButton.frame.origin.y + 30;
-    [self.scrollView layoutIfNeeded];
 }
 
 #pragma mark - Navigation

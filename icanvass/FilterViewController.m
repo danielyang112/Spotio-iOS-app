@@ -12,6 +12,7 @@
 #import "Users.h"
 #import "Mixpanel.h"
 #import "utilities.h"
+#import "SVProgressHUD/SVProgressHUD.h"
 
 #define kStatusSection 0
 #define kCreationDateSection 1
@@ -62,7 +63,9 @@
     [[Pins sharedInstance] sendStatusesTo:^(NSArray *a) {
         self.statuses=a;
         [self.statusTableView reloadData];
-    }];
+    } failure:^(NSError *error) {
+		[SVProgressHUD showErrorWithStatus:error.localizedDescription];
+	}];
     [[Users sharedInstance] sendUsersTo:^(NSArray *a) {
         self.users=a;
         [self.statusTableView reloadData];

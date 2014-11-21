@@ -54,7 +54,9 @@
 {
     [self.parameters setObject:@(limit) forKey:@"$top"];
     [self.parameters setObject:@(offset) forKey:@"$skip"];
+	
     [[Pins sharedInstance] fetchPinsWithParameteres:self.parameters block:^(NSArray *a) {
+		
         if ([a count]) {
             [self getPinsWithLimit:[self.parameters[@"$top"] unsignedLongValue]
                             offset:([self.parameters[@"$skip"] unsignedIntegerValue] + [self.parameters[@"$top"] unsignedIntegerValue])];

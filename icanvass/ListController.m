@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "Pin.h"
 #import <CoreData/CoreData.h>
+#import "ICRequestManager.h"
 
 
 enum ICSortOrder : NSUInteger {
@@ -29,7 +30,7 @@ enum ICSortOrder : NSUInteger {
     ICSortOrderDateDescending
 };
 
-@interface ListController ()
+@interface ListController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *sorted;
@@ -113,6 +114,8 @@ enum ICSortOrder : NSUInteger {
     [super viewDidLoad];
     
     self.tableView.tableFooterView=[UIView new];
+	self.tableView.allowsMultipleSelectionDuringEditing = NO;
+//	[self.tableView setEditing:YES animated:YES];
 }
 
 - (void)updateArrows {
@@ -145,6 +148,10 @@ enum ICSortOrder : NSUInteger {
     [_statusButton setTitle:status forState:UIControlStateNormal];
     [_addressButton setTitle:address forState:UIControlStateNormal];
     [_dateButton setTitle:date forState:UIControlStateNormal];
+	
+//	for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
+//		gR.delegate = self;
+//	}
 }
 
 - (void)sort {
@@ -181,6 +188,11 @@ enum ICSortOrder : NSUInteger {
     
 
 
+}
+
+- (void)refreshList {
+	NSLog(@"%s",__FUNCTION__);
+	[[Pins sharedInstance] fetchPinsWithBlock:nil];
 }
 
 - (void)sortStatus:(id)sender {
@@ -310,6 +322,27 @@ enum ICSortOrder : NSUInteger {
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		NSLog(@"DELETE %d", indexPath.row);
+		__weak __typeof(self)weakSelf = self;
+		Pin *pin=_filtered[indexPath.row];
+		[[Pins sharedInstance] deletePin:pin
+								   block: ^ (BOOL success) {
+									   if(success) {
+										   [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
+										   [[NSUserDefaults standardUserDefaults] synchronize];
+										   [[Pins sharedInstance] clear];
+										   [weakSelf refreshList];
+									   }
+								   }];
+	}
+}
+
+-(BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+	return YES;
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -338,6 +371,38 @@ enum ICSortOrder : NSUInteger {
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
     dc.pin=_filtered[selectedRowIndex.row];
+}
+
+//
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	NSLog(@"1 ++++++++++++");
+	return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer NS_AVAILABLE_IOS(7_0) {
+	NSLog(@"2 ++++++++++++");
+	return NO;
+
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer NS_AVAILABLE_IOS(7_0) {
+	NSLog(@"3 ++++++++++++");
+	return NO;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	//Touch gestures below top bar should not make the page turn.
+	//EDITED Check for only Tap here instead.
+	NSLog(@"4 ++++++++++++");
+	if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+		CGPoint touchPoint = [touch locationInView:self.view];
+		if (touchPoint.y > 40) {
+			return NO;
+		}
+		else if (touchPoint.x > 50 && touchPoint.x < 430) {//Let the buttons in the middle of the top bar receive the touch
+			return NO;
+		}
+	}
+	return YES;
 }
 
 @end
