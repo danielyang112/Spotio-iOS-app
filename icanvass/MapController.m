@@ -93,6 +93,8 @@
     [self.view addSubview:_mapview];
     
     [_mapview addAnnotations:nil];
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnMapView:)];
+	[_mapview addGestureRecognizer:tap];
     
     /*
     self.mapView=[GMSMapView mapWithFrame:f camera:[self cameraPosition]];
@@ -646,6 +648,16 @@
     // Pass the selected object to the new view controller.
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     dc.pin=sender;
+}
+
+
+- (void)tapOnMapView:(UITapGestureRecognizer*)tap {
+	CGPoint touchPoint = [tap locationInView:_mapview];
+	CLLocationCoordinate2D touchMapCoordinate =
+	[_mapview convertPoint:touchPoint toCoordinateFromView:_mapview];
+	if ([self.delegate respondsToSelector:@selector(mapController:didSelectBuildingAtCoordinate:)]) {
+		[self.delegate mapController:self didSelectBuildingAtCoordinate:touchMapCoordinate];
+	}
 }
 
 @end
