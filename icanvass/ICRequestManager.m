@@ -73,6 +73,7 @@
 }
 
 - (void)logoutWithCb:(void(^)(BOOL success))cb {
+    
     [self.operationQueue cancelAllOperations];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserNameKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCompanyNameKey];

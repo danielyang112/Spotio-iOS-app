@@ -83,26 +83,24 @@
 	} else if(_pin){
 		[self adjustForViewing];
 	}
+    [self updateFields];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	[self updateFields];
+    [super viewWillAppear:animated];
 }
 
 #pragma mark - Helpers
 
 - (void)updateFields {
-	__weak typeof(self) weakSelf = self;
-	[[Fields sharedInstance] sendFieldsTo:^(NSArray *a) {
-		if(!self.isAddEmpty) {
-			weakSelf.customFields=a;
-		} else {
-			weakSelf.customFields= [NSArray arrayWithObjects: a[[a count]-2], nil]; // count-2 -> description field
-		}
-		[weakSelf extractPin];
-		[_tableView reloadData];
-	}];
+    
+    __weak typeof(self) weakSelf = self;
+    [[Fields sharedInstance] sendFieldsTo:^(NSArray *a)
+    {
+        weakSelf.customFields=a;
+        [weakSelf extractPin];
+        [_tableView reloadData];
+    }];
 }
 
 - (void)adjustForAdding {
@@ -724,136 +722,114 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	switch(indexPath.section) {
-	case 0:	{
-		return [self tableView:tableView firstSectionForRowAtIndexPath:indexPath];
-	}
-	case 1:
-		if(!tableView.isEditing){
-			NSString *CellIdentifier = @"DetailsDropDownCell";
-			DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-			cell.enabled=NO;
-			NSArray *c=_pin.customValuesOld;
-			NSDictionary *d=c[indexPath.row];
-			Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
-			if([f.name isEqualToString:@"Notes"]) {
-				cell.enabled = YES;
-			}
-			cell.top.text=f.name;
-			NSString *v=nilIfNull(d[@"StringValue"]);
-			if(!v) v=nilIfNull(d[@"IntValue"]);
-			if(!v) v=nilIfNull(d[@"DecimalValue"]);
-			if(!v) {
-				static NSDateFormatter *dFormatter;
-				if(!dFormatter){
-					dFormatter=[[NSDateFormatter alloc] init];
-					dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
-				}
-				static NSDateFormatter *zoneFormatter;
-				static NSDateFormatter *nozoneFormatter;
-				if(!zoneFormatter) {
-					zoneFormatter=[[NSDateFormatter alloc] init];
-					zoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-				}
-				if(!nozoneFormatter) {
-					nozoneFormatter=[[NSDateFormatter alloc] init];
-					nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
-					NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-					[nozoneFormatter setTimeZone:gmt];
-				}
-				NSString *noMilliseconds=[d[@"DateTimeValue"] componentsSeparatedByString:@"."][0];
-				NSDate *date=[zoneFormatter dateFromString:noMilliseconds];
-				if(!date) {
-					date=[nozoneFormatter dateFromString:noMilliseconds];
-				}
-				v=[dFormatter stringFromDate:date];
-			}
-			cell.bottom.text=v;
-			[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
-			[cell phoneOrEmail:NO];
-			BOOL isIPhone = [[UIDevice currentDevice] isIPhone];
-			if( isIPhone) {
-				if([f.name hasPrefix:@"Phone Number"]) {
-					[cell phoneOrEmail:YES];
-					[cell.phoneOrEmailButton addTarget:self action:@selector(clickPhoneButton:) forControlEvents:UIControlEventTouchDown];
-					self.phoneAdress = [NSString stringWithFormat: @"%@", v];
-				}
-			}
-			if([f.name isEqualToString:@"Email"]) {
-				[cell phoneOrEmail:YES];
-				[cell.phoneOrEmailButton addTarget:self action:@selector(clickEmailButton:) forControlEvents:UIControlEventTouchDown];
-				self.emailAdress = [NSString stringWithFormat: @"%@", v];
-			}
-			return cell;
-		}
-		break;
-	case 2 : {
-		DeletePinCell *cell = [tableView dequeueReusableCellWithIdentifier: @"DeletePinCell"];
-		return cell;
-	}
-	}
-	
-	Field *f=_customFields[indexPath.row];
-	NSNumber *key=@(f.ident);
-	
-	if(f.type==FieldDateTime){
-		NSString *CellIdentifier = @"DetailsDateCell";
-		DetailsDateCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		//cell.enabled=!!_addedFields[key];
-		cell.enabled=YES;
-		cell.top.text=f.name;
-		static NSDateFormatter *dFormatter;
-		if(!dFormatter){
-			dFormatter=[[NSDateFormatter alloc] init];
-			dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
-		}
-		cell.bottom.text=[dFormatter stringFromDate:_addedFields[key]];
-		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
-		
-		return cell;
-	}if(f.type==FieldDropDown){
-		NSString *CellIdentifier = @"DetailsDropDownCell";
-		DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		//        cell.enabled=!!_addedFields[key];
-		cell.enabled=YES;
-		
-		cell.top.text=f.name;
-		cell.bottom.text=_addedFields[key];
-		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
-		
-		return cell;
-		
-		return cell;
-	}else if(f.type==FieldNoteBox){
-		NSString *CellIdentifier = @"DetailsNotesCell";
-		DetailsNotesCell *cell = (DetailsNotesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		cell.note.delegate=self;
-		cell.note.text=_addedFields[key];
-		cell.note.keyboardType=UIKeyboardTypeDefault;
-		cell.note.layer.borderWidth = 1.f;
-		cell.note.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-		cell.note.layer.cornerRadius = 5;
-		//UITextField *field=(UITextField*)[cell viewWithTag:1];
-		
-		//        cell.field.placeholder=f.name;
-		//        cell.field.keyboardType=UIKeyboardTypeDefault;
-		//        cell.field.text=_addedFields[key];
-		//        cell.enabled=!!_addedFields[key];
-		cell.enabled=YES;
-		return cell;
-	}else{
-		NSString *CellIdentifier = @"DetailsTextCell";
-		DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		cell.field.delegate=self;
-		//UITextField *field=(UITextField*)[cell viewWithTag:1];
-		
-		cell.field.placeholder=f.name;
-		cell.field.keyboardType=UIKeyboardTypeDefault;
-		cell.field.text=_addedFields[key];
-		//        cell.enabled=!!_addedFields[key];
-		cell.enabled=YES;
-		return cell;
-	}
+    if(indexPath.section==0) {
+        return [self tableView:tableView firstSectionForRowAtIndexPath:indexPath];
+    }else if(!tableView.isEditing){
+        NSString *CellIdentifier = @"DetailsDropDownCell";
+        DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.enabled=NO;
+        NSArray *c=_pin.customValuesOld;
+        NSDictionary *d=c[indexPath.row];
+        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        if([f.name isEqualToString:@"Notes"])
+            cell.enabled = YES;
+        cell.top.text=f.name;
+        NSString *v=nilIfNull(d[@"StringValue"]);
+        if(!v) v=nilIfNull(d[@"IntValue"]);
+        if(!v) v=nilIfNull(d[@"DecimalValue"]);
+        if(!v) {
+            static NSDateFormatter *dFormatter;
+            if(!dFormatter){
+                dFormatter=[[NSDateFormatter alloc] init];
+                dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+            }
+            static NSDateFormatter *zoneFormatter;
+            static NSDateFormatter *nozoneFormatter;
+            if(!zoneFormatter) {
+                zoneFormatter=[[NSDateFormatter alloc] init];
+                zoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+            }
+            if(!nozoneFormatter) {
+                nozoneFormatter=[[NSDateFormatter alloc] init];
+                nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+                NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+                [nozoneFormatter setTimeZone:gmt];
+            }
+            NSString *noMilliseconds=[d[@"DateTimeValue"] componentsSeparatedByString:@"."][0];
+            NSDate *date=[zoneFormatter dateFromString:noMilliseconds];
+            if(!date) {
+                date=[nozoneFormatter dateFromString:noMilliseconds];
+            }
+            v=[dFormatter stringFromDate:date];
+        }
+        if([v isKindOfClass:[NSNumber class]]){
+            v=[(NSNumber*)v stringValue];
+        }
+        cell.bottom.text=v;
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
+        return cell;
+    }
+    
+    Field *f=_customFields[indexPath.row];
+    NSNumber *key=@(f.ident);
+    
+    if(f.type==FieldDateTime){
+        NSString *CellIdentifier = @"DetailsDateCell";
+        DetailsDateCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        //cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
+        cell.top.text=f.name;
+        static NSDateFormatter *dFormatter;
+        if(!dFormatter){
+            dFormatter=[[NSDateFormatter alloc] init];
+            dFormatter.dateFormat=@"MM/dd/yy hh:mm a";
+        }
+        cell.bottom.text=[dFormatter stringFromDate:_addedFields[key]];
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
+        
+        return cell;
+    }if(f.type==FieldDropDown){
+        NSString *CellIdentifier = @"DetailsDropDownCell";
+        DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//        cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
+        
+        cell.top.text=f.name;
+        cell.bottom.text=_addedFields[key];
+        [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
+        
+        return cell;
+    }else if(f.type==FieldNoteBox){
+        NSString *CellIdentifier = @"DetailsNotesCell";
+        DetailsNotesCell *cell = (DetailsNotesCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.note.delegate=self;
+        cell.note.text=_addedFields[key];
+        cell.note.keyboardType=UIKeyboardTypeDefault;
+        cell.note.layer.borderWidth = 1.f;
+        cell.note.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        cell.note.layer.cornerRadius = 5;
+        //UITextField *field=(UITextField*)[cell viewWithTag:1];
+        
+//        cell.field.placeholder=f.name;
+//        cell.field.keyboardType=UIKeyboardTypeDefault;
+//        cell.field.text=_addedFields[key];
+//        cell.enabled=!!_addedFields[key];
+        cell.enabled=YES;
+        return cell;
+    }else{
+        NSString *CellIdentifier = @"DetailsTextCell";
+        DetailsTableViewCell *cell = (DetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.field.delegate=self;
+        cell.field.placeholder=f.name;
+        cell.field.keyboardType=UIKeyboardTypeDefault;
+        if(_addedFields[key]){
+            cell.field.text=_addedFields[key];
+        }else{
+            cell.field.text=@"";
+        }
+        cell.enabled=YES;
+        return cell;
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -992,59 +968,33 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	
-	UITableViewCell *cell= [self cellWithSubview:textField];
-	NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-	if(!indexPath){
-		return;
-	}
-	if(indexPath.section==0) {
-		if(indexPath.row==1){
-			_streetNumber = textField.text;
-		}else if(indexPath.row==2){
-			_streetName = textField.text;
-		}
-		if(indexPath.row==3){
-			_unit= textField.text;
-		}
-		if(indexPath.row==4){
-			_city= textField.text;
-		}
-		if(indexPath.row==5){
-			_state = textField.text;
-		}
-		if(indexPath.row==6){
-			_zipCode= textField.text;
-		}
-		return;
-	}
-	
-	Field *f=_customFields[indexPath.row];
-	NSNumber *key=@(f.ident);
-	_addedFields[key] = textField.text;
-	return;
-	
-	[textField resignFirstResponder];
-	/*DetailsTableViewCell *cell=(DetailsTableViewCell*)(textField.superview.superview.superview);
-	 NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
-	 if(!indexPath || indexPath.section==0){
-	 return;
-	 }
-	 if(indexPath.section==0) {
-	 if(indexPath.row==0) {
-	 self.streetNumber=textField.text;
-	 }else{
-	 self.streetName=textField.text;
-	 }
-	 [textField endEditing:YES];
-	 return;
-	 }
-	 
-	 Field *f=_customFields[indexPath.row];
-	 NSNumber *key=@(f.ident);
-	 _addedFields[key]=cell.field.text;
-	 //f.clientData=cell.field.text;*/
-	self.activeField=nil;
+    [textField resignFirstResponder];
+    self.activeField=nil;
+    
+    if(!textField.text){    //default is nil
+        return;
+    }
+    
+    UITableViewCell *cell= [self cellWithSubview:textField];
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    if(!indexPath){
+        return;
+    }
+    
+    if(indexPath.section==0) {
+        if(indexPath.row==1){
+            _streetNumber=textField.text;
+        }else if(indexPath.row==2){
+            _streetName=textField.text;
+        }
+        if(indexPath.row==3){
+            _unit=textField.text;
+        }
+    }else{
+        Field *f=_customFields[indexPath.row];
+        NSNumber *key=@(f.ident);
+        _addedFields[key]=textField.text;
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -1055,19 +1005,23 @@ static NSDateFormatter *dateFormatter;
 #pragma mark - DatePickerDelegate
 
 - (void)datePicker:(DatePickerViewController *)picker changedDate:(NSDate *)date {
-	NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
-	Field *f=_customFields[indexPath.row];
-	NSNumber *key=@(f.ident);
-	_addedFields[key]=date;
+    NSIndexPath *indexPath=picker.indexPath;
+    if(!indexPath) return;
+    Field *f=_customFields[indexPath.row];
+    NSNumber *key=@(f.ident);
+    _addedFields[key]=date;
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - DropDownDelegate
 
 - (void)dropDown:(DropDownViewController *)dropDown changedTo:(NSString *)value {
-	NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
-	Field *f=_customFields[indexPath.row];
-	NSNumber *key=@(f.ident);
-	_addedFields[key]=value;
+    NSIndexPath *indexPath=dropDown.indexPath;
+    if(!indexPath) return;
+    Field *f=_customFields[indexPath.row];
+    NSNumber *key=@(f.ident);
+    _addedFields[key]=value;
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - API
@@ -1262,40 +1216,44 @@ static NSDateFormatter *dateFormatter;
 
 
 - (IBAction)viewOnMap:(id)sender {
-	HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
-	[homeViewController.segment setSelectedSegmentIndex:0];
-	[homeViewController switchToViewController:homeViewController.controllers[0] animated:NO];  //animation here conflicts with popping to root animation
-	
-	CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
-	homeViewController.map.moved = NO;
-	homeViewController.map.location = loc;
-	homeViewController.map.moved = YES;
-	[homeViewController.map viewOnMap:self.pin];
-	
-	[self.navigationController popToRootViewControllerAnimated:YES];
+    
+    HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
+    [homeViewController.segment setSelectedSegmentIndex:0];
+    [homeViewController switchToViewController:homeViewController.controllers[0] animated:NO];  //animation here conflicts with popping to root animation
+    
+    CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
+    homeViewController.map.moved = NO;
+    homeViewController.map.location = loc;
+    homeViewController.map.moved = YES;
+    [homeViewController.map viewOnMap:self.pin];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
-	Field *f=_customFields[indexPath.row];
-	NSNumber *key=@(f.ident);
-	if([segue.identifier isEqualToString:@"DatePicker"]) {
-		DatePickerViewController *d=segue.destinationViewController;
-		d.delegate=self;
-		d.name=f.name;
-		d.date=[_addedFields[key] isKindOfClass:[NSDate class]]?_addedFields[key]:[NSDate date];
-	} else if([segue.identifier isEqualToString:@"DropDown"]) {
-		DropDownViewController *drop=segue.destinationViewController;
-		drop.delegate=self;
-		drop.options=f.settings;
-	} else if([segue.identifier isEqualToString:@"NoteView"]) {
-		NoteViewController *noteView=segue.destinationViewController;
-		NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-		DetailsDropDownCell *cell=(DetailsDropDownCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-		noteView.note = cell.bottom.text;
-	}
+    
+    NSIndexPath *indexPath=[_tableView indexPathForSelectedRow];
+    Field *f=_customFields[indexPath.row];
+    NSNumber *key=@(f.ident);
+    if([segue.identifier isEqualToString:@"DatePicker"]) {
+        DatePickerViewController *d=segue.destinationViewController;
+        d.indexPath=indexPath;
+        d.delegate=self;
+        d.name=f.name;
+        d.date=[_addedFields[key] isKindOfClass:[NSDate class]]?_addedFields[key]:[NSDate date];
+    } else if([segue.identifier isEqualToString:@"DropDown"]) {
+        DropDownViewController *drop=segue.destinationViewController;
+        drop.indexPath=indexPath;
+        drop.delegate=self;
+        drop.options=f.settings;
+    } else if([segue.identifier isEqualToString:@"NoteView"]) {
+        NoteViewController *noteView=segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        DetailsDropDownCell *cell=(DetailsDropDownCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        noteView.note = cell.bottom.text;
+    }
 }
 
 

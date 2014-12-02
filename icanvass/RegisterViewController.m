@@ -78,6 +78,7 @@
         bottomBorder.backgroundColor = color.CGColor;
         [f.layer addSublayer:bottomBorder];
     }
+    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _doneButton.frame.origin.y + _doneButton.frame.size.height + 10.f)];
 	// Do any additional setup after loading the view.
 }
 

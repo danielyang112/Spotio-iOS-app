@@ -70,7 +70,11 @@
 
 - (NSString*)address2 {
     if(!address2) {
-        address2=[NSString stringWithFormat:@"%@, %@, %@",self.location.city, self.location.state, self.location.zip];
+        NSMutableArray *parts=[@[] mutableCopy];
+        if(self.location.city) [parts addObject:self.location.city];
+        if(self.location.state) [parts addObject:self.location.state];
+        if(self.location.zip) [parts addObject:self.location.zip];
+        address2=[parts componentsJoinedByString:@", "];
     }
     return address2;
 }

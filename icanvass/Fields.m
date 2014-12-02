@@ -60,6 +60,7 @@
         self.fieldById=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedIn:) name:@"ICUserLoggedInn" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(answeredQuestions:) name:@"ICQuestions" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOutQuestions:) name:@"FanOutQuestions" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
@@ -116,6 +117,10 @@
 }
 
 - (void)userLoggedIn:(NSNotification*)notification {
+    self.fields=nil;
+}
+
+- (void)fanOutQuestions:(NSNotification*)notification {
     self.fields=nil;
 }
 

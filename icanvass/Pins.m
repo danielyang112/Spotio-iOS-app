@@ -37,8 +37,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterChanged:) name:@"ICFilter" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOut:) name:@"FanOutPin" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:@"UpdatePinFields" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOutPin:) name:@"FanOutPin" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fanOutStatuses:) name:@"FanOutStatuses" object:nil];
         
         [self sendStatusesTo:nil failure:nil];
     }
@@ -128,6 +128,7 @@
 }
 
 - (NSArray*)pinsArrayFromArray:(NSArray*)a {
+	NSMutableArray *result = [NSMutableArray arrayWithCapacity:a.count];
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *managedObjectContext= appDelegate.managedObjectContext;
     [managedObjectContext setUndoManager:nil];
@@ -151,8 +152,8 @@
         
         Location *loc=[NSEntityDescription insertNewObjectForEntityForName:@"Location"
                                                     inManagedObjectContext:managedObjectContext];
-        NSDictionary *ld=dic[@"Location"];
-        loc.streetNumber=[NSNumber numberWithInt:[ld[@"HouseNumber"] integerValue]];
+        NSDictionary *ld=nilIfNull(dic[@"Location"]);
+        loc.streetNumber=[NSNumber numberWithInt:[nilIfNull(ld[@"HouseNumber"]) integerValue]];
         loc.streetName=nilIfNull(ld[@"Street"]);
         loc.city=nilIfNull(ld[@"City"]);
         NSObject *u=nilIfNull(ld[@"Unit"]);
@@ -175,13 +176,14 @@
     //        [newPin addCustomValues:[NSOrderedSet orderedSetWithOrderedSet:os]];
             newPin.customValues=os;
         }
+		[result addObject:newPin];
     }
 //    if (![a count]) {
 //        a = [self fetchPinsFromCoreData];
 //    }
     [appDelegate.managedObjectContext save:nil];
 
-    return a;
+    return result;
 //    return [a mapWith:^NSObject *(NSObject *o) {
 //        NSDictionary *dic=(NSDictionary*)o;
 //        return [[PinTemp alloc] initWithDictionary:dic];
@@ -288,31 +290,33 @@
     [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             //Background Thread
-//            NSLog(@"JSON: %@", responseObject);
-        
-
-        if(!weakSelf.pins)
-        {
-            weakSelf.pins = [NSMutableArray new];
-        }
-        
-        [self pinsArrayFromArray:responseObject[@"value"]];
-    
-        //            self.oldest=[[_pins lastObject] updateDate];
-        //            self.newest=[[_pins firstObject] updateDate];
-        
-        weakSelf.gettingPins=NO;
-        //            dispatch_async(dispatch_get_main_queue(), ^(void){
-        //Run UI UpdatesNSError *error=nil;
-        if(block) block(responseObject[@"value"]);
-
-		NSLog( @"responseObject[value] $$$$$$$$$$ %@", responseObject[@"value"]);
-		
-//        if(block) block(_pins);
-//        [appDelegate showLoading:NO];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-        //            });
-        //        });
+            NSLog(@"JSON: %@", responseObject);
+            weakSelf.pins=[self pinsArrayFromArray:responseObject[@"value"]].mutableCopy;
+//            self.oldest=[[_pins lastObject] updateDate];
+//            self.newest=[[_pins firstObject] updateDate];
+            Pin *newestPin=[weakSelf.pins firstObject];
+            NSDate *refreshDate=newestPin.creationDate;
+            if(refreshDate){
+				static NSDateFormatter *nozoneFormatter;
+				if(!nozoneFormatter) {
+					nozoneFormatter=[[NSDateFormatter alloc] init];
+					nozoneFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+					NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+					[nozoneFormatter setTimeZone:gmt];
+				}
+                [[NSUserDefaults standardUserDefaults] setObject:[nozoneFormatter stringFromDate:refreshDate] forKey:kRefreshDate];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            weakSelf.gettingPins=NO;
+//            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //Run UI UpdatesNSError *error=nil;
+                NSError *error;
+                [appDelegate.managedObjectContext save:&error];
+                if(block) block(_pins);
+                [appDelegate showLoading:NO];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
+//            });
+//        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         weakSelf.gettingPins=NO;
 //        [appDelegate showLoading:NO];
@@ -356,19 +360,25 @@
     ICRequestManager *manager=[ICRequestManager sharedManager];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *u=@"PinService.svc/Pins?$format=json&$expand=CustomValues";
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [manager POST:u parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
 //        PinTemp *p=[[PinTemp alloc] initWithDictionary:responseObject];
 //        [_pins insertObject:p atIndex:0];
 //        p.customValues=dictionary[@"CustomValues"];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
-//        [self fetchPinsWithBlock:^(NSArray *a) {
+        [self fetchPinsWithBlock:^(NSArray *a) {
             [SVProgressHUD showSuccessWithStatus:@"Success"];
-            block(nil);
-//        }];
+			if (block) {
+				block(nil);
+			}
+        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        block(error);
+		if (block) {
+			block(error);
+		}
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
 }
 
@@ -480,10 +490,14 @@
     }
 }
 
-- (void)fanOut:(NSNotification*)notification {
+- (void)fanOutPin:(NSNotification*)notification {
     if(!_gettingPins) {
         [self fetchPinsWithBlock:nil];
     }
+}
+
+- (void)fanOutStatuses:(NSNotification*)notification {
+    [self fetchStatusesWithBlock:nil failure:nil];
 }
 
 - (void)filterChanged:(NSNotification*)notification {

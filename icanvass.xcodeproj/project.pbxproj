@@ -9,10 +9,23 @@
 /* Begin PBXBuildFile section */
 		06563D991A1F65F100020904 /* ErrorHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06563D981A1F65F100020904 /* ErrorHandle.m */; };
 		06563DA21A1FB48300020904 /* SOSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 06563DA11A1FB48200020904 /* SOSession.m */; };
+		06C1364F1A2DCC1000C101D0 /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 06C1364E1A2DCC1000C101D0 /* UIDevice-Hardware.m */; };
 		06D1D74D1A1DFC820096B1C3 /* FingerAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 06D1D74B1A1DFC820096B1C3 /* FingerAnimation.m */; };
 		06D1D74E1A1DFC820096B1C3 /* FingerAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D1D74C1A1DFC820096B1C3 /* FingerAnimation.xib */; };
 		06D1D7531A1E3A790096B1C3 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06D1D7511A1E3A790096B1C3 /* TutorialViewController.m */; };
 		06D1D7541A1E3A790096B1C3 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D1D7521A1E3A790096B1C3 /* TutorialViewController.xib */; };
+		149498FD1A039904006AE1FF /* REVAnnotationsCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F31A039904006AE1FF /* REVAnnotationsCollection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149498FE1A039904006AE1FF /* REVClusterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F51A039904006AE1FF /* REVClusterBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149498FF1A039904006AE1FF /* REVClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F71A039904006AE1FF /* REVClusterManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499001A039904006AE1FF /* REVClusterMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498FA1A039904006AE1FF /* REVClusterMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499011A039904006AE1FF /* REVClusterPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498FC1A039904006AE1FF /* REVClusterPin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499041A0399C8006AE1FF /* REVClusterAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		149499091A039BE0006AE1FF /* cluster.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499051A039BE0006AE1FF /* cluster.png */; };
+		1494990A1A039BE0006AE1FF /* cluster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499061A039BE0006AE1FF /* cluster@2x.png */; };
+		1494990B1A039BE0006AE1FF /* pinpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499071A039BE0006AE1FF /* pinpoint.png */; };
+		1494990C1A039BE0006AE1FF /* pinpoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149499081A039BE0006AE1FF /* pinpoint@2x.png */; };
+		1494990E1A039C3C006AE1FF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1494990D1A039C3C006AE1FF /* MapKit.framework */; };
+		14AE51CF1A076BF4007C88A2 /* myButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AE51CE1A076BF4007C88A2 /* myButton.m */; };
 		2C72F8E319DAC1DD00BE6C96 /* SyncPinsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C72F8E219DAC1DD00BE6C96 /* SyncPinsOperation.m */; };
 		2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB9833419D18A8A000A9269 /* CustomClusterManager.m */; };
 		2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */; };
@@ -131,15 +144,14 @@
 		42EF82EB18FBFA390045EB0E /* Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EF82EA18FBFA390045EB0E /* Users.m */; };
 		42F79B4219A4DEBD00DCBB08 /* CustomValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F79B4119A4DEBD00DCBB08 /* CustomValue.m */; };
 		42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA1F6418E1DF970015D137 /* ListHeader.xib */; };
-		46662274F8094FC9A143034A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8582D548F5B6439AA0F09ACC /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		49B7D99C19E4EEA500771630 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */; };
 		701488481A14FC7C00DF5BF4 /* AppDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 701488471A14FC7C00DF5BF4 /* AppDetailViewController.m */; };
-		7014884C1A15086E00DF5BF4 /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 7014884B1A15086E00DF5BF4 /* UIDevice-Hardware.m */; };
 		70DC69541A19067300CB8C72 /* TutorialFirstPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC69531A19067300CB8C72 /* TutorialFirstPageViewController.m */; };
 		70DC69571A19068D00CB8C72 /* TutorialSecondPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC69561A19068D00CB8C72 /* TutorialSecondPageViewController.m */; };
 		70E4040C1A1BAABC00A2EBA1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E4040B1A1BAABC00A2EBA1 /* LaunchScreen.xib */; };
-		70EBB7FD1A179B55004B3474 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EBB7FC1A179B55004B3474 /* MapKit.framework */; };
 		73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BFB8BF195D005600952C9A /* MessageUI.framework */; };
 		73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFB8C2195D670C00952C9A /* NoteViewController.m */; };
+		8C10CA2621AFF6B280D44795 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8582D548F5B6439AA0F09ACC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,12 +159,35 @@
 		06563D981A1F65F100020904 /* ErrorHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHandle.m; sourceTree = "<group>"; };
 		06563DA01A1FB48200020904 /* SOSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSession.h; sourceTree = "<group>"; };
 		06563DA11A1FB48200020904 /* SOSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSession.m; sourceTree = "<group>"; };
+		06C1364D1A2DCC1000C101D0 /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
+		06C1364E1A2DCC1000C101D0 /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
 		06D1D74A1A1DFC820096B1C3 /* FingerAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerAnimation.h; sourceTree = "<group>"; };
 		06D1D74B1A1DFC820096B1C3 /* FingerAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FingerAnimation.m; sourceTree = "<group>"; };
 		06D1D74C1A1DFC820096B1C3 /* FingerAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FingerAnimation.xib; sourceTree = "<group>"; };
 		06D1D7501A1E3A790096B1C3 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		06D1D7511A1E3A790096B1C3 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		06D1D7521A1E3A790096B1C3 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		149498F21A039904006AE1FF /* REVAnnotationsCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVAnnotationsCollection.h; sourceTree = "<group>"; };
+		149498F31A039904006AE1FF /* REVAnnotationsCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVAnnotationsCollection.m; sourceTree = "<group>"; };
+		149498F41A039904006AE1FF /* REVClusterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterBlock.h; sourceTree = "<group>"; };
+		149498F51A039904006AE1FF /* REVClusterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterBlock.m; sourceTree = "<group>"; };
+		149498F61A039904006AE1FF /* REVClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterManager.h; sourceTree = "<group>"; };
+		149498F71A039904006AE1FF /* REVClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterManager.m; sourceTree = "<group>"; };
+		149498F81A039904006AE1FF /* REVClusterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterMap.h; sourceTree = "<group>"; };
+		149498F91A039904006AE1FF /* REVClusterMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterMapView.h; sourceTree = "<group>"; };
+		149498FA1A039904006AE1FF /* REVClusterMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterMapView.m; sourceTree = "<group>"; };
+		149498FB1A039904006AE1FF /* REVClusterPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterPin.h; sourceTree = "<group>"; };
+		149498FC1A039904006AE1FF /* REVClusterPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterPin.m; sourceTree = "<group>"; };
+		149499021A0399C8006AE1FF /* REVClusterAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterAnnotationView.h; sourceTree = "<group>"; };
+		149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVClusterAnnotationView.m; sourceTree = "<group>"; };
+		149499051A039BE0006AE1FF /* cluster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cluster.png; sourceTree = "<group>"; };
+		149499061A039BE0006AE1FF /* cluster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cluster@2x.png"; sourceTree = "<group>"; };
+		149499071A039BE0006AE1FF /* pinpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinpoint.png; sourceTree = "<group>"; };
+		149499081A039BE0006AE1FF /* pinpoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinpoint@2x.png"; sourceTree = "<group>"; };
+		1494990D1A039C3C006AE1FF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		14AE51CD1A076BF4007C88A2 /* myButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myButton.h; sourceTree = "<group>"; };
+		14AE51CE1A076BF4007C88A2 /* myButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myButton.m; sourceTree = "<group>"; };
+		23BA41EED8EFB43B071F3A46 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2C72F8E119DAC1DD00BE6C96 /* SyncPinsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPinsOperation.h; sourceTree = "<group>"; };
 		2C72F8E219DAC1DD00BE6C96 /* SyncPinsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPinsOperation.m; sourceTree = "<group>"; };
 		2CB9833319D18A8A000A9269 /* CustomClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomClusterManager.h; sourceTree = "<group>"; };
@@ -361,22 +396,21 @@
 		42F79B4019A4DEBD00DCBB08 /* CustomValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomValue.h; sourceTree = "<group>"; };
 		42F79B4119A4DEBD00DCBB08 /* CustomValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomValue.m; sourceTree = "<group>"; };
 		42FA1F6418E1DF970015D137 /* ListHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListHeader.xib; sourceTree = "<group>"; };
+		49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		701488461A14FC7C00DF5BF4 /* AppDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDetailViewController.h; sourceTree = "<group>"; };
 		701488471A14FC7C00DF5BF4 /* AppDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDetailViewController.m; sourceTree = "<group>"; };
-		7014884A1A15086E00DF5BF4 /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
-		7014884B1A15086E00DF5BF4 /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
 		70DC69521A19067300CB8C72 /* TutorialFirstPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialFirstPageViewController.h; sourceTree = "<group>"; };
 		70DC69531A19067300CB8C72 /* TutorialFirstPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialFirstPageViewController.m; sourceTree = "<group>"; };
 		70DC69551A19068D00CB8C72 /* TutorialSecondPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialSecondPageViewController.h; sourceTree = "<group>"; };
 		70DC69561A19068D00CB8C72 /* TutorialSecondPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialSecondPageViewController.m; sourceTree = "<group>"; };
 		70E4040B1A1BAABC00A2EBA1 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		70EBB7FC1A179B55004B3474 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		73BFB8BF195D005600952C9A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		73BFB8C1195D670C00952C9A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		73BFB8C2195D670C00952C9A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		8582D548F5B6439AA0F09ACC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD9FE4E8359CDA0028C3A2E4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		E59B42D56FDC3ACB6713B110 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EDB41C5574CA7CD010DBAB61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF88AC35EDE62B87AA1C2225 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F7D59D4A6E11B9FCACCEF07D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,7 +418,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70EBB7FD1A179B55004B3474 /* MapKit.framework in Frameworks */,
+				1494990E1A039C3C006AE1FF /* MapKit.framework in Frameworks */,
+				49B7D99C19E4EEA500771630 /* NewRelicAgent.framework in Frameworks */,
 				42284F6A18D257010087941E /* CoreLocation.framework in Frameworks */,
 				73BFB8C0195D005600952C9A /* MessageUI.framework in Frameworks */,
 				42284F7C18D257820087941E /* SystemConfiguration.framework in Frameworks */,
@@ -405,7 +440,7 @@
 				42284F6418D256A20087941E /* GoogleMaps.framework in Frameworks */,
 				2CB9833719D1A5FE000A9269 /* GoogleMaps.framework in Frameworks */,
 				42A6A58118CBA3BF0043233C /* Foundation.framework in Frameworks */,
-				46662274F8094FC9A143034A /* libPods.a in Frameworks */,
+				8C10CA2621AFF6B280D44795 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +465,24 @@
 			path = SOSession;
 			sourceTree = "<group>";
 		};
+		06C1364B1A2DCB9F00C101D0 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				EF88AC35EDE62B87AA1C2225 /* Pods.debug.xcconfig */,
+				EDB41C5574CA7CD010DBAB61 /* Pods.release.xcconfig */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		06C1364C1A2DCC1000C101D0 /* UIDevice+Hardware */ = {
+			isa = PBXGroup;
+			children = (
+				06C1364D1A2DCC1000C101D0 /* UIDevice-Hardware.h */,
+				06C1364E1A2DCC1000C101D0 /* UIDevice-Hardware.m */,
+			);
+			path = "UIDevice+Hardware";
+			sourceTree = "<group>";
+		};
 		06D1D7491A1DFC820096B1C3 /* FingerAnimation */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +501,30 @@
 				06D1D7521A1E3A790096B1C3 /* TutorialViewController.xib */,
 			);
 			path = TutorialViewController;
+			sourceTree = "<group>";
+		};
+		149498F11A039904006AE1FF /* REVClusterMap */ = {
+			isa = PBXGroup;
+			children = (
+				149499051A039BE0006AE1FF /* cluster.png */,
+				149499061A039BE0006AE1FF /* cluster@2x.png */,
+				149499071A039BE0006AE1FF /* pinpoint.png */,
+				149499081A039BE0006AE1FF /* pinpoint@2x.png */,
+				149499021A0399C8006AE1FF /* REVClusterAnnotationView.h */,
+				149499031A0399C8006AE1FF /* REVClusterAnnotationView.m */,
+				149498F21A039904006AE1FF /* REVAnnotationsCollection.h */,
+				149498F31A039904006AE1FF /* REVAnnotationsCollection.m */,
+				149498F41A039904006AE1FF /* REVClusterBlock.h */,
+				149498F51A039904006AE1FF /* REVClusterBlock.m */,
+				149498F61A039904006AE1FF /* REVClusterManager.h */,
+				149498F71A039904006AE1FF /* REVClusterManager.m */,
+				149498F81A039904006AE1FF /* REVClusterMap.h */,
+				149498F91A039904006AE1FF /* REVClusterMapView.h */,
+				149498FA1A039904006AE1FF /* REVClusterMapView.m */,
+				149498FB1A039904006AE1FF /* REVClusterPin.h */,
+				149498FC1A039904006AE1FF /* REVClusterPin.m */,
+			);
+			path = REVClusterMap;
 			sourceTree = "<group>";
 		};
 		2CB9832719D06ECC000A9269 /* CGClustering */ = {
@@ -585,7 +662,7 @@
 		42284F7D18D26AA80087941E /* 3rdparties */ = {
 			isa = PBXGroup;
 			children = (
-				701488491A15086E00DF5BF4 /* UIDevice+Hardware */,
+				149498F11A039904006AE1FF /* REVClusterMap */,
 				2CDCA6D619D07BF7008C7B51 /* Clustering */,
 				2CDCA6E719D07BF7008C7B51 /* Projection */,
 				2CDCA6EA19D07BF7008C7B51 /* QuadTree */,
@@ -645,6 +722,7 @@
 				42A6A57F18CBA3BF0043233C /* Frameworks */,
 				42A6A57E18CBA3BF0043233C /* Products */,
 				4CCBD0909AC73E00CA85FC25 /* Pods */,
+				06C1364B1A2DCB9F00C101D0 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -659,7 +737,8 @@
 		42A6A57F18CBA3BF0043233C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				70EBB7FC1A179B55004B3474 /* MapKit.framework */,
+				1494990D1A039C3C006AE1FF /* MapKit.framework */,
+				49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */,
 				2CB9833619D1A5FE000A9269 /* GoogleMaps.framework */,
 				73BFB8BF195D005600952C9A /* MessageUI.framework */,
 				4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */,
@@ -690,6 +769,7 @@
 		42A6A58618CBA3BF0043233C /* icanvass */ = {
 			isa = PBXGroup;
 			children = (
+				06C1364C1A2DCC1000C101D0 /* UIDevice+Hardware */,
 				06563D9F1A1FB47600020904 /* SOSession */,
 				06563D961A1F65D500020904 /* errorHandle */,
 				06D1D74F1A1E3A660096B1C3 /* TutorialViewController */,
@@ -767,6 +847,8 @@
 				42A7BECC18D71D7400973EA8 /* PinCell.m */,
 				4255E67E19A7AE2A007657E9 /* HilightedButton.h */,
 				4255E67F19A7AE2A007657E9 /* HilightedButton.m */,
+				14AE51CD1A076BF4007C88A2 /* myButton.h */,
+				14AE51CE1A076BF4007C88A2 /* myButton.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -854,19 +936,10 @@
 		4CCBD0909AC73E00CA85FC25 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E59B42D56FDC3ACB6713B110 /* Pods.debug.xcconfig */,
-				DD9FE4E8359CDA0028C3A2E4 /* Pods.release.xcconfig */,
+				F7D59D4A6E11B9FCACCEF07D /* Pods.debug.xcconfig */,
+				23BA41EED8EFB43B071F3A46 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		701488491A15086E00DF5BF4 /* UIDevice+Hardware */ = {
-			isa = PBXGroup;
-			children = (
-				7014884A1A15086E00DF5BF4 /* UIDevice-Hardware.h */,
-				7014884B1A15086E00DF5BF4 /* UIDevice-Hardware.m */,
-			);
-			path = "UIDevice+Hardware";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -876,11 +949,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42A6A5AF18CBA3BF0043233C /* Build configuration list for PBXNativeTarget "door2doorapp" */;
 			buildPhases = (
-				4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */,
+				BA3679C91B80E2F011B2E076 /* Check Pods Manifest.lock */,
 				42A6A57918CBA3BF0043233C /* Sources */,
 				42A6A57A18CBA3BF0043233C /* Frameworks */,
 				42A6A57B18CBA3BF0043233C /* Resources */,
-				F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */,
+				9F8E070BCC2D9BD62A533236 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -933,6 +1006,7 @@
 				42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */,
 				42B3A6BF18E8C5E700B46FBF /* MPCheckmark@2x.png in Resources */,
 				42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */,
+				1494990B1A039BE0006AE1FF /* pinpoint.png in Resources */,
 				42B3A6BE18E8C5E700B46FBF /* MPCheckmark.png in Resources */,
 				42B3A6C018E8C5E700B46FBF /* MPCloseBtn.png in Resources */,
 				42B3A6BC18E8C5E700B46FBF /* MPArrowRight.png in Resources */,
@@ -940,6 +1014,7 @@
 				42B3A67618E82FB900B46FBF /* InfoView.xib in Resources */,
 				42A6A59918CBA3BF0043233C /* Images.xcassets in Resources */,
 				42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */,
+				149499091A039BE0006AE1FF /* cluster.png in Resources */,
 				42341CE419CF0BCC000D61E3 /* fanout.html in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
@@ -947,6 +1022,7 @@
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
 				42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */,
 				42B3A6C518E8C5E700B46FBF /* MPLogo@2x.png in Resources */,
+				1494990A1A039BE0006AE1FF /* cluster@2x.png in Resources */,
 				42B3A6C318E8C5E700B46FBF /* MPDismissKeyboard@2x.png in Resources */,
 				70E4040C1A1BAABC00A2EBA1 /* LaunchScreen.xib in Resources */,
 				42B3A69118E8C3E100B46FBF /* FreshdeskSDKResources.bundle in Resources */,
@@ -954,28 +1030,14 @@
 				42B3A6C418E8C5E700B46FBF /* MPLogo.png in Resources */,
 				4255E68619A7B40B007657E9 /* SVProgressHUD.bundle in Resources */,
 				06D1D74E1A1DFC820096B1C3 /* FingerAnimation.xib in Resources */,
+				1494990C1A039BE0006AE1FF /* pinpoint@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4EE806317D4C45A4B1E0E7BD /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F5CFEB71CC9F47408B7797CD /* Copy Pods Resources */ = {
+		9F8E070BCC2D9BD62A533236 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -990,6 +1052,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BA3679C91B80E2F011B2E076 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -999,19 +1076,23 @@
 			files = (
 				42B3A67418E8023300B46FBF /* DetailsTableViewCell.m in Sources */,
 				2CDCA6F219D07BF7008C7B51 /* GQuadItem.m in Sources */,
+				149499041A0399C8006AE1FF /* REVClusterAnnotationView.m in Sources */,
 				423EA49118E0B4DB00E22FF8 /* GoToWebsiteViewController.m in Sources */,
 				42B3A6D518E9781800B46FBF /* DatePickerViewController.m in Sources */,
-				7014884C1A15086E00DF5BF4 /* UIDevice-Hardware.m in Sources */,
 				42B3A6D818E9783500B46FBF /* DropDownViewController.m in Sources */,
 				42480DE819A3ECC100E6DF7B /* Location.m in Sources */,
+				149498FE1A039904006AE1FF /* REVClusterBlock.m in Sources */,
 				4255E68719A7B40B007657E9 /* SVProgressHUD.m in Sources */,
 				42A7BEC718D719BF00973EA8 /* UIProgressView+AFNetworking.m in Sources */,
+				149499011A039904006AE1FF /* REVClusterPin.m in Sources */,
 				42A7BEC618D719BF00973EA8 /* UIImageView+AFNetworking.m in Sources */,
 				42284F9218D26AF10087941E /* AFHTTPRequestOperation.m in Sources */,
 				73BFB8C3195D670C00952C9A /* NoteViewController.m in Sources */,
 				42B3A6CB18E8C5E700B46FBF /* MPSurveyNavigationController.m in Sources */,
+				14AE51CF1A076BF4007C88A2 /* myButton.m in Sources */,
 				42C35AE318E21E6700E83545 /* FilterViewController.m in Sources */,
 				42A6A59718CBA3BF0043233C /* HomeViewController.m in Sources */,
+				149499001A039904006AE1FF /* REVClusterMapView.m in Sources */,
 				42D28CE918E08285005E1758 /* LeftDrawerViewController.m in Sources */,
 				2CB9833519D18A8A000A9269 /* CustomClusterManager.m in Sources */,
 				42B3A6D218E8C5E700B46FBF /* UIView+MPSnapshotImage.m in Sources */,
@@ -1043,6 +1124,7 @@
 				42D28CE518E06702005E1758 /* MMDrawerVisualState.m in Sources */,
 				42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */,
 				70DC69571A19068D00CB8C72 /* TutorialSecondPageViewController.m in Sources */,
+				149498FF1A039904006AE1FF /* REVClusterManager.m in Sources */,
 				42341CE219CF0BB4000D61E3 /* FanOut.m in Sources */,
 				42284F9518D26AF10087941E /* AFNetworkReachabilityManager.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
@@ -1064,8 +1146,10 @@
 				2CDCA6F419D07BF7008C7B51 /* NonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				2CDCA6F819D07BF7008C7B51 /* GQTPointQuadTree.m in Sources */,
 				42EF82EB18FBFA390045EB0E /* Users.m in Sources */,
+				149498FD1A039904006AE1FF /* REVAnnotationsCollection.m in Sources */,
 				42B3A6CF18E8C5E700B46FBF /* UIColor+MPColor.m in Sources */,
 				42284F9618D26AF10087941E /* AFSecurityPolicy.m in Sources */,
+				06C1364F1A2DCC1000C101D0 /* UIDevice-Hardware.m in Sources */,
 				42A6A5B718CBB52C0043233C /* ListController.m in Sources */,
 				42284F5E18D254020087941E /* Status.m in Sources */,
 				42A7BEC518D719BF00973EA8 /* UIButton+AFNetworking.m in Sources */,
@@ -1123,8 +1207,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1164,8 +1248,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1185,21 +1269,20 @@
 		};
 		42A6A5B018CBA3BF0043233C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E59B42D56FDC3ACB6713B110 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F7D59D4A6E11B9FCACCEF07D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 					"$(PROJECT_DIR)",
+					/Users/imac2/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";
@@ -1219,21 +1302,20 @@
 		};
 		42A6A5B118CBA3BF0043233C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD9FE4E8359CDA0028C3A2E4 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 23BA41EED8EFB43B071F3A46 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv7,
 					armv7s,
 				);
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
 					"$(PROJECT_DIR)",
+					/Users/imac2/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "icanvass/icanvass-Prefix.pch";

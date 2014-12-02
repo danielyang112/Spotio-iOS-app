@@ -16,4 +16,5 @@
 @interface DropDownViewController : UITableViewController
 @property (nonatomic,weak) id<DropDownDelegate> delegate;
 @property (nonatomic,strong) NSArray *options;
+@property (nonatomic,strong) NSIndexPath *indexPath;
 @end

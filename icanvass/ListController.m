@@ -20,7 +20,6 @@
 #import <CoreData/CoreData.h>
 #import "ICRequestManager.h"
 
-
 enum ICSortOrder : NSUInteger {
     ICSortOrderStatusAscending,
     ICSortOrderStatusDescending,
