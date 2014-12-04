@@ -294,6 +294,7 @@
     dc.userCoordinate=_locationManager.location.coordinate;
     _tapped=NO;
     dc.adding=YES;
+	[[TutorialViewController shared] dismissCurrentTip];
     [self.navigationController pushViewController:dc animated:YES];
 }
 
@@ -331,15 +332,12 @@
 }
 
 - (void)didRegister {
-	GMSMutableCameraPosition *position = _map.mapView.camera.mutableCopy;
 	CLLocationCoordinate2D coordinate;
 	coordinate.latitude = 38.897499625363928;
 	coordinate.longitude = -77.036497257649899;
-	position.target = coordinate;
-	position.zoom = 19.4;
-	_map.mapView.camera = position;
+	[_map setCenterLocation:coordinate zoomLavel:19.4];
 	[self switchToViewController:_controllers[0] animated:NO];
-	if ([SOSession isHasBeenLoggedIn]) {
+	if (NO) {
 		[self.locationManager startUpdatingLocation];
 		if (self.locationManager) {
 			self.map.location = self.locationManager.location;

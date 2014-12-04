@@ -7,7 +7,7 @@
 
 @interface TutorialViewController : UIViewController
 
-+ (void)showTutorial;
++ (void)showTutorialWithDidShowCompletion:(void(^)())completion;
 
 + (instancetype)shared;
 

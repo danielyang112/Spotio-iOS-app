@@ -26,10 +26,24 @@ __weak static TutorialViewController *shared = nil;
 @implementation TutorialWindow
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	if (self.tutorialDelegate == nil) {
+		[self removeFromSuperview];
+		return nil;
+	}
 	if (self.tutorialDelegate) {
 		return [self.tutorialDelegate canHitPoint:point] ? [super hitTest:point withEvent:event] : nil;
 	}
 	return [super hitTest:point withEvent:event];
+}
+
+
+-(void)dealloc {
+	NSLog(@"%@",self);
+}
+
+-(instancetype)initWithFrame:(CGRect)frame {
+	self = [super initWithFrame:frame];
+	return self;
 }
 
 @end
@@ -63,7 +77,7 @@ __weak static TutorialViewController *shared = nil;
 
 @implementation TutorialViewController
 
-+ (void)showTutorial {
++ (void)showTutorialWithDidShowCompletion:(void(^)())completion {
 	TutorialWindow *parentWindow = [[TutorialWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	parentWindow.windowLevel = UIWindowLevelAlert + 150;
 	parentWindow.backgroundColor = [UIColor clearColor];
@@ -77,17 +91,19 @@ __weak static TutorialViewController *shared = nil;
 
 	if (IS_OS_8_OR_LATER) {
 		TutorialFirstPageViewController *firstPage = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TutorialFirstPageViewController"];
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			[tutorial presentViewController:firstPage animated:YES completion:nil];
-		});
+//		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//		});
 		tutorial.firstPage = firstPage;
 		__weak typeof(tutorial) tutorialWeak = tutorial;
 		firstPage.onContinue = ^{
 			[tutorialWeak dissmissFirstPage];
 		};
+		[tutorial presentViewController:firstPage animated:YES completion:completion];
 	} else {
-
 		[tutorial dissmissFirstPage];
+		if (completion) {
+			completion();
+		}
 	}
 
 }
@@ -222,12 +238,17 @@ __weak static TutorialViewController *shared = nil;
 	}
 	self.skipInProgress = YES;
 	if([self.focusView isFocused]) {
+		__weak typeof(self) weakSelf = self;
 		[self.focusView dismiss:^{
-			self.parentWindow.rootViewController = nil;
-			self.parentWindow = nil;
+			weakSelf.focusView = nil;
+			[weakSelf.parentWindow removeFromSuperview];
+			weakSelf.parentWindow.rootViewController = nil;
+			weakSelf.parentWindow = nil;
 		}];
 	} else {
+		[self.focusView removeFromSuperview];
 		self.parentWindow.rootViewController = nil;
+		[self.parentWindow resignKeyWindow];
 		self.parentWindow = nil;
 	}
 	shared = nil;
@@ -258,6 +279,10 @@ __weak static TutorialViewController *shared = nil;
 - (void)showFromPrevious {
 	self.parentWindow.alpha = 1.0;
 	self.parentWindow.userInteractionEnabled = YES;
+}
+
+-(void)dealloc {
+	NSLog(@"%@",self);
 }
 
 @end

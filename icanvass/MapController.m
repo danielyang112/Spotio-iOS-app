@@ -19,6 +19,8 @@
 #import "GDefaultClusterRenderer.h"
 #import "GClusterItem.h"
 #import "CustomClusterManager.h"
+#import "InfoView.h"
+#import "TutorialViewController.h"
 //#import <sys/utsname.h>
 
 #import "REVClusterMap.h"
@@ -31,7 +33,25 @@
 
 #define MINIMUM_ZOOM_LEVEL 100000
 
-@interface MapController () <GMSMapViewDelegate,NSFetchedResultsControllerDelegate>
+@implementation MKMapView (ZoomLevel)
+
+- (void)setZoomLevel:(double)zoomLevel {
+	[self setCenterCoordinate:self.centerCoordinate zoomLevel:zoomLevel animated:NO];
+}
+
+- (CGFloat)zoomLevel {
+	return log2(360 * ((self.frame.size.width/256) / self.region.span.longitudeDelta)) + 1;
+}
+
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+				  zoomLevel:(double)zoomLevel animated:(BOOL)animated {
+	MKCoordinateSpan span = MKCoordinateSpanMake(0, 360/pow(2, zoomLevel)*self.frame.size.width/256);
+	[self setRegion:MKCoordinateRegionMake(centerCoordinate, span) animated:animated];
+}
+
+@end
+
+@interface MapController () <GMSMapViewDelegate,NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 {
     CustomClusterManager *clusterManager_;
     BOOL firstLocationUpdate_;
@@ -40,11 +60,9 @@
     
 }
 @property (nonatomic,strong) NSMutableDictionary *markers;
-@property (nonatomic,strong) GMSMapView *allAnnotationMapView;
-
+@property (nonatomic, weak) InfoView *selectedInfoView;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSString *searchText;
-@property (nonatomic,strong) GMSMarker* selectedMarker;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property (nonatomic,strong) NSFetchedResultsController* fetchController;
 @end
@@ -61,7 +79,7 @@
         // Custom initialization
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchChanged:) name:@"ICSearch" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
@@ -70,15 +88,6 @@
     }
     return self;
 }
-//-(NSString*)machineName
-//{
-//    struct utsname systemInfo;
-//    uname(&systemInfo);
-//    
-//    return [NSString stringWithCString:systemInfo.machine
-//                              encoding:NSUTF8StringEncoding];
-//}
-//
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,65 +102,14 @@
     [self.view addSubview:_mapview];
     
     [_mapview addAnnotations:nil];
-	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnMapView:)];
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+																		  action:@selector(tapOnMapView:)];
+	tap.numberOfTapsRequired = 1;
+	tap.numberOfTouchesRequired = 1;
 	[_mapview addGestureRecognizer:tap];
-    
-    /*
-    self.mapView=[GMSMapView mapWithFrame:f camera:[self cameraPosition]];
-    _mapView.delegate=self;
-    _mapView.myLocationEnabled=YES;
-    [_mapView isMyLocationEnabled];
-//    if ([[self machineName] isEqualToString:@"iPhone3,1"]||[[self machineName] isEqualToString:@"iPhone4,1"])
-//    {
-//        _mapView.indoorEnabled = NO;
-//        _mapView.buildingsEnabled = NO;
-//    }
-//    else
-//    {
-//        _mapView.indoorEnabled = YES;
-//        _mapView.buildingsEnabled = YES;
-//
-//    }
-//    [_mapView addObserver:self
-//               forKeyPath:@"myLocation"
-//                  options:NSKeyValueObservingOptionNew
-//                  context:NULL];
-    
-
-    _mapView.settings.myLocationButton=YES;
-    NSLog(@"User's location: %@", _mapView.myLocation);
-
-    _mapView.settings.compassButton=YES;
-    clusterManager_ = [CustomClusterManager managerWithMapView:_mapView
-                                                algorithm:[[NonHierarchicalDistanceBasedAlgorithm alloc] init]
-                                                 renderer:[[GDefaultClusterRenderer alloc] initWithMapView:_mapView]];
-    clusterManager_.trueDelegate = self;
-    clusterManager_.clustered = NO;
-    [_mapView setDelegate:clusterManager_];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-//        [clusterManager_ removeItems];
-//        [self createClusterItems];
-//        [_mapView clear];
-        _fetchController = [Pins sharedInstance].fetchController;
-        _fetchController.delegate = self;
-        [_fetchController performFetch:nil];
-        
-
-    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
-    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
-    [self.view insertSubview:_mapView atIndex:0];
-//    self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0.f,0.f,320.f,44.f)];
-//    _searchBar.delegate=self;
-//    _searchBar.showsCancelButton=YES;
-    [self.view addSubview:_searchBar];
-    [self.view layoutIfNeeded];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _mapView.myLocationEnabled = YES;
-//    });
-
-     */
+	tap.delegate = self;
 }
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -161,62 +119,21 @@
         // location.
         firstLocationUpdate_ = YES;
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-        _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:14];
+		[_mapview setCenterCoordinate:location.coordinate zoomLevel:14 animated:NO];
     }
-}
-
-- (void)viewWillLayoutSubviews {
-    CGRect f=self.view.bounds;
-//    f.size.height-=44.f;
-//    f.origin.y+=44.f;
-    self.mapView.frame=f;
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-//    _moved=NO;    //still weird
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [_mapView clear];
-    if ([_mapView.camera zoom]<12) {
-        [clusterManager_ removeItems];
-        [self createClusterItems];
-        [clusterManager_ cluster];
-    }
-    else
-    {
-        [self refresh];
-    }
-}
-
-#pragma mark - Helpers
-
-- (GMSCameraPosition*)cameraPosition {
-    return [GMSCameraPosition cameraWithLatitude:_location.coordinate.latitude
-                                       longitude:_location.coordinate.longitude
-                                            zoom:21];
+	[self refresh];
 }
 
 - (UIImage*)iconForPin:(Pin*)pin {
+
     if(!_icons[pin.status]){
         _icons[pin.status]=[GMSMarker markerImageWithColor:[[Pins sharedInstance] colorForStatus:pin.status]];
     }
     return _icons[pin.status];
-}
-
-- (GMSMarker*)markerForPin:(Pin*)pin {
-    CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
-    
-    GMSMarker *marker=[GMSMarker markerWithPosition:position];
-    marker.userData=pin;
-    marker.title=[NSString stringWithFormat:@"%@ %@",pin.location.streetNumber, pin.location.streetName];
-    marker.icon=[self iconForPin:pin];
-    [marker setAppearAnimation:kGMSMarkerAnimationPop];
-    marker.map=_mapView;
-    return marker;
 }
 
 - (void)filterArray {
@@ -254,19 +171,7 @@
 
     [_mapview addAnnotations:tempPlaces];
     
-//    for(GMSMarker *m in [_markers allValues]){
-//        [clusterManager_ removeItems];
-//        m.map=nil;
-//    }
-//    [_markers removeAllObjects];
-//    for(Pin *pin in _filtered){
-//        GMSMarker *marker=[self markerForPin:pin];
-//        [clusterManager_ addItem:marker];
-//        self.markers[pin.ident]=marker;
-//    }
 }
-
-
 
 - (void)viewOnMap:(Pin*)pin {
     
@@ -274,45 +179,11 @@
                withObject:_markers[pin.ident]
                afterDelay:0.5];
     
-//    if(_markers[pin.ident]){
-//        self.mapView.selectedMarker=_markers[pin.ident];
-//    }
-}
-
-- (void)clear {
-    [clusterManager_ removeItems];
-    [self.mapView clear];
-}
-
-- (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)cameraPosition
-{
-//    _mapView.selectedMarker?:[_mapView clear];
-
-    [mapView clear];
-    [self refresh];
-}
-
-- (GMSMarker*)clusterItem:(Pin*)pin {
-    CLLocationCoordinate2D position=CLLocationCoordinate2DMake([pin.latitude doubleValue], [pin.longitude doubleValue]);
-    
-    GMSMarker *marker=[GMSMarker markerWithPosition:position];
-    return marker;
-}
-
-
-- (void)createClusterItems
-{
-    for (Pin *pin in [[Pins sharedInstance]pins])
-    {
-        GMSMarker *marker=[self clusterItem:pin];
-        [clusterManager_ addItem:marker];
-    }
 }
 
 - (void)refresh {
     NSLog(@"%s",__FUNCTION__);
     __weak typeof(self) weakSelf = self;
-    GMSVisibleRegion myRegion = _mapView.projection.visibleRegion;
     [[Pins sharedInstance] sendPinsTo:^(NSArray *a) {
         NSString *s=[Pins sharedInstance].searchText;
         if(s && ![s isEqualToString:@""]){
@@ -322,28 +193,26 @@
                 || ([p.address rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound)
                 || ([p.address2 rangeOfString:s options:NSCaseInsensitiveSearch].location != NSNotFound);
             }];
-        }
-        else
-        {
+        } else {
             weakSelf.pins=a;
         }
 		
-		NSLog(@"++++++++++++++++++ %d", [a count]);
-		
-        double maxLatitude = MAX(MAX(myRegion.farRight.latitude,myRegion.nearRight.latitude),MAX(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
-        double maxLongitude = MAX(MAX(myRegion.farRight.longitude,myRegion.nearRight.longitude),MAX(myRegion.farLeft.longitude,myRegion.nearLeft.longitude));
-        double minLatitude = MIN(MIN(myRegion.farRight.latitude,myRegion.nearRight.latitude),MIN(myRegion.farLeft.latitude,myRegion.nearLeft.latitude));
-        double minLongitude = MIN(MIN(myRegion.farRight.longitude,myRegion.nearRight.longitude),MIN(myRegion.farLeft.longitude,myRegion.nearLeft.longitude));
-
-
-        NSPredicate* predicateForRegion = [NSPredicate predicateWithFormat:@"SELF.latitude <= %f+0.009 AND SELF.longitude<= %f+0.009 AND self.latitude >= %f-0.009 AND SELF.longitude>= %f-0.009",maxLatitude,maxLongitude,minLatitude,minLongitude];
         weakSelf.filtered=_pins;
-		self.filtered =  [weakSelf.filtered filteredArrayUsingPredicate:predicateForRegion];
         [weakSelf refreshMarkers];
     }];
 }
 
 #pragma mark - Notifications
+- (void)setMapPositionAfterAddPin:(NSNotification*)notification {
+	NSNumber *lonNumber = [notification.userInfo objectForKey:@"lon"];
+	NSNumber *latNumber = [notification.userInfo objectForKey:@"lat"];
+	double lon = [lonNumber doubleValue];
+	double lat = [latNumber doubleValue];
+	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(lat,lon);
+//	[self.mapView animateToLocation:coordinates];
+//	[self refresh];
+	[_mapview setCenterCoordinate:coordinate animated:YES];
+}
 
 - (void)colorsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
@@ -352,26 +221,20 @@
 }
 - (void)searchChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
-    self.mapView.selectedMarker=nil;
     [self refresh];
 }
 
 - (void)pinsChanged:(NSNotification*)notification {
-    NSLog(@"%s",__FUNCTION__);
-    self.mapView.selectedMarker=nil;
-    [self refresh];
+	NSLog(@"%s",__FUNCTION__);
+	[self refresh];
 }
 
 - (void)userLoggedOut:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
-    [self clear];
 }
 
 - (void)mapSettingsChanged:(NSNotification*)notification {
     NSLog(@"%s",__FUNCTION__);
-//    BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
-//    _mapView.mapType=satellite?kGMSTypeSatellite:kGMSTypeNormal;
-    
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapview.mapType=satellite?MKMapTypeSatellite:MKMapTypeStandard;
 }
@@ -382,7 +245,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     if([annotation class] == MKUserLocation.class) {
-		//userLocation = annotation;
+
 		return nil;
 	}
     
@@ -401,19 +264,15 @@
             [[REVClusterAnnotationView alloc] initWithAnnotation:annotation
                                                   reuseIdentifier:@"cluster"];
         
-        annView.image = [UIImage imageNamed:@"cluster.png"];
+        annView.image = [UIImage imageNamed:@"cluster"];
         
         [(REVClusterAnnotationView*)annView setClusterText:
          [NSString stringWithFormat:@"%i",[pin nodeCount]]];
         
         annView.canShowCallout = NO;
     } else {
-        annView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-        
-        if( !annView )
-            annView = [[MKAnnotationView alloc] initWithAnnotation:annotation
-                                                    reuseIdentifier:@"pin"];
-        
+		annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
+		
         annView.image = pin.image;
         annView.canShowCallout = NO;
         [annView setSelected:YES animated:YES];
@@ -422,66 +281,26 @@
     return annView;
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view1
-{
-
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(REVClusterAnnotationView *)view1 {
+	
     NSLog(@"REVMapViewController mapView didSelectAnnotationView:");
     
-    if ([view1 isKindOfClass:[REVClusterAnnotationView class]])
+	if ([view1 isKindOfClass:[REVClusterAnnotationView class]]) {
         return;
-    
-//    CLLocationCoordinate2D centerCoordinate = [(REVClusterPin *)view1.annotation coordinate];
-//    
-//    MKCoordinateSpan newSpan =
-//    MKCoordinateSpanMake(mapView.region.span.latitudeDelta/2.0,
-//                         mapView.region.span.longitudeDelta/2.0);
-//    
-//    //mapView.region = MKCoordinateRegionMake(centerCoordinate, newSpan);
-//    
-//    [mapView setRegion:MKCoordinateRegionMake(centerCoordinate, newSpan)
-//              animated:YES];
-    
+	}
+	if ([view1.annotation isKindOfClass:[MKUserLocation class]]) {
+		return;
+	}
+	[self closeCalloutView];
     REVClusterPin *pin1 = (REVClusterPin *)view1.annotation;
     
-    Pin *pin=pin1.userData;
-    UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
-    
-    CGRect calloutViewFrame = view.frame;
-
+	InfoView *infoView = [InfoView loadInfoView];
+	[infoView setPin:pin1];
+    CGRect calloutViewFrame = infoView.frame;
     calloutViewFrame.origin = CGPointMake(-calloutViewFrame.size.width/2 + 15, -calloutViewFrame.size.height);
-    view.frame = calloutViewFrame;
-    
-    UIView *icon=[view viewWithTag:7];
-    icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
-    icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
-    icon.layer.borderWidth=1.f;
-    UIView *bg=view;//[view viewWithTag:9];
-    bg.layer.masksToBounds = NO;
-    bg.layer.shadowOffset = CGSizeMake(-5, 5);
-    bg.layer.shadowRadius = 3;
-    bg.layer.shadowOpacity = 0.8;
-    bg.layer.borderWidth = 1.f;
-    bg.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    UILabel *l=(UILabel*)[view viewWithTag:1];
-    l.text=pin.status;
-    l=(UILabel*)[view viewWithTag:2];
-    //    l.text=pin.user;
-    l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
-    l=(UILabel*)[view viewWithTag:3];
-    l.text=[Pin formatDate:pin.updateDate];
-    l=(UILabel*)[view viewWithTag:4];
-    l.text=pin.address;
-    l=(UILabel*)[view viewWithTag:5];
-    l.text=pin.address2;
-    //view.backgroundColor=[UIColor whiteColor];
-    myButton *bt = (myButton*)[view viewWithTag:100];
-    [bt setExclusiveTouch:NO];
-    [bt setUserData:pin1.userData];
-    //[bt setBackgroundColor:[UIColor blueColor]];
-    [bt addTarget:self action:@selector(openPinDetail:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:bt];
-    
-    [view1 addSubview:view];
+    infoView.frame = calloutViewFrame;
+    [view1 addSubview:infoView];
+	self.selectedInfoView = infoView;
 }
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
@@ -489,20 +308,11 @@
     CGPoint touchLocation = [anntouch locationInView:view];
     
     for (UIView *subview in view.subviews ){
-        
-        if (CGRectContainsPoint(subview.frame, touchLocation))
-        {
-            for (UIView *view1 in subview.subviews)
-            {
-                if ([view1 isKindOfClass:[myButton class]])
-                {
-                    myButton *btn = (myButton*)view1;
-                    Pin *pin=btn.userData;
-                    [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
-                }
-            }
-        }
-        
+		if ([subview isKindOfClass:[InfoView class]] && CGRectContainsPoint(subview.frame, touchLocation)) {
+			Pin *pin= ((InfoView*)subview).pin.userData;
+			[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+			[[TutorialViewController shared] dismissCurrentTip];
+		}
         [subview removeFromSuperview];
     }
 }
@@ -533,80 +343,6 @@
     });
 }
 
-#pragma mark - GMSMapViewDelegate
-
-- (void)mapView:(GMSMapView*)mapView willMove:(BOOL)gesture {
-    if(gesture) {
-        self.moved=YES;
-    }
-    if (_selectedMarker) {
-        [self showInfoMarker];
-    }
-
-    
-}
-
-- (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView {
-    _moved=NO;
-    return NO;
-}
-
-- (void)mapView:(GMSMapView*)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    if(!mapView.selectedMarker){
-        [_delegate mapController:self didSelectBuildingAtCoordinate:coordinate];
-    }
-    else
-    {
-        _mapView.selectedMarker = nil;
-    }
-}
-
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
-    _selectedMarker = marker;
-    //Pin *pin=marker.userData;
-    //[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
-    return YES;
-}
--(void) showInfoMarker
-{
-    [self mapView:_mapView markerInfoWindow:_mapView.selectedMarker];
-}
-
-- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-    
-    Pin *pin=marker.userData;
-    UIView *view=[[[NSBundle mainBundle] loadNibNamed:@"InfoView" owner:nil options:nil] lastObject];
-    UIView *icon=[view viewWithTag:7];
-    icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
-    icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
-    icon.layer.borderWidth=1.f;
-    UIView *bg=view;//[view viewWithTag:9];
-    bg.layer.masksToBounds = NO;
-    bg.layer.shadowOffset = CGSizeMake(-5, 5);
-    bg.layer.shadowRadius = 3;
-    bg.layer.shadowOpacity = 0.8;
-    bg.layer.borderWidth = 1.f;
-    bg.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    UILabel *l=(UILabel*)[view viewWithTag:1];
-    l.text=pin.status;
-    l=(UILabel*)[view viewWithTag:2];
-//    l.text=pin.user;
-    l.text=[[Users sharedInstance] fullNameForUserName:pin.user];
-    l=(UILabel*)[view viewWithTag:3];
-    l.text=[Pin formatDate:pin.updateDate];
-    l=(UILabel*)[view viewWithTag:4];
-    l.text=pin.address;
-    l=(UILabel*)[view viewWithTag:5];
-    l.text=pin.address2;
-    //view.backgroundColor=[UIColor whiteColor];
-    return view;
-}
-
-- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
-    Pin *pin=_selectedMarker.userData;
-    [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
-}
-
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -615,8 +351,6 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    //self.searchText=nil;
-    //[self filterArray];
     [searchBar resignFirstResponder];
 }
 
@@ -627,6 +361,11 @@
 }
 
 #pragma mark - API
+-(void)closeCalloutView {
+	if (self.selectedInfoView) {
+		[self.selectedInfoView removeFromSuperview];
+	}
+}
 
 -(void)setFiltered:(NSArray *)filtered {
 	[[Pins sharedInstance] filteredPinsWithArray: filtered];
@@ -636,28 +375,48 @@
 - (void)setLocation:(CLLocation *)location {
     NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
     _location=location;
-    if(!_moved) {
-        [_mapView animateToCameraPosition:[self cameraPosition]];
-    }
+	MKMapCamera *camera = _mapview.camera;
+	camera.centerCoordinate = location.coordinate;
+	_mapview.camera = camera;
 }
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     dc.pin=sender;
 }
 
 
 - (void)tapOnMapView:(UITapGestureRecognizer*)tap {
+	if (self.selectedInfoView) {
+		CGPoint touchPointInInfoView = [tap locationInView:self.selectedInfoView];
+		if (CGRectContainsPoint(self.selectedInfoView.bounds, touchPointInInfoView)) {
+			Pin *pin = self.selectedInfoView.pin.userData;
+			[self performSegueWithIdentifier:@"MapViewPin" sender:pin];
+			return;
+		}
+	}
 	CGPoint touchPoint = [tap locationInView:_mapview];
 	CLLocationCoordinate2D touchMapCoordinate =
 	[_mapview convertPoint:touchPoint toCoordinateFromView:_mapview];
 	if ([self.delegate respondsToSelector:@selector(mapController:didSelectBuildingAtCoordinate:)]) {
 		[self.delegate mapController:self didSelectBuildingAtCoordinate:touchMapCoordinate];
 	}
+	[self closeCalloutView];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]
+		&& [otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+		return YES;
+	}
+	return NO;
+}
+
+- (void)setCenterLocation:(CLLocationCoordinate2D)location zoomLavel:(double)zoomLavel {
+	[_mapview setCenterCoordinate:location zoomLevel:zoomLavel animated:NO];
 }
 
 @end

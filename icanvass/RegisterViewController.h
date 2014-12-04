@@ -22,8 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
-
-@property (weak, nonatomic) IBOutlet UIButton *industryButton;
 @property (weak, nonatomic) IBOutlet UIButton *roleButton;
 @property (weak, nonatomic) IBOutlet UIButton *employeesButton;
 

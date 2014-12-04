@@ -24,5 +24,5 @@
 - (id<MKAnnotation>) getClusteredAnnotation;
 - (id<MKAnnotation>) getAnnotationForIndex:(NSInteger)index;
 - (NSInteger) count;
-
+-(REVAnnotationsCollection*) collection;
 @end

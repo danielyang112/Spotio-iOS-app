@@ -48,6 +48,7 @@
     _loginTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"email address" attributes:@{NSForegroundColorAttributeName: color}];
     _loginTextField.leftViewMode=UITextFieldViewModeAlways;
     _loginTextField.leftView = paddingView;
+	[_loginTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"password" attributes:@{NSForegroundColorAttributeName: color}];
     _passwordTextField.leftViewMode=UITextFieldViewModeAlways;
     paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];

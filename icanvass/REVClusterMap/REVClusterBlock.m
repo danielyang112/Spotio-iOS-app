@@ -71,4 +71,10 @@
 }
 #endif
 
+//
+-(REVAnnotationsCollection*) collection {
+	return annotationsCollection;
+}
+//
+
 @end

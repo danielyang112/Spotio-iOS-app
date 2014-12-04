@@ -11,8 +11,11 @@
 
 #import "REVClusterMapView.h"
 #import "REVClusterManager.h"
+#import <MapKit/MapKit.h>
 
-@interface REVClusterMapView (Private)
+
+@interface REVClusterMapView ()
+@property(nonatomic) BOOL isFirstTouch;
 - (void) setup;
 - (BOOL) mapViewDidZoom;
 @end
@@ -22,6 +25,7 @@
 @synthesize minimumClusterLevel;
 @synthesize blocks;
 @synthesize delegate;
+
 
 
 - (id) initWithFrame:(CGRect)frame
@@ -255,4 +259,20 @@
     
 }
 
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
+	UIView* hitView = [super hitTest:point withEvent:event];
+	if (hitView != nil) {
+		if([hitView isKindOfClass: MKAnnotationView.class]) {
+			if( [event type] == UIEventTypeTouches) {
+				if(!self.isFirstTouch) {
+					[delegate mapView:self didSelectAnnotationView: (MKAnnotationView*)hitView];
+				}
+				self.isFirstTouch = !self.isFirstTouch;
+			}
+			return nil;
+		}
+
+	}
+	return hitView;
+}
 @end

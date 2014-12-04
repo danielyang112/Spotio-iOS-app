@@ -14,6 +14,7 @@
 		06D1D74E1A1DFC820096B1C3 /* FingerAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D1D74C1A1DFC820096B1C3 /* FingerAnimation.xib */; };
 		06D1D7531A1E3A790096B1C3 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06D1D7511A1E3A790096B1C3 /* TutorialViewController.m */; };
 		06D1D7541A1E3A790096B1C3 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D1D7521A1E3A790096B1C3 /* TutorialViewController.xib */; };
+		06DAF6AE1A30734A00C8704C /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DAF6AD1A30734A00C8704C /* InfoView.m */; };
 		149498FD1A039904006AE1FF /* REVAnnotationsCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F31A039904006AE1FF /* REVAnnotationsCollection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		149498FE1A039904006AE1FF /* REVClusterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F51A039904006AE1FF /* REVClusterBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		149498FF1A039904006AE1FF /* REVClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 149498F71A039904006AE1FF /* REVClusterManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -146,6 +147,7 @@
 		42FA1F6518E1DF970015D137 /* ListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA1F6418E1DF970015D137 /* ListHeader.xib */; };
 		49B7D99C19E4EEA500771630 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */; };
 		701488481A14FC7C00DF5BF4 /* AppDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 701488471A14FC7C00DF5BF4 /* AppDetailViewController.m */; };
+		709803751A2F4AB100234227 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 709803741A2F4AB100234227 /* Default-568h@2x.png */; };
 		70DC69541A19067300CB8C72 /* TutorialFirstPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC69531A19067300CB8C72 /* TutorialFirstPageViewController.m */; };
 		70DC69571A19068D00CB8C72 /* TutorialSecondPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DC69561A19068D00CB8C72 /* TutorialSecondPageViewController.m */; };
 		70E4040C1A1BAABC00A2EBA1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E4040B1A1BAABC00A2EBA1 /* LaunchScreen.xib */; };
@@ -167,6 +169,8 @@
 		06D1D7501A1E3A790096B1C3 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		06D1D7511A1E3A790096B1C3 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		06D1D7521A1E3A790096B1C3 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		06DAF6AC1A30734A00C8704C /* InfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
+		06DAF6AD1A30734A00C8704C /* InfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoView.m; sourceTree = "<group>"; };
 		149498F21A039904006AE1FF /* REVAnnotationsCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVAnnotationsCollection.h; sourceTree = "<group>"; };
 		149498F31A039904006AE1FF /* REVAnnotationsCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REVAnnotationsCollection.m; sourceTree = "<group>"; };
 		149498F41A039904006AE1FF /* REVClusterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REVClusterBlock.h; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 		49B7D99B19E4EEA500771630 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		701488461A14FC7C00DF5BF4 /* AppDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDetailViewController.h; sourceTree = "<group>"; };
 		701488471A14FC7C00DF5BF4 /* AppDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDetailViewController.m; sourceTree = "<group>"; };
+		709803741A2F4AB100234227 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		70DC69521A19067300CB8C72 /* TutorialFirstPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialFirstPageViewController.h; sourceTree = "<group>"; };
 		70DC69531A19067300CB8C72 /* TutorialFirstPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialFirstPageViewController.m; sourceTree = "<group>"; };
 		70DC69551A19068D00CB8C72 /* TutorialSecondPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialSecondPageViewController.h; sourceTree = "<group>"; };
@@ -796,11 +801,11 @@
 				42284F9B18D26B110087941E /* ICRequestManager.h */,
 				42284F9C18D26B110087941E /* ICRequestManager.m */,
 				42A6A59218CBA3BF0043233C /* Main.storyboard */,
-				42B3A67518E82FB900B46FBF /* InfoView.xib */,
 				42FA1F6418E1DF970015D137 /* ListHeader.xib */,
 				42A6A59818CBA3BF0043233C /* Images.xcassets */,
 				42A6A58718CBA3BF0043233C /* Supporting Files */,
 				70E4040B1A1BAABC00A2EBA1 /* LaunchScreen.xib */,
+				709803741A2F4AB100234227 /* Default-568h@2x.png */,
 			);
 			path = icanvass;
 			sourceTree = "<group>";
@@ -849,6 +854,9 @@
 				4255E67F19A7AE2A007657E9 /* HilightedButton.m */,
 				14AE51CD1A076BF4007C88A2 /* myButton.h */,
 				14AE51CE1A076BF4007C88A2 /* myButton.m */,
+				06DAF6AC1A30734A00C8704C /* InfoView.h */,
+				06DAF6AD1A30734A00C8704C /* InfoView.m */,
+				42B3A67518E82FB900B46FBF /* InfoView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -1018,6 +1026,7 @@
 				42341CE419CF0BCC000D61E3 /* fanout.html in Resources */,
 				42A6A58B18CBA3BF0043233C /* InfoPlist.strings in Resources */,
 				42A6A59418CBA3BF0043233C /* Main.storyboard in Resources */,
+				709803751A2F4AB100234227 /* Default-568h@2x.png in Resources */,
 				42B3A6C218E8C5E700B46FBF /* MPDismissKeyboard.png in Resources */,
 				42284F6618D256DB0087941E /* GoogleMaps.bundle in Resources */,
 				42B3A6C718E8C5E700B46FBF /* MPNotification.storyboard in Resources */,
@@ -1163,6 +1172,7 @@
 				2CDCA6F919D07BF7008C7B51 /* GQTPointQuadTreeChild.m in Sources */,
 				42F79B4219A4DEBD00DCBB08 /* CustomValue.m in Sources */,
 				42A7BEAF18D7150200973EA8 /* PinTemp.m in Sources */,
+				06DAF6AE1A30734A00C8704C /* InfoView.m in Sources */,
 				42BBFF2C18D395FA0065D4C3 /* LoginViewController.m in Sources */,
 				06D1D74D1A1DFC820096B1C3 /* FingerAnimation.m in Sources */,
 				42B3A6CD18E8C5E700B46FBF /* MPSurveyQuestionViewController.m in Sources */,
@@ -1207,8 +1217,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1227,7 +1237,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "db869e1c-0e8d-4c5e-9476-a37725f59410";
+				PROVISIONING_PROFILE = "a111cba5-c233-4a54-b6b8-a937d30ae09c";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1248,8 +1258,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1261,7 +1271,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "87838e2a-d044-4e25-b9d6-003730572b79";
+				PROVISIONING_PROFILE = "3c13958c-a8d9-426e-b5fb-908f8eac8a5f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1276,8 +1286,10 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1293,7 +1305,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "db869e1c-0e8d-4c5e-9476-a37725f59410";
+				PROVISIONING_PROFILE = "a111cba5-c233-4a54-b6b8-a937d30ae09c";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1309,8 +1321,10 @@
 					armv7,
 					armv7s,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Occasional Riot LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Occasional Riot LLC";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1326,7 +1340,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "87838e2a-d044-4e25-b9d6-003730572b79";
+				PROVISIONING_PROFILE = "3c13958c-a8d9-426e-b5fb-908f8eac8a5f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

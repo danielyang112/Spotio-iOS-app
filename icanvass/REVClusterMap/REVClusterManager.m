@@ -10,7 +10,7 @@
 
 #import "REVClusterManager.h"
 
-
+#define MIN_CLASTER_SIZE 5
 #define BASE_RADIUS .5 // = 1 mile
 #define MINIMUM_LATITUDE_DELTA 0.20
 #define BLOCKS 4
@@ -86,13 +86,27 @@
     NSMutableArray *newPins = [NSMutableArray array];
     for ( REVClusterBlock *block in clusteredBlocks )
     {
-        if( [block count] > 0 )
-        {
-            if( ![REVClusterManager clusterAlreadyExistsForMapView:mapView andBlockCluster:block] )
-            {
-              [newPins addObject:[block getClusteredAnnotation]];
-            } 
-        }
+//        if( [block count] > 0 )
+//        {
+//            if( ![REVClusterManager clusterAlreadyExistsForMapView:mapView andBlockCluster:block] )
+//            {
+//              [newPins addObject:[block getClusteredAnnotation]];
+//            } 
+//        }
+		
+		// beg
+		if( [block count] >= MIN_CLASTER_SIZE || [block count] == 1) {
+			if( ![REVClusterManager clusterAlreadyExistsForMapView:mapView andBlockCluster:block] ) {
+				[newPins addObject:[block getClusteredAnnotation]];
+			}
+		} else if( [block count] > 1 ) {
+			for( int i=0; i<[block count]; i++) {
+				id annotation = [[block collection] objectAtIndex:i];
+				[newPins addObject: annotation];
+			}
+		}
+		
+		// end
     }
     return newPins;
 }

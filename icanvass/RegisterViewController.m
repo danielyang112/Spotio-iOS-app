@@ -42,31 +42,7 @@
     }
     return self;
 }
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex!=actionSheet.cancelButtonIndex){
-        NSString *title=[actionSheet buttonTitleAtIndex:buttonIndex];
-        if(actionSheet.tag==kIndustrySheet){
-            [_industryButton setTitle:title forState:UIControlStateNormal];
-            industrySelected = TRUE;
-//            [_scrollView scrollRectToVisible:[ frame] animated:YES];
-//            [self proceedWithRegistration];
-/*
-//            [self showRoles];
-//        }else if(actionSheet.tag==kRoleSheet){
-//            [_roleButton setTitle:title forState:UIControlStateNormal];
-//            [self showEmployees];
-//        }else if(actionSheet.tag==kEmployeesSheet){
-//            [_employeesButton setTitle:title forState:UIControlStateNormal];
-//            [_phoneTextField becomeFirstResponder];
-             */
-        }
-//        mask|=actionSheet.tag;
-//        if(mask==7){
-//            _getStartedButton.enabled=YES;
-//        }
-    }
-    
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     industrySelected = FALSE;
@@ -80,6 +56,7 @@
     }
     [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _doneButton.frame.origin.y + _doneButton.frame.size.height + 10.f)];
 	// Do any additional setup after loading the view.
+	[_emailTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -195,15 +172,16 @@
                 
                 NSDictionary *dic=@{@"companyLogin":[self trim:_companyTextField],
                                     @"login":[self trim:_emailTextField],
-                                    @"answers":@{@"Industry":_industryButton.titleLabel.text,
+                                    @"answers":@{@"Industry":@"",
                                                  @"Role":@"",
                                                  @"EstimateUsersNumber":@""}};
                 [[ICRequestManager sharedManager] POST:@"MobileApp/SaveRegistrantionQuestionsAnswers" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
                  {
                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ICQuestions" object:nil];
-					 [TutorialViewController showTutorial];
+					 [TutorialViewController showTutorialWithDidShowCompletion:^{
+						 [weakSelf dismissViewControllerAnimated:YES completion:^{}];
+					 }];
 					 [[NSNotificationCenter defaultCenter] postNotificationName:@"ICRegister" object:nil];
-                     [self dismissViewControllerAnimated:YES completion:^{}];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                  {
                      NSLog(@"%@",error);
@@ -285,7 +263,6 @@
         if(textField==_passwordTextField)
         {
             [textField resignFirstResponder];
-            [self showIndustries];
         }
     
     //    else
@@ -312,10 +289,6 @@
 
 #pragma mark - Navigation
 
-- (IBAction)industry:(id)sender {
-    [self showIndustries];
-}
-
 - (IBAction)role:(id)sender {
     [self showRoles];
 }
@@ -331,17 +304,6 @@
     // Pass the selected object to the new view controller.
 //    advc.company=_companyName;
 //    advc.username=[self trim:_emailTextField];
-}
-
-- (void)showIndustries {
-    [_activeField resignFirstResponder];
-    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"Select your industry:"
-                                                     delegate:self
-                                            cancelButtonTitle:nil
-                                       destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Home Improvement", @"Cable/Satelite", @"Alarm", @"Real Estate", @"Solar", @"Other", nil];
-    sheet.tag=kIndustrySheet;
-    [sheet showInView:self.view];
 }
 
 - (void)showRoles {

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
 #import "Clustering/GClusterManager.h"
 
 #import "REVClusterMapView.h"
@@ -29,12 +28,11 @@
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *filtered;
-@property (nonatomic,strong) GMSMapView *mapView;
 @property (nonatomic) BOOL moved;
 
-- (GMSMarker*)markerForPin:(Pin*)pin;
 - (void)viewOnMap:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;
+- (void)setCenterLocation:(CLLocationCoordinate2D)location zoomLavel:(double)zoomLavel;
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view1;
 
 @end
