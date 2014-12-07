@@ -26,6 +26,7 @@
 #import "REVClusterMap.h"
 #import "REVClusterAnnotationView.h"
 #import "myButton.h"
+#import "Territories.h"
 
 #define BASE_RADIUS .5 // = 1 mile
 #define MINIMUM_LATITUDE_DELTA 0.20
@@ -62,6 +63,7 @@
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic, weak) InfoView *selectedInfoView;
 @property (nonatomic,strong) NSMutableDictionary *icons;
+@property (nonatomic,strong) NSMutableDictionary *colorsForOverlays;
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property (nonatomic,strong) NSFetchedResultsController* fetchController;
@@ -79,10 +81,12 @@
         // Custom initialization
         self.markers=[[NSMutableDictionary alloc] initWithCapacity:10];
         self.icons=[[NSMutableDictionary alloc] initWithCapacity:5];
+        self.colorsForOverlays=[[NSMutableDictionary alloc] initWithCapacity:5];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pinsChanged:) name:@"ICPinsChanged" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchChanged:) name:@"ICSearch" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(territoriesChanged:) name:@"ICTerritories" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMapPositionAfterAddPin:) name:@"SetMapPositionAfterAddPin" object:nil];
     }
@@ -126,6 +130,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 	[self refresh];
+    [self refreshTerritories];
 }
 
 - (UIImage*)iconForPin:(Pin*)pin {
@@ -149,6 +154,23 @@
         || ([p.address2 rangeOfString:_searchText options:NSCaseInsensitiveSearch].location != NSNotFound);
     }];
     [self refreshMarkers];
+}
+
+- (void)drawPolygonsWith:(NSArray*)polygons {
+    [_mapview removeOverlays:_mapview.overlays];
+    [self.colorsForOverlays removeAllObjects];
+    for(Area *a in polygons){
+        NSInteger l=[a.vertices count];
+        CLLocationCoordinate2D *coords=malloc(sizeof(CLLocationCoordinate2D)*l);
+        for(int i=0; i<l; ++i){
+            coords[i]=CLLocationCoordinate2DMake([a.vertices[i][@"Latitude"] doubleValue],[a.vertices[i][@"Longitude"] doubleValue]);
+        }
+        MKPolygon *polygon=[MKPolygon polygonWithCoordinates:coords count:l];
+        polygon.title=[a.ident stringValue];
+        self.colorsForOverlays[polygon.title]=a.color;
+        [_mapview addOverlay:polygon];
+        free(coords);
+    }
 }
 
 - (void)refreshMarkers {
@@ -202,6 +224,14 @@
     }];
 }
 
+- (void)refreshTerritories {
+    NSLog(@"%s",__FUNCTION__);
+    __weak typeof(self) weakSelf = self;
+    [[Territories sharedInstance] sendTerritoriesTo:^(NSArray *a) {
+        [weakSelf drawPolygonsWith:a];
+    }];
+}
+
 #pragma mark - Notifications
 - (void)setMapPositionAfterAddPin:(NSNotification*)notification {
 	NSNumber *lonNumber = [notification.userInfo objectForKey:@"lon"];
@@ -209,8 +239,6 @@
 	double lon = [lonNumber doubleValue];
 	double lat = [latNumber doubleValue];
 	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(lat,lon);
-//	[self.mapView animateToLocation:coordinates];
-//	[self refresh];
 	[_mapview setCenterCoordinate:coordinate animated:YES];
 }
 
@@ -239,8 +267,27 @@
     _mapview.mapType=satellite?MKMapTypeSatellite:MKMapTypeStandard;
 }
 
+- (void)territoriesChanged:(NSNotification*)notification {
+    NSLog(@"%s",__FUNCTION__);
+    [self refreshTerritories];
+}
+
 #pragma mark -
 #pragma mark Map view delegate
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolygon class]]){
+        MKPolygon *p=(MKPolygon*)overlay;
+        MKPolygonRenderer *renderer=[[MKPolygonRenderer alloc] initWithPolygon:(MKPolygon*)overlay];
+        renderer.fillColor=[self.colorsForOverlays[p.title] colorWithAlphaComponent:0.2];
+        renderer.strokeColor=[self.colorsForOverlays[p.title] colorWithAlphaComponent:0.7];
+        renderer.lineWidth=2;
+        return renderer;
+    }
+    
+    return nil;
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {

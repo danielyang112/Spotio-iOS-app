@@ -38,6 +38,7 @@
 		2CDCA6F719D07BF7008C7B51 /* SphericalMercatorProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6E919D07BF7008C7B51 /* SphericalMercatorProjection.m */; };
 		2CDCA6F819D07BF7008C7B51 /* GQTPointQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6EE19D07BF7008C7B51 /* GQTPointQuadTree.m */; };
 		2CDCA6F919D07BF7008C7B51 /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCA6F019D07BF7008C7B51 /* GQTPointQuadTreeChild.m */; };
+		420F712C1A34646E0036AF3C /* Territories.m in Sources */ = {isa = PBXBuildFile; fileRef = 420F712B1A34646E0036AF3C /* Territories.m */; };
 		4226928B193B563D00FD0BE9 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */; };
 		42284F0C18D10FC60087941E /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42284F0B18D10FC60087941E /* DetailsViewController.m */; };
 		42284F5218D252970087941E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42284F5118D252970087941E /* CoreData.framework */; };
@@ -221,6 +222,8 @@
 		2CDCA6EF19D07BF7008C7B51 /* GQTPointQuadTreeChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeChild.h; sourceTree = "<group>"; };
 		2CDCA6F019D07BF7008C7B51 /* GQTPointQuadTreeChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GQTPointQuadTreeChild.m; sourceTree = "<group>"; };
 		2CDCA6F119D07BF7008C7B51 /* GQTPointQuadTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeItem.h; sourceTree = "<group>"; };
+		420F712A1A34646E0036AF3C /* Territories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Territories.h; sourceTree = "<group>"; };
+		420F712B1A34646E0036AF3C /* Territories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Territories.m; sourceTree = "<group>"; };
 		4226928A193B563D00FD0BE9 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = SOURCE_ROOT; };
 		42284F0A18D10FC60087941E /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		42284F0B18D10FC60087941E /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -793,6 +796,8 @@
 				42B3A66F18E7161900B46FBF /* Fields.h */,
 				42B3A67018E7161900B46FBF /* Fields.m */,
 				42EF82E918FBFA390045EB0E /* Users.h */,
+				420F712A1A34646E0036AF3C /* Territories.h */,
+				420F712B1A34646E0036AF3C /* Territories.m */,
 				42EF82EA18FBFA390045EB0E /* Users.m */,
 				42A7BEAA18D5B02900973EA8 /* utilities.h */,
 				42A7BEAB18D5B02900973EA8 /* utilities.m */,
@@ -1137,6 +1142,7 @@
 				42341CE219CF0BB4000D61E3 /* FanOut.m in Sources */,
 				42284F9518D26AF10087941E /* AFNetworkReachabilityManager.m in Sources */,
 				42A6A58D18CBA3BF0043233C /* main.m in Sources */,
+				420F712C1A34646E0036AF3C /* Territories.m in Sources */,
 				42B3A6D018E8C5E700B46FBF /* UIImage+MPAverageColor.m in Sources */,
 				42A7BECD18D71D7400973EA8 /* PinCell.m in Sources */,
 				2CDCA6F319D07BF7008C7B51 /* GStaticCluster.m in Sources */,

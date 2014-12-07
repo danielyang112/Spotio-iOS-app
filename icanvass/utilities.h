@@ -14,4 +14,5 @@
 @interface NSArray (RKFunctional)
 - (NSMutableArray*)mapWith:(NSObject*(^)(NSObject*))f;
 - (NSMutableArray*)grepWith:(BOOL(^)(NSObject*))f;
+UIColor *colorFromHexString(NSString *hexString);
 @end

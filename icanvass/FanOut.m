@@ -87,6 +87,9 @@
     }else if([scheme isEqualToString:@"settingsquestionschanged"]){
         [self notify:@"FanOutQuestions"];
         return NO;
+    }else if([scheme isEqualToString:@"territory"]){
+        [self notify:@"FanOutTerritories"];
+        return NO;
     }else{
         return YES;
     }
