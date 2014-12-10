@@ -73,10 +73,10 @@
 }
 
 - (void)updateFilterData {
-    self.creationFrom=[Pins sharedInstance].oldest;
-    self.updateFrom=[Pins sharedInstance].oldest;
-    self.creationTo=[Pins sharedInstance].newest;
-    self.updateTo=[Pins sharedInstance].newest;
+    self.creationFrom=[Pins sharedInstance].oldest?:[NSDate date];
+    self.updateFrom=[Pins sharedInstance].oldest?:[NSDate date];
+    self.creationTo=[Pins sharedInstance].newest?:[NSDate date];
+    self.updateTo=[Pins sharedInstance].newest?:[NSDate date];
     NSDictionary *d=[Pins sharedInstance].filter;
     if(d){
         if(d[@"statuses"]) {
