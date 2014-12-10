@@ -30,7 +30,10 @@
     self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     [self.tableView reloadData];
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]){  //crash on ios6
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
