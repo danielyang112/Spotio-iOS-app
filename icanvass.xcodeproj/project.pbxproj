@@ -987,7 +987,7 @@
 				ORGANIZATIONNAME = "Roman Kot";
 				TargetAttributes = {
 					42A6A57C18CBA3BF0043233C = {
-						DevelopmentTeam = 4PR4N2FLE7;
+						DevelopmentTeam = 75ZZLAH8MX;
 					};
 				};
 			};
@@ -1294,8 +1294,8 @@
 				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Baratjuk (WKV78BLUBD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1311,7 +1311,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a111cba5-c233-4a54-b6b8-a937d30ae09c";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1329,8 +1329,8 @@
 				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lola FLP (4PR4N2FLE7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/icanvass/FreshdeskSDK-iosuniversal",
@@ -1346,7 +1346,7 @@
 				INFOPLIST_FILE = "icanvass/icanvass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3c13958c-a8d9-426e-b5fb-908f8eac8a5f";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
