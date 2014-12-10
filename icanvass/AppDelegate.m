@@ -24,6 +24,10 @@
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
 #define kFanOutRealm @"3f449354"
 
+@interface AppDelegate ()
+@property (nonatomic,assign,getter=isLoggedOut) BOOL loggedOut;
+@end
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -134,11 +138,14 @@
 }
 
 - (void)userLoggedIn:(NSNotification*)notification {
+    self.loggedOut=NO;
     [self startFanout];
 }
 
 - (void)ICNetFailed:(NSNotification*)notification {
+    if([self isLoggedOut]) return;
     if([notification.userInfo[@"status"] intValue]==401){
+        self.loggedOut=YES;
         MMDrawerController *drawerController=(MMDrawerController*)self.window.rootViewController;
         [drawerController performSegueWithIdentifier:@"LoginSegue" sender:nil];
     }
