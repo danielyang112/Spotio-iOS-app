@@ -75,7 +75,7 @@
 - (void)viewWillLayoutSubviews {
     
     CGRect f=self.view.bounds;
-    f.size.height-=44.f;
+//    f.size.height-=44.f;
     self.container.frame=f;
     _current.view.frame=_container.bounds;
 }

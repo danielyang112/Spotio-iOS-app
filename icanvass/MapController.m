@@ -103,15 +103,29 @@
     BOOL satellite=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
     _mapview.mapType=satellite?MKMapTypeSatellite:MKMapTypeStandard;
     _mapview.showsUserLocation = YES;
+    [_mapview setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     [self.view addSubview:_mapview];
-    
+    CGRect toolBarFrame, nevermindFrame;
+    CGRectDivide(f, &toolBarFrame, &nevermindFrame, 44.f, CGRectMaxYEdge);
+    self.toolBar=[[UIToolbar alloc] initWithFrame:toolBarFrame];
+    [self.view addSubview:self.toolBar];
+    MKUserTrackingBarButtonItem *button=[[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapview];
+    [self.toolBar setItems:@[button]];
     [_mapview addAnnotations:nil];
 	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
 																		  action:@selector(tapOnMapView:)];
 	tap.numberOfTapsRequired = 1;
 	tap.numberOfTouchesRequired = 1;
 	[_mapview addGestureRecognizer:tap];
-	tap.delegate = self;
+    tap.delegate = self;
+    
+}
+
+- (void)viewWillLayoutSubviews {
+    CGRect f=self.view.bounds;
+    CGRect toolBarFrame, nevermindFrame;
+    CGRectDivide(f, &toolBarFrame, &nevermindFrame, 44.f, CGRectMaxYEdge);
+    self.toolBar.frame=toolBarFrame;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -131,6 +145,14 @@
     [super viewWillAppear:animated];
 	[self refresh];
     [self refreshTerritories];
+//    [self.navigationController setToolbarHidden:NO animated:NO];
+    
+//    MKUserTrackingBarButtonItem *button=[[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapview];
+//    [self.parentViewController setToolbarItems:@[button] animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
 
 - (UIImage*)iconForPin:(Pin*)pin {
@@ -371,7 +393,7 @@
 
 
 - (void) openPinDetail:(myButton *)sender {
-    
+//    [_mapview setUserTrackingMode:MKUserTrackingModeNone];
     Pin *pin=sender.userData;
     [self performSegueWithIdentifier:@"MapViewPin" sender:pin];
 }
