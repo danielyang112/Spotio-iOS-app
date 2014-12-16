@@ -255,31 +255,12 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (industrySelected)
-    {
+    if(textField==_passwordTextField) {
         [self proceedWithRegistration];
+    } else {
+        NSUInteger idx=[_fieldsCollection indexOfObject:textField];
+        [_fieldsCollection[idx+1] becomeFirstResponder];
     }
-    else
-        if(textField==_passwordTextField)
-        {
-            [textField resignFirstResponder];
-        }
-    
-    //    else
-    //        if (textField ==_firstNameTextField)
-    //        {
-    //            if ([self checkFullName])
-    //            {
-    //                NSUInteger idx=[_fieldsCollection indexOfObject:_firstNameTextField];
-    //                [_fieldsCollection[idx+1] becomeFirstResponder];
-    //            }
-    //        }
-        else
-        {
-            NSUInteger idx=[_fieldsCollection indexOfObject:textField];
-            [_fieldsCollection[idx+1] becomeFirstResponder];
-            
-        }
     return YES;
 }
 
