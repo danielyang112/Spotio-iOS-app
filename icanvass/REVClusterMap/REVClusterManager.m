@@ -10,7 +10,7 @@
 
 #import "REVClusterManager.h"
 
-#define MIN_CLASTER_SIZE 5
+#define MIN_CLASTER_SIZE 10
 #define BASE_RADIUS .5 // = 1 mile
 #define MINIMUM_LATITUDE_DELTA 0.20
 #define BLOCKS 4
