@@ -996,7 +996,7 @@ static NSDateFormatter *dateFormatter;
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 	UITableViewCell *cell=[self cellWithSubview:textView];
-	NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
 	if(!indexPath){
 		return YES;
 	}
@@ -1096,6 +1096,23 @@ static NSDateFormatter *dateFormatter;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	[textField endEditing:YES];
+    UITableViewCell *cell= [self cellWithSubview:textField];
+    NSIndexPath *indexPath=[_tableView indexPathForCell:cell];
+    NSIndexPath *newPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+    UITableViewCell *nextCell;
+    while ((nextCell=[self.tableView cellForRowAtIndexPath: newPath])!=nil) {
+        if([nextCell isKindOfClass:[DetailsNotesCell class]]){
+            DetailsNotesCell *noteCell=(DetailsNotesCell*)nextCell;
+            [self.tableView scrollToRowAtIndexPath:newPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            [noteCell.note becomeFirstResponder];
+            return NO;
+        }else if([nextCell isKindOfClass:[DetailsTableViewCell class]]){
+            DetailsTableViewCell *textCell=(DetailsTableViewCell*)nextCell;
+            [textCell.field becomeFirstResponder];
+            return NO;
+        }
+        newPath = [NSIndexPath indexPathForRow:newPath.row+1 inSection:indexPath.section];
+    }
 	return YES;
 }
 
