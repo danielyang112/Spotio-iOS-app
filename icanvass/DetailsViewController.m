@@ -1292,6 +1292,7 @@ static NSDateFormatter *dateFormatter;
 - (IBAction)cancel:(id)sender {
 	[_activeField endEditing:YES];
 	if(_adding){
+        [SVProgressHUD dismiss];
 		[self.navigationController popViewControllerAnimated:YES];
 	}else{
 		[self setEditing:NO animated:YES];
