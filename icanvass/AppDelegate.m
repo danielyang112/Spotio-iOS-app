@@ -122,9 +122,11 @@
 - (void)showLoading:(BOOL)yeah {
     NSLog(@"%s:%@",__FUNCTION__,@(yeah));
     if(!yeah){
-        [_alert dismissWithClickedButtonIndex:0 animated:YES];
+        [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+        self.alert=nil;
         return;
     }
+    if(self.alert) return;  //don't show an alert multiple times
     self.alert=[[UIAlertView alloc] initWithTitle:nil message:@"Please wait while your pins are downloading, this will only happen once." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     [_alert show];
 }

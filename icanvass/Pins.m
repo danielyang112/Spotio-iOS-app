@@ -279,9 +279,9 @@
 	NSLog(@"[fetchPinsWithParameteres] >>> %@",u);
 	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 	u=[u stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	//    if(!date){
-	//        [appDelegate showLoading:YES];
-	//    }
+	    if(!date && ![self.pins count]){
+	        [appDelegate showLoading:YES];
+	    }
 	[manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
 		//Background Thread
@@ -306,13 +306,13 @@
 		NSLog( @"responseObject[value] $$$$$$$$$$ %@", responseObject[@"value"]);
 		
 		//        if(block) block(_pins);
-		//        [appDelegate showLoading:NO];
+		        [appDelegate showLoading:NO];
 		//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 		//            });
 		//        });
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		weakSelf.gettingPins=NO;
-		//        [appDelegate showLoading:NO];
+		        [appDelegate showLoading:NO];
 		NSLog(@"Error: %@", error);
 		
 	}];
