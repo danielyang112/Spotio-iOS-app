@@ -17,6 +17,7 @@
 #import "Mixpanel.h"
 #import <BugSense-iOS/BugSenseController.h>
 #import "FanOut.h"
+#import "SVProgressHUD/SVProgressHUD.h"
 
 #define kGoogleAPIKey @"AIzaSyAdd2d-Ukg6NwqHRQUY8ltgnbTcIUamS1I"
 #define kFreshDeskSite @"spotio.freshdesk.com"
@@ -122,13 +123,16 @@
 - (void)showLoading:(BOOL)yeah {
     NSLog(@"%s:%@",__FUNCTION__,@(yeah));
     if(!yeah){
-        [self.alert dismissWithClickedButtonIndex:0 animated:YES];
-        self.alert=nil;
+        [SVProgressHUD dismiss];
+//        [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+//        self.alert=nil;
         return;
     }
-    if(self.alert) return;  //don't show an alert multiple times
-    self.alert=[[UIAlertView alloc] initWithTitle:nil message:@"Please wait while your pins are downloading, this will only happen once." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-    [_alert show];
+    if([SVProgressHUD isVisible]) return;
+    [SVProgressHUD showWithStatus:@"Please wait while your pins are downloading, this will only happen once." maskType:SVProgressHUDMaskTypeClear];
+//    if([self.alert isVisible]) return;  //don't show an alert multiple times
+//    self.alert=[[UIAlertView alloc] initWithTitle:nil message:@"Please wait while your pins are downloading, this will only happen once." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+//    [_alert show];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -230,7 +230,8 @@
 	[[Pins operationQueue] addOperation:operation];
 	[operation setCompletionBlock:^{
 		NSLog(@"Finished!");
-		
+		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate showLoading:NO];
 		NSLog(@"----___________ %d", [_pins count]);
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -306,7 +307,7 @@
 		NSLog( @"responseObject[value] $$$$$$$$$$ %@", responseObject[@"value"]);
 		
 		//        if(block) block(_pins);
-		        [appDelegate showLoading:NO];
+//		        [appDelegate showLoading:NO];
 		//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ICPinsChanged" object:nil];
 		//            });
 		//        });
