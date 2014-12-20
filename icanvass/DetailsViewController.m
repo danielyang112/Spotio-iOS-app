@@ -737,7 +737,7 @@ static NSDateFormatter *dateFormatter;
 				NSArray *c=_pin.customValuesOld;
 				NSDictionary *d=c[indexPath.row];
 				Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
-				if([f.name isEqualToString:@"Notes"]) {
+				if(f.type==FieldNoteBox) {
 					cell.enabled = YES;
 				}
 				cell.top.text=f.name;
@@ -894,14 +894,15 @@ static NSDateFormatter *dateFormatter;
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
 	[_activeField endEditing:YES];
 	UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-	return cell.editingAccessoryType==UITableViewCellAccessoryDisclosureIndicator;
+    BOOL should=cell.editingAccessoryType==UITableViewCellAccessoryDisclosureIndicator;
+    return should;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	//[tableView deselectRowAtIndexPath:indexPath animated:NO];
 	if(!tableView.isEditing){
 		[self performSegueWithIdentifier:@"NoteView" sender:nil];
-		
+        return;
 	}
 	Field *f=_customFields[indexPath.row];
 	[_activeField endEditing:YES];
