@@ -321,20 +321,35 @@ enum ICSortOrder : NSUInteger {
     return cell;
 }
 
+- (void)maybeDeletePin:(Pin*)pin {
+    BOOL allowed=[[[NSUserDefaults standardUserDefaults] objectForKey:@"deleting"] isEqualToString:@"1"];
+    if(!allowed) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Delete"
+                              message:@"You do not have permission to delete pins."
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    __weak __typeof(self)weakSelf = self;
+    [[Pins sharedInstance] deletePin:pin
+                               block: ^ (BOOL success) {
+                                   if(success) {
+                                       [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
+                                       [[NSUserDefaults standardUserDefaults] synchronize];
+                                       [[Pins sharedInstance] clear];
+                                       [weakSelf refreshList];
+                                   }
+                               }];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		NSLog(@"DELETE %d", indexPath.row);
-		__weak __typeof(self)weakSelf = self;
 		Pin *pin=_filtered[indexPath.row];
-		[[Pins sharedInstance] deletePin:pin
-								   block: ^ (BOOL success) {
-									   if(success) {
-										   [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
-										   [[NSUserDefaults standardUserDefaults] synchronize];
-										   [[Pins sharedInstance] clear];
-										   [weakSelf refreshList];
-									   }
-								   }];
+        [self maybeDeletePin:pin];
 	}
 }
 

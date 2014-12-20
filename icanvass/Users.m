@@ -79,14 +79,15 @@
             [manager GET:u parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"JSON: %@", responseObject);
                 NSArray *permissions=responseObject[@"value"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharing"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"deleting"];
                 for(NSDictionary *per in permissions) {
                     if([per[@"PermissionCode"] isEqualToString:@"AllowedToShareReports"]) {
                         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"sharing"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                        return;
+                    } else if([per[@"PermissionCode"] isEqualToString:@"AllowedToDeletePin"]) {
+                        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"deleting"];
                     }
                 }
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharing"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);

@@ -1239,23 +1239,36 @@ static NSDateFormatter *dateFormatter;
 	_tableView.scrollIndicatorInsets = contentInsets;
 }
 
+- (void)maybeDeletePin:(Pin*)pin {
+    BOOL allowed=[[[NSUserDefaults standardUserDefaults] objectForKey:@"deleting"] isEqualToString:@"1"];
+    if(!allowed) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Delete"
+                              message:@"You do not have permission to delete pins."
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    __weak __typeof(self)weakSelf = self;
+    [[Pins sharedInstance] deletePin:pin
+                               block: ^ (BOOL success) {
+                                   if(success) {
+                                       [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
+                                       [[NSUserDefaults standardUserDefaults] synchronize];
+                                       [[Pins sharedInstance] clear];
+                                       [weakSelf refreshList];
+                                   }
+                               }];
+}
+
 #pragma mark - Actions
 
 - (IBAction)clickDeletePinButton:(id)sender {
 	NSLog( @"DELETE PIN");
 	
-	__weak __typeof(self)weakSelf = self;
-	[[Pins sharedInstance] deletePin:_pin
-							   block: ^ (BOOL success) {
-								   if(success) {
-									   [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRefreshDate];
-									   [[NSUserDefaults standardUserDefaults] synchronize];
-									   [[Pins sharedInstance] clear];
-									   [weakSelf refreshList];
-									   
-									   [weakSelf.navigationController popViewControllerAnimated:YES];
-								   }
-							   }];
+    [self maybeDeletePin:_pin];
 }
 
 
