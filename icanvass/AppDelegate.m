@@ -23,7 +23,8 @@
 #define kFreshDeskSite @"spotio.freshdesk.com"
 #define kFreshDeskAPIKey @"CPEiBLBk9moDrw2ix3R"
 #define kMixPanelToken @"3d3406adba1edf53af7443468c7efad8"
-#define kFanOutRealm @"3f449354"
+//#define kFanOutRealm @"3f449354"    //test
+#define kFanOutRealm @"4155897a"    //production
 
 @interface AppDelegate ()
 @property (nonatomic,assign,getter=isLoggedOut) BOOL loggedOut;
