@@ -383,6 +383,7 @@ enum ICSortOrder : NSUInteger {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
+    dc.userCoordinate=[self.delegate userLocation].coordinate;
     NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
     dc.pin=_filtered[selectedRowIndex.row];
 }

@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Pin.h"
 
+@protocol ListControllerDelegate <NSObject>
+- (CLLocation*)userLocation;
+@end
+
 @interface ListController : UITableViewController<UISearchBarDelegate,NSFetchedResultsControllerDelegate>
 
-
+@property (nonatomic,weak) id<ListControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @end

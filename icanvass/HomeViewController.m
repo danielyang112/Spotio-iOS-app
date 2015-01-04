@@ -14,7 +14,7 @@
 #import "SOSession.h"
 
 
-@interface HomeViewController () <MapControllerDelegate>
+@interface HomeViewController () <MapControllerDelegate,ListControllerDelegate>
 @property (nonatomic,strong) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationCoordinate2D tappedCoordinate;
 @property (nonatomic) BOOL tapped;
@@ -55,7 +55,7 @@
 //    [self.locationManager startUpdatingLocation];
 
     ListController *list=[self.storyboard instantiateViewControllerWithIdentifier:@"ListController"];
-    //list.delegate=self;
+    list.delegate=self;
     self.map=[self.storyboard instantiateViewControllerWithIdentifier:@"MapController"];
     _map.delegate=self;
 	_map.location = self.locationManager.location;
@@ -277,6 +277,12 @@
     [self switchToViewController:_controllers[segmented.selectedSegmentIndex] animated:YES];
 }
 
+#pragma mark - ListControllerDelegate
+
+- (CLLocation*)userLocation {
+    return self.locationManager.location;
+}
+
 #pragma mark - MapControllerDelegate
 
 
@@ -327,7 +333,6 @@
         _tapped=NO;
         dc.adding=YES;
     } else if([segue.identifier isEqualToString:@"ViewPin"]) {
-        
     }
 }
 

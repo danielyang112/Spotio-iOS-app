@@ -512,7 +512,7 @@ static NSDateFormatter *dateFormatter;
 		}
 		return NSOrderedAscending;
 	}];
-	
+	__weak typeof(self) weakSelf = self;
 	[self locationForAddressDictionary:@{@"City":emptyStringIfNil(_city),@"State":emptyStringIfNil(_state),@"ZIP":emptyStringIfNil(_zipCode),@"Thoroughfare":emptyStringIfNil(_streetName),@"SubThoroughfare":emptyStringIfNil(_streetNumber)} block:^(CLLocation *l) {
 		CLLocationDegrees latitude=_coordinate.latitude;
 		CLLocationDegrees longitude=_coordinate.longitude;
@@ -520,36 +520,39 @@ static NSDateFormatter *dateFormatter;
 			latitude=l.coordinate.latitude;
 			longitude=l.coordinate.longitude;
 		}
-		NSDictionary *data=@{@"Id":_pin.ident,
-							 @"Location":location,
-							 @"Status":_status,
-							 @"ClientData":@{},
-							 @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
-							 @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
-							 @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
-							 @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_coordinate.latitude],
-							 @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_coordinate.longitude],
-							 @"UpdateDate":[dateFormatter stringFromDate:[NSDate date]],
-							 @"CustomValues":customValues};
-		
-		[[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
-			[self adjustForViewing];
-			if(success && titleOfEvent){
-				EKEventStore *store = [[EKEventStore alloc] init];
-				[store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-					if (!granted) { return; }
-					EKEvent *event = [EKEvent eventWithEventStore:store];
-					event.title = titleOfEvent;
-					event.location=locationOfEvent;
-					event.startDate = dateOfEvent;
-					event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-					[event setCalendar:[store defaultCalendarForNewEvents]];
-					NSError *err = nil;
-					[store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-					
-				}];
-			}
-		}];
+        [weakSelf userAddressWithBlock:^(NSString *ua) {
+            NSDictionary *data=@{@"Id":_pin.ident,
+                                 @"Location":location,
+                                 @"Status":_status,
+                                 @"ClientData":@{},
+                                 @"Latitude":[NSString stringWithFormat:@"%.6f",latitude],
+                                 @"Longitude":[NSString stringWithFormat:@"%.6f",longitude],
+                                 @"UserName":[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey],
+                                 @"UserCurrentLatitude":[NSString stringWithFormat:@"%.6f",_userCoordinate.latitude],
+                                 @"UserCurrentLongitude":[NSString stringWithFormat:@"%.6f",_userCoordinate.longitude],
+                                 @"UserLocation":ua,
+                                 @"UpdateDate":[dateFormatter stringFromDate:[NSDate date]],
+                                 @"CustomValues":customValues};
+            
+            [[Pins sharedInstance] editPin:_pin withDictionary:data block:^(BOOL success) {
+                [weakSelf adjustForViewing];
+                if(success && titleOfEvent){
+                    EKEventStore *store = [[EKEventStore alloc] init];
+                    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                        if (!granted) { return; }
+                        EKEvent *event = [EKEvent eventWithEventStore:store];
+                        event.title = titleOfEvent;
+                        event.location=locationOfEvent;
+                        event.startDate = dateOfEvent;
+                        event.endDate = [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                        [event setCalendar:[store defaultCalendarForNewEvents]];
+                        NSError *err = nil;
+                        [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                        
+                    }];
+                }
+            }];
+        }];
 	}];
 }
 

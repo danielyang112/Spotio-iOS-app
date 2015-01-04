@@ -453,6 +453,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
+    dc.userCoordinate=[self.delegate userLocation].coordinate;
     dc.pin=sender;
 }
 

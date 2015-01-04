@@ -17,6 +17,7 @@
 @class MapController;
 @protocol MapControllerDelegate <NSObject>
 - (void)mapController:(MapController*)map didSelectBuildingAtCoordinate:(CLLocationCoordinate2D)coordinate;
+- (CLLocation*)userLocation;
 @end
 
 @interface MapController : UIViewController<UISearchBarDelegate,MKMapViewDelegate>{
