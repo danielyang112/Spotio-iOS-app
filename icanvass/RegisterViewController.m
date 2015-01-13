@@ -268,6 +268,10 @@
     [self proceedWithRegistration];
 }
 
+- (IBAction)privacyPolicy:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://spotio.com/privacy/"]];
+}
+
 #pragma mark - Navigation
 
 - (IBAction)role:(id)sender {

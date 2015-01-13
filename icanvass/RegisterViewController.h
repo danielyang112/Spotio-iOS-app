@@ -26,4 +26,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *employeesButton;
 
 - (IBAction)next:(id)sender;
+- (IBAction)privacyPolicy:(id)sender;
 @end
