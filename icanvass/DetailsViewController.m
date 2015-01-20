@@ -25,6 +25,9 @@
 #define EMAIL @"Email"
 
 @interface DetailsViewController () <UIActionSheetDelegate,DatePickerDelegate,DropDownDelegate,UITextViewDelegate, UIAlertViewDelegate>
+{
+    BOOL isCancel;
+}
 @property (nonatomic,strong) NSString *streetNumber;
 @property (nonatomic,strong) NSString *streetName;
 @property (nonatomic,strong) NSString *initialStreetNumber;
@@ -107,14 +110,19 @@
 }
 
 - (void)adjustForAdding {
-	self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-	self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
+    UIButton *buttonL = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [buttonL setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
+    [buttonL addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonL];
+	//self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+	self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(done:)];
 	self.navigationItem.rightBarButtonItem.enabled=NO;
 	[_tableView setEditing:YES];
 	[self updateAddressTextFields];
 }
 
 - (void)adjustForViewing {
+    /*
 	UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
 	buttonContainer.backgroundColor = [UIColor clearColor];
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -126,7 +134,13 @@
 	[button addTarget:self action:@selector(viewOnMap:) forControlEvents:UIControlEventTouchUpInside];
 	[buttonContainer addSubview:button];
 	self.navigationItem.titleView = buttonContainer;
-	self.navigationItem.rightBarButtonItem=[self editButtonItem];
+	self.navigationItem.rightBarButtonItem=[self editButtonItem];*/
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 17)];
+    [button setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(onBackPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
 	[self extractPin];
 	[self enableChanges:NO];
 	[self updateAddressTextFields];
@@ -615,11 +629,13 @@ static NSDateFormatter *dateFormatter;
 	if(indexPath.row==0) {
 		CellIdentifier=@"DetailsStatusCell";
 		DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		UIButton *button=(UIButton*)[cell viewWithTag:1];
+		UILabel *label=(UILabel*)[cell viewWithTag:1];
 		if(_status){
-			[button setTitle:_status forState:UIControlStateNormal];
-			[button setTitleColor:[[Pins sharedInstance] colorForStatus:_status] forState:UIControlStateNormal];
+            label.text = _status;
+            cell.contentView.backgroundColor = [[Pins sharedInstance] colorForStatus:_status];
 		}
+        
+        /*
 		if(tableView.isEditing){
 			[button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
 			[button addTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
@@ -629,7 +645,7 @@ static NSDateFormatter *dateFormatter;
 		}else{
 			[button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
 			button.layer.borderWidth = 0;
-		}
+		}*/
 		return cell;
 	} else if(indexPath.row==1) {
 		CellIdentifier=@"DetailsStreetNumberCell";
@@ -649,7 +665,7 @@ static NSDateFormatter *dateFormatter;
 		CellIdentifier=@"DetailsTextCell";
 		DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 		cell.top.text=@"Street";
-		cell.field.placeholder=@"Stremkhkjkjkkjket";
+		cell.field.placeholder=@"Street";
 		cell.field.keyboardType=UIKeyboardTypeDefault;
 		cell.bottom.text=_streetName;
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
@@ -777,20 +793,19 @@ static NSDateFormatter *dateFormatter;
                 }
 				cell.bottom.text=v;
 				[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
-				[cell phoneOrEmail:NO];
+				[cell phoneOrEmail:0];
 				BOOL isIPhone = [[UIDevice currentDevice] isIPhone];
 				if( isIPhone) {
 					if([f.name hasPrefix:PHONE_NUMBER]) {
-						[cell phoneOrEmail:YES];
+						[cell phoneOrEmail:1];
 						[cell.phoneOrEmailButton addTarget:self action:@selector(clickPhoneButton:) forControlEvents:UIControlEventTouchDown];
 						self.phoneAdress = [NSString stringWithFormat: @"%@", v];
 					}
 				}
 				if([f.name isEqualToString:EMAIL]) {
-					[cell phoneOrEmail:YES];
+					[cell phoneOrEmail:2];
 					[cell.phoneOrEmailButton addTarget:self action:@selector(clickEmailButton:) forControlEvents:UIControlEventTouchDown];
 					self.emailAdress = [NSString stringWithFormat: @"%@", v];
-
 					cell.field.keyboardType = UIKeyboardTypeEmailAddress;
 				}
 				return cell;
@@ -825,7 +840,7 @@ static NSDateFormatter *dateFormatter;
 		DetailsDropDownCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 		//        cell.enabled=!!_addedFields[key];
 		cell.enabled=YES;
-		
+        cell.phoneOrEmailButton.hidden = YES;
 		cell.top.text=f.name;
 		cell.bottom.text=_addedFields[key];
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
@@ -1161,7 +1176,7 @@ static NSDateFormatter *dateFormatter;
 	
 	[_tableView reloadData];
 	
-	if(!editing) {
+	if(!editing && !isCancel) {
 		[self editPin];
 	}
 	
@@ -1300,6 +1315,10 @@ static NSDateFormatter *dateFormatter;
 	[self showMapApp: self.coordinate isWalking:NO];
 }
 
+- (IBAction)onBackPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (IBAction)done:(id)sender {
 	[[TutorialViewController shared] dismissCurrentTip];
 	[self textFieldDidEndEditing:_activeField];
@@ -1350,7 +1369,7 @@ static NSDateFormatter *dateFormatter;
 - (IBAction)viewOnMap:(id)sender {
     
     HomeViewController *homeViewController = [self.navigationController.viewControllers objectAtIndex:0];
-    [homeViewController.segment setSelectedSegmentIndex:0];
+    [homeViewController setCategory:0];
     [homeViewController switchToViewController:homeViewController.controllers[0] animated:NO];  //animation here conflicts with popping to root animation
     
     CLLocation *loc=[[CLLocation alloc] initWithLatitude:_coordinate.latitude longitude:_coordinate.longitude];
@@ -1360,6 +1379,42 @@ static NSDateFormatter *dateFormatter;
     [homeViewController.map viewOnMap:self.pin];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)edit:(id)sender {
+    
+    UIButton *buttonL = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [buttonL setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
+    [buttonL addTarget:self action:@selector(cancelClicked) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonL];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(editClicked)];
+    
+    self.btnEdit.hidden = YES;
+    [self setEditing:YES animated:YES];
+}
+
+- (void)editClicked
+{
+    isCancel = NO;
+    self.btnEdit.hidden = NO;
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 17)];
+    [button setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(onBackPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = nil;
+    [self setEditing:NO animated:YES];
+}
+
+- (void)cancelClicked
+{
+    isCancel = YES;
+    self.btnEdit.hidden = NO;
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 17)];
+    [button setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(onBackPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = nil;
+    [self setEditing:NO animated:YES];
 }
 
 #pragma mark - Navigation
