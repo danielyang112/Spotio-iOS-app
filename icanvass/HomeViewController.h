@@ -14,13 +14,16 @@
 @class  MapController;
 
 @interface HomeViewController : UIViewController <CLLocationManagerDelegate>
-@property (nonatomic,weak) IBOutlet UISegmentedControl *segment;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnCategory;
 @property (weak, nonatomic) IBOutlet UIView *container;
 @property (nonatomic,strong) MapController *map;
 @property (nonatomic,strong) NSArray *controllers;
+@property (nonatomic,assign) int category;
+@property (nonatomic,strong) UIButton *btnTitle;
 
-- (IBAction)filter:(id)sender;
-- (IBAction)valueChanged:(id)sender;
+- (IBAction)categoryChanged:(id)sender;
 - (IBAction)shareClicked:(id)sender;
 - (void)switchToViewController:(UIViewController*)vc animated:(BOOL)animated;
+
 @end

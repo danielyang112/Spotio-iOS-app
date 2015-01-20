@@ -26,11 +26,14 @@
     UITouch *anntouch;
 }
 @property (nonatomic,strong) CLLocation *location;
+@property (nonatomic,strong) MKUserLocation *userLocation;
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *filtered;
 @property (nonatomic) BOOL moved;
 @property (nonatomic,strong) UIToolbar *toolBar;
+@property (nonatomic,strong) UIView *topView;
+@property (nonatomic,strong) UIButton *btnTracking;
 
 - (void)viewOnMap:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;

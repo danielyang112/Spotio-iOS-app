@@ -649,7 +649,7 @@ static NSDateFormatter *dateFormatter;
 		CellIdentifier=@"DetailsTextCell";
 		DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 		cell.top.text=@"Street";
-		cell.field.placeholder=@"Street";
+		cell.field.placeholder=@"Stremkhkjkjkkjket";
 		cell.field.keyboardType=UIKeyboardTypeDefault;
 		cell.bottom.text=_streetName;
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];

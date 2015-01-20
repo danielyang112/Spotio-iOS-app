@@ -60,6 +60,7 @@
     _map.delegate=self;
 	_map.location = self.locationManager.location;
     self.controllers=@[_map,list];
+    self.category = 0;
     [self switchToViewController:_controllers[0] animated:NO];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,7 +86,11 @@
 -(void)setupLeftMenuButton{
     
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    self.btnTitle = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, 20)];
+    [self.btnTitle  setTitle:@"Map" forState:UIControlStateNormal];
+    //UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStyleDone target:nil action:nil];
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:self.btnTitle];
+    [self.navigationItem setLeftBarButtonItems:@[leftDrawerButton, barItem] animated:YES];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
@@ -268,13 +273,23 @@
 
 }
 
-- (IBAction)filter:(id)sender {
+- (IBAction)categoryChanged:(id)sender {
+    if ([self.btnTitle.titleLabel.text isEqualToString:@"Map"])
+        [self setCategory:1];
+    else
+        [self setCategory:0];
 }
 
-- (IBAction)valueChanged:(id)sender {
-    
-    UISegmentedControl *segmented=(UISegmentedControl*)sender;
-    [self switchToViewController:_controllers[segmented.selectedSegmentIndex] animated:YES];
+-(void)setCategory:(int)category
+{
+    if (category == 0) {
+        [self.btnTitle setTitle:@"Map" forState:UIControlStateNormal];
+        [self.btnCategory setImage:[UIImage imageNamed:@"list_button"] forState:UIControlStateNormal];
+    } else {
+        [self.btnTitle setTitle:@"List" forState:UIControlStateNormal];
+        [self.btnCategory setImage:[UIImage imageNamed:@"map_button"] forState:UIControlStateNormal];
+    }
+    [self switchToViewController:_controllers[category] animated:YES];
 }
 
 #pragma mark - ListControllerDelegate

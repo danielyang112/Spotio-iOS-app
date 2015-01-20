@@ -31,7 +31,7 @@ typedef void(^OnClickBlock)(NSString *title);
 
 @interface DetailsDropDownCell : DetailsTableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *phoneOrEmailButton;
-- (void)phoneOrEmail:(BOOL) isPhoneOrEmail;
+- (void)phoneOrEmail:(int) isPhoneOrEmail;
 @end
 
 @interface DetailsNotesCell : DetailsTableViewCell

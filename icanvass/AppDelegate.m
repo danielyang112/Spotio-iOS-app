@@ -65,7 +65,9 @@
     //[[ICRequestManager sharedManager] loginUserName:@"romankot3@fake.com" password:@"Asd123" company:@"romankot4" cb:^(BOOL success) {}];
     [Users sharedInstance];
     
-    [[UINavigationBar appearance] setTintColor: [UIColor colorWithRed:243/255.0 green:156/255.0 blue:18/255.0 alpha:1.0]];
+    //[[UINavigationBar appearance] setTintColor: [UIColor colorWithRed:243/255.0 green:156/255.0 blue:18/255.0 alpha:1.0]];
+    //Status Bar to White
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     return YES;
 }

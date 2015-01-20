@@ -86,7 +86,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchChanged:) name:@"ICSearch" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorsChanged:) name:@"ICPinColors" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mapSettingsChanged:) name:@"ICMapSettings" object:nil];
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(territoriesChanged:) name:@"ICTerritories" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(territoriesChanged:) name:@"ICTerritories" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLoggedOut:) name:@"ICLogOut" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMapPositionAfterAddPin:) name:@"SetMapPositionAfterAddPin" object:nil];
     }
@@ -108,7 +108,7 @@
     CGRect toolBarFrame, nevermindFrame;
     CGRectDivide(f, &toolBarFrame, &nevermindFrame, 44.f, CGRectMaxYEdge);
     self.toolBar=[[UIToolbar alloc] initWithFrame:toolBarFrame];
-    [self.view addSubview:self.toolBar];
+    //[self.view addSubview:self.toolBar];
     MKUserTrackingBarButtonItem *button=[[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapview];
     [self.toolBar setItems:@[button]];
     [_mapview addAnnotations:nil];
@@ -118,6 +118,55 @@
 	tap.numberOfTouchesRequired = 1;
 	[_mapview addGestureRecognizer:tap];
     tap.delegate = self;
+    
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, f.size.width, 30)];
+    self.topView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    
+    UILabel *labelTotal = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, 75, 25)];
+    labelTotal.textAlignment = NSTextAlignmentRight;
+    labelTotal.text = @"140 Total";
+    labelTotal.font = [UIFont fontWithName:@"OpenSans-Bold" size:14.0];
+    labelTotal.textColor = [UIColor whiteColor];
+    labelTotal.tag = 100;
+    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(80, 7, 2, 16)];
+    view1.backgroundColor = [UIColor whiteColor];
+    UIImageView *imgYellow = [[UIImageView alloc] initWithFrame:CGRectMake(87, 5, 14, 20)];
+    [imgYellow setImage:[UIImage imageNamed:@"marker_yellow_small"]];
+    UILabel *labelLeads = [[UILabel alloc] initWithFrame:CGRectMake(102, 5, 55, 20)];
+    labelLeads.text = @"10 Leads";
+    labelLeads.font = [UIFont fontWithName:@"OpenSans-Bold" size:11.0];
+    labelLeads.textColor = [UIColor whiteColor];
+    labelLeads.tag = 101;
+    UIImageView *imgRed = [[UIImageView alloc] initWithFrame:CGRectMake(158, 5, 14, 20)];
+    [imgRed setImage:[UIImage imageNamed:@"marker_red_small"]];
+    UILabel *labelAttempts = [[UILabel alloc] initWithFrame:CGRectMake(173, 5, 75, 20)];
+    labelAttempts.text = @"10 Attempts";
+    labelAttempts.font = [UIFont fontWithName:@"OpenSans-Bold" size:11.0];
+    labelAttempts.textColor = [UIColor whiteColor];
+    labelAttempts.tag = 102;
+    UIImageView *imgBlue = [[UIImageView alloc] initWithFrame:CGRectMake(248, 5, 14, 20)];
+    [imgBlue setImage:[UIImage imageNamed:@"marker_blue_small"]];
+    UILabel *labelNotHome = [[UILabel alloc] initWithFrame:CGRectMake(263, 5, 55, 20)];
+    labelNotHome.text = @"10 Not H";
+    labelNotHome.font = [UIFont fontWithName:@"OpenSans-Bold" size:11.0];
+    labelNotHome.textColor = [UIColor whiteColor];
+    labelNotHome.tag = 103;
+    
+    [self.topView addSubview:labelTotal];
+    [self.topView addSubview:view1];
+    [self.topView addSubview:imgYellow];
+    [self.topView addSubview:labelLeads];
+    [self.topView addSubview:imgRed];
+    [self.topView addSubview:labelAttempts];
+    [self.topView addSubview:imgBlue];
+    [self.topView addSubview:labelNotHome];
+    [self.view addSubview:self.topView];
+    
+    self.btnTracking = [[UIButton alloc] initWithFrame:CGRectMake(f.size.width - 50, 60, 40, 40)];
+    [self.btnTracking setImage:[UIImage imageNamed:@"tracking_button"] forState:UIControlStateNormal];
+    //[self.btnTracking setImage:[UIImage imageNamed:@"tracking_button"] forState:UIControlStateHighlighted];
+    [self.btnTracking addTarget:self action:@selector(onbtnTracking) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.btnTracking];
     
 }
 
@@ -193,6 +242,11 @@
         [_mapview addOverlay:polygon];
         free(coords);
     }
+}
+
+- (void)onbtnTracking
+{
+    [_mapview setCenterCoordinate:self.userLocation.coordinate animated:YES];
 }
 
 - (void)refreshMarkers {
@@ -384,6 +438,11 @@
 		}
         [subview removeFromSuperview];
     }
+}
+
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    self.userLocation = userLocation;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

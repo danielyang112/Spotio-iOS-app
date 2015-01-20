@@ -81,7 +81,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     self.top.hidden=NO;
-    self.bottom.hidden = !self.phoneOrEmailButton.hidden;
+    //self.bottom.hidden = !self.phoneOrEmailButton.hidden;
 }
 
 - (void)setEnabled:(BOOL)enabled {
@@ -91,10 +91,18 @@
     self.accessoryType=enabled?UITableViewCellAccessoryDisclosureIndicator:UITableViewCellAccessoryNone;
 }
 
-- (void)phoneOrEmail:(BOOL) isPhoneOrEmail {
-	[self.phoneOrEmailButton setTitle:self.bottom.text forState:UIControlStateNormal];
-	self.phoneOrEmailButton.hidden = !isPhoneOrEmail;
-	self.bottom.hidden = isPhoneOrEmail;
+- (void)phoneOrEmail:(int) isPhoneOrEmail {
+    if (isPhoneOrEmail == 0)
+        self.phoneOrEmailButton.hidden = YES;
+    else
+    {
+        if (isPhoneOrEmail == 1)
+            [self.phoneOrEmailButton setBackgroundImage:[UIImage imageNamed:@"phone_button_gray"] forState:UIControlStateNormal];
+        else
+            [self.phoneOrEmailButton setBackgroundImage:[UIImage imageNamed:@"email_button_gray"] forState:UIControlStateNormal];
+        
+        self.phoneOrEmailButton.hidden = NO;
+    }
 }
 
 @end

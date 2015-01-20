@@ -19,10 +19,12 @@
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;
 @property (weak, nonatomic) IBOutlet UITextField *cityStateZipTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *btnEdit;
 
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)status:(id)sender;
 - (IBAction)viewOnMap:(id)sender;
+- (IBAction)edit:(id)sender;
 
 @end
