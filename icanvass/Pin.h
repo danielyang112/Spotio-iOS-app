@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *sortAddress;
 @property (nonatomic, strong) NSString *address2;
+@property (nonatomic, strong) NSString *detailedAddress;
 
 - (void)updateWithDictionary:(NSDictionary*)dic;
 + (NSString*)formatDate:(NSDate*)date;

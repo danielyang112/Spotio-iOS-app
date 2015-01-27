@@ -50,8 +50,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    //self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.backgroundColor=[UIColor clearColor];
+    [self setupLeftMenuButton];
     [self updateFilterData];
     // Do any additional setup after loading the view.
 }
@@ -70,6 +71,18 @@
         self.users=a;
         [self.statusTableView reloadData];
     }];
+}
+
+-(void)setupLeftMenuButton{
+    
+    UIButton *buttonL = [[UIButton alloc] initWithFrame:CGRectMake(-10, 0, 21, 37)];
+    [buttonL setImage:[UIImage imageNamed:@"filter_back"] forState:UIControlStateNormal];
+    [buttonL addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *btnTitle = [[UIButton alloc] initWithFrame:CGRectMake(40, 0, 50, 20)];
+    [btnTitle  setTitle:@"Filter" forState:UIControlStateNormal];
+    UIBarButtonItem *barItem1 = [[UIBarButtonItem alloc] initWithCustomView:buttonL];
+    UIBarButtonItem *barItem2 = [[UIBarButtonItem alloc] initWithCustomView:btnTitle];
+    [self.navigationItem setLeftBarButtonItems:@[barItem1, barItem2] animated:YES];
 }
 
 - (void)updateFilterData {
@@ -99,25 +112,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView switchCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"FilterSwitchCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    cell.accessoryView = switchView;
+    //UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+    //cell.accessoryView = switchView;
     UILabel *label=(UILabel*)[cell viewWithTag:1];
+    UIButton *btn = (UIButton *)[cell viewWithTag:2];
     if(indexPath.section==kStatusSection) {
         label.text=@"Status";
-        switchView.on=_statusOn;
-        [switchView addTarget:self action:@selector(statusSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        //switchView.on=_statusOn;
+        //[switchView addTarget:self action:@selector(statusSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        [btn addTarget:self action:@selector(statusSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
     } else if(indexPath.section==kUserSection){
-        label.text=@"User";
-        switchView.on=_userOn;
-        [switchView addTarget:self action:@selector(userSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        label.text=@"Assigned to";
+        //switchView.on=_userOn;
+        //[switchView addTarget:self action:@selector(userSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        [btn addTarget:self action:@selector(userSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
     } else if(indexPath.section==kCreationDateSection){
-        label.text=@"Last Updated";
-        switchView.on=_creationDateOn;
-        [switchView addTarget:self action:@selector(creationDateSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        label.text=@"Date";
+        //switchView.on=_creationDateOn;
+        //[switchView addTarget:self action:@selector(creationDateSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        [btn addTarget:self action:@selector(creationDateSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
     } else if(indexPath.section==kLastUpdatedSection){
         label.text=@"Update Date";
-        switchView.on=_updateDateOn;
-        [switchView addTarget:self action:@selector(updateDateSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        //switchView.on=_updateDateOn;
+        //[switchView addTarget:self action:@selector(updateDateSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        [btn addTarget:self action:@selector(updateDateSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -129,25 +147,49 @@
     NSString *status=_statuses[indexPath.row-1];
     UILabel *label=(UILabel*)[cell viewWithTag:1];
     label.text=status;
+    UIImageView *imgView = (UIImageView *)[cell viewWithTag:2];
+    if ([status isEqualToString:@"Not Contacted"])
+        imgView.image = [UIImage imageNamed:@"pin_notcontacted"];
+    else if ([status isEqualToString:@"Sold - Test"])
+        imgView.image = [UIImage imageNamed:@"pin_sold"];
+    else if ([status isEqualToString:@"Not Interested"])
+        imgView.image = [UIImage imageNamed:@"pin_notinterested"];
+    else if ([status isEqualToString:@"Lead"])
+        imgView.image = [UIImage imageNamed:@"pin_lead"];
+    else if ([status isEqualToString:@"Not Home"])
+        imgView.image = [UIImage imageNamed:@"pin_nothome"];
+    
+    UIImageView *imgCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 19, 19)];
     if([_selectedStatuses containsObject:status]){
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        imgCheck.image = [UIImage imageNamed:@"filter_checked"];
+        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        imgCheck.image = [UIImage imageNamed:@"filter_unchecked"];
+        //cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    cell.accessoryView = imgCheck;
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
+    
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView userCellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"FilterStatusCell";
+    static NSString *CellIdentifier = @"FilterUserCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     UserTemp *user=_users[indexPath.row-1];
     UILabel *label=(UILabel*)[cell viewWithTag:1];
     label.text=user.fullName;
+    UIImageView *imgCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 19, 19)];
     if([_selectedUsers containsObject:user.userName]){
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        imgCheck.image = [UIImage imageNamed:@"filter_checked"];
+        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        imgCheck.image = [UIImage imageNamed:@"filter_unchecked"];
+        //cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    cell.accessoryView = imgCheck;
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
+    
     return cell;
 }
 
@@ -177,21 +219,27 @@
     if(indexPath.section==kStatusSection){
         NSString *status=_statuses[indexPath.row-1];
         UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-        if(cell.accessoryType==UITableViewCellAccessoryNone){
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        UIImageView *imgView = (UIImageView *)cell.accessoryView;
+        if(![_selectedStatuses containsObject:status]){
+            imgView.image = [UIImage imageNamed:@"filter_checked"];
+            //[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
             [_selectedStatuses addObject:status];
-        } else if(cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+        } else {
+            imgView.image = [UIImage imageNamed:@"filter_unchecked"];
+            //[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
             [_selectedStatuses removeObject:status];
         }
     }else if(indexPath.section==kUserSection) {
         NSString *username=[_users[indexPath.row-1] userName];
         UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-        if(cell.accessoryType==UITableViewCellAccessoryNone){
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        UIImageView *imgView = (UIImageView *)cell.accessoryView;
+        if(![_selectedUsers containsObject:username]){
+            imgView.image = [UIImage imageNamed:@"filter_checked"];
+            //[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
             [_selectedUsers addObject:username];
-        } else if(cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+        } else {
+            imgView.image = [UIImage imageNamed:@"filter_unchecked"];
+            //[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
             [_selectedUsers removeObject:username];
         }
     }
@@ -272,8 +320,8 @@
 
 #pragma mark - Actions
 
-- (void)statusSwitchChanged:(UISwitch*)sender {
-    _statusOn=sender.on;
+- (void)statusSwitchChanged:(UIButton*)sender {
+    _statusOn = !_statusOn;
     NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:[_statuses count]];
     NSInteger k=[_statuses count];
     for(NSInteger i=0;i<k;++i) {
@@ -281,14 +329,16 @@
     }
     if(_statusOn) {
         [self.statusTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_up"] forState:UIControlStateNormal];
     } else {
         [self.statusTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_down"] forState:UIControlStateNormal];
         [_selectedStatuses removeAllObjects];
     }
 }
 
-- (void)userSwitchChanged:(UISwitch*)sender {
-    _userOn=sender.on;
+- (void)userSwitchChanged:(UIButton*)sender {
+    _userOn = !_userOn;
     NSMutableArray *indexPaths=[NSMutableArray arrayWithCapacity:[_users count]];
     NSInteger k=[_users count];
     for(NSInteger i=0;i<k;++i) {
@@ -296,29 +346,35 @@
     }
     if(_userOn) {
         [self.statusTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_up"] forState:UIControlStateNormal];
     } else {
         [self.statusTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_down"] forState:UIControlStateNormal];
         [_selectedUsers removeAllObjects];
     }
 }
 
-- (void)creationDateSwitchChanged:(UISwitch*)sender {
-    _creationDateOn=sender.on;
+- (void)creationDateSwitchChanged:(UIButton*)sender {
+    _creationDateOn = !_creationDateOn;
     NSArray *indexPaths=@[[NSIndexPath indexPathForRow:1 inSection:kCreationDateSection]];
     if(_creationDateOn) {
         [self.statusTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_up"] forState:UIControlStateNormal];
     } else {
         [self.statusTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_down"] forState:UIControlStateNormal];
     }
 }
 
-- (void)updateDateSwitchChanged:(UISwitch*)sender {
-    _updateDateOn=sender.on;
+- (void)updateDateSwitchChanged:(UIButton*)sender {
+    _updateDateOn = !_updateDateOn;
     NSArray *indexPaths=@[[NSIndexPath indexPathForRow:1 inSection:kLastUpdatedSection]];
     if(_updateDateOn) {
         [self.statusTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_up"] forState:UIControlStateNormal];
     } else {
         [self.statusTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
+        [sender setBackgroundImage:[UIImage imageNamed:@"filter_arrow_down"] forState:UIControlStateNormal];
     }
 }
 

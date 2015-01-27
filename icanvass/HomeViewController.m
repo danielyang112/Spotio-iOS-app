@@ -60,8 +60,15 @@
     _map.delegate=self;
 	_map.location = self.locationManager.location;
     self.controllers=@[_map,list];
-    self.category = 0;
-    [self switchToViewController:_controllers[0] animated:NO];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:kCategory] isEqualToString:@"list"]) {
+        self.category = 1;
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kCategory];
+        [self switchToViewController:_controllers[1] animated:NO];
+    } else {
+        self.category = 0;
+        [self switchToViewController:_controllers[0] animated:NO];
+    }
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     

@@ -11,6 +11,7 @@
 #import "DetailsViewController.h"
 #import "Pins.h"
 #import "Pin.h"
+#import "Fields.h"
 #import "Mixpanel.h"
 #import "Users.h"
 #import "utilities.h"
@@ -20,7 +21,9 @@
 #import "GClusterItem.h"
 #import "CustomClusterManager.h"
 #import "InfoView.h"
+#import "LayerView.h"
 #import "TutorialViewController.h"
+#import "DetailsTableViewCell.h"
 //#import <sys/utsname.h>
 
 #import "REVClusterMap.h"
@@ -57,16 +60,20 @@
     CustomClusterManager *clusterManager_;
     BOOL firstLocationUpdate_;
     GMSCameraPosition *previousCameraPosition;
-
+    Pin *detailsPin;
+    NSString *name, *phoneNumber, *email;
     
 }
 @property (nonatomic,strong) NSMutableDictionary *markers;
 @property (nonatomic, weak) InfoView *selectedInfoView;
+@property (nonatomic, weak) LayerView *layerView;
 @property (nonatomic,strong) NSMutableDictionary *icons;
 @property (nonatomic,strong) NSMutableDictionary *colorsForOverlays;
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property (nonatomic,strong) NSFetchedResultsController* fetchController;
+@property (nonatomic,strong) NSArray *users;
+
 @end
 
 @implementation MapController
@@ -119,6 +126,10 @@
 	[_mapview addGestureRecognizer:tap];
     tap.delegate = self;
     
+    [[Users sharedInstance] sendUsersTo:^(NSArray *a) {
+        self.users=a;
+    }];
+    
     self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, f.size.width, 30)];
     self.topView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
     
@@ -162,11 +173,18 @@
     [self.topView addSubview:labelNotHome];
     [self.view addSubview:self.topView];
     
-    self.btnTracking = [[UIButton alloc] initWithFrame:CGRectMake(f.size.width - 50, 60, 40, 40)];
+    self.btnTracking = [[UIButton alloc] initWithFrame:CGRectMake(f.size.width - 50, 40, 42, 42)];
     [self.btnTracking setImage:[UIImage imageNamed:@"tracking_button"] forState:UIControlStateNormal];
     //[self.btnTracking setImage:[UIImage imageNamed:@"tracking_button"] forState:UIControlStateHighlighted];
     [self.btnTracking addTarget:self action:@selector(onbtnTracking) forControlEvents:UIControlEventTouchUpInside];
+    self.btnShowLayers = [[UIButton alloc] initWithFrame:CGRectMake(f.size.width - 50, 90, 42, 42)];
+    [self.btnShowLayers setImage:[UIImage imageNamed:@"territory_button"] forState:UIControlStateNormal];
+    //[self.btnTracking setImage:[UIImage imageNamed:@"tracking_button"] forState:UIControlStateHighlighted];
+    [self.btnShowLayers addTarget:self action:@selector(onbtnShowLayers) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.btnTracking];
+    [self.view addSubview:self.btnShowLayers];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
 }
 
@@ -202,6 +220,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [_layerView removeFromSuperview];
+    self.detailsView.hidden = YES;
 }
 
 - (UIImage*)iconForPin:(Pin*)pin {
@@ -246,7 +266,18 @@
 
 - (void)onbtnTracking
 {
-    [_mapview setCenterCoordinate:self.userLocation.coordinate animated:YES];
+    [_mapview setCenterCoordinate:[self.delegate userLocation].coordinate animated:YES];
+}
+
+- (void)onbtnShowLayers
+{
+    _layerView = [LayerView loadLayerView];
+    [_layerView setSatelliteSelected:[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue]];
+    [_layerView setTerritorySelected:[[[NSUserDefaults standardUserDefaults] objectForKey:@"Territory"] boolValue]];
+    CGRect frame = _layerView.frame;
+    frame.origin = CGPointMake((self.view.bounds.size.width - frame.size.width) / 2, 100);
+    _layerView.frame = frame;
+    [self.view addSubview:_layerView];
 }
 
 - (void)refreshMarkers {
@@ -269,6 +300,46 @@
 
     [_mapview addAnnotations:tempPlaces];
     
+}
+
+- (IBAction)onDetailsCallClicked:(id)sender {
+    if( phoneNumber && phoneNumber.length > 0) {
+        NSString *number = [NSString stringWithFormat: @"telprompt://%@", phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:number]];
+        NSLog( @"%@", number);
+        return;
+    }
+}
+
+- (IBAction)onDetailsEmailClicked:(id)sender {
+    if( email && email.length > 0) {
+        NSString *url = [NSString stringWithFormat: @"mailto:%@?cc=&subject=Hello&body=", email];
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString: url]];
+        NSLog( @"%@", url);
+        return;
+    }
+}
+
+- (IBAction)onDetailsDirectionClicked:(id)sender {
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([detailsPin.latitude doubleValue], [detailsPin.longitude doubleValue]);
+    BOOL isWalking = NO;
+    //create MKMapItem out of coordinates
+    MKPlacemark* placeMark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem* destination =  [[MKMapItem alloc] initWithPlacemark:placeMark];
+    if([destination respondsToSelector:@selector(openInMapsWithLaunchOptions:)]) {
+        //using iOS6 native maps app
+        if(isWalking) {
+            [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+        } else {
+            [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving}];
+        }
+    } else{
+        NSLog( @"iOS < 6.0");
+    }
+}
+
+- (IBAction)onEditClicked:(id)sender {
+    [self performSegueWithIdentifier:@"MapViewPin" sender:detailsPin];
 }
 
 - (void)viewOnMap:(Pin*)pin {
@@ -304,7 +375,9 @@
     NSLog(@"%s",__FUNCTION__);
     __weak typeof(self) weakSelf = self;
     [[Territories sharedInstance] sendTerritoriesTo:^(NSArray *a) {
-        [weakSelf drawPolygonsWith:a];
+        BOOL territory=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Territory"] boolValue];
+        if (territory)
+            [weakSelf drawPolygonsWith:a];
     }];
 }
 
@@ -349,6 +422,65 @@
 }
 
 #pragma mark -
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    if (detailsPin)
+        return 5;
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0)
+        return 64.0;
+    
+    return 44.0f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    DetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsTextCell" forIndexPath:indexPath];
+    
+    // Configure the cell...
+    if (indexPath.row == 0) {
+        cell.top.text = @"Address";
+        cell.bottom.text = detailsPin.detailedAddress;
+        cell.bottom.font = [UIFont systemFontOfSize:18.0f];
+    } else if (indexPath.row == 1) {
+        cell.top.text = @"Name";
+        if (name) {
+            cell.bottom.text = name;
+        } else {
+            cell.bottom.text = @"";
+        }
+    } else if (indexPath.row == 2) {
+        cell.top.text = @"Assigned to";
+        if (detailsPin.user) {
+            BOOL found = NO;
+            for (UserTemp *user in self.users) {
+                if ([user.userName isEqualToString:detailsPin.user]) {
+                    cell.bottom.text = user.fullName;
+                    found = YES;
+                }
+            }
+            if (!found)
+                cell.bottom.text = @"";
+        } else
+            cell.bottom.text = @"";
+    } else if (indexPath.row == 3) {
+        cell.top.text = @"Created";
+        cell.bottom.text = [Pin formatDate:detailsPin.creationDate];
+    } else {
+        cell.top.text = @"Last updated";
+        cell.bottom.text = [Pin formatDate:detailsPin.updateDate];
+    }
+    
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
+    
+    return cell;
+}
+
 #pragma mark Map view delegate
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
@@ -408,6 +540,36 @@
 	
     NSLog(@"REVMapViewController mapView didSelectAnnotationView:");
     
+    CGRect rect = self.detailsView.frame;
+    rect.origin.y = self.view.bounds.size.height;
+    self.detailsView.frame = rect;
+    
+    REVClusterPin *pin = (REVClusterPin *)view1.annotation;
+    detailsPin = pin.userData;
+    name = nil;
+    phoneNumber = nil;
+    email = nil;
+    for (NSDictionary *d in detailsPin.customValuesOld) {
+        Field *f=[Fields sharedInstance].fieldById[[d[@"DefinitionId"] stringValue]];
+        if ([f.name hasPrefix:@"Phone Number"])
+            phoneNumber = nilIfNull(d[@"StringValue"]);
+        else if ([f.name isEqualToString:@"Email"])
+            email = nilIfNull(d[@"StringValue"]);
+        else if ([f.name isEqualToString:@"Name"])
+            name = nilIfNull(d[@"StringValue"]);
+    }
+    self.detailViewTitle.textColor = [[Pins sharedInstance] colorForStatus:detailsPin.status];
+    
+    [self.tableView reloadData];
+    self.detailsView.hidden = NO;
+    
+    [self.view bringSubviewToFront:self.detailsView];
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect rect = self.detailsView.frame;
+        rect.origin.y = rect.origin.y - rect.size.height;
+        self.detailsView.frame = rect;
+    }];
+    /*
 	if ([view1 isKindOfClass:[REVClusterAnnotationView class]]) {
         return;
 	}
@@ -423,7 +585,7 @@
     calloutViewFrame.origin = CGPointMake(-calloutViewFrame.size.width/2 + 15, -calloutViewFrame.size.height);
     infoView.frame = calloutViewFrame;
     [view1 addSubview:infoView];
-	self.selectedInfoView = infoView;
+	self.selectedInfoView = infoView;*/
 }
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
@@ -438,11 +600,6 @@
 		}
         [subview removeFromSuperview];
     }
-}
-
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    self.userLocation = userLocation;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -513,6 +670,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     DetailsViewController *dc=(DetailsViewController*)[segue destinationViewController];
     dc.userCoordinate=[self.delegate userLocation].coordinate;
+    dc.editing = YES;
     dc.pin=sender;
 }
 

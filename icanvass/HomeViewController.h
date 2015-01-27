@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Roman Kot. All rights reserved.
 //
 
+#define kCategory @"Category"
+
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MessageUI/MessageUI.h>

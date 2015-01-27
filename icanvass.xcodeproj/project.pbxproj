@@ -165,6 +165,8 @@
 		FA01F8F51A6C331D00A81EE4 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA01F8EB1A6C331D00A81EE4 /* OpenSans-Regular.ttf */; };
 		FA01F8F61A6C331D00A81EE4 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA01F8EC1A6C331D00A81EE4 /* OpenSans-Semibold.ttf */; };
 		FA01F8F71A6C331D00A81EE4 /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA01F8ED1A6C331D00A81EE4 /* OpenSans-SemiboldItalic.ttf */; };
+		FAF6B4AA1A76C32800C15FC9 /* LayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF6B4A91A76C32800C15FC9 /* LayerView.m */; };
+		FAF6B4AC1A76C33800C15FC9 /* LayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF6B4AB1A76C33800C15FC9 /* LayerView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -439,6 +441,9 @@
 		FA01F8EB1A6C331D00A81EE4 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		FA01F8EC1A6C331D00A81EE4 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		FA01F8ED1A6C331D00A81EE4 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		FAF6B4A81A76C32800C15FC9 /* LayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerView.h; sourceTree = "<group>"; };
+		FAF6B4A91A76C32800C15FC9 /* LayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayerView.m; sourceTree = "<group>"; };
+		FAF6B4AB1A76C33800C15FC9 /* LayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayerView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -883,6 +888,9 @@
 				06DAF6AC1A30734A00C8704C /* InfoView.h */,
 				06DAF6AD1A30734A00C8704C /* InfoView.m */,
 				42B3A67518E82FB900B46FBF /* InfoView.xib */,
+				FAF6B4A81A76C32800C15FC9 /* LayerView.h */,
+				FAF6B4A91A76C32800C15FC9 /* LayerView.m */,
+				FAF6B4AB1A76C33800C15FC9 /* LayerView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -1068,6 +1076,7 @@
 				42B3A6C118E8C5E700B46FBF /* MPCloseBtn@2x.png in Resources */,
 				FA01F8F71A6C331D00A81EE4 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				42B3A6BF18E8C5E700B46FBF /* MPCheckmark@2x.png in Resources */,
+				FAF6B4AC1A76C33800C15FC9 /* LayerView.xib in Resources */,
 				42B3A6CA18E8C5E700B46FBF /* MPSurvey.storyboard in Resources */,
 				1494990B1A039BE0006AE1FF /* pinpoint.png in Resources */,
 				42B3A6BE18E8C5E700B46FBF /* MPCheckmark.png in Resources */,
@@ -1188,6 +1197,7 @@
 				42D28CE318E06702005E1758 /* MMDrawerBarButtonItem.m in Sources */,
 				4255E68019A7AE2A007657E9 /* HilightedButton.m in Sources */,
 				06563DA21A1FB48300020904 /* SOSession.m in Sources */,
+				FAF6B4AA1A76C32800C15FC9 /* LayerView.m in Sources */,
 				42284F9418D26AF10087941E /* AFHTTPSessionManager.m in Sources */,
 				42480DEB19A3ECC100E6DF7B /* Pin.m in Sources */,
 				42A7BEC418D719BF00973EA8 /* UIAlertView+AFNetworking.m in Sources */,

@@ -41,6 +41,7 @@ enum ICSortOrder : NSUInteger {
 @property (nonatomic,strong) UIButton *statusButton;
 @property (nonatomic,strong) UIButton *addressButton;
 @property (nonatomic,strong) UIButton *dateButton;
+@property (nonatomic,strong) UIButton *assignedButton;
 @property (nonatomic,strong) NSSortDescriptor *currentDescriptor;
 @property (nonatomic,strong) NSString *searchText;
 @property (nonatomic) enum ICSortOrder sortOrder;
@@ -71,12 +72,14 @@ enum ICSortOrder : NSUInteger {
         [_addressButton addTarget:self action:@selector(sortAddress:) forControlEvents:UIControlEventTouchUpInside];
         self.dateButton=(UIButton*)[_headerView viewWithTag:3];
         [_dateButton addTarget:self action:@selector(sortDate:) forControlEvents:UIControlEventTouchUpInside];
+        self.assignedButton=(UIButton*)[_headerView viewWithTag:4];
+        //[_assignedButton addTarget:self action:@selector(sortDate:) forControlEvents:UIControlEventTouchUpInside];
         
         _currentDescriptor=_dateDescriptors[1];
         self.sortOrder=ICSortOrderDateDescending;
         
         
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+//        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 //        NSFetchedResultsController* listResultController = appDelegate.fetchResultController;
 //        listResultController.delegate = self;
 //        [listResultController fetchRequest];
@@ -262,10 +265,24 @@ enum ICSortOrder : NSUInteger {
     cell.topLabel.text=pin.address;
     cell.bottomLabel.text=pin.address2;
     cell.rightLabel.text = [Pin formatDate:pin.updateDate];
+    if ([pin.status isEqualToString:@"Not Contacted"])
+        cell.icon.image = [UIImage imageNamed:@"pin_notcontacted"];
+    else if ([pin.status isEqualToString:@"Sold - Test"])
+        cell.icon.image = [UIImage imageNamed:@"pin_sold"];
+    else if ([pin.status isEqualToString:@"Not Interested"])
+        cell.icon.image = [UIImage imageNamed:@"pin_notinterested"];
+    else if ([pin.status isEqualToString:@"Lead"])
+        cell.icon.image = [UIImage imageNamed:@"pin_lead"];
+    else if ([pin.status isEqualToString:@"Not Home"])
+        cell.icon.image = [UIImage imageNamed:@"pin_nothome"];
+    else
+        cell.icon.image = nil;
 //    cell.updatedTime.text = [Pin formatDate:pin.updateDate];
-    cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
-    cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
-    cell.icon.layer.borderWidth=1.f;
+//    cell.icon.backgroundColor=[[Pins sharedInstance] colorForStatus:pin.status];
+//    cell.icon.layer.borderColor=[UIColor darkGrayColor].CGColor;
+//    cell.icon.layer.borderWidth=1.f;
+    
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
     /*
      CGPathRef path=[PocketSVG pathFromDAttribute:@"M0 0 h80 c40 0 50 10 50 50 v80 c0 25 0 25 -25 50 l-45 50 c-10 10 -30 10 -40 0 l-45 -50 c-25 -25 -25 -25 -25 -50 v-80 c0 -40 10 -50 50 -50 z"];
      

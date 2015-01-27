@@ -30,6 +30,7 @@
 @synthesize address;
 @synthesize address2;
 @synthesize sortAddress;
+@synthesize detailedAddress;
 
 - (void)updateWithDictionary:(NSDictionary*)dic {
     self.ident=dic[@"Id"];
@@ -52,6 +53,13 @@
     self.latitude=lat;
     NSNumber *lon=[NSNumber numberWithDouble:[nilIfNull(dic[@"Longitude"]) doubleValue]];
     self.longitude=lon;
+}
+
+- (NSString*)detailedAddress {
+    if(!detailedAddress) {
+        detailedAddress=[NSString stringWithFormat:@"%@ %@\r%@, %@ %@",self.location.streetNumber, self.location.streetName, self.location.city, self.location.state, self.location.zip];
+    }
+    return detailedAddress;
 }
 
 - (NSString*)address {

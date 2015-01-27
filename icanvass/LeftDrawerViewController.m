@@ -11,7 +11,6 @@
 #import "MMDrawerController/UIViewController+MMDrawerController.h"
 #import "HomeViewController.h"
 #import "GoToWebsiteViewController.h"
-#import "ICRequestManager.h"
 #import <FreshdeskSDK/FreshdeskSDK.h>
 #import "Mixpanel.h"
 #import "Pins.h"
@@ -34,8 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    //self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     _mapSwitch.on=[[[NSUserDefaults standardUserDefaults] objectForKey:@"Satellite"] boolValue];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     // Do any additional setup after loading the view.
 }
 
@@ -157,11 +157,7 @@
 }
 
 - (IBAction)logout:(id)sender {
-    [[Mixpanel sharedInstance] track:@"Logout"];
-    [[ICRequestManager sharedManager] logoutWithCb:^(BOOL success) {
-        [Pins sharedInstance].filter=nil;
-        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
-    }];
+    
 }
 
 - (IBAction)appDetails:(id)sender {
@@ -171,6 +167,99 @@
 //								   withCloseAnimation:YES
 //										   completion:nil];
 	[self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark -
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return 6;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0)
+        return 50.0;
+    
+    return 64.0f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellSettings" forIndexPath:indexPath];
+    
+    // Configure the cell...
+    UILabel *label = (UILabel *)[cell viewWithTag:1];
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:2];
+    
+    switch ((int)indexPath.row) {
+        case 1:
+            label.text = @"Performance";
+            imageView.image = [UIImage imageNamed:@"settings_performance"];
+            break;
+        case 2:
+            label.text = @"Map";
+            imageView.image = [UIImage imageNamed:@"settings_map"];
+            break;
+        case 3:
+            label.text = @"List";
+            imageView.image = [UIImage imageNamed:@"settings_list"];
+            break;
+        case 4:
+            label.text = @"Settings";
+            imageView.image = [UIImage imageNamed:@"settings_settings"];
+            break;
+        case 5:
+            label.text = @"Help & Feedback";
+            imageView.image = [UIImage imageNamed:@"settings_support"];
+            break;
+
+        default:
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            label.text = @"Spotio";
+            imageView.image = [UIImage imageNamed:@"settings_menu"];
+            label.font = [UIFont fontWithName:@"OpenSans-SemiBold" size:24.0f];
+            break;
+    }
+    
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor colorWithRed:243/255.0 green:156/255.0 blue:18/255.0 alpha:1.0];
+    [cell setSelectedBackgroundView:bgColorView];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 1) {
+        
+    } else if (indexPath.row == 2) {
+        UINavigationController *nc=[self.storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
+        [self.mm_drawerController setCenterViewController:nc
+                                       withCloseAnimation:YES
+                                               completion:nil];
+    } else if (indexPath.row == 3) {
+        UINavigationController *nc=(UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"list" forKey:kCategory];
+        [self.mm_drawerController setCenterViewController:nc
+                                       withCloseAnimation:YES
+                                               completion:nil];
+    } else if (indexPath.row == 4) {
+        AppDetailViewController *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"AppDetailViewController"];
+        UINavigationController *nc=[[UINavigationController alloc] initWithRootViewController:vc];
+        nc.navigationBar.barTintColor = [UIColor colorWithRed:37/255.0 green:37/255.0 blue:37/255.0 alpha:1.0];
+        nc.navigationBar.translucent = NO;
+        [self.mm_drawerController setCenterViewController:nc
+                                        withCloseAnimation:YES
+                                               completion:nil];
+        //[self presentViewController:vc animated:YES completion:nil];
+    } else if (indexPath.row == 5) {
+        NSString *username=[[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey];
+        [FDSupport setUseremail:username];
+        [[FDSupport sharedInstance] presentSupport:self];
+    }
 }
 
 #pragma mark - Delegate to MailComposer

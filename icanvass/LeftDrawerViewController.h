@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftDrawerViewController : UIViewController
+@interface LeftDrawerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISwitch *mapSwitch;
+
 - (IBAction)pins:(id)sender;
 - (IBAction)satelliteView:(id)sender;
 - (IBAction)switchChanged:(UISwitch *)sender;

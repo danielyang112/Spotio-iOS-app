@@ -20,13 +20,12 @@
 - (CLLocation*)userLocation;
 @end
 
-@interface MapController : UIViewController<UISearchBarDelegate,MKMapViewDelegate>{
+@interface MapController : UIViewController<UISearchBarDelegate,MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>{
     
     REVClusterMapView *_mapview;
     UITouch *anntouch;
 }
 @property (nonatomic,strong) CLLocation *location;
-@property (nonatomic,strong) MKUserLocation *userLocation;
 @property (nonatomic,weak) id<MapControllerDelegate> delegate;
 @property (nonatomic,strong) NSArray *pins;
 @property (nonatomic,strong) NSArray *filtered;
@@ -34,6 +33,17 @@
 @property (nonatomic,strong) UIToolbar *toolBar;
 @property (nonatomic,strong) UIView *topView;
 @property (nonatomic,strong) UIButton *btnTracking;
+@property (nonatomic,strong) UIButton *btnShowLayers;
+
+@property (weak, nonatomic) IBOutlet UIView *detailsView;
+@property (weak, nonatomic) IBOutlet UILabel *detailViewTitle;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)onDetailsCallClicked:(id)sender;
+- (IBAction)onDetailsEmailClicked:(id)sender;
+- (IBAction)onDetailsDirectionClicked:(id)sender;
+
+- (IBAction)onEditClicked:(id)sender;
 
 - (void)viewOnMap:(Pin*)pin;
 - (void)setLocation:(CLLocation *)location;

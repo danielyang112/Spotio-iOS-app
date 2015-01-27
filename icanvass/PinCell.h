@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PinCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIView *icon;
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imgAssignee;
 
 @end

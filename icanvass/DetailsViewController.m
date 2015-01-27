@@ -79,15 +79,19 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+	//self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 	self.tableView.backgroundColor=[UIColor clearColor];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 	if(_adding) {
 		//Show Loading Circle
 		[SVProgressHUD show];
 		[self adjustForAdding];
 		
 	} else if(_pin){
-		[self adjustForViewing];
+        if (_editing)
+            [self adjustForEditing];
+        else
+            [self adjustForViewing];
 	}
     [self updateFields];
 }
@@ -117,12 +121,13 @@
 	//self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
 	self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(done:)];
 	self.navigationItem.rightBarButtonItem.enabled=NO;
+    self.btnEdit.hidden = YES;
 	[_tableView setEditing:YES];
 	[self updateAddressTextFields];
 }
 
 - (void)adjustForViewing {
-    /*
+    
 	UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
 	buttonContainer.backgroundColor = [UIColor clearColor];
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -134,12 +139,12 @@
 	[button addTarget:self action:@selector(viewOnMap:) forControlEvents:UIControlEventTouchUpInside];
 	[buttonContainer addSubview:button];
 	self.navigationItem.titleView = buttonContainer;
-	self.navigationItem.rightBarButtonItem=[self editButtonItem];*/
+	/*self.navigationItem.rightBarButtonItem=[self editButtonItem];*/
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 17)];
-    [button setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(onBackPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIButton *buttonL = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 17)];
+    [buttonL setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
+    [buttonL addTarget:self action:@selector(onBackPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonL];
     
 	[self extractPin];
 	[self enableChanges:NO];
@@ -147,7 +152,27 @@
 }
 
 - (void)adjustForEditing {
-	self.navigationItem.rightBarButtonItem=[self editButtonItem];
+    
+    UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
+    buttonContainer.backgroundColor = [UIColor clearColor];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0, 0, 150, 44)];
+    [button setTitleColor:[UIColor colorWithRed:(243.0/255) green:(156.0/255) blue:(18.0/255) alpha:1.0f] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithRed:(243.0/255) green:(156.0/255) blue:(18.0/255) alpha:0.3f] forState:UIControlStateHighlighted];
+    [button setTitle:@"View on Map" forState:UIControlStateNormal];
+    button.showsTouchWhenHighlighted = TRUE;
+    [button addTarget:self action:@selector(viewOnMap:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonContainer addSubview:button];
+    self.navigationItem.titleView = buttonContainer;
+    
+    UIButton *buttonL = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [buttonL setImage:[UIImage imageNamed:@"cancel_button"] forState:UIControlStateNormal];
+    [buttonL addTarget:self action:@selector(cancelClicked) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonL];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(editClicked)];
+    
+    self.btnEdit.hidden = YES;
+
 	[self extractPin];
 	[self updateAddressTextFields];
 	[self setEditing:YES animated:YES];
@@ -601,7 +626,10 @@ static NSDateFormatter *dateFormatter;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch(section) {
 		case 0: {
-			return self.isAddEmpty? 7 : 4;
+            if (tableView.isEditing)
+                return self.isAddEmpty? 7 : 4;
+            else
+                return 2;
 		}
 		case 1: {
 			if(tableView.isEditing) {
@@ -646,20 +674,33 @@ static NSDateFormatter *dateFormatter;
 			[button removeTarget:self action:@selector(status:) forControlEvents:UIControlEventTouchUpInside];
 			button.layer.borderWidth = 0;
 		}*/
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	} else if(indexPath.row==1) {
-		CellIdentifier=@"DetailsStreetNumberCell";
-		DetailsStreetNumberCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-		cell.top.text=@"Number";
-		cell.field.placeholder=@"Number";
-		cell.bottom.text=_streetNumber;
-		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
-		cell.field.text=_streetNumber;
-		cell.field.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
-		cell.stepper.value=[_streetNumber doubleValue];
-		[cell.stepper addTarget:self action:@selector(stepperChanged:) forControlEvents:UIControlEventValueChanged];
-		cell.field.delegate=self;
-		[cell.directionsButton  addTarget:self action:@selector(clickDirectionButton:) forControlEvents:UIControlEventTouchDown];
+        CellIdentifier=@"DetailsStreetNumberCell";
+        DetailsStreetNumberCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (tableView.isEditing) {
+            cell.top.text=@"Number";
+            cell.field.placeholder=@"Number";
+            cell.bottom.text=_streetNumber;
+            [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
+            cell.field.text=_streetNumber;
+            cell.field.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+            cell.stepper.value=[_streetNumber doubleValue];
+            [cell.stepper addTarget:self action:@selector(stepperChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.field.delegate=self;
+            [cell.directionsButton  addTarget:self action:@selector(clickDirectionButton:) forControlEvents:UIControlEventTouchDown];
+        } else {
+            cell.top.text=@"Address";
+            cell.field.placeholder=@"Address";
+            cell.bottom.text=[NSString stringWithFormat:@"%@ %@\r%@, %@ %@", _streetNumber, _streetName, _city, _state, _zipCode];
+            [cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
+            cell.field.hidden = YES;
+            cell.stepper.hidden = YES;
+            [cell.directionsButton  addTarget:self action:@selector(clickDirectionButton:) forControlEvents:UIControlEventTouchDown];
+        }
+		
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	} else if(indexPath.row==2){
 		CellIdentifier=@"DetailsTextCell";
@@ -671,6 +712,7 @@ static NSDateFormatter *dateFormatter;
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 		cell.field.text=_streetName;
 		cell.field.delegate=self;
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	} else if(self.isAddEmpty) {
 		if(indexPath.row==4) {
@@ -683,6 +725,7 @@ static NSDateFormatter *dateFormatter;
 			[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 			cell.field.text=_city;
 			cell.field.delegate=self;
+            cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 			return cell;
 		} else if(indexPath.row==5) {
 			CellIdentifier=@"DetailsTextCell";
@@ -694,6 +737,7 @@ static NSDateFormatter *dateFormatter;
 			[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 			cell.field.text=_state;
 			cell.field.delegate=self;
+            cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 			return cell;
 		} else if(indexPath.row==6) {
 			CellIdentifier=@"DetailsTextCell";
@@ -705,6 +749,7 @@ static NSDateFormatter *dateFormatter;
 			[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 			cell.field.text=_zipCode;
 			cell.field.delegate=self;
+            cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 			return cell;
 		}
 	}
@@ -718,6 +763,7 @@ static NSDateFormatter *dateFormatter;
 	[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 	cell.field.text=_unit;
 	cell.field.delegate=self;
+    cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 	return cell;
 }
 
@@ -726,7 +772,12 @@ static NSDateFormatter *dateFormatter;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if(indexPath.section==0) return 44.f;
+    if(indexPath.section==0) {
+        if (indexPath.row == 1 && !tableView.isEditing)
+            return 64.0f;
+        
+        return 44.f;
+    }
 	
 	Field *f;
 	if(tableView.isEditing) {
@@ -796,7 +847,7 @@ static NSDateFormatter *dateFormatter;
 				[cell phoneOrEmail:0];
 				BOOL isIPhone = [[UIDevice currentDevice] isIPhone];
 				if( isIPhone) {
-					if([f.name hasPrefix:PHONE_NUMBER]) {
+                    if([f.name hasPrefix:PHONE_NUMBER]) {
 						[cell phoneOrEmail:1];
 						[cell.phoneOrEmailButton addTarget:self action:@selector(clickPhoneButton:) forControlEvents:UIControlEventTouchDown];
 						self.phoneAdress = [NSString stringWithFormat: @"%@", v];
@@ -808,11 +859,14 @@ static NSDateFormatter *dateFormatter;
 					self.emailAdress = [NSString stringWithFormat: @"%@", v];
 					cell.field.keyboardType = UIKeyboardTypeEmailAddress;
 				}
+                
+                cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 				return cell;
 			}
 			break;
 		case 2 : {
 			DeletePinCell *cell = [tableView dequeueReusableCellWithIdentifier: @"DeletePinCell"];
+            cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 			return cell;
 		}
 	}
@@ -834,6 +888,7 @@ static NSDateFormatter *dateFormatter;
 		cell.bottom.text=[dFormatter stringFromDate:_addedFields[key]];
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 		
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	}if(f.type==FieldDropDown){
 		NSString *CellIdentifier = @"DetailsDropDownCell";
@@ -845,6 +900,7 @@ static NSDateFormatter *dateFormatter;
 		cell.bottom.text=_addedFields[key];
 		[cell.bottom setFont:[UIFont systemFontOfSize:18.0]];
 		
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 		
 	}else if(f.type==FieldNoteBox){
@@ -863,6 +919,7 @@ static NSDateFormatter *dateFormatter;
 		//        cell.field.text=_addedFields[key];
 		//        cell.enabled=!!_addedFields[key];
 		cell.enabled=YES;
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	}else{
 		NSString *CellIdentifier = @"DetailsTextCell";
@@ -884,6 +941,7 @@ static NSDateFormatter *dateFormatter;
 			[cell.field setKeyboardType:UIKeyboardTypeEmailAddress];
 		}
 		
+        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
 		return cell;
 	}
 
@@ -1172,7 +1230,7 @@ static NSDateFormatter *dateFormatter;
 	//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
 	
 	[_tableView setEditing:editing animated:animated];
-	[self.navigationItem.titleView setHidden:YES];
+	[self.navigationItem.titleView setHidden:editing];
 	
 	[_tableView reloadData];
 	

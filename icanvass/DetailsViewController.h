@@ -14,6 +14,7 @@
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) CLLocationCoordinate2D userCoordinate;
 @property (nonatomic) BOOL adding;
+@property (nonatomic) BOOL editing;
 @property (nonatomic) BOOL isAddEmpty;
 @property (nonatomic,strong) Pin *pin;
 @property (weak, nonatomic) IBOutlet UIStepper *numberStepper;

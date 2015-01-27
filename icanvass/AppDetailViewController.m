@@ -10,12 +10,20 @@
 #import "MMDrawerController/MMDrawerBarButtonItem.h"
 #import "MMDrawerController/UIViewController+MMDrawerController.h"
 #import "UIDevice-Hardware.h"
+#import "ICRequestManager.h"
+#import "Mixpanel.h"
+#import "Pins.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 @interface AppDetailViewController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *appVersionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *deviceModelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *iOSVersionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *buildNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deviceModelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *logOutLabel;
+
+- (IBAction)onLogOutClicked:(id)sender;
+
 @end
 
 @implementation AppDetailViewController
@@ -31,17 +39,22 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-//	[self setupLeftMenuButton];
+	//self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    
+	[self setupLeftMenuButton];
 	self.appVersionLabel.text = [self version];
-	self.buildNumberLabel.text = [self build];
+	//self.buildNumberLabel.text = [self build];
+    self.iOSVersionLabel.text = [self iosVersion];
 	self.deviceModelLabel.text = [self deviceName];
-	self.iOSVersionLabel.text = [self iosVersion];
+    self.logOutLabel.text = [self logoutText];
 }
 
 -(void)setupLeftMenuButton{
 	MMDrawerBarButtonItem *leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-	[self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    UIButton *btnTitle = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 70, 20)];
+    [btnTitle  setTitle:@"Settings" forState:UIControlStateNormal];
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:btnTitle];
+    [self.navigationItem setLeftBarButtonItems:@[leftDrawerButton, barItem] animated:YES];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
@@ -53,16 +66,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)onExit:(id)sender {
-  [self dismissViewControllerAnimated: NO completion:^{
-  }];
-	
+- (IBAction)onLogOutClicked:(id)sender {
+    [[Mixpanel sharedInstance] track:@"Logout"];
+    [[ICRequestManager sharedManager] logoutWithCb:^(BOOL success) {
+        [Pins sharedInstance].filter=nil;
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {}];
+    }];
 }
 
 -(NSString*) version {
 	NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
 	NSString *version = infoDictionary[@"CFBundleShortVersionString"];
-	NSString *fullVersion = [NSString stringWithFormat:@"Version: %@", version];
+	NSString *fullVersion = [NSString stringWithFormat:@"%@", version];
 	return fullVersion;
 }
 
@@ -73,16 +88,21 @@
 	return fullVersion;
 }
 
+-(NSString*) iosVersion {
+    float iosVer = [[UIDevice currentDevice].systemVersion floatValue];
+    NSString *opName = [NSString stringWithFormat:@"%.1f", iosVer];
+    return opName;
+}
+
 -(NSString*) deviceName {
 	NSString *name = [[UIDevice currentDevice] platformString];
-	NSString *devName = [NSString stringWithFormat:@"Model: %@", name];
+	NSString *devName = [NSString stringWithFormat:@"%@", name];
 	return devName;
 }
 
--(NSString*) iosVersion {
-	float iosVer = [[UIDevice currentDevice].systemVersion floatValue];
-	NSString *opName = [NSString stringWithFormat:@"iOS: %.1f", iosVer];
-	return opName;
+-(NSString*) logoutText {
+    NSString *opName = [NSString stringWithFormat:@"You are logged in as %@", [[NSUserDefaults standardUserDefaults] objectForKey:kUserNameKey]];
+    return opName;
 }
 
 @end
